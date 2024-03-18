@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d372e0ad33b748fda39d6affcaa09ee8" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="MoodBiteModel.Allergy" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="MoodBiteModel.FoodSale" Width="1.5" PointX="10.5" PointY="13.5" />
+        <EntityTypeShape EntityType="MoodBiteModel.Ingredient" Width="1.5" PointX="6" PointY="18.25" />
+        <EntityTypeShape EntityType="MoodBiteModel.IngredientType" Width="1.5" PointX="3.75" PointY="18.5" />
+        <EntityTypeShape EntityType="MoodBiteModel.Intolerance" Width="1.5" PointX="6" PointY="6.5" />
+        <EntityTypeShape EntityType="MoodBiteModel.Mood" Width="1.5" PointX="0.75" PointY="8.5" />
+        <EntityTypeShape EntityType="MoodBiteModel.OrderDetail" Width="1.5" PointX="5.25" PointY="23.125" />
+        <EntityTypeShape EntityType="MoodBiteModel.OrderMaster" Width="1.5" PointX="3" PointY="23.125" />
+        <EntityTypeShape EntityType="MoodBiteModel.OrderPayment" Width="1.5" PointX="7.5" PointY="23.375" />
+        <EntityTypeShape EntityType="MoodBiteModel.Premium" Width="1.5" PointX="3.75" PointY="2.25" />
+        <EntityTypeShape EntityType="MoodBiteModel.Recipe" Width="1.5" PointX="3" PointY="11" />
+        <EntityTypeShape EntityType="MoodBiteModel.RecipeAllergy" Width="1.5" PointX="5.25" PointY="15.25" />
+        <EntityTypeShape EntityType="MoodBiteModel.RecipeImage" Width="1.5" PointX="5.25" PointY="26.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.RecipeIngredient" Width="1.5" PointX="8.25" PointY="12.125" />
+        <EntityTypeShape EntityType="MoodBiteModel.RecipeIntolerance" Width="1.5" PointX="8.25" PointY="9.25" />
+        <EntityTypeShape EntityType="MoodBiteModel.Role" Width="1.5" PointX="3.75" PointY="8.5" />
+        <EntityTypeShape EntityType="MoodBiteModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.User" Width="1.5" PointX="0.75" PointY="11.5" />
+        <EntityTypeShape EntityType="MoodBiteModel.UserPremium" Width="1.5" PointX="6" PointY="12.125" />
+        <EntityTypeShape EntityType="MoodBiteModel.UserRecipe" Width="1.5" PointX="8.25" PointY="15.125" />
+        <EntityTypeShape EntityType="MoodBiteModel.UserRole" Width="1.5" PointX="6" PointY="9.25" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_IngredientsOfRecipe" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_IngredientWithType" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_RecipeDetailsWithMoodTag" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_RecipeDetailsWithMoodTagSimplified" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_RecipeWithMoodName" Width="1.5" PointX="10.75" PointY="5.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_RecommendedRecipeForMood" Width="1.5" PointX="10.75" PointY="10.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_UserDetailsWithRole" Width="1.5" PointX="11.75" PointY="0.75" />
+        <AssociationConnector Association="MoodBiteModel.FK__RecipeAll__Aller__5EBF139D" />
+        <AssociationConnector Association="MoodBiteModel.FK__FoodSale__UserPr__1EA48E88" />
+        <AssociationConnector Association="MoodBiteModel.FK__FoodSale__UserRe__1DB06A4F" />
+        <AssociationConnector Association="MoodBiteModel.FK__Ingredien__Ingre__49C3F6B7" />
+        <AssociationConnector Association="MoodBiteModel.FK__RecipeIng__Ingre__5D95E53A" />
+        <AssociationConnector Association="MoodBiteModel.FK__RecipeInt__Intol__6477ECF3" />
+        <AssociationConnector Association="MoodBiteModel.FK__Recipe__MoodID__52593CB8" />
+        <AssociationConnector Association="MoodBiteModel.FK__OrderDeta__PO_ID__31B762FC" />
+        <AssociationConnector Association="MoodBiteModel.FK__OrderPaym__Order__37703C52" />
+        <AssociationConnector Association="MoodBiteModel.FK__OrderMast__UserI__2EDAF651" />
+        <AssociationConnector Association="MoodBiteModel.FK__UserPremi__Premi__0F624AF8" />
+        <AssociationConnector Association="MoodBiteModel.FK__Recipe__Approved__5441852A" />
+        <AssociationConnector Association="MoodBiteModel.FK__RecipeAll__Recip__5DCAEF64" />
+        <AssociationConnector Association="MoodBiteModel.FK__RecipeIma__Recip__59C55456" />
+        <AssociationConnector Association="MoodBiteModel.FK__RecipeInt__Recip__6383C8BA" />
+        <AssociationConnector Association="MoodBiteModel.FK__UserRecip__Recip__787EE5A0" />
+        <AssociationConnector Association="MoodBiteModel.FK_RecipeIngredient_RecipeID" />
+        <AssociationConnector Association="MoodBiteModel.FK__UserRole__RoleID__3D5E1FD2" />
+        <AssociationConnector Association="MoodBiteModel.FK__UserPremi__DateS__0E6E26BF" />
+        <AssociationConnector Association="MoodBiteModel.FK__UserRecip__UserI__778AC167" />
+        <AssociationConnector Association="MoodBiteModel.FK__UserRole__UserID__3C69FB99" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

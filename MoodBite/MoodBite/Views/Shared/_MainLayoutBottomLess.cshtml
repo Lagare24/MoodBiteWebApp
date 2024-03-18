@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with FoodHut landing page.">
+    <meta name="author" content="Devcrud">
+    <title>MoodBite - @ViewBag.Title</title>
+
+    <!-- font icons -->
+    <link rel="stylesheet" href="~/Content/MainTemplate/assets/vendors/themify-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/Content/MainTemplate/assets/vendors/animate/animate.css">
+    <!-- Bootstrap + FoodHut main styles -->
+    <link rel="stylesheet" href="~/Content/MainTemplate/assets/css/foodhut.css">
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+
+    <!-- Navbar -->
+    <nav class="custom-navbar navbar navbar-expand-lg navbar-dark fixed-top" data-spy="affix" data-offset-top="10">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#gallary">Gallary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#book-table">Book-Table</a>
+                </li>
+            </ul>
+            <a class="navbar-brand m-auto" href="#">
+                <img src="~/Content/MainTemplate/assets/imgs/moodbite-logo-transparentbg.png" class="brand-img" alt="">
+                <span class="brand-txt">MoodBite</span>
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#blog">Blog<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#testmonial">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/Account/LogIn" class="btn btn-primary ml-xl-4">Get Started</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- header -->
+    <header id="home" class="login-header">
+        <div class="overlay text-white text-center">
+        </div>
+    </header>
+    <main class="main-content">
+        @RenderBody()
+    </main>
+    <!-- page footer  -->
+    <div class="container-fluid bg-dark text-light has-height-md middle-items border-top text-center wow fadeIn">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>EMAIL US</h3>
+                <P class="text-muted">moodbite@gmail.com</P>
+            </div>
+            <div class="col-sm-4">
+                <h3>CALL US</h3>
+                <P class="text-muted">(032) 341-5884</P>
+            </div>
+            <div class="col-sm-4">
+                <h3>FIND US</h3>
+                <P class="text-muted">6015 Mandaue City, Cebu</P>
+            </div>
+        </div>
+    </div>
+    <div class="bg-dark text-light text-center border-top wow fadeIn">
+        <p class="mb-0 py-3 text-muted small">
+            &copy; Copyright
+            <script>document.write(new Date().getFullYear())</script> Made with <i class="ti-heart text-danger"></i> By <a href="http://devcrud.com">DevCRUD</a>
+        </p>
+    </div>
+    <!-- end of page footer -->
+    <!-- core  -->
+    <script src="~/Content/MainTemplate/assets/vendors/jquery/jquery-3.4.1.js"></script>
+    <script src="~/Content/MainTemplate/assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+    <!-- bootstrap affix -->
+    <script src="~/Content/MainTemplate/assets/vendors/bootstrap/bootstrap.affix.js"></script>
+    <!-- wow.js -->
+    <script src="~/Content/MainTemplate/assets/vendors/wow/wow.js"></script>
+
+    <!-- google maps -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script>
+    <!-- FoodHut js -->
+    <script src="~/Content/MainTemplate/assets/js/foodhut.js"></script>
+</body>
+</html>
