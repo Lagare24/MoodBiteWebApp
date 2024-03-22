@@ -1,74 +1,90 @@
-﻿@model User
+﻿
 @{
-    ViewBag.Title = "Sign up";
-    Layout = "~/Views/Shared/_MainLayoutBottomLess.cshtml";
+    ViewBag.Title = "LogIn";
+    ViewBag.TitleHeader = "Welcome Back!";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form</title>
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
 
-    <!-- Font Icon -->
-    <link rel="stylesheet" href="~/Content/LogInTemplate/fonts/material-icon/css/material-design-iconic-font.min.css">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
 
-    <!-- Main css -->
-    <link rel="stylesheet" href="~/Content/LogInTemplate/css/style.css">
-</head>
-<body>
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <div class="main">
+<!-- Template Stylesheet -->
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
-        <!-- Sing in  Form -->
-        <section class="sign-in">
-            <div class="container">
-                <div class="signin-content">
-                    <div class="signin-image">
-                        <figure><img src="~/Content/LogInTemplate/images/signin-image.jpg" alt="sing up image"></figure>
-                        <a href="~/Account/Register" class="signup-image-link">Create an account</a>
-                    </div>
 
-                    <div class="signin-form">
-                        <h2 class="form-title">Sign up</h2>
-                        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "register-form", @id = "login-form" }))
-                        {
-                            <div class="form-group">
-                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                @Html.TextBoxFor(model => model.Username, new { @type = "text", @placeholder = "Your Name" })
-                            </div>
-                            <div class="form-group">
-                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                @Html.PasswordFor(model => model.Password, new { @placeholder = "Password" })
-                            </div>
-                            <div class="form-group">
-                                @Html.CheckBox("remember-me", false, new { @id = "remember-me", @class = "agree-term", @name = "remember-me-cb" })
-                                <label for="remember-me" class="label-agree-term">
-                                    <span><span></span></span>Remember me
-                                </label>
-                            </div>
-                            <div class="form-group form-button">
-                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
-                            </div>
-                        }
-                        <div class="social-login">
-                            <span class="social-label">Or login with</span>
-                            <ul class="socials">
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-                            </ul>
+<div class="row align-items-center">
+    <div class="col-lg-7">
+        <div class="booking-content">
+            <div class="section-header">
+                <p>Sign In</p>
+                <h2>Sign In to Discover Recipes That Will Boost Your Mood</h2>
+            </div>
+            <div class="about-text">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus. Aenean consectetur convallis porttitor. Aliquam interdum at lacus non blandit.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="booking-form">
+            <form id="login-form">
+                <div class="control-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Username" required="required" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="far fa-user"></i></div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
+                <div class="control-group">
+                    <div class="input-group" id="show-hide-password">
+                        <input type="password" class="form-control" placeholder="Password" required="required" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><a><i class="fa fa-eye-slash" aria-hidden="true"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn custom-btn" type="submit">Log In</button>
+                </div>
+                <div class="control-group">
+                    <div class="input-group dont-have-account-link-container" style="justify-content:center; align-items:center; margin-top:2rem">
+                        <a href="~/Account/Register" style="color:rgba(255,255,255, 0.8);">Don't have an account yet?</a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 
-    <!-- JS -->
-    <script src="~/Content/LogInTemplate/vendor/jquery/jquery.min.js"></script>
-    <script src="~/Content/LogInTemplate/js/main.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-</html>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+

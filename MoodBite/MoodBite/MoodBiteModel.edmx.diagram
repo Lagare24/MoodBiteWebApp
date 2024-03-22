@@ -54,6 +54,7 @@
         <AssociationConnector Association="MoodBiteModel.FK__UserPremi__DateS__0E6E26BF" />
         <AssociationConnector Association="MoodBiteModel.FK__UserRecip__UserI__778AC167" />
         <AssociationConnector Association="MoodBiteModel.FK__UserRole__UserID__3C69FB99" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredients" Width="1.5" PointX="13.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -143,6 +143,7 @@
       <End Role="User" EntitySet="User" />
       <End Role="UserRole" EntitySet="UserRole" />
     </AssociationSet>
+    <EntitySet Name="vw_RecipeDetailsWithoutIngredients" EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredients" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -776,4 +777,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="vw_RecipeDetailsWithoutIngredients">
+    <Key>
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeID" Type="Int32" Nullable="false" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PreparationTime" Type="Time" Precision="7" />
+    <Property Name="CookingDuration" Type="Time" Precision="7" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="DateApproved" Type="DateTime" Precision="3" />
+    <Property Name="ApprovedBy" Type="Int32" />
+  </EntityType>
 </Schema>

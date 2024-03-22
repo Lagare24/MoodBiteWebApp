@@ -1,4 +1,5 @@
-﻿@model Dictionary<string, List<string>>
+﻿@using MoodBite.Models.RecipeViewModel;
+@model RecipeDetailViewModel
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_MainLayoutPage.cshtml";
@@ -7,10 +8,18 @@
 <link href="~/Content/UsersHomeTemplate/style.css" rel="stylesheet" />
 
 <div class="recipes-container">
-    @foreach (var recipe in Model)
+    @foreach (var recipe in Model.recipeIngredients)
     {
         <div class="recipe-card">
             <h3>@recipe.Key</h3>
+            @foreach (var recipeDetail in Model.recipeDetailsWithoutIngredients)
+            {
+                <h4>@recipeDetail.PreparationTime</h4>
+                <h4>@recipeDetail.CookingDuration</h4>
+                <h4>@recipeDetail.MoodName</h4>
+                <h4>@recipeDetail.CookingInstruction</h4>
+                <h4>@recipeDetail.DateUploaded</h4>
+            }
             <ul class="ingredient-list">
                 <li class="ingredient-header">Ingredients:</li>
                 @foreach (var ingredient in recipe.Value)

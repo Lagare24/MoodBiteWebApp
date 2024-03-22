@@ -1,70 +1,145 @@
-﻿@{
-    ViewBag.Title = "Home";
-    Layout = "~/Views/Shared/_MainLayoutBottomLess.cshtml";
+﻿
+@{
+    ViewBag.Title = "Register";
+    ViewBag.TitleHeader = "Creating Account";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form</title>
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
 
-    <!-- Font Icon -->
-    <link rel="stylesheet" href="~/Content/LogInTemplate/fonts/material-icon/css/material-design-iconic-font.min.css">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
 
-    <!-- Main css -->
-    <link rel="stylesheet" href="~/Content/LogInTemplate/css/style.css">
-</head>
-<body>
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <div class="main">
+<!-- Template Stylesheet -->
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
 
-        <!-- Sign up form -->
-        <section class="signup">
-            <div class="container">
-                <div class="signup-content">
-                    <div class="signup-form">
-                        <h2 class="form-title">Sign up</h2>
-                        <form method="POST" class="register-form" id="register-form">
-                            <div class="form-group">
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name" />
-                            </div>
-                            <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email" />
-                            </div>
-                            <div class="form-group">
-                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="pass" id="pass" placeholder="Password" />
-                            </div>
-                            <div class="form-group">
-                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" />
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
-                            </div>
-                            <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="signup-image">
-                        <figure><img src="~/Content/LogInTemplate/images/signup-image.jpg" alt="sing up image"></figure>
-                        <a href="~/Account/LogIn" class="signup-image-link">I already have an account</a>
+<div class="row align-items-center">
+    <div class="col-lg-7">
+        <div class="booking-content">
+            <div class="section-header">
+                <p>Sign Up</p>
+                <h2>Sign Up to Discover Recipes That Will Boost Your Mood</h2>
+            </div>
+            <div class="about-text">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus. Aenean consectetur convallis porttitor. Aliquam interdum at lacus non blandit.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="booking-form">
+            <form id="login-form">
+                <div class="control-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Username" required="required" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="far fa-user"></i></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
+                <div class="control-group">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Email" required="required" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="far fa-envelope"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-group" id="show-hide-password">
+                        <input type="password" class="form-control" placeholder="Password" required="required" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><a><i class="fa fa-eye-slash" aria-hidden="true"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-group" id="show-hide-confirm-password">
+                        <input type="password" class="form-control" placeholder="Confirm Password" required="required" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><a><i class="fa fa-eye-slash" aria-hidden="true"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="First Name" required="required" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="far fa-user"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Last Name" required="required" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="far fa-user"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Address" required="required" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="far fa-user"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-group date" id="date" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" placeholder="Date Of Birth" data-target="#date" data-toggle="datetimepicker" />
+                        <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-group">
+                        <select class="custom-select form-control" placeholder="">
+                            <option style="color:black" selected>Gender</option>
+                            <option style="color:black" value="1">Male</option>
+                            <option style="color:black" value="2">Female</option>
+                        </select>
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="fa fa-chevron-down"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn custom-btn" type="submit">Log In</button>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 
-    <!-- JS -->
-    <script src="~/Content/LogInTemplate/vendor/jquery/jquery.min.js"></script>
-    <script src="~/Content/LogInTemplate/js/main.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-</html>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+

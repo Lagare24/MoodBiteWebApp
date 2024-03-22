@@ -258,6 +258,23 @@ warning 6002: The table/view 'MoodBite.dbo.vw_RecipeDetailsWithMoodTagSimplified
     <Property Name="ApprovedBy" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_RecipeDetailsWithoutIngredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_RecipeDetailsWithoutIngredients">
+    <Key>
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="MoodName" Type="varchar" MaxLength="100" />
+    <Property Name="RecipeID" Type="int" Nullable="false" />
+    <Property Name="RecipeName" Type="text" />
+    <Property Name="CookingInstruction" Type="text" />
+    <Property Name="PreparationTime" Type="time" Precision="7" />
+    <Property Name="CookingDuration" Type="time" Precision="7" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="DateApproved" Type="datetime" />
+    <Property Name="ApprovedBy" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_RecipeWithMoodName' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_RecipeWithMoodName">
     <Key>
@@ -696,6 +713,20 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
     [vw_RecipeDetailsWithMoodTagSimplified].[DateApproved] AS [DateApproved], 
     [vw_RecipeDetailsWithMoodTagSimplified].[ApprovedBy] AS [ApprovedBy]
     FROM [dbo].[vw_RecipeDetailsWithMoodTagSimplified] AS [vw_RecipeDetailsWithMoodTagSimplified]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_RecipeDetailsWithoutIngredients" EntityType="Self.vw_RecipeDetailsWithoutIngredients" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_RecipeDetailsWithoutIngredients].[MoodName] AS [MoodName], 
+    [vw_RecipeDetailsWithoutIngredients].[RecipeID] AS [RecipeID], 
+    [vw_RecipeDetailsWithoutIngredients].[RecipeName] AS [RecipeName], 
+    [vw_RecipeDetailsWithoutIngredients].[CookingInstruction] AS [CookingInstruction], 
+    [vw_RecipeDetailsWithoutIngredients].[PreparationTime] AS [PreparationTime], 
+    [vw_RecipeDetailsWithoutIngredients].[CookingDuration] AS [CookingDuration], 
+    [vw_RecipeDetailsWithoutIngredients].[DateUploaded] AS [DateUploaded], 
+    [vw_RecipeDetailsWithoutIngredients].[IsApproved] AS [IsApproved], 
+    [vw_RecipeDetailsWithoutIngredients].[DateApproved] AS [DateApproved], 
+    [vw_RecipeDetailsWithoutIngredients].[ApprovedBy] AS [ApprovedBy]
+    FROM [dbo].[vw_RecipeDetailsWithoutIngredients] AS [vw_RecipeDetailsWithoutIngredients]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_RecipeWithMoodName" EntityType="Self.vw_RecipeWithMoodName" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

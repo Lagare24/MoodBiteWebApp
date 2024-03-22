@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoodBite.Models.RecipeViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,7 +13,13 @@ namespace MoodBite.Controllers
         public ActionResult UsersHome(string mood)
         {
             var recommendedRecipes = _db.vw_RecommendedRecipeForMood.Where(model => model.MoodName == mood).ToList();
+            var recipeDetailsNoIngredients = _db.vw_RecipeDetailsWithoutIngredients.Where(model => model.MoodName == mood).ToList();
             Dictionary<string, List<string>> recipeIngredients = new Dictionary<string, List<string>>();
+
+            RecipeDetailViewModel recipeDetail = new RecipeDetailViewModel();
+            recipeDetail.recommendedRecipes = recommendedRecipes;
+            recipeDetail.recipeDetailsWithoutIngredients = recipeDetailsNoIngredients;
+
             foreach (var recipe in recommendedRecipes)
             {
                 if(!recipeIngredients.ContainsKey(recipe.RecipeName))
@@ -25,7 +32,8 @@ namespace MoodBite.Controllers
                     }
                 }
             }
-            return View(recipeIngredients);
+            recipeDetail.recipeIngredients = recipeIngredients;
+            return View(recipeDetail);
         }
     }
 }
