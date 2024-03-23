@@ -169,6 +169,7 @@
           <Property Name="Address" Type="varchar" MaxLength="255" />
           <Property Name="BirthDate" Type="date" />
           <Property Name="Gender" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="UserPremium">
           <Key>
@@ -916,6 +917,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
           <EntitySet Name="vw_IngredientWithType" EntityType="MoodBiteModel.vw_IngredientWithType" />
           <EntitySet Name="vw_RecipeDetailsWithMoodTag" EntityType="MoodBiteModel.vw_RecipeDetailsWithMoodTag" />
           <EntitySet Name="vw_RecipeDetailsWithMoodTagSimplified" EntityType="MoodBiteModel.vw_RecipeDetailsWithMoodTagSimplified" />
+          <EntitySet Name="vw_RecipeDetailsWithoutIngredients" EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredients" />
           <EntitySet Name="vw_RecipeWithMoodName" EntityType="MoodBiteModel.vw_RecipeWithMoodName" />
           <EntitySet Name="vw_RecommendedRecipeForMood" EntityType="MoodBiteModel.vw_RecommendedRecipeForMood" />
           <EntitySet Name="vw_UserDetailsWithRole" EntityType="MoodBiteModel.vw_UserDetailsWithRole" />
@@ -1003,8 +1005,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
             <End Role="User" EntitySet="User" />
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
-          <EntitySet Name="vw_RecipeDetailsWithoutIngredients" EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredients" />
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -1209,6 +1210,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="OrderMaster" Relationship="MoodBiteModel.FK__OrderMast__UserI__2EDAF651" FromRole="User" ToRole="OrderMaster" />
           <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__Recipe__Approved__5441852A" FromRole="User" ToRole="Recipe" />
           <NavigationProperty Name="UserPremium" Relationship="MoodBiteModel.FK__UserPremi__DateS__0E6E26BF" FromRole="User" ToRole="UserPremium" />
@@ -1304,6 +1306,21 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
           <Property Name="CookingDuration" Type="Time" Precision="7" />
           <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="DateApproved" Type="DateTime" Precision="3" />
+          <Property Name="ApprovedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vw_RecipeDetailsWithoutIngredients">
+          <Key>
+            <PropertyRef Name="RecipeID" />
+          </Key>
+          <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RecipeID" Type="Int32" Nullable="false" />
+          <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PreparationTime" Type="Time" Precision="7" />
+          <Property Name="CookingDuration" Type="Time" Precision="7" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="IsApproved" Type="Boolean" />
           <Property Name="DateApproved" Type="DateTime" Precision="3" />
           <Property Name="ApprovedBy" Type="Int32" />
         </EntityType>
@@ -1637,22 +1654,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vw_RecipeDetailsWithoutIngredients">
-          <Key>
-            <PropertyRef Name="RecipeID" />
-          </Key>
-          <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="RecipeID" Type="Int32" Nullable="false" />
-          <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PreparationTime" Type="Time" Precision="7" />
-          <Property Name="CookingDuration" Type="Time" Precision="7" />
-          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
-          <Property Name="IsApproved" Type="Boolean" />
-          <Property Name="DateApproved" Type="DateTime" Precision="3" />
-          <Property Name="ApprovedBy" Type="Int32" />
-        </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1854,6 +1856,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="MoodBiteModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1952,6 +1955,22 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_RecipeDetailsWithoutIngredients">
+            <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeDetailsWithoutIngredients">
+              <MappingFragment StoreEntitySet="vw_RecipeDetailsWithoutIngredients">
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+                <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+                <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+                <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+                <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+                <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_RecipeWithMoodName">
             <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeWithMoodName">
               <MappingFragment StoreEntitySet="vw_RecipeWithMoodName">
@@ -1996,23 +2015,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vw_RecipeDetailsWithoutIngredients">
-            <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeDetailsWithoutIngredients">
-              <MappingFragment StoreEntitySet="vw_RecipeDetailsWithoutIngredients">
-                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-                <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-                <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
-                <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
-                <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
-                <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-                <ScalarProperty Name="MoodName" ColumnName="MoodName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

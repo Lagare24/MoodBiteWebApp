@@ -1,7 +1,7 @@
-﻿
+﻿@model User
 @{
-    ViewBag.Title = "LogIn";
     ViewBag.TitleHeader = "Welcome Back!";
+    ViewBag.TitleSubHeader = "LogIn";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
 }
 <!-- Favicon -->
@@ -41,10 +41,13 @@
     </div>
     <div class="col-lg-5">
         <div class="booking-form">
-            <form id="login-form">
+            @using (Html.BeginForm(new { @id = "login-form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger custom-ul", @style = "color:red" })
                 <div class="control-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Username" required="required" />
+                        @Html.TextBoxFor(model => model.Username, new { @class= "form-control", @required="required", @placeholder= "Username" })
                         <div class="input-group-append">
                             <div class="input-group-text"><i class="far fa-user"></i></div>
                         </div>
@@ -52,25 +55,24 @@
                 </div>
                 <div class="control-group">
                     <div class="input-group" id="show-hide-password">
-                        <input type="password" class="form-control" placeholder="Password" required="required" />
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @required = "required", @placeholder = "Password" })
                         <div class="input-group-append">
                             <div class="input-group-text"><a><i class="fa fa-eye-slash" aria-hidden="true"></i></a></div>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <button class="btn custom-btn" type="submit">Log In</button>
+                    <button class="btn custom-btn" id="login-btn" type="submit">Log In</button>
                 </div>
                 <div class="control-group">
                     <div class="input-group dont-have-account-link-container" style="justify-content:center; align-items:center; margin-top:2rem">
                         <a href="~/Account/Register" style="color:rgba(255,255,255, 0.8);">Don't have an account yet?</a>
                     </div>
                 </div>
-            </form>
+            }
         </div>
     </div>
 </div>
-
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -87,4 +89,3 @@
 
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
-

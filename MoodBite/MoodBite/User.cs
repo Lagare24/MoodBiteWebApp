@@ -32,6 +32,7 @@ namespace MoodBite
         public string Address { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Gender { get; set; }
+        public string Email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderMaster> OrderMaster { get; set; }

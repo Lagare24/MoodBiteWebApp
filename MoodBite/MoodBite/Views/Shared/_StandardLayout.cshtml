@@ -1,8 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string homeUrl = User.Identity.IsAuthenticated ? Url.Content("~/UsersPage/UsersHome") : Url.Content("~/Home/Index");
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>MoodBite - @ViewBag.Title</title>
+    <title>MoodBite - @ViewBag.TitleSubHeader</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free Website Template" name="keywords">
     <meta content="Free Website Template" name="description">
@@ -23,24 +26,39 @@
 
     <!-- Template Stylesheet -->
     <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
     <!-- Nav Bar Start -->
     <div class="navbar navbar-expand-lg bg-light navbar-light">
         <div class="container-fluid">
-            <a href="~/Home/Index" class="navbar-brand">Mood<span>Bite</span></a>
+            <a href="@homeUrl" class="navbar-brand">Mood<span>Bite</span></a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto">
-                    <a href="~/Home/Index" class="nav-item nav-link active">Home</a>
+                    <a href="@homeUrl" class="nav-item nav-link active">Home</a>
                     <a href="#about" class="nav-item nav-link">About</a>
                     <a href="#feature" class="nav-item nav-link">Feature</a>
                     <a href="#price" class="nav-item nav-link">Price</a>
                     <a href="#contact" class="nav-item nav-link">Contact</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="~/Account/LogOut" class="nav-item nav-link btn" style="background-color: #fbaf32; color: white;">Log Out</a>
+                    }
+                    @*<div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Menu</a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">View Profile</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                            <a href="~/Account/LogOut" class="dropdown-item">Log Out</a>
+                            }
+                        </div>
+                    </div>*@
                 </div>
             </div>
         </div>
@@ -54,14 +72,14 @@
                     <h2>@ViewBag.TitleHeader</h2>
                 </div>
                 <div class="col-12">
-                    <p>@ViewBag.Title</p>
+                    <p>@ViewBag.TitleSubHeader</p>
                 </div>
             </div>
         </div>
     </div>
     <!-- Page Header End -->
     <!-- Booking Start -->
-    <div class="booking">
+    <div class="@((ViewContext.RouteData.Values["controller"].ToString().Equals("UsersPage", StringComparison.OrdinalIgnoreCase)) ? "blog" : "booking")">
         <div class="container">
             @RenderBody()
         </div>
@@ -269,8 +287,8 @@
                             <img src="~/Content/MainTemplate/img/team-1.jpg" alt="Image">
                             <div class="team-social">
                                 <a href=""><i class="fab fa-twitter"></i></a>
-                                <a href=""><i class="fab fa-facebook-f"></i></a>
-                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://www.facebook.com/koby.bryant.79827"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.linkedin.com/in/lagare-lord-leo-11a093263/"><i class="fab fa-linkedin-in"></i></a>
                                 <a href=""><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
@@ -444,7 +462,7 @@
             </div>
             <div class="row contact-form">
                 <div class="col-md-6">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1600663868074!5m2!1sen!2sbd" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=La%20Aldea%20Buena%20Mactan%20Homeowners%20Association%20Office%2C%20La%20Aldea%20Buena%20Mactan%20Timpolok%2C%20Babag%201%2C%20Lapu-Lapu%20City%2C%20Cebu%2C%20Philippines" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                 </div>
                 <div class="col-md-6">
                     <div id="success"></div>

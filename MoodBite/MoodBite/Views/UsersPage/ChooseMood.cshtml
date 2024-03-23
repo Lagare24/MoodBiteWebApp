@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.TitleHeader = "ChooseMood";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
+    User user = (User)Session["User"];
+}
+
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+<!-- Modal -->
+<div class="modal chooseMoodModal" id="myModal" style="background-color:rgba(0,0,0,0.85);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Hi, @user.FirstName</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="moodSelect">How are you feeling today?</label>
+                    <select class="form-control" id="moodSelect">
+                        <option value="happy">Happy</option>
+                        <option value="sad">Sad</option>
+                        <option value="Angry">Angry</option>
+                        <option value="Disgusted">Disgusted</option>
+                        <option value="Fearful">Fearful</option>
+                        <option value="Surprised">Surprised</option>
+                        <option value="Neutral">Neutral</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="selectMoodBtn">Next</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+
+<script>
+    $(function() {
+        // Get the modal element
+        var modal = $('.chooseMoodModal');
+
+        // Show the modal
+        modal.modal('show');
+
+        // Handle the click event for the Next button
+        $('#selectMoodBtn').click(function() {
+            // Get the selected mood from the dropdown
+            var chosenMood = $('#moodSelect').val();
+
+            // Store the chosen mood in the session
+            sessionStorage.setItem('ChosenMood', chosenMood);
+            console.log("ChosenMood: " + sessionStorage.getItem("ChosenMood").toString());
+
+            // Hide the modal
+            modal.modal('hide');
+
+
+            // Redirect to the UsersHome action with the chosen mood
+            var url = '@Url.Action("UsersHome", "UsersPage")' + '?chosenMood=' + encodeURIComponent(chosenMood);
+            window.location.href = url;
+        });
+
+        // Handle the click event for the Close button
+        $('.modal-footer .btn-secondary').click(function() {
+            // Hide the modal
+            modal.modal('hide');
+        });
+    });
+</script>

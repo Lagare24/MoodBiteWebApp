@@ -55,6 +55,10 @@ a:focus {
     box-shadow: none;
 }
 
+.custom-select option {
+    color:black;
+}
+
 .container-fluid {
     max-width: 1366px;
 }
@@ -534,6 +538,10 @@ a:focus {
 .booking .booking-form {
     padding: 60px 30px;
     background: #fbaf32;
+}
+
+.custom-ul ul{
+    margin:0;
 }
 
 .booking .booking-form .control-group {

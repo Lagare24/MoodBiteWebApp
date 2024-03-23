@@ -53,12 +53,15 @@
                 }).on('mouseout', function () {
                     $('.dropdown-toggle', this).trigger('click').blur();
                 });
+                console.log("inside if");
             } else {
                 $('.navbar .dropdown').off('mouseover').off('mouseout');
+                console.log("inside else");
             }
         }
         toggleNavbarMethod();
         $(window).resize(toggleNavbarMethod);
+        console.log("working");
     });
 
     
@@ -94,7 +97,7 @@
     
     // Date and time picker
     $('#date').datetimepicker({
-        format: 'L'
+        format: 'yy-mm-dd'
     });
     $('#time').datetimepicker({
         format: 'LT'

@@ -164,6 +164,7 @@
     <Property Name="Address" Type="varchar" MaxLength="255" />
     <Property Name="BirthDate" Type="date" />
     <Property Name="Gender" Type="varchar" MaxLength="100" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="UserPremium">
     <Key>

@@ -52,10 +52,10 @@ namespace MoodBite
         public virtual DbSet<vw_IngredientWithType> vw_IngredientWithType { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithMoodTag> vw_RecipeDetailsWithMoodTag { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithMoodTagSimplified> vw_RecipeDetailsWithMoodTagSimplified { get; set; }
+        public virtual DbSet<vw_RecipeDetailsWithoutIngredients> vw_RecipeDetailsWithoutIngredients { get; set; }
         public virtual DbSet<vw_RecipeWithMoodName> vw_RecipeWithMoodName { get; set; }
         public virtual DbSet<vw_RecommendedRecipeForMood> vw_RecommendedRecipeForMood { get; set; }
         public virtual DbSet<vw_UserDetailsWithRole> vw_UserDetailsWithRole { get; set; }
-        public virtual DbSet<vw_RecipeDetailsWithoutIngredients> vw_RecipeDetailsWithoutIngredients { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
