@@ -42,23 +42,39 @@ namespace MoodBite.Controllers
             return View();
         }
 
-        public ActionResult UsersHome(string chosenMood)
+        [HttpPost]
+        public ActionResult ChooseMood(string chosenMood)
+        {
+            Session["ChosenMood"] = chosenMood;
+            //return RedirectToAction("UsersHome");
+            return RedirectToAction("UsersHome");
+        }
+
+        public ActionResult UsersHome()
         {
             if (User.Identity.IsAuthenticated)
             {
-                Session["ChosenMood"] = chosenMood;
+                var chosenMood = Session["ChosenMood"] as String;
+                var user = Session["User"] as User;
+
                 return View();
             } else
             {
-                return View("../Home/Index");
+                return RedirectToAction("../Home/Index");
             }
         }
 
-        public void generateRecommendedRecipe(string chosenMood)
+        public RecipeDetailViewModel RecipeDetail(string chosenMood)
         {
             var recommendedRecipes = _db.vw_RecommendedRecipeForMood.Where(model => model.MoodName == chosenMood).ToList();
             var recipeDetailsNoIngredients = _db.vw_RecipeDetailsWithoutIngredients.Where(model => model.MoodName == chosenMood).ToList();
+            var recipeIngredients = new Dictionary<string, List<string>>();
 
+            var recipeDetail = new RecipeDetailViewModel();
+            recipeDetail.recommendedRecipes = recommendedRecipes;
+            recipeDetail.recipeDetailsWithoutIngredients = recipeDetailsNoIngredients;
+
+            return recipeDetail;
         }
     }
 }

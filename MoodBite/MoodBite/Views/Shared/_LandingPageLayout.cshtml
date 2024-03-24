@@ -62,14 +62,14 @@
     </div>
     <!-- Nav Bar End -->
     <!-- Carousel Start -->
-    <div class="carousel">
+    <div class="carousel" id="homeTopPage">
         <div class="container-fluid">
             <div class="owl-carousel">
                 <div class="carousel-item">
                     <div class="carousel-img">
                         <img src="~/Content/MainTemplate/img/carousel-1.jpg" alt="Image">
                     </div>
-                    <div class="carousel-text">
+                    <div class="carousel-text" id="home">
                         @*<h1>Best <span>Quality</span> Ingredients</h1>
                         <p>
                             Lorem ipsum dolor sit amet elit. Phasellus ut mollis mauris. Vivamus egestas eleifend dui ac consequat at lectus in malesuada
@@ -921,5 +921,42 @@
 
     <!-- Template Javascript -->
     <script src="~/Content/MainTemplate/js/main.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            // Function to handle click event on nav links
+            $('.nav-item.nav-link').click(function(){
+                // Remove active class from all nav links
+                $('.nav-item.nav-link').removeClass('active');
+                // Add active class to the clicked nav link
+                $(this).addClass('active');
+            });
+
+
+            var sectionIDs = ['#home', '#about', '#feature', '#price', '#contact'];
+
+
+            // Function to handle scroll event
+            $(window).scroll(function () {
+                var scrollDistance = $(window).scrollTop();
+                // Assign IDs of the sections you want to target
+                var sectionIDs = ['#homeTopPage', '#about', '#feature', '#price', '#contact'];
+                $(sectionIDs).each(function (i, sectionID) {
+                    var sectionTop = $(sectionID).offset().top;
+                    var sectionBottom = sectionTop + $(sectionID).outerHeight();
+                    if (scrollDistance >= sectionTop && scrollDistance < sectionBottom) {
+                        // Remove active class from all nav links
+                        $('.nav-item.nav-link').removeClass('active');
+                        // Add active class to the corresponding nav link
+                        if (sectionID === '#homeTopPage') {
+                            $('.nav-item.nav-link[href="@homeUrl"]').addClass('active');
+                        } else {
+                            $('.nav-item.nav-link[href="' + sectionID + '"]').addClass('active');
+                        }
+                    }
+                });
+            }).scroll(); // Trigger scroll event on page load
+        });
+    </script>
 </body>
 </html>

@@ -4,6 +4,31 @@
     ViewBag.TitleSubheader = "Home Page";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
     string chosenMood = (string)Session["ChosenMood"];
+    string iconName = "";
+    switch(chosenMood?.ToLower())
+    {
+        case "happy":
+            iconName = "far fa-smile";
+            break;
+        case "sad":
+            iconName = "far fa-sad-tear";
+            break;
+        case "angry":
+            iconName = "far fa-angry";
+            break;
+        case "disgusted":
+            iconName = "far fa-grimace";
+            break;
+        case "fearful":
+            iconName = "far fa-flushed";
+            break;
+        case "surprised":
+            iconName = "far fa-surprise";
+            break;
+        case "euthymia":
+            iconName = "far fa-grin";
+            break;
+    }
 }
 
 <!-- Favicon -->
@@ -25,8 +50,8 @@
 
 
 <div class="section-header text-center">
-    <p>Your mood is @chosenMood</p>
-    <h2>Recommended For You</h2>
+    <p>List of Recipes</p>
+    <h2>Recommended For Your Current Mood <i class="@iconName" style="font-size:2rem"></i></h2>
 </div>
 <div class="row">
     @for (int i = 0; i < 10; i++)
