@@ -32,7 +32,6 @@
         });
     });
 
-
     
     // Sticky Navbar
     $(window).scroll(function () {
@@ -71,7 +70,7 @@
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
         items: 1,
-        smartSpeed: 300,
+        smartSpeed: 400,
         dots: false,
         loop: true,
         nav : false
@@ -96,11 +95,17 @@
     
     
     // Date and time picker
-    $('#date').datetimepicker({
-        format: 'yy-mm-dd'
-    });
-    $('#time').datetimepicker({
-        format: 'LT'
+    //$('#date').datetimepicker({
+    //    format: 'L'
+    //});
+    //$('#time').datetimepicker({
+    //    format: 'LT'
+    //});
+
+    $(function () {
+        $('#date').datetimepicker({
+            format: 'MM/DD/YYYY'
+        });
     });
 
 
@@ -109,7 +114,7 @@
         center: true,
         autoplay: true,
         dots: true,
-        loop: true,
+        loop: false,
         responsive: {
             0:{
                 items:1
@@ -131,7 +136,7 @@
     $(".related-slider").owlCarousel({
         autoplay: true,
         dots: false,
-        loop: true,
+        loop: false,
         nav : true,
         navText : [
             '<i class="fa fa-angle-left" aria-hidden="true"></i>',
@@ -149,6 +154,21 @@
             }
         }
     });
+
+    $(document).ready(function () {
+        $('.form-check-input').change(function () {
+            var isChecked = $(this).is(':checked');
+            var ingredientName = $(this).siblings('.form-check-label').find('.ingredient-name');
+
+            if (isChecked) {
+                ingredientName.addClass('crossed-out');
+            } else {
+                ingredientName.removeClass('crossed-out');
+            }
+        });
+    });
+
+
     
 })(jQuery);
 

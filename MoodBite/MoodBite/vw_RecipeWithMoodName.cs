@@ -15,9 +15,7 @@ namespace MoodBite
     public partial class vw_RecipeWithMoodName
     {
         public int RecipeID { get; set; }
-        public Nullable<int> IngredientID { get; set; }
         public Nullable<int> MoodID { get; set; }
-        public Nullable<int> RecipeImageID { get; set; }
         public string CookingInstruction { get; set; }
         public Nullable<System.TimeSpan> PreparationTime { get; set; }
         public Nullable<System.TimeSpan> CookingDuration { get; set; }
@@ -26,6 +24,9 @@ namespace MoodBite
         public Nullable<System.DateTime> DateApproved { get; set; }
         public Nullable<int> ApprovedBy { get; set; }
         public string RecipeName { get; set; }
+        public Nullable<int> IngredientsCount { get; set; }
         public string MoodName { get; set; }
+        public int userID { get; set; }
+        public string Uploaded_by { get; set; }
     }
 }

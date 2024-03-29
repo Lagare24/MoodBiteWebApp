@@ -318,6 +318,33 @@ a:focus {
     flex:1;
 }
 
+.recipe-btn{
+    display: flex;
+    width:18rem;
+}
+
+.recipe-readmore-btn {
+    display: flex;
+}
+
+.recipe-readmore-btn button{
+    flex:1;
+    margin:0 0.25rem;
+}
+
+.recipe-readmore-btn .disable-button{
+    flex:1;
+    margin:0 0.25rem;
+    cursor:not-allowed;
+}
+
+
+.recipe-btn a{
+    flex:1;
+    margin:0 0.25rem;
+
+}
+
 .carousel .carousel-btn .btn:last-child {
     margin-left: 10px;
     background: #719a0a;
@@ -627,6 +654,48 @@ a:focus {
     border-radius: 15px;
     box-shadow: 0 0 30px rgba(0, 0, 0, .08);
     transition: .3s;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.food .food-item .row {
+    display: flex;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+}
+ 
+.one {
+  color: rgb(255, 0, 0);
+}
+ 
+.two {
+  color: rgb(255, 106, 0);
+}
+ 
+.three {
+  color: rgb(251, 255, 120);
+}
+ 
+.four {
+  color: rgb(255, 255, 0);
+}
+ 
+.five {
+  color: rgb(24, 159, 14);
+}
+
+.align-items-stretch .col-md-4 {
+  flex: 1;
+}
+
+.col-md-4 .food-item ul {
+    text-align:left;
 }
 
 .food .food-item:hover {
@@ -1265,6 +1334,7 @@ a:focus {
 
 .blog .blog-item {
     position: relative;
+    width:400px;
 }
 
 .blog .blog-img {
@@ -1282,6 +1352,7 @@ a:focus {
 .blog .blog-content {
     position: relative;
     width: calc(100% - 60px);
+    height: 200px;
     top: -60px;
     left: 30px;
     padding: 25px 30px 30px 30px;
@@ -1289,6 +1360,15 @@ a:focus {
     box-shadow: 0 0 30px rgba(0, 0, 0, .08);
     border-radius: 15px;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-recipe-container {
+    display:flex;
+    justify-content:center;
 }
 
 .blog .blog-content h2.blog-title {
@@ -1371,6 +1451,13 @@ a:focus {
     overflow: hidden;
 }
 
+.ingredient-name {
+    text-decoration: none;
+}
+
+.crossed-out {
+    text-decoration: line-through;
+}
 .single .single-content img {
     margin-bottom: 20px;
     width: 100%;
@@ -1988,14 +2075,12 @@ a:focus {
 }
 
 .footer .footer-newsletter input {
-    height: 60px;
     background: transparent;
     border: 1px solid #fbaf32;
     border-radius: 5px;
 }
 
 .footer .footer-newsletter .btn {
-    position: absolute;
     top: 8px;
     right: 8px;
     height: 44px;

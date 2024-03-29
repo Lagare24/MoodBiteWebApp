@@ -42,17 +42,20 @@ namespace MoodBite
         public virtual DbSet<RecipeImage> RecipeImage { get; set; }
         public virtual DbSet<RecipeIngredient> RecipeIngredient { get; set; }
         public virtual DbSet<RecipeIntolerance> RecipeIntolerance { get; set; }
+        public virtual DbSet<RecipeRating> RecipeRating { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserPremium> UserPremium { get; set; }
         public virtual DbSet<UserRecipe> UserRecipe { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<vw_CoverImageOfRecipes> vw_CoverImageOfRecipes { get; set; }
         public virtual DbSet<vw_IngredientsOfRecipe> vw_IngredientsOfRecipe { get; set; }
         public virtual DbSet<vw_IngredientWithType> vw_IngredientWithType { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithMoodTag> vw_RecipeDetailsWithMoodTag { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithMoodTagSimplified> vw_RecipeDetailsWithMoodTagSimplified { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithoutIngredients> vw_RecipeDetailsWithoutIngredients { get; set; }
+        public virtual DbSet<vw_RecipeDetailsWithoutIngredientsWithRating> vw_RecipeDetailsWithoutIngredientsWithRating { get; set; }
         public virtual DbSet<vw_RecipeWithMoodName> vw_RecipeWithMoodName { get; set; }
         public virtual DbSet<vw_RecommendedRecipeForMood> vw_RecommendedRecipeForMood { get; set; }
         public virtual DbSet<vw_UserDetailsWithRole> vw_UserDetailsWithRole { get; set; }
@@ -158,6 +161,23 @@ namespace MoodBite
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual int sp_InsertRecipeImage(Nullable<int> recipeID, string imageName, string imagePath)
+        {
+            var recipeIDParameter = recipeID.HasValue ?
+                new ObjectParameter("RecipeID", recipeID) :
+                new ObjectParameter("RecipeID", typeof(int));
+    
+            var imageNameParameter = imageName != null ?
+                new ObjectParameter("ImageName", imageName) :
+                new ObjectParameter("ImageName", typeof(string));
+    
+            var imagePathParameter = imagePath != null ?
+                new ObjectParameter("ImagePath", imagePath) :
+                new ObjectParameter("ImagePath", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertRecipeImage", recipeIDParameter, imageNameParameter, imagePathParameter);
         }
     }
 }

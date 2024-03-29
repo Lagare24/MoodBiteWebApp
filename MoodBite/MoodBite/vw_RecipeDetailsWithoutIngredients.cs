@@ -17,6 +17,7 @@ namespace MoodBite
         public string MoodName { get; set; }
         public int RecipeID { get; set; }
         public string RecipeName { get; set; }
+        public string RecipeDescription { get; set; }
         public string CookingInstruction { get; set; }
         public Nullable<System.TimeSpan> PreparationTime { get; set; }
         public Nullable<System.TimeSpan> CookingDuration { get; set; }
@@ -24,5 +25,9 @@ namespace MoodBite
         public Nullable<bool> IsApproved { get; set; }
         public Nullable<System.DateTime> DateApproved { get; set; }
         public Nullable<int> ApprovedBy { get; set; }
+        public Nullable<double> Rating { get; set; }
+        public int RecipeImageID { get; set; }
+        public string ImageName { get; set; }
+        public byte[] ImageURL { get; set; }
     }
 }

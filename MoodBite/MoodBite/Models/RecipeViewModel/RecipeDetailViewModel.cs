@@ -10,5 +10,11 @@ namespace MoodBite.Models.RecipeViewModel
         public IEnumerable<vw_RecipeDetailsWithoutIngredients> recipeDetailsWithoutIngredients;
         public IEnumerable<vw_RecommendedRecipeForMood> recommendedRecipes;
         public Dictionary<string, List<string>> recipeIngredients;
+        public IEnumerable<vw_CoverImageOfRecipes> imagesOfRecipe;
+        public vw_CoverImageOfRecipes recipeImagesReadMore;
+        public vw_RecommendedRecipeForMood recipeReadMore;
+        public IEnumerable<vw_IngredientsOfRecipe> recipeIngredientsReadMore;
+        public vw_RecipeDetailsWithoutIngredients recipeDetailsWithoutIngredientsReadMore;
+        public IEnumerable<vw_RecipeDetailsWithoutIngredientsWithRating> recipeDetailsWithRating;
     }
 }

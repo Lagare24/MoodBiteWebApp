@@ -25,6 +25,7 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MoodBiteModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MoodBiteModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="sp_InsertRecipeImage" FunctionName="MoodBiteModel.Store.sp_InsertRecipeImage" />
     <EntitySetMapping Name="Allergy">
       <EntityTypeMapping TypeName="MoodBiteModel.Allergy">
         <MappingFragment StoreEntitySet="Allergy">
@@ -122,6 +123,9 @@
     <EntitySetMapping Name="Recipe">
       <EntityTypeMapping TypeName="MoodBiteModel.Recipe">
         <MappingFragment StoreEntitySet="Recipe">
+          <ScalarProperty Name="RatingCount" ColumnName="RatingCount" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
           <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
           <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
           <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
@@ -172,6 +176,16 @@
           <ScalarProperty Name="IntoleranceID" ColumnName="IntoleranceID" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="RecipeIntoleranceID" ColumnName="RecipeIntoleranceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RecipeRating">
+      <EntityTypeMapping TypeName="MoodBiteModel.RecipeRating">
+        <MappingFragment StoreEntitySet="RecipeRating">
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="RecipeRatingID" ColumnName="RecipeRatingID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -237,10 +251,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vw_CoverImageOfRecipes">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_CoverImageOfRecipes">
+        <MappingFragment StoreEntitySet="vw_CoverImageOfRecipes">
+          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
+          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="vw_IngredientsOfRecipe">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_IngredientsOfRecipe">
         <MappingFragment StoreEntitySet="vw_IngredientsOfRecipe">
           <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Ingredient" ColumnName="Ingredient" />
           <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
         </MappingFragment>
@@ -299,6 +329,10 @@
     <EntitySetMapping Name="vw_RecipeDetailsWithoutIngredients">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeDetailsWithoutIngredients">
         <MappingFragment StoreEntitySet="vw_RecipeDetailsWithoutIngredients">
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
           <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
           <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
@@ -306,6 +340,29 @@
           <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
           <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
           <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_RecipeDetailsWithoutIngredientsWithRating">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeDetailsWithoutIngredientsWithRating">
+        <MappingFragment StoreEntitySet="vw_RecipeDetailsWithoutIngredientsWithRating">
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
+          <ScalarProperty Name="TotalReview" ColumnName="TotalReview" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
           <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="MoodName" ColumnName="MoodName" />
@@ -315,7 +372,10 @@
     <EntitySetMapping Name="vw_RecipeWithMoodName">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeWithMoodName">
         <MappingFragment StoreEntitySet="vw_RecipeWithMoodName">
+          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
           <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
           <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
           <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
@@ -324,9 +384,7 @@
           <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
           <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
           <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
-          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
           <ScalarProperty Name="MoodID" ColumnName="MoodID" />
-          <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -334,6 +392,14 @@
     <EntitySetMapping Name="vw_RecommendedRecipeForMood">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_RecommendedRecipeForMood">
         <MappingFragment StoreEntitySet="vw_RecommendedRecipeForMood">
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="Approved_by" ColumnName="Approved by" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="MoodName" ColumnName="MoodName" />
           <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />

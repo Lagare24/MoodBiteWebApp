@@ -19,6 +19,7 @@ namespace MoodBite
         {
             this.OrderMaster = new HashSet<OrderMaster>();
             this.Recipe = new HashSet<Recipe>();
+            this.RecipeRating = new HashSet<RecipeRating>();
             this.UserPremium = new HashSet<UserPremium>();
             this.UserRecipe = new HashSet<UserRecipe>();
             this.UserRole = new HashSet<UserRole>();
@@ -38,6 +39,8 @@ namespace MoodBite
         public virtual ICollection<OrderMaster> OrderMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recipe> Recipe { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecipeRating> RecipeRating { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserPremium> UserPremium { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

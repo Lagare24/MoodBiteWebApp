@@ -1,5 +1,6 @@
 ﻿@model User
 @{
+    ViewBag.Title = "Register";
     ViewBag.TitleHeader = "Creating Account";
     ViewBag.TitleSubHeader = "Register";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
@@ -102,10 +103,12 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <div class="input-group date" id="date" data-target-input="nearest">
-                        <input class ="form-control datetimepicker-input" name = "bod" data-target = "#date" data-toggle = "datetimepicker" placeholder = "Date of Birth" required = "required" />
-                        <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                    <div class="control-group">
+                        <div class="input-group date" id="date" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Date of Birth" name="bod" data-target="#date" data-toggle="datetimepicker" />
+                            <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,6 +127,11 @@
                 </div>
                 <div>
                     <button class="btn custom-btn" type="submit">Register</button>
+                </div>
+                <div class="control-group">
+                    <div class="input-group dont-have-account-link-container" style="justify-content:center; align-items:center; margin-top:2rem">
+                        <a href="~/Account/LogIn" style="color:rgba(255,255,255, 0.8);">Already have an account?</a>
+                    </div>
                 </div>
             }
         </div>

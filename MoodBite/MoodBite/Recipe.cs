@@ -20,6 +20,7 @@ namespace MoodBite
             this.RecipeAllergy = new HashSet<RecipeAllergy>();
             this.RecipeImage = new HashSet<RecipeImage>();
             this.RecipeIntolerance = new HashSet<RecipeIntolerance>();
+            this.RecipeRating = new HashSet<RecipeRating>();
             this.UserRecipe = new HashSet<UserRecipe>();
             this.RecipeIngredient = new HashSet<RecipeIngredient>();
         }
@@ -35,6 +36,9 @@ namespace MoodBite
         public Nullable<int> ApprovedBy { get; set; }
         public string RecipeName { get; set; }
         public Nullable<int> IngredientsCount { get; set; }
+        public string RecipeDescription { get; set; }
+        public Nullable<double> Rating { get; set; }
+        public Nullable<int> RatingCount { get; set; }
     
         public virtual Mood Mood { get; set; }
         public virtual User User { get; set; }
@@ -44,6 +48,8 @@ namespace MoodBite
         public virtual ICollection<RecipeImage> RecipeImage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecipeIntolerance> RecipeIntolerance { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecipeRating> RecipeRating { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRecipe> UserRecipe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

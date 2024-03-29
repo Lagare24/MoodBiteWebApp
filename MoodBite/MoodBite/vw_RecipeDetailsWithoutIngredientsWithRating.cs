@@ -12,16 +12,21 @@ namespace MoodBite
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_RecommendedRecipeForMood
+    public partial class vw_RecipeDetailsWithoutIngredientsWithRating
     {
+        public string MoodName { get; set; }
         public int RecipeID { get; set; }
         public string RecipeName { get; set; }
-        public string MoodName { get; set; }
-        public int userID { get; set; }
-        public string Uploaded_by { get; set; }
+        public string RecipeDescription { get; set; }
+        public string CookingInstruction { get; set; }
+        public Nullable<System.TimeSpan> PreparationTime { get; set; }
+        public Nullable<System.TimeSpan> CookingDuration { get; set; }
         public Nullable<System.DateTime> DateUploaded { get; set; }
-        public string Approved_by { get; set; }
+        public Nullable<bool> IsApproved { get; set; }
         public Nullable<System.DateTime> DateApproved { get; set; }
+        public Nullable<int> ApprovedBy { get; set; }
+        public Nullable<double> Rating { get; set; }
+        public Nullable<int> TotalReview { get; set; }
         public int RecipeImageID { get; set; }
         public string ImageName { get; set; }
         public byte[] ImageURL { get; set; }

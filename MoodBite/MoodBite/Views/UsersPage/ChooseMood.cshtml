@@ -1,9 +1,11 @@
 ﻿
 @{
+    ViewBag.Title = "Choose a mood";
     ViewBag.TitleHeader = "Select a mood first";
     ViewBag.TitleSubHeader = "Choose a mood";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
     User user = Session["User"] as User;
+    string usersFirstName = user.FirstName as string;
 }
 
 <!-- Favicon -->
@@ -28,7 +30,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Hi, @user.FirstName</h5>
+                <h5 class="modal-title">Hi, @usersFirstName</h5>
             </div>
             @using (Html.BeginForm())
             {

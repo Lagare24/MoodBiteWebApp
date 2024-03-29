@@ -14,7 +14,7 @@ namespace MoodBite.Controllers
         [AllowAnonymous]
         public ActionResult LogIn()
         {
-            if (IsUserAuthenticated())
+            if (User.Identity.IsAuthenticated)
             {
                 if (User.IsInRole("User"))
                 {
@@ -101,6 +101,15 @@ namespace MoodBite.Controllers
                 if(u.Gender != null)
                 {
                     _userRepo.Create(u);
+
+                    var addNewUserWithRole = new UserRole();
+
+                    addNewUserWithRole.UserID = u.userID;
+                    addNewUserWithRole.RoleID = 2;
+
+                    _userRoleRepo.Create(addNewUserWithRole);
+
+                    ViewBag.RegisterSuccessAlertMsg = "Successfully registered, try to log in with your new account";
                     return RedirectToAction("LogIn");
                 } else
                 {

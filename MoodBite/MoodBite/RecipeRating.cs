@@ -12,13 +12,14 @@ namespace MoodBite
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_IngredientsOfRecipe
+    public partial class RecipeRating
     {
-        public int RecipeID { get; set; }
-        public string RecipeName { get; set; }
-        public string Ingredient { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public string Unit { get; set; }
-        public string IngredientName { get; set; }
+        public int RecipeRatingID { get; set; }
+        public Nullable<int> UserID { get; set; }
+        public Nullable<int> RecipeID { get; set; }
+        public Nullable<double> Rate { get; set; }
+    
+        public virtual Recipe Recipe { get; set; }
+        public virtual User User { get; set; }
     }
 }

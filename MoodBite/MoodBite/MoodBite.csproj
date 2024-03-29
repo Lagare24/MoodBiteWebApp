@@ -150,6 +150,8 @@
     <Content Include="Content\MainTemplate\img\menu-burger.jpg" />
     <Content Include="Content\MainTemplate\img\menu-snack-img.jpg" />
     <Content Include="Content\MainTemplate\img\menu-snack.jpg" />
+    <Content Include="Content\MainTemplate\img\moodbite-logo-icon.ico" />
+    <Content Include="Content\MainTemplate\img\moodbite-logo-transparentbg-icon.ico" />
     <Content Include="Content\MainTemplate\img\page-header.jpg" />
     <Content Include="Content\MainTemplate\img\post-1.jpg" />
     <Content Include="Content\MainTemplate\img\post-2.jpg" />
@@ -306,6 +308,9 @@
     <Compile Include="RecipeIntolerance.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="RecipeRating.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Role.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
@@ -332,6 +337,9 @@
     <Compile Include="UserRole.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_CoverImageOfRecipes.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_IngredientsOfRecipe.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -345,6 +353,9 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_RecipeDetailsWithoutIngredients.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_RecipeDetailsWithoutIngredientsWithRating.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_RecipeWithMoodName.cs">
@@ -376,6 +387,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\UsersPage\UsersHome.cshtml" />
     <Content Include="Views\UsersPage\ChooseMood.cshtml" />
+    <Content Include="Views\UsersPage\RecipeReadMore.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -385,6 +397,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\RecipeImages\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

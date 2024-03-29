@@ -1,0 +1,640 @@
+﻿@using MoodBite.Models.RecipeViewModel
+
+@model RecipeDetailViewModel
+@{
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
+    string chosenMood = (string)Session["ChosenMood"];
+    string iconName = "";
+    switch (chosenMood?.ToLower())
+    {
+        case "happy":
+            iconName = "far fa-smile";
+            break;
+        case "sad":
+            iconName = "far fa-sad-tear";
+            break;
+        case "angry":
+            iconName = "far fa-angry";
+            break;
+        case "disgusted":
+            iconName = "far fa-grimace";
+            break;
+        case "fearful":
+            iconName = "far fa-flushed";
+            break;
+        case "surprised":
+            iconName = "far fa-surprise";
+            break;
+        case "euthymia":
+            iconName = "far fa-grin";
+            break;
+    }
+
+    // Default MIME type
+    string mimeType = "image/jpeg";
+
+    var recipe = Model.recipeImagesReadMore;
+    ViewBag.Title = $"{recipe.RecipeName}";
+    ViewBag.TitleHeader = $"{recipe.RecipeName}";
+    //ViewBag.TitleSubheader = $"{recipe.RecipeName}";
+    if (recipe.ImageURL != null && recipe.ImageURL.Length > 0)
+    {
+        // Determine the MIME type based on the first few bytes of the image data
+        byte[] imageData = recipe.ImageURL;
+        string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
+
+        if (firstBytes.StartsWith("GIF8"))
+        {
+            mimeType = "image/gif";
+        }
+        else if (firstBytes.StartsWith("\xFF\xD8"))
+        {
+            mimeType = "image/jpeg";
+        }
+        else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
+        {
+            mimeType = "image/png";
+        }
+    }
+}
+
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="single-content">
+            <img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(recipe.ImageURL)}")" />
+            <h2>@recipe.RecipeName</h2>
+            <p>
+                @Model.recipeDetailsWithoutIngredientsReadMore.RecipeDescription
+            </p>
+            <div style="margin:0;padding:0;" class="row">
+                <div class="col-md-6"  style="margin:0;padding:0;">
+                    <h4>Preparation Time</h4>
+                    <p>
+                        @Model.recipeDetailsWithoutIngredientsReadMore.PreparationTime
+                    </p>
+                </div>
+                <div class="col-md-6"  style="margin:0; padding:0;">
+                    <h4>Cooking Duration</h4>
+                    <p>
+                        @Model.recipeDetailsWithoutIngredientsReadMore.CookingDuration
+                </p>
+            </div>
+            </div>
+            <h4>Ingredients</h4>
+            <div class="form-check" style="margin-bottom:1rem">
+                @foreach (var recipeIngredient in Model.recipeIngredientsReadMore)
+                {
+                    <input class="form-check-input" type="checkbox" id="@("checkbox_" + recipeIngredient.Ingredient)">
+                    <label class="form-check-label" for="@("checkbox_" + recipeIngredient.Ingredient)">
+                        <span class="ingredient-name">@recipeIngredient.Ingredient</span>
+                    </label>
+                    <br />
+                }
+            </div>
+            <div style="margin:0 0 1rem">
+                <h4>Cooking Instruction</h4>
+
+                @{
+                    var cookingInstruction = Model.recipeDetailsWithoutIngredientsReadMore.CookingInstruction as string;
+                    string[] steps = cookingInstruction.Split(new string[] { "./ " }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach(var step in steps)
+                    {
+                        <p>@step</p>
+                    }
+                }
+            </div>
+            <div style="margin:0 0 1rem">
+                <h4>Allergy and Intolerance Warning</h4>
+                <h6 style="display:inline-block">This recipe contains: </h6> <span>egg, nuts, shrimp</span>
+            </div>
+            <div style="margin:0 0 1rem">
+                <h4>Rating</h4>
+                @{
+                    double recipeRating = 0;
+                    int totalReviews = 0;
+                    foreach (var recipesRating in Model.recipeDetailsWithRating)
+                    {
+                        if (recipesRating.RecipeID == Model.recipeDetailsWithoutIngredientsReadMore.RecipeID)
+                        {
+                            recipeRating = Convert.ToDouble(recipesRating.Rating);
+                            totalReviews = Convert.ToInt32(recipesRating.TotalReview);
+                        }
+                    }
+                }
+                <h6>@recipeRating<i class="far fa-star"> (@totalReviews Reviews)</i></h6>
+
+            </div>
+            <div class="blog-text recipe-readmore-btn">
+                <button class="btn custom-btn" href="#">Download Recipe</button>
+                <button class="btn custom-btn disable-button" style="background-color:red" href="#" disabled>Add to cart</button>
+            </div>
+        </div>
+        @*<div class="single-tags">
+            <a href="">National</a>
+            <a href="">International</a>
+            <a href="">Economics</a>
+            <a href="">Politics</a>
+            <a href="">Lifestyle</a>
+            <a href="">Technology</a>
+            <a href="">Trades</a>
+        </div>*@
+        <div class="single-bio">
+            <div class="single-bio-img">
+                <img src="~/Content/MainTemplate/img/user.jpg" />
+            </div>
+            <div class="single-bio-text">
+                <h3>Author Name</h3>
+                <p>
+                    Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
+                </p>
+            </div>
+        </div>
+        <div class="single-related">
+            <h2>Related Post</h2>
+            <div class="owl-carousel related-slider">
+                <div class="post-item">
+                    <div class="post-img">
+                        <img src="~/Content/MainTemplate/img/post-1.jpg" />
+                    </div>
+                    <div class="post-text">
+                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                        <div class="post-meta">
+                            <p>By<a href="">Admin</a></p>
+                            <p>In<a href="">Web Design</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <div class="post-img">
+                        <img src="~/Content/MainTemplate/img/post-2.jpg" />
+                    </div>
+                    <div class="post-text">
+                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                        <div class="post-meta">
+                            <p>By<a href="">Admin</a></p>
+                            <p>In<a href="">Web Design</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <div class="post-img">
+                        <img src="~/Content/MainTemplate/img/post-3.jpg" />
+                    </div>
+                    <div class="post-text">
+                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                        <div class="post-meta">
+                            <p>By<a href="">Admin</a></p>
+                            <p>In<a href="">Web Design</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <div class="post-img">
+                        <img src="~/Content/MainTemplate/img/post-4.jpg" />
+                    </div>
+                    <div class="post-text">
+                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                        <div class="post-meta">
+                            <p>By<a href="">Admin</a></p>
+                            <p>In<a href="">Web Design</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single-comment">
+            <h2>3 Comments</h2>
+            <ul class="comment-list">
+                <li class="comment-item">
+                    <div class="comment-body">
+                        <div class="comment-img">
+                            <img src="~/Content/MainTemplate/img/user.jpg" />
+                        </div>
+                        <div class="comment-text">
+                            <h3><a href="">Josh Dunn</a></h3>
+                            <span>01 Jan 2045 at 12:00pm</span>
+                            <p>
+                                Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
+                            </p>
+                            <a class="btn" href="">Reply</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="comment-item">
+                    <div class="comment-body">
+                        <div class="comment-img">
+                            <img src="~/Content/MainTemplate/img/user.jpg" />
+                        </div>
+                        <div class="comment-text">
+                            <h3><a href="">Josh Dunn</a></h3>
+                            <p><span>01 Jan 2045 at 12:00pm</span></p>
+                            <p>
+                                Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
+                            </p>
+                            <a class="btn" href="">Reply</a>
+                        </div>
+                    </div>
+                    <ul class="comment-child">
+                        <li class="comment-item">
+                            <div class="comment-body">
+                                <div class="comment-img">
+                                    <img src="~/Content/MainTemplate/img/user.jpg" />
+                                </div>
+                                <div class="comment-text">
+                                    <h3><a href="">Josh Dunn</a></h3>
+                                    <p><span>01 Jan 2045 at 12:00pm</span></p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
+                                    </p>
+                                    <a class="btn" href="">Reply</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="comment-form">
+            <h2>Leave a comment</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" class="form-control" id="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="website">Website</label>
+                    <input type="url" class="form-control" id="website">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Post Comment" class="btn custom-btn">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="sidebar">
+            <div class="sidebar-widget">
+                <div class="search-widget">
+                    <form>
+                        <input class="form-control" type="text" placeholder="Search Keyword">
+                        <button class="btn"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <h2 class="widget-title">Recipes with similar mood tag</h2>
+                <div class="recent-post">
+                    @if (ViewBag.NoRecipesWithSimilarMoodTagMsg == null)
+                    {
+                        foreach (var recom in Model.recommendedRecipes)
+                        {
+                            // Default MIME type
+                            if (recom.ImageURL != null && recom.ImageURL.Length > 0)
+                            {
+                                // Determine the MIME type based on the first few bytes of the image data
+                                byte[] imageData = recom.ImageURL;
+                                string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
+
+                                if (firstBytes.StartsWith("GIF8"))
+                                {
+                                    mimeType = "image/gif";
+                                }
+                                else if (firstBytes.StartsWith("\xFF\xD8"))
+                                {
+                                    mimeType = "image/jpeg";
+                                }
+                                else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
+                                {
+                                    mimeType = "image/png";
+                                }
+                            }
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(recom.ImageURL)}")" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">@recom.RecipeName</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">@recom.Uploaded_by</a></p>
+                                        <p><a href=""><i class="@iconName"></i></a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    } else
+                    {
+                        <i>@ViewBag.NoRecipesWithSimilarMoodTagMsg</i>
+                    }
+
+                </div>
+            </div>
+
+            @*<div class="sidebar-widget">
+                <div class="image-widget">
+                    <a href="#"><img src="~/Content/MainTemplate/img/blog-1.jpg" alt="Image"></a>
+                </div>
+            </div>*@
+
+            <div class="sidebar-widget">
+                <div class="tab-post">
+                    <ul class="nav nav-pills nav-justified">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="pill" href="#featured">Order Food</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#popular">Popular</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#latest">Latest</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="featured" class="container tab-pane active">
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-1.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-2.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-3.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-4.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-5.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="popular" class="container tab-pane fade">
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-1.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-2.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-3.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-4.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-5.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="latest" class="container tab-pane fade">
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-1.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-2.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-3.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-4.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-item">
+                                <div class="post-img">
+                                    <img src="~/Content/MainTemplate/img/post-5.jpg" />
+                                </div>
+                                <div class="post-text">
+                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                    <div class="post-meta">
+                                        <p>By<a href="">Admin</a></p>
+                                        <p>In<a href="">Web Design</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <div class="image-widget">
+                    <a href="#"><img src="~/Content/MainTemplate/img/blog-2.jpg" alt="Image"></a>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <h2 class="widget-title">Categories</h2>
+                <div class="category-widget">
+                    <ul>
+                        <li><a href="">Fruit and Vegetables</a><span>(n)</span></li>
+                        <li><a href="">Dairy</a><span>(n)</span></li>
+                        <li><a href="">Meat</a><span>(n)</span></li>
+                        <li><a href="">Poultry</a><span>(n)</span></li>
+                        <li><a href="">Seafood</a><span>(n)</span></li>
+                        <li><a href="">Sugar</a><span>(n)</span></li>
+                        <li><a href="">Alocoholic Beverages</a><span>(n)</span></li>
+                        <li><a href="">Non-Alocoholic Beverages</a><span>(n)</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <div class="image-widget">
+                    <a href="#"><img src="~/Content/MainTemplate/img/blog-3.jpg" alt="Image"></a>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <h2 class="widget-title">Tags Cloud</h2>
+                <div class="tag-widget">
+                    <a href="">National</a>
+                    <a href="">International</a>
+                    <a href="">Economics</a>
+                    <a href="">Politics</a>
+                    <a href="">Lifestyle</a>
+                    <a href="">Technology</a>
+                    <a href="">Trades</a>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <h2 class="widget-title">Text Widget</h2>
+                <div class="text-widget">
+                    <p>
+                        Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea nec eros. Nunc eu enim non turpis id augue.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
