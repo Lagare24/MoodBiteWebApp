@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+:root {
+  /* fonts */
+  --font-blinker: Blinker;
+  --font-wano-quin: "Wano Quin";
+
+  /* font sizes */
+  --font-size-xl: 20px;
+  --font-size-mini: 15px;
+  --font-size-xs: 12px;
+
+  /* Colors */
+  --color-white: #fff;
+  --color-black: #000;
+  --color-seagreen: #42855b;
+  --color-khaki: #e8fba5;
+  --color-palegoldenrod-100: #d8ecb8;
+  --color-palegoldenrod-200: #d2d79f;
+  --color-red-100: #ff0000;
+  --color-dimgray: #483838;
+  --color-whitesmoke: #f3f1f1;
+  --color-darkseagreen-100: #98bb87;
+  --color-darkseagreen-200: #90b77d;
+
+  /* Gaps */
+  --gap-3xs: 10px;
+
+  /* Paddings */
+  --padding-8xs: 5px;
+  --padding-6xl: 25px;
+  --padding-5xs: 8px;
+
+  /* Border radiuses */
+  --br-11xl: 30px;
+  --br-5xs: 8px;
+  --br-10xs: 3px;
+  --br-161xl: 180px;
+  --br-mini: 15px;
+}

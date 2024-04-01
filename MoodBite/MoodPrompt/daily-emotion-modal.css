@@ -1,0 +1,117 @@
+.happy-icon {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  opacity: 0.97;
+}
+.happy {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  flex: 1;
+  position: relative;
+  height: 60px;
+}
+.angry-icon,
+.disgusted-icon,
+.sad-icon {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  opacity: 0.96;
+}
+.angry-icon,
+.disgusted-icon {
+  opacity: 0.95;
+}
+.disgusted-icon {
+  opacity: 0.88;
+}
+.moods {
+  position: absolute;
+  top: calc(50% - 0px);
+  left: calc(50% - 210px);
+  width: 420px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+.welcome-back {
+  margin: 0;
+}
+.welcome-back-whats-container {
+  align-self: stretch;
+  position: relative;
+  font-size: 25px;
+  letter-spacing: 0.06em;
+  font-family: var(--font-blinker);
+  color: var(--color-black);
+  text-align: center;
+}
+.moodpromt-contents {
+  position: absolute;
+  width: 70.95%;
+  top: 30px;
+  right: 14.52%;
+  left: 14.52%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.moodprompt {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  border-radius: var(--br-11xl);
+  background-color: var(--color-white);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.25);
+  height: 240px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.daily-emotion-modal {
+  width: 100%;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 206px 295px;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 1200px) {
+  .happy:hover {
+    animation: 2s ease 1s 1 normal forwards scale-up;
+    opacity: 1;
+  }
+  @keyframes scale-up {
+    0% {
+      transform: scale(0.5);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+}
