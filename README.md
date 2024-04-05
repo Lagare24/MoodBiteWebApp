@@ -1,2 +1,3 @@
 # MoodBiteWebApp
-For our database final project
+A Facial-Emotion based Recipe Recommendation Web App
+
