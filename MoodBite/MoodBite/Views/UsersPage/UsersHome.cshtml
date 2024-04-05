@@ -4,6 +4,15 @@
 
 @{
     ViewBag.Title = "Home";
+
+    string a = "active";
+    string ia = "inactive";
+
+    Session["HomeActive"] = a;
+    Session["UploadActive"] = ia;
+    Session["CartActive"] = ia;
+    Session["ProfileActive"] = ia;
+
     var user = Session["user"] as User;
     if (user != null)
     {

@@ -1,6 +1,8 @@
 ﻿using MoodBite.Models.RecipeViewModel;
+using MoodBite.Models.UploadRecipeModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -34,8 +36,6 @@ namespace MoodBite.Controllers
                 var chosenMood = Session["ChosenMood"] as String;
                 var user = Session["User"] as User;
                 var recipedetail = RecipeDetail(chosenMood);
-
-
                 return View(recipedetail);
             } else
             {
@@ -46,58 +46,75 @@ namespace MoodBite.Controllers
         //view full details when read more button is clicked from the recipe card/item
         public ActionResult RecipeReadMore(int id)
         {
-            //contains the details of recipe that will be rendered in RecipeReadMore
-            var recipeDetail = new RecipeDetailViewModel();
-            var recipe = _db.vw_RecommendedRecipeForMood.Where(model => model.RecipeID == id).FirstOrDefault();
-            var recipeImages = _db.vw_CoverImageOfRecipes.Where(model => model.RecipeID == id).FirstOrDefault();
-            var recipeIngredients = _db.vw_IngredientsOfRecipe.Where(model => model.RecipeID == recipe.RecipeID).Select(model => new { model.Ingredient }).ToList();
-            var varrecipeDetailsWithoutIngredients = _db.vw_RecipeDetailsWithoutIngredients.Where(model => model.RecipeID == id).FirstOrDefault();
 
-
-            var chosenMood = Session["ChosenMood"] as String;
-            var allRecipeImages = _db.vw_CoverImageOfRecipes.Where(model => model.MoodName == chosenMood && model.RecipeID != id).ToList();
-            var allRecommendedRecipes = _db.vw_RecommendedRecipeForMood.Where(model => model.MoodName == chosenMood && model.RecipeID != id).ToList();
-            var allRecipeIngredients = new Dictionary<string, List<string>>();
-
-            var recipeRating = _db.vw_RecipeDetailsWithoutIngredientsWithRating.ToList();
-
-            recipeDetail.recipeReadMore = recipe;
-            recipeDetail.recipeImagesReadMore = recipeImages;
-            recipeDetail.recipeIngredientsReadMore = recipeIngredients.Select(model => new vw_IngredientsOfRecipe { Ingredient = model.Ingredient }).ToList();
-            recipeDetail.recipeDetailsWithoutIngredientsReadMore = varrecipeDetailsWithoutIngredients;
-
-            recipeDetail.recipeDetailsWithRating = recipeRating;
-
-            if (allRecommendedRecipes.Count != 0)
+            if (User.Identity.IsAuthenticated)
             {
-                foreach (var recomRecipe in allRecommendedRecipes)
-                {
-                    //check if the the container for recipeingredients has already have this key to avoid duplication, if key doesnt exist then create the key otherwise ignore
-                    if (!allRecipeIngredients.ContainsKey(recomRecipe.RecipeName))
-                    {
-                        //creating key for recipeingredients
-                        allRecipeIngredients[recomRecipe.RecipeName] = new List<string>();
-
-                        //contains the raw table of recipe with ingredients from vw_IngredientsOfRecipe view
-                        var recipeIngredientsTable = _db.vw_IngredientsOfRecipe.Where(model => model.RecipeID == recomRecipe.RecipeID).Select(model => new { model.Ingredient }).ToList();
-
-                        //iterate through the table
-                        foreach (var ingredient in recipeIngredientsTable)
-                        {
-                            //for current recipe, add its ingredients
-                            allRecipeIngredients[recomRecipe.RecipeName].Add(ingredient.Ingredient);
-                        }
-                    }
-                }
-                recipeDetail.imagesOfRecipe = allRecipeImages;
-                recipeDetail.recommendedRecipes = allRecommendedRecipes;
-                recipeDetail.recipeIngredients = allRecipeIngredients;
+                var recipeDetail = ReadMore(id);
+                return View(recipeDetail);
             } else
             {
-                ViewBag.NoRecipesWithSimilarMoodTagMsg = "Out of recipe...";
+                return RedirectToAction("../Home/Index");
+            }
+        }
+
+        public ActionResult UploadRecipe()
+        {
+            var model = new Recipe(); 
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult UploadRecipe(Recipe recipe, string ingcount, string moodid, string[] ingredientName, int[] ingredientQty, string[] ingredientUnit)
+        {
+            var user = Session["User"] as User;
+            var imageFile = Request.Files.Get("imageFile");
+
+            var uploadRecipe = new Recipe();
+            uploadRecipe.RecipeID = recipe.RecipeID;
+            uploadRecipe.RecipeName = recipe.RecipeName;
+            uploadRecipe.RecipeDescription = recipe.RecipeDescription;
+            uploadRecipe.PreparationTime = TimeSpan.Parse(recipe.PreparationTime.ToString());
+            uploadRecipe.CookingDuration = TimeSpan.Parse(recipe.CookingDuration.ToString());
+            uploadRecipe.DateUploaded = DateTime.Today;
+            uploadRecipe.CookingInstruction = recipe.CookingInstruction;
+            uploadRecipe.IngredientsCount = Convert.ToInt32(ingcount);
+            uploadRecipe.IsApproved = false;
+            uploadRecipe.MoodID = Convert.ToInt32(moodid);
+            _recipeRepo.Create(uploadRecipe);
+
+            int newRecipeID = uploadRecipe.RecipeID;
+
+            if (imageFile != null && imageFile.ContentLength > 0)
+            {
+                var recipeImage = new RecipeImage();
+                recipeImage.RecipeID = newRecipeID;
+                recipeImage.ImageName = recipe.RecipeName + " cover";
+
+                using (var binaryReader = new BinaryReader(imageFile.InputStream))
+                {
+                    recipeImage.ImageURL = binaryReader.ReadBytes(imageFile.ContentLength);
+                }
+
+                _recipeImageRepo.Create(recipeImage);
             }
 
-            return View(recipeDetail);
+            var userRecipe = new UserRecipe();
+            userRecipe.UserID = user.userID;
+            userRecipe.RecipeID = newRecipeID;
+            _userRecipeRepo.Create(userRecipe);
+
+            var recipeIngredients = new RecipeIngredient();
+            for (int i = 0; i < Convert.ToInt32(moodid); i++)
+            {
+                recipeIngredients.RecipeID = newRecipeID;
+                recipeIngredients.IngredientName = ingredientName[i];
+                recipeIngredients.Unit = ingredientUnit[i];
+                recipeIngredients.Quantity = ingredientQty[i];
+                _recipeIngredientRepo.Create(recipeIngredients);
+            }
+
+            return View();
         }
+
     }
 }

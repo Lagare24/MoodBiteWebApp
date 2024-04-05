@@ -37,8 +37,6 @@ namespace MoodBite
         public string RecipeName { get; set; }
         public Nullable<int> IngredientsCount { get; set; }
         public string RecipeDescription { get; set; }
-        public Nullable<double> Rating { get; set; }
-        public Nullable<int> RatingCount { get; set; }
     
         public virtual Mood Mood { get; set; }
         public virtual User User { get; set; }

@@ -1,4 +1,10 @@
 ﻿@{
+    var homeActive = Session["HomeActive"] as string;
+    var uploadActive = Session["UploadActive"] as string;
+    var cartActive = Session["CartActive"] as string;
+    var profileActive = Session["ProfileActive"] as string;
+
+
     string homeUrl = User.Identity.IsAuthenticated ? Url.Content("~/UsersPage/UsersHome") : Url.Content("~/Home/Index");
     string classParentContainerName;
     switch (ViewContext.RouteData.Values["action"].ToString().ToLower())
@@ -55,13 +61,12 @@
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto">
-                    <a href="@homeUrl" class="nav-item nav-link active">Home</a>
-                    <a href="#about" class="nav-item nav-link">About</a>
-                    <a href="#feature" class="nav-item nav-link">Feature</a>
-                    <a href="#price" class="nav-item nav-link">Price</a>
-                    <a href="#contact" class="nav-item nav-link">Contact</a>
+                    <a href="@homeUrl" class="nav-item nav-link @homeActive">Home</a>
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <a href="~/UsersPage/UploadRecipe" class="nav-item nav-link @uploadActive">Upload Recipe</a>
+                        <a href="#feature" class="nav-item nav-link @cartActive">Cart</a>
+                        <a href="#price" class="nav-item nav-link @profileActive">Profile</a>
                         <a href="~/Account/LogOut" class="nav-item nav-link btn" style="background-color: #fbaf32; color: white;">Log Out</a>
                     }
                     @*<div class="nav-item dropdown">
@@ -206,31 +211,6 @@
                 // Add active class to the clicked nav link
                 $(this).addClass('active');
             });
-
-
-            var sectionIDs = ['#home', '#about', '#feature', '#price', '#contact'];
-
-
-            // Function to handle scroll event
-            $(window).scroll(function () {
-                var scrollDistance = $(window).scrollTop();
-                // Assign IDs of the sections you want to target
-                var sectionIDs = ['#homeTopPage', '#about', '#feature', '#price', '#contact'];
-                $(sectionIDs).each(function (i, sectionID) {
-                    var sectionTop = $(sectionID).offset().top;
-                    var sectionBottom = sectionTop + $(sectionID).outerHeight();
-                    if (scrollDistance >= sectionTop && scrollDistance < sectionBottom) {
-                        // Remove active class from all nav links
-                        $('.nav-item.nav-link').removeClass('active');
-                        // Add active class to the corresponding nav link
-                        if (sectionID === '#homeTopPage') {
-                            $('.nav-item.nav-link[href="@homeUrl"]').addClass('active');
-                        } else {
-                            $('.nav-item.nav-link[href="' + sectionID + '"]').addClass('active');
-                        }
-                    }
-                });
-            }).scroll(); // Trigger scroll event on page load
         });
     </script>
 </body>

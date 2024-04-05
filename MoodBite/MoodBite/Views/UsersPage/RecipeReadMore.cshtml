@@ -101,9 +101,9 @@
             <div class="form-check" style="margin-bottom:1rem">
                 @foreach (var recipeIngredient in Model.recipeIngredientsReadMore)
                 {
-                    <input class="form-check-input" type="checkbox" id="@("checkbox_" + recipeIngredient.Ingredient)">
-                    <label class="form-check-label" for="@("checkbox_" + recipeIngredient.Ingredient)">
-                        <span class="ingredient-name">@recipeIngredient.Ingredient</span>
+                    <input class="form-check-input" type="checkbox" id="@("checkbox_" + recipeIngredient.IngredientName)">
+                    <label class="form-check-label" for="@("checkbox_" + recipeIngredient.IngredientName)">
+                        <span class="ingredient-name">@recipeIngredient.IngredientName</span>
                     </label>
                     <br />
                 }
@@ -123,7 +123,7 @@
             </div>
             <div style="margin:0 0 1rem">
                 <h4>Allergy and Intolerance Warning</h4>
-                <h6 style="display:inline-block">This recipe contains: </h6> <span>egg, nuts, shrimp</span>
+                <h6 class="inline-block">This recipe contains: </h6> <span>egg, nuts, shrimp</span>
             </div>
             <div style="margin:0 0 1rem">
                 <h4>Rating</h4>
@@ -158,13 +158,61 @@
         </div>*@
         <div class="single-bio">
             <div class="single-bio-img">
+                <!--change this image to actual users profile picture-->
                 <img src="~/Content/MainTemplate/img/user.jpg" />
             </div>
             <div class="single-bio-text">
-                <h3>Author Name</h3>
-                <p>
-                    Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
-                </p>
+                <h3>Uploaders Info</h3>
+                <div>
+                    @{ 
+                        string uploadersName = string.Empty;
+                        int totalUploads = 0;
+                        string highestRatedRecipeName = string.Empty;
+                        double highestRatedRecipeRate = 0;
+                        int totalReview = 0;
+                        DateTime dateJoined = new DateTime();
+                        List<vw_recipeUploadersNameWithRating> listOfRecipe = new List<vw_recipeUploadersNameWithRating>();
+
+                        foreach (var x in Model.recipeUploadersNameWithRatingReadMore)
+                        {
+                            if(x.UploadedBy == recipe.Uploaded_by)
+                            {
+                                listOfRecipe.Add(x);
+                            }
+                            if (x.RecipeName == Model.recipeReadMore.RecipeName)
+                            {
+                                uploadersName = Convert.ToString(x.UploadedBy);
+                                foreach (var y in Model.userUploadCounts)
+                                {
+                                    if (y.userID == x.userID)
+                                    {
+                                        totalUploads = Convert.ToInt32(y.TotalUpload);
+                                    }
+                                }
+                            }
+                        }
+                        foreach (var item in listOfRecipe)
+                        {
+                            if (item.Rating >= highestRatedRecipeRate)
+                            {
+                                highestRatedRecipeRate = Convert.ToDouble(item.Rating);
+                                highestRatedRecipeName = Convert.ToString(item.RecipeName);
+                                totalReview = Convert.ToInt32(item.TotalReview);
+                                dateJoined = Convert.ToDateTime(item.DateCreated);
+                            }
+                        }
+                    }
+                    <h6 class="inline-block">Name: </h6> <span>@uploadersName</span>
+                </div>
+                <div>
+                    <h6 class="inline-block">Total Uploads: </h6> <span>@totalUploads</span>
+                </div>
+                <div>
+                    <h6 class="inline-block">Highest rated recipe: </h6> <span>@highestRatedRecipeName @highestRatedRecipeRate<i class="far fa-star"> (@totalReview Reviews)</i></span>
+                </div>
+                <div>
+                    <h6 class="inline-block">Date joined: </h6> <span>@dateJoined.ToShortDateString()</span>
+                </div>
             </div>
         </div>
         <div class="single-related">

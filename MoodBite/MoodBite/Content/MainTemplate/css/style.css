@@ -318,6 +318,10 @@ a:focus {
     flex:1;
 }
 
+.inline-block {
+    display:inline-block;
+}
+
 .recipe-btn{
     display: flex;
     width:18rem;
@@ -630,6 +634,11 @@ a:focus {
 .booking .booking-form .btn.custom-btn:hover {
     color: #ffffff;
     background: transparent;
+}
+
+.form-horizontal {
+    width:80%;
+    margin: 0 auto;
 }
 
 

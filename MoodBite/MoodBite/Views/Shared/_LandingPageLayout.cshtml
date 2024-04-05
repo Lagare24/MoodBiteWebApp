@@ -47,10 +47,6 @@
                     <a href="#feature" class="nav-item nav-link">Feature</a>
                     <a href="#price" class="nav-item nav-link">Price</a>
                     <a href="#contact" class="nav-item nav-link">Contact</a>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a href="~/Account/LogOut" class="dropdown-item">Log Out</a>
-                    }
                     @*<div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Menu</a>
                         <div class="dropdown-menu">
@@ -407,7 +403,6 @@
     </div>
     <!-- Food End -->
     <!-- Testimonial Start -->
-    <h2>Team MB</h2>
     <div class="testimonial" style="margin-top:0; background-color:white;"> 
         <div class="container">
             <div class="owl-carousel testimonials-carousel">

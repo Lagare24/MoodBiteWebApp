@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MoodBiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AccountCreationLog">
+    <Key>
+      <PropertyRef Name="AccountCreationLogID" />
+    </Key>
+    <Property Name="AccountCreationLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="DateCreated" Type="datetime" />
+  </EntityType>
   <EntityType Name="Allergy">
     <Key>
       <PropertyRef Name="AllergyID" />
@@ -16,21 +24,6 @@
     <Property Name="UserPremiumID" Type="int" />
     <Property Name="Price" Type="money" />
     <Property Name="Address" Type="text" />
-  </EntityType>
-  <EntityType Name="Ingredient">
-    <Key>
-      <PropertyRef Name="IngredientID" />
-    </Key>
-    <Property Name="IngredientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="IngredientTypeID" Type="int" />
-    <Property Name="IngredientName" Type="varchar" MaxLength="255" />
-  </EntityType>
-  <EntityType Name="IngredientType">
-    <Key>
-      <PropertyRef Name="IngredientTypeID" />
-    </Key>
-    <Property Name="IngredientTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="IngredientTypeName" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="Intolerance">
     <Key>
@@ -100,8 +93,6 @@
     <Property Name="RecipeName" Type="text" />
     <Property Name="IngredientsCount" Type="int" />
     <Property Name="RecipeDescription" Type="text" />
-    <Property Name="Rating" Type="float" />
-    <Property Name="RatingCount" Type="int" />
   </EntityType>
   <EntityType Name="RecipeAllergy">
     <Key>
@@ -126,7 +117,7 @@
     </Key>
     <Property Name="RecipeIngredientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RecipeID" Type="int" />
-    <Property Name="IngredientID" Type="int" />
+    <Property Name="IngredientName" Type="varchar" MaxLength="255" />
     <Property Name="Unit" Type="varchar" MaxLength="100" />
     <Property Name="Quantity" Type="int" />
   </EntityType>
@@ -219,20 +210,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_CoverImageOfRecipes' does not have
     <Property Name="Uploaded by" Type="varchar" MaxLength="201" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'MoodBite.dbo.vw_IngredientsOfRecipe' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="vw_IngredientsOfRecipe">
-    <Key>
-      <PropertyRef Name="RecipeID" />
-      <PropertyRef Name="Ingredient" />
-    </Key>
-    <Property Name="RecipeID" Type="int" Nullable="false" />
-    <Property Name="RecipeName" Type="text" />
-    <Property Name="Ingredient" Type="varchar" MaxLength="369" Nullable="false" />
-    <Property Name="Quantity" Type="int" />
-    <Property Name="Unit" Type="varchar" MaxLength="100" />
-    <Property Name="IngredientName" Type="varchar" MaxLength="255" />
-  </EntityType>
-  <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_IngredientWithType' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_IngredientWithType">
     <Key>
@@ -241,31 +218,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_IngredientWithType' does not have 
     <Property Name="IngredientID" Type="int" Nullable="false" />
     <Property Name="IngredientName" Type="varchar" MaxLength="255" />
     <Property Name="IngredientTypeName" Type="varchar" MaxLength="255" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'MoodBite.dbo.vw_RecipeDetailsWithMoodTag' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="vw_RecipeDetailsWithMoodTag">
-    <Key>
-      <PropertyRef Name="RecipeIngredientID" />
-      <PropertyRef Name="RecipeID" />
-      <PropertyRef Name="IngredientID" />
-      <PropertyRef Name="MoodID" />
-    </Key>
-    <Property Name="RecipeIngredientID" Type="int" Nullable="false" />
-    <Property Name="RecipeID" Type="int" Nullable="false" />
-    <Property Name="RecipeName" Type="text" />
-    <Property Name="IngredientID" Type="int" Nullable="false" />
-    <Property Name="IngredientTypeID" Type="int" />
-    <Property Name="IngredientName" Type="varchar" MaxLength="255" />
-    <Property Name="PreparationTime" Type="time" Precision="7" />
-    <Property Name="CookingDuration" Type="time" Precision="7" />
-    <Property Name="CookingInstruction" Type="text" />
-    <Property Name="DateUploaded" Type="datetime" />
-    <Property Name="DateApproved" Type="datetime" />
-    <Property Name="ApprovedBy" Type="int" />
-    <Property Name="IngredientTypeName" Type="varchar" MaxLength="255" />
-    <Property Name="MoodID" Type="int" Nullable="false" />
-    <Property Name="MoodName" Type="varchar" MaxLength="100" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_RecipeDetailsWithMoodTagSimplified' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -307,7 +259,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_RecipeDetailsWithoutIngredients' d
     <Property Name="IsApproved" Type="bit" />
     <Property Name="DateApproved" Type="datetime" />
     <Property Name="ApprovedBy" Type="int" />
-    <Property Name="Rating" Type="float" />
     <Property Name="RecipeImageID" Type="int" Nullable="false" />
     <Property Name="ImageName" Type="varchar" MaxLength="255" />
     <Property Name="ImageURL" Type="varbinary(max)" />
@@ -343,6 +294,22 @@ warning 6013: The table/view 'MoodBite.dbo.vw_RecipeRating' does not have a prim
           <Property Name="Rating" Type="float" />
           <Property Name="TotalReview" Type="int" />
         </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_recipeUploadersNameWithRating' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_recipeUploadersNameWithRating">
+    <Key>
+      <PropertyRef Name="UserRecipeID" />
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="UploadedBy" />
+    </Key>
+    <Property Name="UserRecipeID" Type="int" Nullable="false" />
+    <Property Name="userID" Type="int" Nullable="false" />
+    <Property Name="UploadedBy" Type="varchar" MaxLength="201" Nullable="false" />
+    <Property Name="RecipeName" Type="varchar" MaxLength="30" />
+    <Property Name="Rating" Type="float" />
+    <Property Name="TotalReview" Type="int" />
+    <Property Name="DateCreated" Type="datetime" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_RecipeWithMoodName' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_RecipeWithMoodName">
@@ -405,6 +372,29 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
     <Property Name="UserRoleID" Type="int" Nullable="false" />
     <Property Name="Rolename" Type="varchar" MaxLength="100" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_UsersUploadCounts">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="int" Nullable="false" />
+    <Property Name="TotalUpload" Type="int" />
+  </EntityType>
+  <Association Name="FK__AccountCr__UserI__3DE82FB7">
+    <End Role="User" Type="Self.User" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AccountCreationLog" Type="Self.AccountCreationLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="AccountCreationLog">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__FoodSale__UserPr__1EA48E88">
     <End Role="UserPremium" Type="Self.UserPremium" Multiplicity="0..1" />
     <End Role="FoodSale" Type="Self.FoodSale" Multiplicity="*" />
@@ -428,20 +418,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
       </Principal>
       <Dependent Role="FoodSale">
         <PropertyRef Name="UserRecipeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Ingredien__Ingre__49C3F6B7">
-    <End Role="IngredientType" Type="Self.IngredientType" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="IngredientType">
-        <PropertyRef Name="IngredientTypeID" />
-      </Principal>
-      <Dependent Role="Ingredient">
-        <PropertyRef Name="IngredientTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -554,18 +530,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
       </Principal>
       <Dependent Role="RecipeImage">
         <PropertyRef Name="RecipeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__RecipeIng__Ingre__5D95E53A">
-    <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="0..1" />
-    <End Role="RecipeIngredient" Type="Self.RecipeIngredient" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Ingredient">
-        <PropertyRef Name="IngredientID" />
-      </Principal>
-      <Dependent Role="RecipeIngredient">
-        <PropertyRef Name="IngredientID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -756,10 +720,9 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
   </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="MoodBiteModelStoreContainer">
+    <EntitySet Name="AccountCreationLog" EntityType="Self.AccountCreationLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Allergy" EntityType="Self.Allergy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FoodSale" EntityType="Self.FoodSale" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="IngredientType" EntityType="Self.IngredientType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Intolerance" EntityType="Self.Intolerance" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Mood" EntityType="Self.Mood" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
@@ -789,41 +752,12 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
     [vw_CoverImageOfRecipes].[Uploaded by] AS [Uploaded by]
     FROM [dbo].[vw_CoverImageOfRecipes] AS [vw_CoverImageOfRecipes]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="vw_IngredientsOfRecipe" EntityType="Self.vw_IngredientsOfRecipe" store:Type="Views" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [vw_IngredientsOfRecipe].[RecipeID] AS [RecipeID], 
-    [vw_IngredientsOfRecipe].[RecipeName] AS [RecipeName], 
-    [vw_IngredientsOfRecipe].[Ingredient] AS [Ingredient], 
-    [vw_IngredientsOfRecipe].[Quantity] AS [Quantity], 
-    [vw_IngredientsOfRecipe].[Unit] AS [Unit], 
-    [vw_IngredientsOfRecipe].[IngredientName] AS [IngredientName]
-    FROM [dbo].[vw_IngredientsOfRecipe] AS [vw_IngredientsOfRecipe]</DefiningQuery>
-    </EntitySet>
     <EntitySet Name="vw_IngredientWithType" EntityType="Self.vw_IngredientWithType" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vw_IngredientWithType].[IngredientID] AS [IngredientID], 
     [vw_IngredientWithType].[IngredientName] AS [IngredientName], 
     [vw_IngredientWithType].[IngredientTypeName] AS [IngredientTypeName]
     FROM [dbo].[vw_IngredientWithType] AS [vw_IngredientWithType]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vw_RecipeDetailsWithMoodTag" EntityType="Self.vw_RecipeDetailsWithMoodTag" store:Type="Views" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [vw_RecipeDetailsWithMoodTag].[RecipeIngredientID] AS [RecipeIngredientID], 
-    [vw_RecipeDetailsWithMoodTag].[RecipeID] AS [RecipeID], 
-    [vw_RecipeDetailsWithMoodTag].[RecipeName] AS [RecipeName], 
-    [vw_RecipeDetailsWithMoodTag].[IngredientID] AS [IngredientID], 
-    [vw_RecipeDetailsWithMoodTag].[IngredientTypeID] AS [IngredientTypeID], 
-    [vw_RecipeDetailsWithMoodTag].[IngredientName] AS [IngredientName], 
-    [vw_RecipeDetailsWithMoodTag].[PreparationTime] AS [PreparationTime], 
-    [vw_RecipeDetailsWithMoodTag].[CookingDuration] AS [CookingDuration], 
-    [vw_RecipeDetailsWithMoodTag].[CookingInstruction] AS [CookingInstruction], 
-    [vw_RecipeDetailsWithMoodTag].[DateUploaded] AS [DateUploaded], 
-    [vw_RecipeDetailsWithMoodTag].[DateApproved] AS [DateApproved], 
-    [vw_RecipeDetailsWithMoodTag].[ApprovedBy] AS [ApprovedBy], 
-    [vw_RecipeDetailsWithMoodTag].[IngredientTypeName] AS [IngredientTypeName], 
-    [vw_RecipeDetailsWithMoodTag].[MoodID] AS [MoodID], 
-    [vw_RecipeDetailsWithMoodTag].[MoodName] AS [MoodName]
-    FROM [dbo].[vw_RecipeDetailsWithMoodTag] AS [vw_RecipeDetailsWithMoodTag]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_RecipeDetailsWithMoodTagSimplified" EntityType="Self.vw_RecipeDetailsWithMoodTagSimplified" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -856,7 +790,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
     [vw_RecipeDetailsWithoutIngredients].[IsApproved] AS [IsApproved], 
     [vw_RecipeDetailsWithoutIngredients].[DateApproved] AS [DateApproved], 
     [vw_RecipeDetailsWithoutIngredients].[ApprovedBy] AS [ApprovedBy], 
-    [vw_RecipeDetailsWithoutIngredients].[Rating] AS [Rating], 
     [vw_RecipeDetailsWithoutIngredients].[RecipeImageID] AS [RecipeImageID], 
     [vw_RecipeDetailsWithoutIngredients].[ImageName] AS [ImageName], 
     [vw_RecipeDetailsWithoutIngredients].[ImageURL] AS [ImageURL]
@@ -881,6 +814,17 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
     [vw_RecipeDetailsWithoutIngredientsWithRating].[ImageName] AS [ImageName], 
     [vw_RecipeDetailsWithoutIngredientsWithRating].[ImageURL] AS [ImageURL]
     FROM [dbo].[vw_RecipeDetailsWithoutIngredientsWithRating] AS [vw_RecipeDetailsWithoutIngredientsWithRating]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_recipeUploadersNameWithRating" EntityType="Self.vw_recipeUploadersNameWithRating" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_recipeUploadersNameWithRating].[UserRecipeID] AS [UserRecipeID], 
+    [vw_recipeUploadersNameWithRating].[userID] AS [userID], 
+    [vw_recipeUploadersNameWithRating].[UploadedBy] AS [UploadedBy], 
+    [vw_recipeUploadersNameWithRating].[RecipeName] AS [RecipeName], 
+    [vw_recipeUploadersNameWithRating].[Rating] AS [Rating], 
+    [vw_recipeUploadersNameWithRating].[TotalReview] AS [TotalReview], 
+    [vw_recipeUploadersNameWithRating].[DateCreated] AS [DateCreated]
+    FROM [dbo].[vw_recipeUploadersNameWithRating] AS [vw_recipeUploadersNameWithRating]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_RecipeWithMoodName" EntityType="Self.vw_RecipeWithMoodName" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -929,6 +873,16 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
     [vw_UserDetailsWithRole].[Rolename] AS [Rolename]
     FROM [dbo].[vw_UserDetailsWithRole] AS [vw_UserDetailsWithRole]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vw_UsersUploadCounts" EntityType="Self.vw_UsersUploadCounts" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_UsersUploadCounts].[userID] AS [userID], 
+    [vw_UsersUploadCounts].[TotalUpload] AS [TotalUpload]
+    FROM [dbo].[vw_UsersUploadCounts] AS [vw_UsersUploadCounts]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__AccountCr__UserI__3DE82FB7" Association="Self.FK__AccountCr__UserI__3DE82FB7">
+      <End Role="User" EntitySet="User" />
+      <End Role="AccountCreationLog" EntitySet="AccountCreationLog" />
+    </AssociationSet>
     <AssociationSet Name="FK__FoodSale__UserPr__1EA48E88" Association="Self.FK__FoodSale__UserPr__1EA48E88">
       <End Role="UserPremium" EntitySet="UserPremium" />
       <End Role="FoodSale" EntitySet="FoodSale" />
@@ -936,10 +890,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
     <AssociationSet Name="FK__FoodSale__UserRe__1DB06A4F" Association="Self.FK__FoodSale__UserRe__1DB06A4F">
       <End Role="UserRecipe" EntitySet="UserRecipe" />
       <End Role="FoodSale" EntitySet="FoodSale" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Ingredien__Ingre__49C3F6B7" Association="Self.FK__Ingredien__Ingre__49C3F6B7">
-      <End Role="IngredientType" EntitySet="IngredientType" />
-      <End Role="Ingredient" EntitySet="Ingredient" />
     </AssociationSet>
     <AssociationSet Name="FK__OrderDeta__PO_ID__31B762FC" Association="Self.FK__OrderDeta__PO_ID__31B762FC">
       <End Role="OrderMaster" EntitySet="OrderMaster" />
@@ -972,10 +922,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UserDetailsWithRole' does not have
     <AssociationSet Name="FK__RecipeIma__Recip__59C55456" Association="Self.FK__RecipeIma__Recip__59C55456">
       <End Role="Recipe" EntitySet="Recipe" />
       <End Role="RecipeImage" EntitySet="RecipeImage" />
-    </AssociationSet>
-    <AssociationSet Name="FK__RecipeIng__Ingre__5D95E53A" Association="Self.FK__RecipeIng__Ingre__5D95E53A">
-      <End Role="Ingredient" EntitySet="Ingredient" />
-      <End Role="RecipeIngredient" EntitySet="RecipeIngredient" />
     </AssociationSet>
     <AssociationSet Name="FK__RecipeInt__Intol__6477ECF3" Association="Self.FK__RecipeInt__Intol__6477ECF3">
       <End Role="Intolerance" EntitySet="Intolerance" />

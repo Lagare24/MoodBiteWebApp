@@ -212,13 +212,6 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
-    <EntityDeploy Include="MoodBiteModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MoodBiteModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="MoodBiteModel.edmx.diagram">
-      <DependentUpon>MoodBiteModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\MainTemplate\lib\flaticon\font\Flaticon.eot" />
     <Content Include="Content\MainTemplate\lib\flaticon\font\Flaticon.ttf" />
     <Content Include="Content\MainTemplate\lib\flaticon\font\Flaticon.woff" />
@@ -227,6 +220,13 @@
     <Content Include="Content\MainTemplate\lib\flaticon\license\license.pdf" />
     <Content Include="Content\MainTemplate\lib\owlcarousel\LICENSE" />
     <Content Include="Content\MainTemplate\mail\contact.php" />
+    <EntityDeploy Include="MoodBiteModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MoodBiteModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="MoodBiteModel.edmx.diagram">
+      <DependentUpon>MoodBiteModel.edmx</DependentUpon>
+    </Content>
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -236,6 +236,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountCreationLog.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Allergy.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -245,6 +248,7 @@
     <Compile Include="Controllers\AdminsPageController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IFormFile.cs" />
     <Compile Include="Controllers\UsersPageController.cs" />
     <Compile Include="FoodSale.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
@@ -252,16 +256,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Ingredient.cs">
-      <DependentUpon>MoodBiteModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="IngredientType.cs">
-      <DependentUpon>MoodBiteModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Intolerance.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RecipeViewModel\RecipeDetailViewModel.cs" />
+    <Compile Include="Models\UploadRecipeModel\UploadRecipe.cs" />
     <Compile Include="Mood.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -340,13 +339,7 @@
     <Compile Include="vw_CoverImageOfRecipes.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="vw_IngredientsOfRecipe.cs">
-      <DependentUpon>MoodBiteModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="vw_IngredientWithType.cs">
-      <DependentUpon>MoodBiteModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vw_RecipeDetailsWithMoodTag.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_RecipeDetailsWithMoodTagSimplified.cs">
@@ -358,6 +351,9 @@
     <Compile Include="vw_RecipeDetailsWithoutIngredientsWithRating.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_recipeUploadersNameWithRating.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_RecipeWithMoodName.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -365,6 +361,9 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_UserDetailsWithRole.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_UsersUploadCounts.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -388,6 +387,7 @@
     <Content Include="Views\UsersPage\UsersHome.cshtml" />
     <Content Include="Views\UsersPage\ChooseMood.cshtml" />
     <Content Include="Views\UsersPage\RecipeReadMore.cshtml" />
+    <Content Include="Views\UsersPage\UploadRecipe.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -397,6 +397,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\multimedia\" />
     <Folder Include="Content\RecipeImages\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
