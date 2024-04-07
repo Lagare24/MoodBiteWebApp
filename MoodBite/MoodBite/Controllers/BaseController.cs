@@ -14,6 +14,7 @@ namespace MoodBite.Controllers
         public BaseRepository<Mood> _moodRepo;
         public BaseRepository<User> _userRepo;
         public BaseRepository<UserRole> _userRoleRepo;
+        public BaseRepository<UserPremium> _userPremiumRecipe;
         public BaseRepository<Recipe> _recipeRepo;
         public BaseRepository<UserRecipe> _userRecipeRepo;
         public BaseRepository<RecipeImage> _recipeImageRepo;
@@ -25,6 +26,7 @@ namespace MoodBite.Controllers
             _moodRepo = new BaseRepository<Mood>();
             _userRepo = new BaseRepository<MoodBite.User>();
             _userRoleRepo = new BaseRepository<UserRole>();
+            _userPremiumRecipe = new BaseRepository<UserPremium>();
             _recipeRepo = new BaseRepository<Recipe>();
             _userRecipeRepo = new BaseRepository<UserRecipe>();
             _recipeImageRepo = new BaseRepository<RecipeImage>();

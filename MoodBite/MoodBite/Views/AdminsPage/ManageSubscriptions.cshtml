@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MoodBite.vw_ManageSubscriptions>
+
+@{
+    ViewBag.Title = "Manage Subscriptions";
+    ViewBag.TitleHeader = "List of Users with Subscriptions";
+    ViewBag.SubHeader = "";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
+
+    string a = "active";
+    string ia = string.Empty;
+
+    Session["HomeActive"] = ia;
+    Session["MUploadsActive"] = ia;
+    Session["MSubscriptionsActuve"] = a;
+}
+
+<div style="text-align: right; margin:1rem 0 0.5rem">
+    <a href="~/AdminsPage/AddSubscription" class="btn custom-btn" style="padding: 5px 10px;">Add new</a>
+</div>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayName("First name")
+        </th>
+        <th>
+            @Html.DisplayName("Last name")
+        </th>
+        <th>
+            @Html.DisplayName("Premium type")
+        </th>
+        <th>
+            @Html.DisplayName("Date Subscribed")
+        </th>
+        <th>
+            @Html.DisplayName("Expiry date")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.First_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Last_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Premium_type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_of_Subscription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Expiry_date)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+</table>
+

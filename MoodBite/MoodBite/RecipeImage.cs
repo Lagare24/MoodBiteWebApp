@@ -11,17 +11,14 @@ namespace MoodBite
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
-
+    
     public partial class RecipeImage
     {
         public int RecipeImageID { get; set; }
         public Nullable<int> RecipeID { get; set; }
         public string ImageName { get; set; }
         public byte[] ImageURL { get; set; }
-
-        public HttpPostedFileBase ImageFile { get; set; }
-
+    
         public virtual Recipe Recipe { get; set; }
     }
 }

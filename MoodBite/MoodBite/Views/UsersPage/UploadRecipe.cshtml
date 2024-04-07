@@ -80,10 +80,10 @@
             <div class="form-group ingredient-row" style="display: block;">
                 <div class="row" style="margin:0">
                     <div class="col-md-3 ingname">
-                        <input class="form-control ingredient-name" placeholder="Ingredient Name" name="ingredientName[]" required />
+                        <input class="form-control ingredient-name" placeholder="Ingredient Name" id="ingredientName" name="ingredientName[]" required />
                     </div>
                     <div class="col-md-3 ingqty">
-                        <input class="form-control ingredient-quantity" placeholder="Quantity" type="number" min="0" name="ingredientQty[]" required/>
+                        <input class="form-control ingredient-quantity" placeholder="Quantity" type="number" min="0" id="ingredientQty" name="ingredientQty[]" required/>
                     </div>
                     <div class="col-md-3 ingunit">
                         <div>
@@ -131,7 +131,7 @@
                                 var unitMeasurementPlaceholder = "ml";
                             }
                         </div><!--list of measurements-->
-                        <select class="form-control ingredient-unit" name="ingredientUnit[]" required>
+                        <select class="form-control ingredient-unit" id="ingredientUnit" name="ingredientUnit[]" required>
                             @foreach (var item in @listOfUnitMeasures)
                             {
                                 if (item.Value != unitMeasurementPlaceholder)
@@ -160,7 +160,7 @@
         </div>
 
         <div>
-            <input type="text" id="ingcount" name="ingcount" value="1"/>
+            <input type="hidden" id="ingcount" name="ingcount" value="0"/>
         </div>
 
         <div class="form-group">
@@ -186,7 +186,6 @@
             </div>
         </div>
 
-
         <div class="form-group">
             <label for="imageFile" class="control-label col-md-12">Upload Recipes Cover Picture</label>
             <div class="col-md-12">
@@ -197,6 +196,30 @@
         <div class="form-group">
             <div class="col-md-12">
                 <img id="selectedImage" src="#" alt="Selected Image" style="display: none; max-width: 300px; max-height: 300px;" />
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label>Do you want to sell this recipe?</label>
+            <label>Yes</label>
+            <input type="radio" name="forsale" value="Yes" />
+            <label>No</label>
+            <input type="radio" checked name="forsale" value="No"/>
+        </div>
+
+        <div class="saleoption" id="saleoption" style="display:none">
+            <div class="form-group">
+                <label class="control-label col-md-12">Price</label>
+                <div class="col-md-12">
+                    <input style="width:50%" class="form-control ingredient-quantity" placeholder="P00.00" type="number" min="0" id="price" name="Price" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-12">Shipped from</label>
+                <div class="col-md-12">
+                    <input class="form-control ingredient-quantity" placeholder="Address" type="text" id="shippedfrom" name="shippedfrom" />
+                </div>
             </div>
         </div>
 
@@ -250,18 +273,16 @@
             var newRow = templateRow.clone().show(); // Clone the template row and show it
             newRow.find("input").val(""); // Clear input values
 
-            newRow.find("input").prop("disabled", false);
-            newRow.find("select").prop("disabled", false);
+            //newRow.find("input").prop("disabled", false);
+            //newRow.find("select").prop("disabled", false);
 
             container.append(newRow);
             ingredientCount++;
 
             document.getElementById('ingcount').value = String(ingredientCount);
-            console.log("ingcount: " + document.getElementById('ingcount').value);
 
-            container.find(".ingredient-row").not(newRow).find("input").prop("disabled", true);
-            container.find(".ingredient-row").not(newRow).find("select").prop("disabled", true);
-
+            //container.find(".ingredient-row").not(newRow).find("input").prop("disabled", true);
+            //container.find(".ingredient-row").not(newRow).find("select").prop("disabled", true);
         });
 
         // Remove ingredient row
@@ -272,8 +293,21 @@
 
             ingredientCount--;
             document.getElementById('ingcount').value = String(ingredientCount);
-            console.log("ingcount: " + document.getElementById('ingcount').value);
         });
     });
 
+    document.querySelectorAll('input[name="forsale"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            var saleOptionDiv = document.getElementById('saleoption');
+            if (this.value === 'Yes') {
+                saleOptionDiv.style.display = 'block';
+                document.getElementById('price').setAttribute('required', 'required');
+                document.getElementById('shippedfrom').setAttribute('required', 'required')
+            } else {
+                saleOptionDiv.style.display = 'none';
+                document.getElementById('price').removeAttribute('required');
+                document.getElementById('shippedfrom').removeAttribute('required')
+            }
+        });
+    });
 </script>

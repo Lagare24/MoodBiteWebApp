@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -22,7 +23,7 @@ namespace MoodBite.Controllers
                 }
                 if (User.IsInRole("Admin"))
                 {
-                    return RedirectToAction("../UsersPage/UsersHome");
+                    return RedirectToAction("../AdminsPage/ManageUsers");
                 }
             }
             return View();
@@ -58,8 +59,19 @@ namespace MoodBite.Controllers
             ViewBag.LoginSuccess = true;
             Session["User"] = user;
 
-            //return RedirectToAction("Register");
-            return RedirectToAction("../UsersPage/ChooseMood");
+            var usersRole = _db.UserRole.Where(model => model.UserID == user.userID).Select(model => model.RoleID).FirstOrDefault();
+
+            if(usersRole == 2)
+            {
+                return RedirectToAction("../UsersPage/ChooseMood");
+            }
+
+            if(usersRole == 1)
+            {
+                return RedirectToAction("../AdminsPage/ManageUsers");
+            }
+
+            return View();
         }
 
         public ActionResult LogOut()
@@ -78,6 +90,16 @@ namespace MoodBite.Controllers
         [HttpPost]
         public ActionResult Register(User u, string confirmPasswordInp, string bod)
         {
+            var profilePicture = Request.Files.Get("profilePic");
+
+            if (profilePicture != null && profilePicture.ContentLength > 0)
+            {
+                using (var binaryReader = new BinaryReader(profilePicture.InputStream))
+                {
+                    u.ProfilePicture = binaryReader.ReadBytes(profilePicture.ContentLength);
+                }
+            }
+
             if (u.Password != confirmPasswordInp)
             {
                 ModelState.AddModelError("", "Password not matched");

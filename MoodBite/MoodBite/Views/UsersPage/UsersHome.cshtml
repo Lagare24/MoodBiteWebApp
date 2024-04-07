@@ -75,65 +75,81 @@
     <h2>Recommended For Your Current Mood <i class="@iconName" style="font-size:2rem"></i></h2>
 </div>
 <div class="row">
-    @foreach (var recipe in Model.recommendedRecipes)
+    @if (Model.recommendedRecipes.Count() != 0)
     {
-    <div class="col-md-6 flex-recipe-container">
-        <div class="blog-item">
-            <div class="blog-img">
-                @{
-                    // Default MIME type
-                    string mimeType = "image/jpeg";
-                    if (recipe.ImageURL != null && recipe.ImageURL.Length > 0)
-                    {
-                        // Determine the MIME type based on the first few bytes of the image data
-                        byte[] imageData = recipe.ImageURL;
-                        string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
-
-                        if (firstBytes.StartsWith("GIF8"))
-                        {
-                            mimeType = "image/gif";
-                        }
-                        else if (firstBytes.StartsWith("\xFF\xD8"))
-                        {
-                            mimeType = "image/jpeg";
-                        }
-                        else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
-                        {
-                            mimeType = "image/png";
-                        }
-                    }
-                }
-                <img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(recipe.ImageURL)}")" alt="RecipeImageCover" width="400px" height="300px"/>
-            </div>  
-            <div class="blog-content">
-                <h2 class="blog-title">@recipe.RecipeName &nbsp;&nbsp;<i class="@iconName" style="color:#fbaf32"></i></h2>
-                @foreach (var recipeDetail in Model.recipeDetailsWithoutIngredients)
-                {
-                    <div class="blog-meta">
-                        <p><i class="far fa-user"></i>@recipe.Uploaded_by</p>
-                        @{ 
-                            string dateUploaded = Convert.ToDateTime(recipeDetail.DateUploaded).ToShortDateString();
-                            double recipeRating = 0;
-                            foreach (var recipesRating in Model.recipeDetailsWithRating)
+        foreach (var recipe in Model.recommendedRecipes)
+        {
+            <div class="col-md-6 flex-recipe-container">
+                <div class="blog-item">
+                    <div class="blog-img">
+                        @{
+                            // Default MIME type
+                            string mimeType = "image/jpeg";
+                            if (recipe.ImageURL != null && recipe.ImageURL.Length > 0)
                             {
-                                if (recipesRating.RecipeID == recipeDetail.RecipeID)
+                                // Determine the MIME type based on the first few bytes of the image data
+                                byte[] imageData = recipe.ImageURL;
+                                string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
+
+                                if (firstBytes.StartsWith("GIF8"))
                                 {
-                                    recipeRating = Convert.ToDouble(recipesRating.Rating);
+                                    mimeType = "image/gif";
+                                }
+                                else if (firstBytes.StartsWith("\xFF\xD8"))
+                                {
+                                    mimeType = "image/jpeg";
+                                }
+                                else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
+                                {
+                                    mimeType = "image/png";
                                 }
                             }
                         }
-                        <p><i class="far fa-calendar-alt"></i>@dateUploaded</p>
-                        <p><i class="far fa-star"></i>(@recipeRating)</p>
+                        <img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(recipe.ImageURL)}")" alt="RecipeImageCover" width="400px" height="300px" />
                     </div>
-                    <div class="blog-text recipe-btn">
-                        <a class="btn custom-btn" href="~/UsersPage/RecipeReadMore/@recipe.RecipeID">Read more</a>
-                        <a class="btn custom-btn" style="background-color:red" href="">Add to cart</a>
+                    <div class="blog-content">
+                        <h2 class="blog-title">@recipe.RecipeName &nbsp;&nbsp;<i class="@iconName" style="color:#fbaf32"></i></h2>
+
+                        @{
+                            string dateUploaded = "";
+                            double recipeRating = 0;
+
+                            foreach (var recipeDetail in Model.recipeDetailsWithoutIngredients)
+                            {
+                                if (recipeDetail.RecipeID == recipe.RecipeID)
+                                {
+                                    dateUploaded = Convert.ToDateTime(recipeDetail.DateUploaded).ToShortDateString();
+                                    recipeRating = 0;
+                                    foreach (var recipesRating in Model.recipeDetailsWithRating)
+                                    {
+                                        if (recipesRating.RecipeID == recipeDetail.RecipeID)
+                                        {
+                                            recipeRating = Convert.ToDouble(recipesRating.Rating);
+                                            break;
+                                        }
+                                    }
+                                    <div class="blog-meta">
+                                        <p><i class="far fa-user"></i>@recipe.Uploaded_by</p>
+                                        <p><i class="far fa-calendar-alt"></i>@dateUploaded</p>
+                                        <p><i class="far fa-star"></i>(@recipeRating)</p>
+                                    </div>
+                                    break;
+                                }
+                            }
+                        }
+
+                        <div class="blog-text recipe-btn">
+                            <a class="btn custom-btn" href="~/UsersPage/RecipeReadMore/@recipe.RecipeID">Read more</a>
+                            <a class="btn custom-btn" style="background-color:red; cursor:not-allowed;" href="">Add to cart</a>
+                        </div>
                     </div>
-                }
+                </div> <!--end of blog-item-->
             </div>
-        </div> <!--end of blog-item-->
-    </div>
-    }
+            }
+        } else
+        {
+            <h3 style="text-align:center"><i>Out of recipes...</i></h3>
+        }
 </div>
 
 <!-- JavaScript Libraries -->

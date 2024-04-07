@@ -342,6 +342,15 @@
     <Compile Include="vw_IngredientWithType.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_ManageSubscriptions.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_ManageUploads.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_ManageUsers.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_RecipeDetailsWithMoodTagSimplified.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -379,7 +388,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\AdminsPage\AdminsHome.cshtml" />
     <Content Include="Views\Shared\_LandingPageLayout.cshtml" />
     <Content Include="Views\Shared\_StandardLayout.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
@@ -388,6 +396,10 @@
     <Content Include="Views\UsersPage\ChooseMood.cshtml" />
     <Content Include="Views\UsersPage\RecipeReadMore.cshtml" />
     <Content Include="Views\UsersPage\UploadRecipe.cshtml" />
+    <Content Include="Views\AdminsPage\ManageUsers.cshtml" />
+    <Content Include="Views\AdminsPage\ManageSubscriptions.cshtml" />
+    <Content Include="Views\AdminsPage\ManageUploads.cshtml" />
+    <Content Include="Views\AdminsPage\EditRecipe.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

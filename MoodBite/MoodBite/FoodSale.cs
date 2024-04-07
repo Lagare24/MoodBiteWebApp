@@ -16,11 +16,9 @@ namespace MoodBite
     {
         public int FoodSaleID { get; set; }
         public Nullable<int> UserRecipeID { get; set; }
-        public Nullable<int> UserPremiumID { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string Address { get; set; }
     
-        public virtual UserPremium UserPremium { get; set; }
         public virtual UserRecipe UserRecipe { get; set; }
     }
 }

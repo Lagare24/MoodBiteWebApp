@@ -50,6 +50,9 @@ namespace MoodBite
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<vw_CoverImageOfRecipes> vw_CoverImageOfRecipes { get; set; }
         public virtual DbSet<vw_IngredientWithType> vw_IngredientWithType { get; set; }
+        public virtual DbSet<vw_ManageSubscriptions> vw_ManageSubscriptions { get; set; }
+        public virtual DbSet<vw_ManageUploads> vw_ManageUploads { get; set; }
+        public virtual DbSet<vw_ManageUsers> vw_ManageUsers { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithMoodTagSimplified> vw_RecipeDetailsWithMoodTagSimplified { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithoutIngredients> vw_RecipeDetailsWithoutIngredients { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithoutIngredientsWithRating> vw_RecipeDetailsWithoutIngredientsWithRating { get; set; }

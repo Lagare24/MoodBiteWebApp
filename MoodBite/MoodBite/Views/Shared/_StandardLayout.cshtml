@@ -4,8 +4,26 @@
     var cartActive = Session["CartActive"] as string;
     var profileActive = Session["ProfileActive"] as string;
 
+    var manageUploads = Session["MUploadsActive"] as string;
+    var manageSubscriptions = Session["MSubscriptionsActuve"] as string;
 
-    string homeUrl = User.Identity.IsAuthenticated ? Url.Content("~/UsersPage/UsersHome") : Url.Content("~/Home/Index");
+    string homeUrl = "";
+    string home = "";
+    if (User.IsInRole("Admin"))
+    {
+        home = "Manage Users";
+        homeUrl = User.Identity.IsAuthenticated ? Url.Content("~/AdminsPage/ManageUsers") : Url.Content("~/Home/Index");
+    }
+    else if(User.IsInRole("User"))
+    {
+        home = "Home";
+        homeUrl = User.Identity.IsAuthenticated ? Url.Content("~/UsersPage/UsersHome") : Url.Content("~/Home/Index");
+    } else
+    {
+        home = "Home";
+        homeUrl = User.Identity.IsAuthenticated ? Url.Content("~/Home/Index") : Url.Content("~/Home/Index");
+    }
+
     string classParentContainerName;
     switch (ViewContext.RouteData.Values["action"].ToString().ToLower())
     {
@@ -61,13 +79,24 @@
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto">
-                    <a href="@homeUrl" class="nav-item nav-link @homeActive">Home</a>
+                    <a href="@homeUrl" class="nav-item nav-link @homeActive">@home</a>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a href="~/UsersPage/UploadRecipe" class="nav-item nav-link @uploadActive">Upload Recipe</a>
-                        <a href="#feature" class="nav-item nav-link @cartActive">Cart</a>
-                        <a href="#price" class="nav-item nav-link @profileActive">Profile</a>
-                        <a href="~/Account/LogOut" class="nav-item nav-link btn" style="background-color: #fbaf32; color: white;">Log Out</a>
+                        if (User.IsInRole("User"))
+                        {
+                            <a href="~/UsersPage/UploadRecipe" class="nav-item nav-link @uploadActive">Upload Recipe</a>
+                            <a href="#feature" class="nav-item nav-link @cartActive">Cart</a>
+                            <a href="#price" class="nav-item nav-link @profileActive">Profile</a>
+                            <a href="~/Account/LogOut" class="nav-item nav-link btn" style="background-color: #fbaf32; color: white;">Log Out</a>
+                        }
+                        else if (User.IsInRole("Admin"))
+                        {
+                            <a href="~/AdminsPage/ManageUploads" class="nav-item nav-link @manageUploads">Manage Uploads</a>
+                            <a href="~/AdminsPage/ManageSubscriptions" class="nav-item nav-link @manageSubscriptions">Manage Subscriptions</a>
+                            <a href="#price" class="nav-item nav-link @profileActive">Profile</a>
+                            <a href="~/Account/LogOut" class="nav-item nav-link btn" style="background-color: #fbaf32; color: white;">Log Out</a>
+                        }
+
                     }
                     @*<div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Menu</a>

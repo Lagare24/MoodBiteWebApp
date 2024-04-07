@@ -104,7 +104,7 @@ namespace MoodBite.Controllers
             _userRecipeRepo.Create(userRecipe);
 
             var recipeIngredients = new RecipeIngredient();
-            for (int i = 0; i < Convert.ToInt32(moodid); i++)
+            for (int i = 0; i < Convert.ToInt32(ingcount); i++)
             {
                 recipeIngredients.RecipeID = newRecipeID;
                 recipeIngredients.IngredientName = ingredientName[i];

@@ -23,7 +23,7 @@ namespace MoodBite
         public int PremiumID { get; set; }
         public string PremiumType { get; set; }
         public Nullable<decimal> Price { get; set; }
-        public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public Nullable<int> Duration { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserPremium> UserPremium { get; set; }

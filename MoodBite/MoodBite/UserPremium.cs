@@ -14,19 +14,11 @@ namespace MoodBite
     
     public partial class UserPremium
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserPremium()
-        {
-            this.FoodSale = new HashSet<FoodSale>();
-        }
-    
         public int UserPremiumID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> PremiumID { get; set; }
         public Nullable<System.DateTime> DateSubscribed { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FoodSale> FoodSale { get; set; }
         public virtual Premium Premium { get; set; }
         public virtual User User { get; set; }
     }

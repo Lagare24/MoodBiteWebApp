@@ -42,10 +42,16 @@
     </div>
     <div class="col-lg-5">
         <div class="booking-form">
-            @using (Html.BeginForm(new { @id = "registration-form" }))
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data", id = "registration-form" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "alert alert-danger custom-ul", @style = "color:red" })
+
+                <div class="control-group" style="display:flex">
+                    <img src="http://via.placeholder.com/150x150" style="border-radius:50%; margin:0 auto" id="profilepicdisplay" width="150px" alt="Upload Profile Picture"/>
+                    <input type="file" style="display:none;" id="profilepicinp" name="profilePic" accept="image/*"/>
+                </div>
+
                 <div class="control-group">
                     <div class="input-group">
                         @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @placeholder = "Username", @required = "required" })
@@ -153,4 +159,26 @@
 
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
+
+<script>
+    $('#profilepicdisplay').click(function () {
+        $('#profilepicinp').click()
+    })
+
+    document.getElementById('profilepicinp').addEventListener('change', function (event) {
+        var input = event.target;
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            var imgElement = document.getElementById('profilepicdisplay');
+            imgElement.src = reader.result;
+            //imgElement.style.display = 'block';
+        };
+
+        if (input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+
+</script>
 

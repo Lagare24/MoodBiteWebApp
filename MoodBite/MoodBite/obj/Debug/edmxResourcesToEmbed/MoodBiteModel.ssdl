@@ -21,7 +21,6 @@
     </Key>
     <Property Name="FoodSaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserRecipeID" Type="int" />
-    <Property Name="UserPremiumID" Type="int" />
     <Property Name="Price" Type="money" />
     <Property Name="Address" Type="text" />
   </EntityType>
@@ -75,7 +74,7 @@
     <Property Name="PremiumID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PremiumType" Type="varchar" MaxLength="100" />
     <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="ExpiryDate" Type="date" />
+    <Property Name="Duration" Type="int" />
   </EntityType>
   <EntityType Name="Recipe">
     <Key>
@@ -168,6 +167,7 @@
     <Property Name="BirthDate" Type="date" />
     <Property Name="Gender" Type="varchar" MaxLength="100" />
     <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="ProfilePicture" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="UserPremium">
     <Key>
@@ -218,6 +218,49 @@ warning 6002: The table/view 'MoodBite.dbo.vw_IngredientWithType' does not have 
     <Property Name="IngredientID" Type="int" Nullable="false" />
     <Property Name="IngredientName" Type="varchar" MaxLength="255" />
     <Property Name="IngredientTypeName" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_ManageSubscriptions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_ManageSubscriptions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="First name" Type="varchar" MaxLength="100" />
+    <Property Name="Last name" Type="varchar" MaxLength="100" />
+    <Property Name="Premium type" Type="varchar" MaxLength="100" />
+    <Property Name="Date of Subscription" Type="date" />
+    <Property Name="Expiry date" Type="date" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_ManageUploads' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_ManageUploads">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Uploaded by" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="RecipeName" Type="text" />
+    <Property Name="Uploaded by" Type="varchar" MaxLength="201" Nullable="false" />
+    <Property Name="Date uploaded" Type="datetime" />
+    <Property Name="Date approved" Type="datetime" />
+    <Property Name="Approved by" Type="varchar" MaxLength="201" />
+    <Property Name="Status" Type="varchar" MaxLength="8" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_ManageUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_ManageUsers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="100" />
+    <Property Name="First name" Type="varchar" MaxLength="100" />
+    <Property Name="Last name" Type="varchar" MaxLength="100" />
+    <Property Name="Address" Type="varchar" MaxLength="255" />
+    <Property Name="Birthdate" Type="date" />
+    <Property Name="Gender" Type="varchar" MaxLength="100" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_RecipeDetailsWithMoodTagSimplified' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -392,18 +435,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
       </Principal>
       <Dependent Role="AccountCreationLog">
         <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__FoodSale__UserPr__1EA48E88">
-    <End Role="UserPremium" Type="Self.UserPremium" Multiplicity="0..1" />
-    <End Role="FoodSale" Type="Self.FoodSale" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UserPremium">
-        <PropertyRef Name="UserPremiumID" />
-      </Principal>
-      <Dependent Role="FoodSale">
-        <PropertyRef Name="UserPremiumID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -759,6 +790,39 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_IngredientWithType].[IngredientTypeName] AS [IngredientTypeName]
     FROM [dbo].[vw_IngredientWithType] AS [vw_IngredientWithType]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vw_ManageSubscriptions" EntityType="Self.vw_ManageSubscriptions" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_ManageSubscriptions].[ID] AS [ID], 
+    [vw_ManageSubscriptions].[First name] AS [First name], 
+    [vw_ManageSubscriptions].[Last name] AS [Last name], 
+    [vw_ManageSubscriptions].[Premium type] AS [Premium type], 
+    [vw_ManageSubscriptions].[Date of Subscription] AS [Date of Subscription], 
+    [vw_ManageSubscriptions].[Expiry date] AS [Expiry date]
+    FROM [dbo].[vw_ManageSubscriptions] AS [vw_ManageSubscriptions]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_ManageUploads" EntityType="Self.vw_ManageUploads" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_ManageUploads].[ID] AS [ID], 
+    [vw_ManageUploads].[RecipeName] AS [RecipeName], 
+    [vw_ManageUploads].[Uploaded by] AS [Uploaded by], 
+    [vw_ManageUploads].[Date uploaded] AS [Date uploaded], 
+    [vw_ManageUploads].[Date approved] AS [Date approved], 
+    [vw_ManageUploads].[Approved by] AS [Approved by], 
+    [vw_ManageUploads].[Status] AS [Status]
+    FROM [dbo].[vw_ManageUploads] AS [vw_ManageUploads]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_ManageUsers" EntityType="Self.vw_ManageUsers" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_ManageUsers].[ID] AS [ID], 
+    [vw_ManageUsers].[Username] AS [Username], 
+    [vw_ManageUsers].[First name] AS [First name], 
+    [vw_ManageUsers].[Last name] AS [Last name], 
+    [vw_ManageUsers].[Address] AS [Address], 
+    [vw_ManageUsers].[Birthdate] AS [Birthdate], 
+    [vw_ManageUsers].[Gender] AS [Gender], 
+    [vw_ManageUsers].[Email] AS [Email]
+    FROM [dbo].[vw_ManageUsers] AS [vw_ManageUsers]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vw_RecipeDetailsWithMoodTagSimplified" EntityType="Self.vw_RecipeDetailsWithMoodTagSimplified" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vw_RecipeDetailsWithMoodTagSimplified].[RecipeIngredientID] AS [RecipeIngredientID], 
@@ -882,10 +946,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     <AssociationSet Name="FK__AccountCr__UserI__3DE82FB7" Association="Self.FK__AccountCr__UserI__3DE82FB7">
       <End Role="User" EntitySet="User" />
       <End Role="AccountCreationLog" EntitySet="AccountCreationLog" />
-    </AssociationSet>
-    <AssociationSet Name="FK__FoodSale__UserPr__1EA48E88" Association="Self.FK__FoodSale__UserPr__1EA48E88">
-      <End Role="UserPremium" EntitySet="UserPremium" />
-      <End Role="FoodSale" EntitySet="FoodSale" />
     </AssociationSet>
     <AssociationSet Name="FK__FoodSale__UserRe__1DB06A4F" Association="Self.FK__FoodSale__UserRe__1DB06A4F">
       <End Role="UserRecipe" EntitySet="UserRecipe" />
