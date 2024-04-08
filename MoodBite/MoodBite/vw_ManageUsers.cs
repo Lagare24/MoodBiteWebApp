@@ -18,9 +18,6 @@ namespace MoodBite
         public string Username { get; set; }
         public string First_name { get; set; }
         public string Last_name { get; set; }
-        public string Address { get; set; }
-        public Nullable<System.DateTime> Birthdate { get; set; }
-        public string Gender { get; set; }
-        public string Email { get; set; }
+        public string Role { get; set; }
     }
 }

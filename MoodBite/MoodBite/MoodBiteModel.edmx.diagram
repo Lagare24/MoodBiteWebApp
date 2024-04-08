@@ -5,27 +5,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="478a2e74570348f9a19295a4325cac2b" Name="Diagram1" ZoomLevel="62">
-        <EntityTypeShape EntityType="MoodBiteModel.AccountCreationLog" Width="1.5" PointX="3" PointY="19.125" />
-        <EntityTypeShape EntityType="MoodBiteModel.Allergy" Width="1.5" PointX="9" PointY="6.125" />
+        <EntityTypeShape EntityType="MoodBiteModel.AccountCreationLog" Width="1.5" PointX="3" PointY="16.375" />
+        <EntityTypeShape EntityType="MoodBiteModel.Allergy" Width="1.5" PointX="9" PointY="9.125" />
         <EntityTypeShape EntityType="MoodBiteModel.FoodSale" Width="1.5" PointX="10.5" PointY="18" />
-        <EntityTypeShape EntityType="MoodBiteModel.Intolerance" Width="1.5" PointX="9" PointY="9.125" />
-        <EntityTypeShape EntityType="MoodBiteModel.Mood" Width="1.5" PointX="3.75" PointY="9.125" />
-        <EntityTypeShape EntityType="MoodBiteModel.OrderDetail" Width="1.5" PointX="5.25" PointY="21.75" />
-        <EntityTypeShape EntityType="MoodBiteModel.OrderMaster" Width="1.5" PointX="3" PointY="21.75" />
-        <EntityTypeShape EntityType="MoodBiteModel.OrderPayment" Width="1.5" PointX="7.5" PointY="21.875" />
+        <EntityTypeShape EntityType="MoodBiteModel.Intolerance" Width="1.5" PointX="6" PointY="11.125" />
+        <EntityTypeShape EntityType="MoodBiteModel.Mood" Width="1.5" PointX="3.75" PointY="10.125" />
+        <EntityTypeShape EntityType="MoodBiteModel.OrderDetail" Width="1.5" PointX="5.25" PointY="27.375" />
+        <EntityTypeShape EntityType="MoodBiteModel.OrderMaster" Width="1.5" PointX="3" PointY="27.375" />
+        <EntityTypeShape EntityType="MoodBiteModel.OrderPayment" Width="1.5" PointX="7.5" PointY="27.5" />
         <EntityTypeShape EntityType="MoodBiteModel.Premium" Width="1.5" PointX="0.75" PointY="11" />
         <EntityTypeShape EntityType="MoodBiteModel.Recipe" Width="1.5" PointX="6" PointY="13.5" />
-        <EntityTypeShape EntityType="MoodBiteModel.RecipeAllergy" Width="1.5" PointX="11.25" PointY="15" />
-        <EntityTypeShape EntityType="MoodBiteModel.RecipeImage" Width="1.5" PointX="8.25" PointY="27.75" />
-        <EntityTypeShape EntityType="MoodBiteModel.RecipeIngredient" Width="1.5" PointX="8.25" PointY="18.375" />
-        <EntityTypeShape EntityType="MoodBiteModel.RecipeIntolerance" Width="1.5" PointX="11.25" PointY="12" />
-        <EntityTypeShape EntityType="MoodBiteModel.RecipeRating" Width="1.5" PointX="8.25" PointY="11.875" />
+        <EntityTypeShape EntityType="MoodBiteModel.RecipeAllergy" Width="1.5" PointX="11.25" PointY="12" />
+        <EntityTypeShape EntityType="MoodBiteModel.RecipeImage" Width="1.5" PointX="8.25" PointY="30.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.RecipeIngredient" Width="1.5" PointX="8.25" PointY="19.125" />
+        <EntityTypeShape EntityType="MoodBiteModel.RecipeIntolerance" Width="1.5" PointX="8.25" PointY="12" />
+        <EntityTypeShape EntityType="MoodBiteModel.RecipeRating" Width="1.5" PointX="11.25" PointY="14.875" />
         <EntityTypeShape EntityType="MoodBiteModel.Role" Width="1.5" PointX="0.75" PointY="19.125" />
         <EntityTypeShape EntityType="MoodBiteModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MoodBiteModel.User" Width="1.5" PointX="0.75" PointY="13.875" />
-        <EntityTypeShape EntityType="MoodBiteModel.UserPremium" Width="1.5" PointX="3" PointY="11.875" />
+        <EntityTypeShape EntityType="MoodBiteModel.UserPremium" Width="1.5" PointX="3" PointY="12.875" />
         <EntityTypeShape EntityType="MoodBiteModel.UserRecipe" Width="1.5" PointX="8.25" PointY="14.875" />
-        <EntityTypeShape EntityType="MoodBiteModel.UserRole" Width="1.5" PointX="3" PointY="15" />
+        <EntityTypeShape EntityType="MoodBiteModel.UserRole" Width="1.5" PointX="3" PointY="19" />
         <EntityTypeShape EntityType="MoodBiteModel.vw_CoverImageOfRecipes" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="MoodBiteModel.vw_IngredientWithType" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="MoodBiteModel.vw_ManageSubscriptions" Width="1.5" PointX="0.75" PointY="4.75" />
@@ -34,11 +34,11 @@
         <EntityTypeShape EntityType="MoodBiteModel.vw_RecipeDetailsWithMoodTagSimplified" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredients" Width="1.5" PointX="8.75" PointY="0.75" />
         <EntityTypeShape EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredientsWithRating" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MoodBiteModel.vw_recipeUploadersNameWithRating" Width="1.5" PointX="5.75" PointY="7.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_recipeUploadersNameWithRating" Width="1.5" PointX="4.75" PointY="6.75" />
         <EntityTypeShape EntityType="MoodBiteModel.vw_RecipeWithMoodName" Width="1.5" PointX="11.75" PointY="5.75" />
         <EntityTypeShape EntityType="MoodBiteModel.vw_RecommendedRecipeForMood" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="MoodBiteModel.vw_UserDetailsWithRole" Width="1.5" PointX="13.75" PointY="4.75" />
-        <EntityTypeShape EntityType="MoodBiteModel.vw_UsersUploadCounts" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_UsersUploadCounts" Width="1.5" PointX="6.75" PointY="5.75" />
         <AssociationConnector Association="MoodBiteModel.FK__AccountCr__UserI__3DE82FB7" />
         <AssociationConnector Association="MoodBiteModel.FK__RecipeAll__Aller__5EBF139D" />
         <AssociationConnector Association="MoodBiteModel.FK__FoodSale__UserRe__1DB06A4F" />

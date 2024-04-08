@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoodBite.Models.ManageUploads;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,28 +28,54 @@ namespace MoodBite.Controllers
             return RedirectToAction("./Account/Login");
         }
 
+        [HttpPost]
+        public ActionResult UpdateRecipeStatus(int id, string status)
+        {
+            var recipe = _db.Recipe.Where(model => model.RecipeID == id);
+            return RedirectToAction("ManageUploads");
+        }
+
         public ActionResult EditRecipe(int id)
         {
-            var ingredientCount = _db.Recipe.Where(model => model.RecipeID == id).Select(model => model.IngredientsCount).FirstOrDefault();
-            var recipe = _db.RecipeIngredient.Where(model => model.RecipeID == id).ToList();
-
-            var ingredientName = new List<string>();
-            var ingredientQty = new List<int>();
-            var ingredientUnit = new List<string>();
-
-            foreach (var item in recipe)
+            if(User.Identity.IsAuthenticated)
             {
-                ingredientName.Add(item.IngredientName);
-                ingredientQty.Add(Convert.ToInt32(item.Quantity));
-                ingredientUnit.Add(item.Unit);
-            }
+                var recipe = _recipeRepo.Get(id);
+                var recipeIngredients = _db.RecipeIngredient.Where(m => m.RecipeID == id).ToList();
 
-            return View(_recipeRepo.Get(id));
+                UpdateUploadsViewModel model = new UpdateUploadsViewModel();
+                model.recipe = recipe;
+                model.recipeIngredient = recipeIngredients;
+
+
+                return View(model);
+            }
+            return RedirectToAction("ManageUploads");
         }
 
         [HttpPost]
-        public ActionResult EditRecipe(Recipe recipe)
+        public ActionResult EditRecipe(UpdateUploadsViewModel postModel, string ingcount, string moodid, string[] ingredientName, int[] ingredientQty, string[] ingredientUnit)
         {
+            var recipe = new Recipe();
+            recipe.RecipeID = postModel.recipe.RecipeID;
+            recipe.RecipeName = postModel.recipe.RecipeName;
+            recipe.RecipeDescription = postModel.recipe.RecipeDescription;
+            recipe.PreparationTime = TimeSpan.Parse(postModel.recipe.PreparationTime.ToString());
+            recipe.CookingDuration = TimeSpan.Parse(postModel.recipe.CookingDuration.ToString());
+            recipe.DateUploaded = DateTime.Today;
+            recipe.CookingInstruction = postModel.recipe.CookingInstruction;
+            recipe.IngredientsCount = Convert.ToInt32(ingcount);
+            recipe.IsApproved = false;
+            recipe.MoodID = Convert.ToInt32(moodid);
+            _recipeRepo.Create(recipe);
+
+            int newRecipeID = postModel.recipe.RecipeID;
+
+            var userRecipe = new UserRecipe();
+            var recipeIngredients = new RecipeIngredient();
+            var recipeImage = new RecipeImage();
+
+
+
             return RedirectToAction("ManageUploads");
         }
 

@@ -29,12 +29,12 @@
         <th>
             @Html.DisplayName("Date uploaded")
         </th>
-        <th>
+        @*<th>
             @Html.DisplayName("Date approved")
         </th>
         <th>
             @Html.DisplayName("Approved by")
-        </th>
+        </th>*@
         <th>
             @Html.DisplayName("Status")
         </th>
@@ -56,7 +56,7 @@
                     <span>@item.Date_uploaded.Value.ToString("MMMM dd, yyyy hh:mm tt")</span>
                 }
             </td>
-            <td>
+            @*<td>
                 @if (item.Date_approved.HasValue)
                 {
                     <span>@item.Date_approved.Value.ToString("MMMM dd, yyyy hh:mm tt")</span>
@@ -64,16 +64,66 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Approved_by)
-            </td>
-            <td>
+            </td>*@
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Status)
+            </td>*@
+            <td>
+                @Html.DropDownListFor(modelItem => item.Status, new SelectList(new[]
+                {
+                    new SelectListItem { Text = "Keep it pending", Value = "Pending" },
+                    new SelectListItem { Text = "Reject", Value = "Reject" },
+                    new SelectListItem { Text = "Approved", Value = "Approved" }
+                }, "Value", "Text", item.Status), new { @class = "form-control", @id = "statusDropdown", @data_id = @item.ID})
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditRecipe", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                <a href="~/AdminsPage/EditRecipe/@item.ID" class="btn crud-btn edit"><i class="fas fa-edit"></i></a> &nbsp;&nbsp; 
+                @*@Html.ActionLink("Edit", "EditRecipe", new { id = item.ID}, new { @class = "btn crud-btn edit"})*@
+
+                <a href="~/AdminsPage/RecipeDetails/@item.ID" class="btn crud-btn details"><i class="fas fa-info-circle"></i></a> &nbsp;&nbsp;
+                @*@Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn crud-btn details" })*@
+
+                <a href="~/AdminsPage/DeleteRecipe/@item.ID" class="btn crud-btn delete"><i class="fas fa-trash"></i></a>
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn crud-btn delete" })*@
             </td>
         </tr>
     }
 
 </table>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#statusDropdown').change(function () {
+            var selectedValue = $(this).val();
+            var itemId = $(this).data('id');
+
+            $.ajax({
+                url: '@Url.Action("UpdateRecipeStatus", "AdminsPage")',
+                type: 'POST',
+                data: { id: itemId, status: selectedValue },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

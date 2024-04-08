@@ -279,8 +279,6 @@
       <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageUploads">
         <MappingFragment StoreEntitySet="vw_ManageUploads">
           <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="Approved_by" ColumnName="Approved by" />
-          <ScalarProperty Name="Date_approved" ColumnName="Date approved" />
           <ScalarProperty Name="Date_uploaded" ColumnName="Date uploaded" />
           <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
           <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
@@ -291,10 +289,7 @@
     <EntitySetMapping Name="vw_ManageUsers">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageUsers">
         <MappingFragment StoreEntitySet="vw_ManageUsers">
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
           <ScalarProperty Name="Last_name" ColumnName="Last name" />
           <ScalarProperty Name="First_name" ColumnName="First name" />
           <ScalarProperty Name="Username" ColumnName="Username" />

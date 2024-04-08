@@ -11,6 +11,17 @@ namespace MoodBite.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            if(User.Identity.IsAuthenticated)
+            {
+                if(User.IsInRole("User"))
+                {
+                    return RedirectToAction("../UsersPage/UsersHome");
+                }
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("../AdminsPage/ManageUsers");
+                }
+            }
             return View();
         }
 

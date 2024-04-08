@@ -32,6 +32,18 @@ a:focus {
     text-decoration: none;
 }
 
+.btn.crud-btn {
+    padding: 5px 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background: #fbaf32;
+    border: 2px solid #fbaf32;
+    border-radius: 5px;
+    transition: .5s;
+}
+
 .btn.custom-btn {
     padding: 12px 25px;
     font-family: 'Nunito', sans-serif;
@@ -44,12 +56,44 @@ a:focus {
     transition: .5s;
 }
 
-.btn.custom-btn:hover {
+.btn.crud-btn.edit {
+    color: #ffffff;
+    background: #286090;
+    border: 2px solid #204d74;
+}
+
+.btn.crud-btn.details {
+    color: #ffffff;
+    background: #31b0d5;
+    border: 2px solid #269abc;
+}
+
+.btn.crud-btn.delete {
+    color: #ffffff;
+    background: #c9302c;
+    border: 2px solid #ac2925;
+}
+
+
+.btn.custom-btn:hover, .btn.crud-btn:hover {
     color: #fbaf32;
     background: transparent;
 }
 
+.btn.crud-btn.edit:hover{
+    color: #286090;
+}
+
+.btn.crud-btn.details:hover{
+    color: #31b0d5;
+}
+
+.btn.crud-btn.delete:hover{
+    color: #ac2925;
+}
+
 .btn.custom-btn:focus,
+.btn.crud-btn:focus,
 .form-control:focus,
 .custom-select:focus {
     box-shadow: none;

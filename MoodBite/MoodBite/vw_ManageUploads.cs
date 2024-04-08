@@ -18,8 +18,6 @@ namespace MoodBite
         public string RecipeName { get; set; }
         public string Uploaded_by { get; set; }
         public Nullable<System.DateTime> Date_uploaded { get; set; }
-        public Nullable<System.DateTime> Date_approved { get; set; }
-        public string Approved_by { get; set; }
         public string Status { get; set; }
     }
 }

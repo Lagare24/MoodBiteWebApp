@@ -1,4 +1,6 @@
-﻿@model Recipe
+﻿@using MoodBite.Models.ManageUploads
+
+@model UpdateUploadsViewModel
 
 
 @{
@@ -38,38 +40,38 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Recipe</h4>
+        <h5 style="padding:1rem 0 0.5rem"><a href="~/AdminsPage/ManageUploads">Go back</a></h5>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.RecipeName, "Recipe Name", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.recipe.RecipeName, "Recipe Name", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.EditorFor(model => model.RecipeName, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
-                @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.recipe.RecipeName, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                @Html.ValidationMessageFor(model => model.recipe.RecipeName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RecipeDescription, "Recipe Description", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.recipe.RecipeDescription, "Recipe Description", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.TextAreaFor(model => model.RecipeDescription, new { @class = "form-control", @rows = 4, @cols = 100, @required = "true" })
-                @Html.ValidationMessageFor(model => model.RecipeDescription, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.recipe.RecipeDescription, new { @class = "form-control", @rows = 4, @cols = 100, @required = "true" })
+                @Html.ValidationMessageFor(model => model.recipe.RecipeDescription, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PreparationTime, "Preparation Time (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.recipe.PreparationTime, "Preparation Time (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.EditorFor(model => model.PreparationTime, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true" } })
-                @Html.ValidationMessageFor(model => model.PreparationTime, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.recipe.PreparationTime, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true" } })
+                @Html.ValidationMessageFor(model => model.recipe.PreparationTime, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CookingDuration, "Cooking Duration (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.recipe.CookingDuration, "Cooking Duration (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.EditorFor(model => model.CookingDuration, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true" } })
-                @Html.ValidationMessageFor(model => model.CookingDuration, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.recipe.CookingDuration, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true" } })
+                @Html.ValidationMessageFor(model => model.recipe.CookingDuration, "", new { @class = "text-danger" })
 
             </div>
         </div>
@@ -77,25 +79,22 @@
         @*@Html.Label("Ingredients", new { @class = "control-label col-md-12" })*@
         <label class="control-label col-md-12" style="display:block;">Ingredients</label>
 
-        @foreach (var item in Model.RecipeIngredient)
+        @foreach (var item in Model.recipeIngredient)
         {
-
-        }
-
-        <div id="ingredients-container">
-            <div class="form-group ingredient-row" style="display: block;">
-                <div class="row" style="margin:0">
-                    <div class="col-md-3 ingname">
-                        <input class="form-control ingredient-name" placeholder="Ingredient Name" id="ingredientName" name="ingredientName[]" required />
-                    </div>
-                    <div class="col-md-3 ingqty">
-                        <input class="form-control ingredient-quantity" placeholder="Quantity" type="number" min="0" id="ingredientQty" name="ingredientQty[]" required />
-                    </div>
-                    <div class="col-md-3 ingunit">
-                        <div>
-                            @{
-                                var listOfUnitMeasures = new[]
-                                {
+            <div id="ingredients-container">
+                <div class="form-group ingredient-row" style="display: block;">
+                    <div class="row" style="margin:0">
+                        <div class="col-md-3 ingname">
+                            <input class="form-control ingredient-name" placeholder="Ingredient Name" id="ingredientName" name="ingredientName[]" value="@item.IngredientName" required />
+                        </div>
+                        <div class="col-md-3 ingqty">
+                            <input class="form-control ingredient-quantity" placeholder="Quantity" type="number" min="0" id="ingredientQty" name="ingredientQty[]" value="@item.Quantity" required />
+                        </div>
+                        <div class="col-md-3 ingunit">
+                            <div>
+                                @{
+                                    var listOfUnitMeasures = new[]
+                                    {
                                 new SelectListItem { Value = "tbsp", Text = "Tablespoon (tbsp)" },
                                 new SelectListItem { Value = "c", Text = "Cup (c)" },
                                 new SelectListItem { Value = "fl oz", Text = "Fluid Ounce (fl oz)" },
@@ -131,33 +130,36 @@
                                 new SelectListItem { Value = "crushed", Text = "Crushed" },
                                 new SelectListItem { Value = "diced", Text = "Diced" }
                             };
-                                listOfUnitMeasures = listOfUnitMeasures.OrderBy(list => list.Text).ToArray();
+                                    listOfUnitMeasures = listOfUnitMeasures.OrderBy(list => list.Text).ToArray();
 
-                                //most
-                                var unitMeasurementPlaceholder = "ml";
-                            }
-                        </div><!--list of measurements-->
-                        <select class="form-control ingredient-unit" id="ingredientUnit" name="ingredientUnit[]" required>
-                            @foreach (var item in @listOfUnitMeasures)
-                            {
-                                if (item.Value != unitMeasurementPlaceholder)
-                                {
-                                    <option value="@item.Value">@item.Text</option>
+                                    //most
+                                    var unitMeasurementPlaceholder = @item.Unit;
                                 }
-                                else
+                            </div><!--list of measurements-->
+                            <select class="form-control ingredient-unit" id="ingredientUnit" name="ingredientUnit[]" required>
+                                @foreach (var list in @listOfUnitMeasures)
                                 {
-                                    <option selected value="@item.Value">@item.Text</option>
+                                    if (list.Value != unitMeasurementPlaceholder)
+                                    {
+                                        <option value="@list.Value">@list.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option selected value="@list.Value">@list.Text</option>
+                                    }
                                 }
-                            }
-                        </select>
-                    </div>
+                            </select>
+                        </div>
 
-                    <div class="col-md-3">
-                        <button class="btn btn-danger remove-ingredient">Remove</button>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger remove-ingredient">Remove</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+                                    }
+
 
         <div class="form-group">
             <div class="col-md-12">
@@ -170,10 +172,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CookingInstruction, "Cooking Instruction", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.recipe.CookingInstruction, "Cooking Instruction", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.TextAreaFor(model => model.CookingInstruction, new { @class = "form-control", @rows = 10, @cols = 100 })
-                @Html.ValidationMessageFor(model => model.CookingInstruction, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.recipe.CookingInstruction, new { @class = "form-control", @rows = 10, @cols = 100 })
+                @Html.ValidationMessageFor(model => model.recipe.CookingInstruction, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -181,15 +183,60 @@
             <label for="moodid" class="control-label col-md-12">Mood Tag</label>
             <div class="col-md-12">
                 <select id="moodid" name="moodid" class="form-control">
-                    <option value="1">Happy</option>
-                    <option value="2">Sad</option>
-                    <option value="3">Angry</option>
-                    <option value="4">Surprised</option>
-                    <option value="5">Disgusted</option>
-                    <option value="6">Fearful</option>
+                    @switch (Model.recipe.MoodID)
+                    {
+                        case 1:
+                            <option selected value="1">Happy</option>
+                            <option value="2">Sad</option>
+                            <option value="3">Angry</option>
+                            <option value="4">Surprised</option>
+                            <option value="5">Disgusted</option>
+                            <option value="6">Fearful</option>
+                            break;
+                        case 2:
+                            <option value="1">Happy</option>
+                            <option selected value="2">Sad</option>
+                            <option value="3">Angry</option>
+                            <option value="4">Surprised</option>
+                            <option value="5">Disgusted</option>
+                            <option value="6">Fearful</option>
+                            break;
+                        case 3:
+                            <option value="1">Happy</option>
+                            <option value="2">Sad</option>
+                            <option selected value="3">Angry</option>
+                            <option value="4">Surprised</option>
+                            <option value="5">Disgusted</option>
+                            <option value="6">Fearful</option>
+                            break;
+                        case 4:
+                            <option value="1">Happy</option>
+                            <option value="2">Sad</option>
+                            <option value="3">Angry</option>
+                            <option selected value="4">Surprised</option>
+                            <option value="5">Disgusted</option>
+                            <option value="6">Fearful</option>
+                            break;
+                        case 5:
+                            <option value="1">Happy</option>
+                            <option value="2">Sad</option>
+                            <option value="3">Angry</option>
+                            <option value="4">Surprised</option>
+                            <option selected value="5">Disgusted</option>
+                            <option value="6">Fearful</option>
+                            break;
+                        case 6:
+                            <option value="1">Happy</option>
+                            <option value="2">Sad</option>
+                            <option value="3">Angry</option>
+                            <option value="4">Surprised</option>
+                            <option value="5">Disgusted</option>
+                            <option selected value="6">Fearful</option>
+                            break;
+                    }
                 </select>
                 <span class="text-danger"></span>
-            </div>
+            </div> <!--Mood tag Select Option Element-->
         </div>
 
         <div class="form-group">
@@ -231,11 +278,11 @@
 
         <div class="form-group" style="margin-top:3rem">
             <div class="col-md-offset-2 col-md-12">
-                <button class="btn custom-btn" id="upload-recipe-btn" type="submit" style="width:100%">Upload Recipe</button>
+                <button class="btn custom-btn" id="upload-recipe-btn" type="submit" style="width:100%">Update Recipe</button>
             </div>
         </div>
     </div>
-                                }
+                                    }
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

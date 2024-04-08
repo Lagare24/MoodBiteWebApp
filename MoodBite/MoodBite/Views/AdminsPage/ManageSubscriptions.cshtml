@@ -56,9 +56,15 @@
             @Html.DisplayFor(modelItem => item.Expiry_date)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            <a href="~/AdminsPage/EditSubscription/@item.ID" class="btn crud-btn edit"><i class="fas fa-edit"></i></a> &nbsp;&nbsp;
+
+            <a href="~/AdminsPage/SubscriptionDetails/@item.ID" class="btn crud-btn details"><i class="fas fa-info-circle"></i></a> &nbsp;&nbsp;
+
+            <a href="~/AdminsPage/DeleteSubscription/@item.ID" class="btn crud-btn delete"><i class="fas fa-trash"></i></a>
+
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
         </td>
     </tr>
 }

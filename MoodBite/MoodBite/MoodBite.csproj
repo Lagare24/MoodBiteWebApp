@@ -259,6 +259,7 @@
     <Compile Include="Intolerance.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ManageUploads\UpdateUploadsViewModel.cs" />
     <Compile Include="Models\RecipeViewModel\RecipeDetailViewModel.cs" />
     <Compile Include="Models\UploadRecipeModel\UploadRecipe.cs" />
     <Compile Include="Mood.cs">

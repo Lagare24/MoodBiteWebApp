@@ -443,22 +443,17 @@
     <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Uploaded_by" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="Date_uploaded" Type="DateTime" Precision="3" />
-    <Property Name="Date_approved" Type="DateTime" Precision="3" />
-    <Property Name="Approved_by" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="Status" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_ManageUsers">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID" Type="Int32" Nullable="false" />
     <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="First_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="Birthdate" Type="DateTime" Precision="0" />
-    <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Role" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_RecipeDetailsWithMoodTagSimplified">
     <Key>

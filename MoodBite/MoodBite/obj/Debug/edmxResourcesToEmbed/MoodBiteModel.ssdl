@@ -243,8 +243,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_ManageUploads' does not have a pri
     <Property Name="RecipeName" Type="text" />
     <Property Name="Uploaded by" Type="varchar" MaxLength="201" Nullable="false" />
     <Property Name="Date uploaded" Type="datetime" />
-    <Property Name="Date approved" Type="datetime" />
-    <Property Name="Approved by" Type="varchar" MaxLength="201" />
     <Property Name="Status" Type="varchar" MaxLength="8" />
   </EntityType>
   <!--Errors Found During Generation:
@@ -253,14 +251,11 @@ warning 6002: The table/view 'MoodBite.dbo.vw_ManageUsers' does not have a prima
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" Nullable="false" />
     <Property Name="Username" Type="varchar" MaxLength="100" />
     <Property Name="First name" Type="varchar" MaxLength="100" />
     <Property Name="Last name" Type="varchar" MaxLength="100" />
-    <Property Name="Address" Type="varchar" MaxLength="255" />
-    <Property Name="Birthdate" Type="date" />
-    <Property Name="Gender" Type="varchar" MaxLength="100" />
-    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Role" Type="varchar" MaxLength="100" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_RecipeDetailsWithMoodTagSimplified' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -806,8 +801,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_ManageUploads].[RecipeName] AS [RecipeName], 
     [vw_ManageUploads].[Uploaded by] AS [Uploaded by], 
     [vw_ManageUploads].[Date uploaded] AS [Date uploaded], 
-    [vw_ManageUploads].[Date approved] AS [Date approved], 
-    [vw_ManageUploads].[Approved by] AS [Approved by], 
     [vw_ManageUploads].[Status] AS [Status]
     FROM [dbo].[vw_ManageUploads] AS [vw_ManageUploads]</DefiningQuery>
     </EntitySet>
@@ -817,10 +810,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_ManageUsers].[Username] AS [Username], 
     [vw_ManageUsers].[First name] AS [First name], 
     [vw_ManageUsers].[Last name] AS [Last name], 
-    [vw_ManageUsers].[Address] AS [Address], 
-    [vw_ManageUsers].[Birthdate] AS [Birthdate], 
-    [vw_ManageUsers].[Gender] AS [Gender], 
-    [vw_ManageUsers].[Email] AS [Email]
+    [vw_ManageUsers].[Role] AS [Role]
     FROM [dbo].[vw_ManageUsers] AS [vw_ManageUsers]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_RecipeDetailsWithMoodTagSimplified" EntityType="Self.vw_RecipeDetailsWithMoodTagSimplified" store:Type="Views" store:Schema="dbo">

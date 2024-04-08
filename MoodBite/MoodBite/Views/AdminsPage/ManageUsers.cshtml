@@ -30,6 +30,9 @@
             @Html.DisplayName("Last name")
         </th>
         <th>
+            @Html.DisplayName("Role")
+        </th>
+        @*<th>
             @Html.DisplayName("Address")
         </th>
         <th>
@@ -40,7 +43,7 @@
         </th>
         <th>
             @Html.DisplayName("Email")
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -57,6 +60,9 @@
                 @Html.DisplayFor(modelItem => item.Last_name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
@@ -70,11 +76,17 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
-            </td>
+            </td>*@
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                <a href="~/AdminsPage/EditUser/@item.ID" class="btn crud-btn edit"><i class="fas fa-edit"></i></a> &nbsp;&nbsp;
+
+                <a href="~/AdminsPage/UserDetails/@item.ID" class="btn crud-btn details"><i class="fas fa-info-circle"></i></a> &nbsp;&nbsp; 
+
+                <a href="~/AdminsPage/DeleteUser/@item.ID" class="btn crud-btn delete"><i class="fas fa-trash"></i></a>
+
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
             </td>
         </tr>
     }
