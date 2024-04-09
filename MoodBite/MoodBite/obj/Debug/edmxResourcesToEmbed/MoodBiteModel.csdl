@@ -444,6 +444,7 @@
     <Property Name="Uploaded_by" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="Date_uploaded" Type="DateTime" Precision="3" />
     <Property Name="Status" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="DateApproved" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="vw_ManageUsers">
     <Key>

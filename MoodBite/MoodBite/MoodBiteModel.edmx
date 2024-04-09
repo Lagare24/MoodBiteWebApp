@@ -249,6 +249,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_ManageUploads' does not have a pri
           <Property Name="Uploaded by" Type="varchar" MaxLength="201" Nullable="false" />
           <Property Name="Date uploaded" Type="datetime" />
           <Property Name="Status" Type="varchar" MaxLength="8" />
+          <Property Name="DateApproved" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_ManageUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -806,7 +807,8 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_ManageUploads].[RecipeName] AS [RecipeName], 
     [vw_ManageUploads].[Uploaded by] AS [Uploaded by], 
     [vw_ManageUploads].[Date uploaded] AS [Date uploaded], 
-    [vw_ManageUploads].[Status] AS [Status]
+    [vw_ManageUploads].[Status] AS [Status], 
+    [vw_ManageUploads].[DateApproved] AS [DateApproved]
     FROM [dbo].[vw_ManageUploads] AS [vw_ManageUploads]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_ManageUsers" EntityType="Self.vw_ManageUsers" store:Type="Views" store:Schema="dbo">
@@ -1471,6 +1473,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <Property Name="Uploaded_by" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
           <Property Name="Date_uploaded" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="DateApproved" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="vw_ManageUsers">
           <Key>
@@ -2194,6 +2197,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <EntitySetMapping Name="vw_ManageUploads">
             <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageUploads">
               <MappingFragment StoreEntitySet="vw_ManageUploads">
+                <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Date_uploaded" ColumnName="Date uploaded" />
                 <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />

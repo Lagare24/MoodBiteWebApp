@@ -74,6 +74,11 @@ a:focus {
     border: 2px solid #ac2925;
 }
 
+.btn.crud-btn.approve {
+    color: #ffffff;
+    background: #449d44;
+    border: 2px solid #398439;
+}
 
 .btn.custom-btn:hover, .btn.crud-btn:hover {
     color: #fbaf32;
@@ -90,6 +95,10 @@ a:focus {
 
 .btn.crud-btn.delete:hover{
     color: #ac2925;
+}
+
+.btn.crud-btn.approve:hover{
+    color: #398439;
 }
 
 .btn.custom-btn:focus,

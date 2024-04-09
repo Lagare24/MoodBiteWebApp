@@ -28,10 +28,31 @@ namespace MoodBite.Controllers
             return RedirectToAction("./Account/Login");
         }
 
-        [HttpPost]
-        public ActionResult UpdateRecipeStatus(int id, string status)
+        public ActionResult ApproveRecipe(int id)
         {
-            var recipe = _db.Recipe.Where(model => model.RecipeID == id);
+            var adminInCharge = Session["User"] as User;
+            var recipe = _db.Recipe.Where(model => model.RecipeID == id).FirstOrDefault();
+
+            recipe.IsApproved = true;
+            recipe.ApprovedBy = adminInCharge.userID;
+            recipe.DateApproved = DateTime.Today;
+
+            _recipeRepo.Update(id, recipe);
+
+            return RedirectToAction("ManageUploads");
+        }
+
+        public ActionResult RejectRecipe(int id)
+        {
+            var adminInCharge = Session["User"] as User;
+            var recipe = _db.Recipe.Where(model => model.RecipeID == id).FirstOrDefault();
+
+            recipe.IsApproved = false;
+            recipe.ApprovedBy = adminInCharge.userID;
+            recipe.DateApproved = DateTime.Today;
+
+            _recipeRepo.Update(id, recipe);
+
             return RedirectToAction("ManageUploads");
         }
 

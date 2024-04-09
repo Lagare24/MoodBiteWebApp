@@ -278,6 +278,7 @@
     <EntitySetMapping Name="vw_ManageUploads">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageUploads">
         <MappingFragment StoreEntitySet="vw_ManageUploads">
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Date_uploaded" ColumnName="Date uploaded" />
           <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />

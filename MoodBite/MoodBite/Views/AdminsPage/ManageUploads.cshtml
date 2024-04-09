@@ -65,17 +65,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Approved_by)
             </td>*@
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>*@
             <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            @*<td>
                 @Html.DropDownListFor(modelItem => item.Status, new SelectList(new[]
                 {
                     new SelectListItem { Text = "Keep it pending", Value = "Pending" },
                     new SelectListItem { Text = "Reject", Value = "Reject" },
                     new SelectListItem { Text = "Approved", Value = "Approved" }
                 }, "Value", "Text", item.Status), new { @class = "form-control", @id = "statusDropdown", @data_id = @item.ID})
-            </td>
+            </td>*@
             <td>
                 <a href="~/AdminsPage/EditRecipe/@item.ID" class="btn crud-btn edit"><i class="fas fa-edit"></i></a> &nbsp;&nbsp; 
                 @*@Html.ActionLink("Edit", "EditRecipe", new { id = item.ID}, new { @class = "btn crud-btn edit"})*@
@@ -83,8 +83,16 @@
                 <a href="~/AdminsPage/RecipeDetails/@item.ID" class="btn crud-btn details"><i class="fas fa-info-circle"></i></a> &nbsp;&nbsp;
                 @*@Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn crud-btn details" })*@
 
-                <a href="~/AdminsPage/DeleteRecipe/@item.ID" class="btn crud-btn delete"><i class="fas fa-trash"></i></a>
+                <a href="~/AdminsPage/DeleteRecipe/@item.ID" class="btn crud-btn delete"><i class="fas fa-trash"></i></a> &nbsp;&nbsp;
                 @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn crud-btn delete" })*@
+
+                <!--means if recipe was already checked then dont show approval buttons-->
+                @if (item.DateApproved == null)
+                {
+                    <a href="~/AdminsPage/RejectRecipe/@item.ID" class="btn crud-btn delete"><i class="fas fa-times"></i></a> @:&nbsp; &nbsp;
+                    <a href="~/AdminsPage/ApproveRecipe/@item.ID" class="btn crud-btn approve"><i class="fas fa-check"></i></a>
+                }
+                
             </td>
         </tr>
     }

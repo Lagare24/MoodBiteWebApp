@@ -19,5 +19,6 @@ namespace MoodBite
         public string Uploaded_by { get; set; }
         public Nullable<System.DateTime> Date_uploaded { get; set; }
         public string Status { get; set; }
+        public Nullable<System.DateTime> DateApproved { get; set; }
     }
 }
