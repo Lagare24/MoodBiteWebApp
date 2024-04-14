@@ -36,8 +36,36 @@ namespace MoodBite.Controllers
                 var chosenMood = Session["ChosenMood"] as String;
                 var user = Session["User"] as User;
                 var recipedetail = RecipeDetail(chosenMood);
+                Session["SearchInput"] = string.Empty;
                 return View(recipedetail);
             } else
+            {
+                return RedirectToAction("../Home/Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UsersHome(string search)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if(string.IsNullOrWhiteSpace(search))
+                {
+                    var chosenMood = Session["ChosenMood"] as String;
+                    var user = Session["User"] as User;
+                    Session["SearchInput"] = search;
+                    var recipedetail = RecipeDetail(chosenMood);
+                    return View(recipedetail);
+                } else
+                {
+                    var chosenMood = Session["ChosenMood"] as String;
+                    var user = Session["User"] as User;
+                    Session["SearchInput"] = search;
+                    var recipedetail = RecipeDetail(chosenMood, search);
+                    return View(recipedetail);
+                }
+            }
+            else
             {
                 return RedirectToAction("../Home/Index");
             }

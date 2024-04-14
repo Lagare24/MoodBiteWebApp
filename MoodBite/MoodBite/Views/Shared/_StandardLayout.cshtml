@@ -116,14 +116,36 @@
     <!-- Page Header Start -->
     <div class="page-header mb-0" id="homeTopPage">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2>@ViewBag.TitleHeader</h2>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("User") && ViewContext.RouteData.Values["action"].ToString().ToLower() == "usershome")
+            {
+                <div class="search-widget">
+                    <form action="~/UsersPage/UsersHome" method="post">
+                        <input class="form-control" name="search" type="text" placeholder="Search Keyword" value="@Session["SearchInput"]">
+                        <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                    </form>
                 </div>
-                <div class="col-12">
-                    <p>@ViewBag.TitleSubHeader</p>
+                @*<form action="~/UsersPage/UsersHome" method="post">
+                    <div class="row" style="justify-content:center;">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input id="search-input" type="search" id="form1" class="form-control" name="search" value="@Session["SearchInput"]" placeholder="Search" style="padding: 1.5rem; border-radius:.25rem 0 0 .25rem; width:50rem" />
+                        </div>
+                        <button id="search-button" type="submit" class="btn btn-primary" style="border-radius:0 .25rem .25rem 0">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>*@
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <h2>@ViewBag.TitleHeader</h2>
+                    </div>
+                    <div class="col-12">
+                        <p>@ViewBag.TitleSubHeader</p>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
     <!-- Page Header End -->
@@ -241,6 +263,13 @@
                 $(this).addClass('active');
             });
         });
+
+        //const searchButton = document.getElementById('search-button');
+        //const searchInput = document.getElementById('search-input');
+        //searchButton.addEventListener('click', () => {
+        //    const inputValue = searchInput.value;
+        //    window.location.href = 'UsersHome/' + inputValue;
+        //});
     </script>
 </body>
 </html>
