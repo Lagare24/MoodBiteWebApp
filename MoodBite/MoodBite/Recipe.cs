@@ -17,12 +17,14 @@ namespace MoodBite
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Recipe()
         {
+            this.Cart = new HashSet<Cart>();
             this.RecipeAllergy = new HashSet<RecipeAllergy>();
             this.RecipeImage = new HashSet<RecipeImage>();
             this.RecipeIntolerance = new HashSet<RecipeIntolerance>();
             this.RecipeRating = new HashSet<RecipeRating>();
             this.UserRecipe = new HashSet<UserRecipe>();
             this.RecipeIngredient = new HashSet<RecipeIngredient>();
+            this.UsersFavoriteRecipes = new HashSet<UsersFavoriteRecipes>();
         }
     
         public int RecipeID { get; set; }
@@ -37,7 +39,11 @@ namespace MoodBite
         public string RecipeName { get; set; }
         public Nullable<int> IngredientsCount { get; set; }
         public string RecipeDescription { get; set; }
+        public Nullable<int> FoodCategoryID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Cart { get; set; }
+        public virtual FoodCategory FoodCategory { get; set; }
         public virtual Mood Mood { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,5 +58,7 @@ namespace MoodBite
         public virtual ICollection<UserRecipe> UserRecipe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecipeIngredient> RecipeIngredient { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsersFavoriteRecipes> UsersFavoriteRecipes { get; set; }
     }
 }

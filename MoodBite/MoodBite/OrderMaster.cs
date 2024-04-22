@@ -21,9 +21,9 @@ namespace MoodBite
         }
     
         public int PO_ID { get; set; }
-        public Nullable<int> UserID { get; set; }
+        public Nullable<int> CustomerID { get; set; }
         public Nullable<System.DateTime> DateOrdered { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
+        public string CustomerAddress { get; set; }
         public Nullable<bool> IsPaid { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

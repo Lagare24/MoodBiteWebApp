@@ -127,10 +127,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.rtl.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-utilities.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-utilities.min.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap.rtl.min.css" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.bundle.js" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.esm.js" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.esm.min.js" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.js" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ChooseMoodModalTemplate\modal-script.js" />
     <Content Include="Content\ChooseMoodModalTemplate\modal-style.css" />
+    <Content Include="Content\MainTemplate\css\global.css" />
     <Content Include="Content\MainTemplate\css\style.css" />
     <Content Include="Content\MainTemplate\img\about.jpg" />
     <Content Include="Content\MainTemplate\img\blog-1.jpg" />
@@ -195,6 +218,14 @@
     <Content Include="Content\MainTemplate\lib\tempusdominus\js\tempusdominus-bootstrap-4.min.js" />
     <Content Include="Content\MainTemplate\mail\contact.js" />
     <Content Include="Content\MainTemplate\mail\jqBootstrapValidation.min.js" />
+    <Content Include="Content\multimedia\bookmark.svg" />
+    <Content Include="Content\multimedia\favoritesvector.svg" />
+    <Content Include="Content\multimedia\group-1.svg" />
+    <Content Include="Content\multimedia\heartactive.svg" />
+    <Content Include="Content\multimedia\imageremovebgpreview-8-1%402x.png" />
+    <Content Include="Content\multimedia\MoodBiteLogo%402x.png" />
+    <Content Include="Content\multimedia\recipecontainer%403x.png" />
+    <Content Include="Content\multimedia\shareicon.svg" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -220,6 +251,28 @@
     <Content Include="Content\MainTemplate\lib\flaticon\license\license.pdf" />
     <Content Include="Content\MainTemplate\lib\owlcarousel\LICENSE" />
     <Content Include="Content\MainTemplate\mail\contact.php" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.esm.js.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.esm.min.js.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.js.map" />
+    <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.min.js.map" />
     <EntityDeploy Include="MoodBiteModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MoodBiteModel.Designer.cs</LastGenOutput>
@@ -243,6 +296,9 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Cart.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Contract\IBaseRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminsPageController.cs" />
@@ -250,6 +306,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IFormFile.cs" />
     <Compile Include="Controllers\UsersPageController.cs" />
+    <Compile Include="FoodCategory.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FoodSale.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -259,6 +318,7 @@
     <Compile Include="Intolerance.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartModel\CartViewModel.cs" />
     <Compile Include="Models\ManageUploads\UpdateUploadsViewModel.cs" />
     <Compile Include="Models\RecipeViewModel\RecipeDetailViewModel.cs" />
     <Compile Include="Models\UploadRecipeModel\UploadRecipe.cs" />
@@ -337,7 +397,31 @@
     <Compile Include="UserRole.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UsersFavoriteRecipes.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_AllRecipeDetailsWithFoodCategoryName.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_AllUserColWithRecipeID.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_CartView.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_CheckOutView.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_CoverImageOfRecipes.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_FilterAllergy.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_FoodSaleView.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_ForOrderPaymentInsertionView.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_IngredientWithType.cs">
@@ -350,6 +434,9 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_ManageUsers.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_OrderDetailView.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_RecipeDetailsWithMoodTagSimplified.cs">
@@ -401,6 +488,10 @@
     <Content Include="Views\AdminsPage\ManageSubscriptions.cshtml" />
     <Content Include="Views\AdminsPage\ManageUploads.cshtml" />
     <Content Include="Views\AdminsPage\EditRecipe.cshtml" />
+    <Content Include="Views\UsersPage\MyCart.cshtml" />
+    <Content Include="Views\UsersPage\CheckOutPage.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\AdminsPage\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -410,7 +501,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\multimedia\" />
     <Folder Include="Content\RecipeImages\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

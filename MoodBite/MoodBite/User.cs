@@ -18,12 +18,14 @@ namespace MoodBite
         public User()
         {
             this.AccountCreationLog = new HashSet<AccountCreationLog>();
+            this.Cart = new HashSet<Cart>();
             this.OrderMaster = new HashSet<OrderMaster>();
             this.Recipe = new HashSet<Recipe>();
             this.RecipeRating = new HashSet<RecipeRating>();
             this.UserPremium = new HashSet<UserPremium>();
             this.UserRecipe = new HashSet<UserRecipe>();
             this.UserRole = new HashSet<UserRole>();
+            this.UsersFavoriteRecipes = new HashSet<UsersFavoriteRecipes>();
         }
     
         public int userID { get; set; }
@@ -35,10 +37,14 @@ namespace MoodBite
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Gender { get; set; }
         public string Email { get; set; }
+        public Nullable<bool> EmailConfirmed { get; set; }
         public byte[] ProfilePicture { get; set; }
+        public string EmailConfirmationToken { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountCreationLog> AccountCreationLog { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Cart { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderMaster> OrderMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -51,5 +57,7 @@ namespace MoodBite
         public virtual ICollection<UserRecipe> UserRecipe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsersFavoriteRecipes> UsersFavoriteRecipes { get; set; }
     }
 }

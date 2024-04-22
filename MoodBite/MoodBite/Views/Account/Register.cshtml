@@ -24,7 +24,7 @@
 
 
 <div class="row align-items-center">
-    <div class="col-lg-7">
+    <div class="col-lg-7" style="margin-top:-30rem">
         <div class="booking-content">
             <div class="section-header">
                 <p>Sign Up</p>
@@ -32,10 +32,10 @@
             </div>
             <div class="about-text">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                    Indulge in a culinary adventure that matches your mood. Sign in to MoodBite and explore a vast collection of delicious recipes tailored to uplift your spirits. From comforting dishes to vibrant creations, our app is designed to enhance your cooking experience and bring joy to your kitchen.
                 </p>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus. Aenean consectetur convallis porttitor. Aliquam interdum at lacus non blandit.
+                    Discover the power of food and mood synergy with MoodBite. Join us today and embark on a delightful journey of flavors and emotions.
                 </p>
             </div>
         </div>
@@ -48,8 +48,7 @@
                 @Html.ValidationSummary(true, "", new { @class = "alert alert-danger custom-ul", @style = "color:red" })
 
                 <div class="control-group" style="display:flex">
-                    <img src="http://via.placeholder.com/150x150" style="border-radius:50%; margin:0 auto" id="profilepicdisplay" width="150px" alt="Upload Profile Picture"/>
-                    <input type="file" style="display:none;" id="profilepicinp" name="profilePic" accept="image/*"/>
+                    <img src="http://via.placeholder.com/150x150" style="border-radius:50%; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" alt="Upload Profile Picture"/>
                 </div>
 
                 <div class="control-group">
@@ -70,9 +69,13 @@
                 </div>
                 <div class="control-group">
                     <div class="input-group" id="show-hide-password">
-                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @required = "required"})
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @required = "required" })
                         <div class="input-group-append">
-                            <div class="input-group-text"><a><i class="fa fa-eye-slash" aria-hidden="true"></i></a></div>
+                            <div class="input-group-text">
+                                <a onclick="togglePasswordVisibility('passwordInput')">
+                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +83,11 @@
                     <div class="input-group" id="show-hide-confirm-password">
                         <input type="password" class="form-control" name="confirmPasswordInp" placeholder="Confirm Password" required="required" />
                         <div class="input-group-append">
-                            <div class="input-group-text"><a><i class="fa fa-eye-slash" aria-hidden="true"></i></a></div>
+                            <div class="input-group-text">
+                                <a onclick="togglePasswordVisibility('confirmPasswordInp')">
+                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,6 +138,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="control-group">
+                    <div class="input-group">
+                        <label class="form-label" style="color:white;">Upload profile picture</label>
+                        <input type="file" id="profilepicinp" name="profilePic" accept="image/*" />
+                    </div>
+                </div>
                 <div>
                     <button class="btn custom-btn" type="submit">Register</button>
                 </div>
@@ -143,6 +156,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -180,5 +194,19 @@
         }
     });
 
+    function togglePasswordVisibility(elementId) {
+        var passwordInput = document.getElementById(elementId);
+        var eyeIcon = passwordInput.nextElementSibling.querySelector("i");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.classList.remove("fa-eye-slash");
+            eyeIcon.classList.add("fa-eye");
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.classList.remove("fa-eye");
+            eyeIcon.classList.add("fa-eye-slash");
+        }
+    }
 </script>
 

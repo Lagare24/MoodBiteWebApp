@@ -155,18 +155,18 @@
         }
     });
 
-    $(document).ready(function () {
-        $('.form-check-input').change(function () {
-            var isChecked = $(this).is(':checked');
-            var ingredientName = $(this).siblings('.form-check-label').find('.ingredient-name');
+    //$(document).ready(function () {
+    //    $('.form-check-input').change(function () {
+    //        var isChecked = $(this).is(':checked');
+    //        var ingredientName = $(this).siblings('.form-check-label').find('.ingredient-name');
 
-            if (isChecked) {
-                ingredientName.addClass('crossed-out');
-            } else {
-                ingredientName.removeClass('crossed-out');
-            }
-        });
-    });
+    //        if (isChecked) {
+    //            ingredientName.addClass('crossed-out');
+    //        } else {
+    //            ingredientName.removeClass('crossed-out');
+    //        }
+    //    });
+    //});
 
 
     

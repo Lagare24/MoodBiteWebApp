@@ -4,8 +4,6 @@
     ViewBag.Title = "Manage Uploads";
     ViewBag.TitleHeader = "List of Uploaded Recipes";
     ViewBag.SubHeader = "";
-    Layout = "~/Views/Shared/_StandardLayout.cshtml";
-
     string a = "active";
     string ia = string.Empty;
 
@@ -14,93 +12,99 @@
     Session["MSubscriptionsActuve"] = ia;
 }
 
-<div style="text-align: right; margin:1rem 0 0.5rem">
-    <a href="~/UsersPage/UploadRecipe" class="btn custom-btn" style="padding: 5px 10px;">Add new</a>
-</div>
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
 
-<table class="table table-hover">
-    <tr>
-        <th>
-            @Html.DisplayName("Recipe name")
-        </th>
-        <th>
-            @Html.DisplayName("Uploaded by")
-        </th>
-        <th>
-            @Html.DisplayName("Date uploaded")
-        </th>
-        @*<th>
-            @Html.DisplayName("Date approved")
-        </th>
-        <th>
-            @Html.DisplayName("Approved by")
-        </th>*@
-        <th>
-            @Html.DisplayName("Status")
-        </th>
-        <th></th>
-    </tr>
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
 
-    @foreach (var item in Model)
-    {
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Wano Quin:wght@900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Blinker:wght@300;400;700&display=swap" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+<table id="manageuploadstable" class="table table-striped">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecipeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Uploaded_by)
-            </td>
-            <td>
-                @if (item.Date_uploaded.HasValue)
-                {
-                    <span>@item.Date_uploaded.Value.ToString("MMMM dd, yyyy hh:mm tt")</span>
-                }
-            </td>
-            @*<td>
-                @if (item.Date_approved.HasValue)
-                {
-                    <span>@item.Date_approved.Value.ToString("MMMM dd, yyyy hh:mm tt")</span>
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Approved_by)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            @*<td>
-                @Html.DropDownListFor(modelItem => item.Status, new SelectList(new[]
-                {
-                    new SelectListItem { Text = "Keep it pending", Value = "Pending" },
-                    new SelectListItem { Text = "Reject", Value = "Reject" },
-                    new SelectListItem { Text = "Approved", Value = "Approved" }
-                }, "Value", "Text", item.Status), new { @class = "form-control", @id = "statusDropdown", @data_id = @item.ID})
-            </td>*@
-            <td>
-                <a href="~/AdminsPage/EditRecipe/@item.ID" class="btn crud-btn edit"><i class="fas fa-edit"></i></a> &nbsp;&nbsp; 
-                @*@Html.ActionLink("Edit", "EditRecipe", new { id = item.ID}, new { @class = "btn crud-btn edit"})*@
-
-                <a href="~/AdminsPage/RecipeDetails/@item.ID" class="btn crud-btn details"><i class="fas fa-info-circle"></i></a> &nbsp;&nbsp;
-                @*@Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn crud-btn details" })*@
-
-                <a href="~/AdminsPage/DeleteRecipe/@item.ID" class="btn crud-btn delete"><i class="fas fa-trash"></i></a> &nbsp;&nbsp;
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn crud-btn delete" })*@
-
-                <!--means if recipe was already checked then dont show approval buttons-->
-                @if (item.DateApproved == null)
-                {
-                    <a href="~/AdminsPage/RejectRecipe/@item.ID" class="btn crud-btn delete"><i class="fas fa-times"></i></a> @:&nbsp; &nbsp;
-                    <a href="~/AdminsPage/ApproveRecipe/@item.ID" class="btn crud-btn approve"><i class="fas fa-check"></i></a>
-                }
-                
-            </td>
+            <th>
+                @Html.DisplayName("Recipe name")
+            </th>
+            <th>
+                @Html.DisplayName("Uploaded by")
+            </th>
+            <th>
+                @Html.DisplayName("Date uploaded")
+            </th>
+            <th>
+                @Html.DisplayName("Status")
+            </th>
+            <th>
+                Action
+            </th>
         </tr>
-    }
+    </thead>
 
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr data-id="@item.ID">
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecipeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Uploaded_by)
+                </td>
+                <td>
+                    @if (item.Date_uploaded.HasValue)
+                    {
+                        <span>@item.Date_uploaded.Value.ToString("MMMM dd, yyyy hh:mm tt")</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="actionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="actionsDropdown">
+                            <a class="dropdown-item" href="~/AdminsPage/EditRecipe/@item.ID">Edit</a>
+                            <a class="dropdown-item" href="~/AdminsPage/RecipeDetails/@item.ID">Details</a>
+                            <a class="dropdown-item" href="~/AdminsPage/DeleteRecipe/@item.ID">Delete</a>
+                            @if (item.DateApproved == null)
+                            {
+                                <a class="dropdown-item" href="#" onclick="approveRecipe(@item.ID)">Approve</a>
+                                <a class="dropdown-item" href="~/AdminsPage/RejectRecipe/@item.ID">Reject</a>
+                            }
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<!-- Remove duplicate jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
+
 <script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
 <script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
@@ -113,7 +117,6 @@
 
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
-
 
 <script>
     $(document).ready(function () {
@@ -134,4 +137,29 @@
             });
         });
     });
+
+    $(document).ready(function () {
+        // Initialize DataTable
+        $('#manageuploadstable').DataTable();
+    });
+
+    function approveRecipe(id) {
+        $.ajax({
+            url: '/AdminsPage/ApproveRecipe/' + id,
+            type: 'POST',
+            success: function (response) {
+                if (response.success) {
+                    alert('Recipe approved successfully!');
+
+                    var row = $('#manageuploadstable').find('tr[data-id="' + id + '"]');
+                    row.find('.status').text('Approved');
+                } else {
+                    alert('Failed to approve recipe.');
+                }
+            },
+            error: function () {
+                alert('An error occurred.');
+            }
+        });
+    }
 </script>

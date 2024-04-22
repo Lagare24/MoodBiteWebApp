@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
     string chosenMood = (string)Session["ChosenMood"];
     string iconName = "";
+
+    var containsAllergens = new List<string>();
+    var user = Session["User"] as User;
+
     switch (chosenMood?.ToLower())
     {
         case "happy":
@@ -30,13 +34,13 @@
             break;
     }
 
+    var recipe = Model.recipeImagesReadMore;
+    //ViewBag.Title = $"{recipe.RecipeName}";
+    //ViewBag.TitleHeader = $"{recipe.RecipeName}";
+    //ViewBag.TitleSubheader = $"{recipe.RecipeName}";
+
     // Default MIME type
     string mimeType = "image/jpeg";
-
-    var recipe = Model.recipeImagesReadMore;
-    ViewBag.Title = $"{recipe.RecipeName}";
-    ViewBag.TitleHeader = $"{recipe.RecipeName}";
-    //ViewBag.TitleSubheader = $"{recipe.RecipeName}";
     if (recipe.ImageURL != null && recipe.ImageURL.Length > 0)
     {
         // Determine the MIME type based on the first few bytes of the image data
@@ -56,6 +60,22 @@
             mimeType = "image/png";
         }
     }
+    var ingredientName = new List<string>();
+    var ingredientQty = new List<int>();
+    var ingredientUnit = new List<string>();
+    var allergens = string.Empty;
+
+    foreach (var recipeIngredient in Model.recipeIngredientsReadMore)
+    {
+        ingredientName.Add(recipeIngredient.IngredientName);
+        ingredientQty.Add(Convert.ToInt32(recipeIngredient.Quantity));
+        ingredientUnit.Add(recipeIngredient.Unit);
+        if (Model.allergy.Select(model => model.ToLower()).Contains(recipeIngredient.IngredientName.ToLower()))
+        {
+            containsAllergens.Add(recipeIngredient.IngredientName);
+        }
+        allergens = string.Join(", ", containsAllergens);
+    }
 }
 
 <!-- Favicon -->
@@ -71,15 +91,36 @@
 <link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 <link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
 <link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 
 <!-- Template Stylesheet -->
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
 <div class="row">
     <div class="col-lg-8">
-        <div class="single-content">
+        <div class="single-content recipecontent">
             <img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(recipe.ImageURL)}")" />
-            <h2>@recipe.RecipeName</h2>
+            <div style="display:flex; justify-content:space-between; align-items:center">
+                <div>
+                    <h6 class="inline-block">This recipe contains: </h6>
+                    <span><i>@allergens</i></span>
+                    <h2 style="display:block">@recipe.RecipeName</h2>
+                </div>
+                <div class="stars">
+                    <form action="">
+                        <input class="star star-5" id="star-5" type="radio" name="star" value="5"/>
+                        <label class="star star-5" for="star-5"></label>
+                        <input class="star star-4" id="star-4" type="radio" name="star" value="4"/>
+                        <label class="star star-4" for="star-4"></label>
+                        <input class="star star-3" id="star-3" type="radio" name="star" value="3"/>
+                        <label class="star star-3" for="star-3"></label>
+                        <input class="star star-2" id="star-2" type="radio" name="star" value="2"/>
+                        <label class="star star-2" for="star-2"></label>
+                        <input class="star star-1" id="star-1" type="radio" name="star" value="1"/>
+                        <label class="star star-1" for="star-1"></label>
+                    </form>
+                </div>
+            </div>
             <p>
                 @Model.recipeDetailsWithoutIngredientsReadMore.RecipeDescription
             </p>
@@ -98,33 +139,39 @@
             </div>
             </div>
             <h4>Ingredients</h4>
-            <div class="form-check" style="margin-bottom:1rem">
-                @foreach (var recipeIngredient in Model.recipeIngredientsReadMore)
-                {
-                    <input class="form-check-input" type="checkbox" id="@("checkbox_" + recipeIngredient.IngredientName)">
-                    <label class="form-check-label" for="@("checkbox_" + recipeIngredient.IngredientName)">
-                        <span class="ingredient-name">@recipeIngredient.IngredientName</span>
-                    </label>
-                    <br />
-                }
+            <div class="form-check row" style="margin-bottom:1rem; padding:0 1rem 0 0; width:max-content;">
+                <table>
+                    <tbody>
+                        @for (int i = 0; i < Model.recipeIngredientsReadMore.Count(); i++)
+            {
+                            <tr>
+                                <td class="ingredient-qty " style="padding:0 0 0 1rem !important; text-align:right;">@ingredientQty.ElementAt(i)</td>
+                                <td class="ingredient-unit" style="padding:0 0 0 1rem !important; text-align:left;">@ingredientUnit.ElementAt(i)</td>
+                                <td class="ingredient-name" style="padding:0 0 0 1rem !important; text-align:left;">@ingredientName.ElementAt(i)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
             <div style="margin:0 0 1rem">
-                <h4>Cooking Instruction</h4>
-
+                <h4 style="display:inline-block; margin-right:1rem">Cooking Instruction</h4>
+                <i class="fas fa-microphone"></i>
                 @{
                     var cookingInstruction = Model.recipeDetailsWithoutIngredientsReadMore.CookingInstruction as string;
                     string[] steps = cookingInstruction.Split(new string[] { "./ " }, StringSplitOptions.RemoveEmptyEntries);
 
-                    foreach(var step in steps)
+                    foreach (var step in steps)
                     {
                         <p>@step</p>
                     }
                 }
             </div>
-            <div style="margin:0 0 1rem">
-                <h4>Allergy and Intolerance Warning</h4>
-                <h6 class="inline-block">This recipe contains: </h6> <span>egg, nuts, shrimp</span>
-            </div>
+                @{
+                    containsAllergens.Clear();
+                    ingredientName.Clear();
+                    ingredientQty.Clear();
+                    ingredientUnit.Clear();
+                }
             <div style="margin:0 0 1rem">
                 <h4>Rating</h4>
                 @{
@@ -144,7 +191,22 @@
             </div>
             <div class="blog-text recipe-readmore-btn">
                 <button class="btn custom-btn" href="#">Download Recipe</button>
-                <button class="btn custom-btn disable-button" style="background-color:red" href="#" disabled>Add to cart</button>
+
+                @if (Model.userPremium != null && Model.foodSaleView != null)
+                {
+                    if(Model.foodSaleView.Available == true)
+                    {
+                        <button class="btn custom-btn addToCartBtn" style="background-color:red">Add to cart</button>
+                    }
+                    else
+                    {
+                        <button class="btn custom-btn addToCartBtn disable-button" style="background-color:red" disabled>Add to cart (Not available)</button>
+                    }
+                }
+                else
+                {
+                    <button class="btn custom-btn disable-button" style="background-color:red; display:none;" href="#" disabled>Add to cart</button>
+                }
             </div>
         </div>
         @*<div class="single-tags">
@@ -158,8 +220,28 @@
         </div>*@
         <div class="single-bio">
             <div class="single-bio-img">
-                <!--change this image to actual users profile picture-->
-                <img src="~/Content/MainTemplate/img/user.jpg" />
+                @{ 
+                    if (Model.uploadersProfilePic.ProfilePicture != null && Model.uploadersProfilePic.ProfilePicture.Length > 0)
+                    {
+                        // Determine the MIME type based on the first few bytes of the image data
+                        byte[] imageData = Model.uploadersProfilePic.ProfilePicture;
+                        string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
+
+                        if (firstBytes.StartsWith("GIF8"))
+                        {
+                            mimeType = "image/gif";
+                        }
+                        else if (firstBytes.StartsWith("\xFF\xD8"))
+                        {
+                            mimeType = "image/jpeg";
+                        }
+                        else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
+                        {
+                            mimeType = "image/png";
+                        }
+                    }
+                }
+                <img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(Model.uploadersProfilePic.ProfilePicture)}")" />
             </div>
             <div class="single-bio-text">
                 <h3>Uploaders Info</h3>
@@ -365,17 +447,9 @@
 
     <div class="col-lg-4">
         <div class="sidebar">
-            <div class="sidebar-widget">
-                <div class="search-widget">
-                    <form>
-                        <input class="form-control" type="text" placeholder="Search Keyword">
-                        <button class="btn"><i class="fa fa-search"></i></button>
-                    </form>
-                </div>
-            </div>
 
             <div class="sidebar-widget">
-                <h2 class="widget-title">Recipes with similar mood tag</h2>
+                <h2 class="widget-title">Similar Recipes</h2>
                 <div class="recent-post">
                     @if (ViewBag.NoRecipesWithSimilarMoodTagMsg == null)
                     {
@@ -429,262 +503,28 @@
             </div>*@
 
             <div class="sidebar-widget">
-                <div class="tab-post">
-                    <ul class="nav nav-pills nav-justified">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="pill" href="#featured">Order Food</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#popular">Popular</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#latest">Latest</a>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content">
-                        <div id="featured" class="container tab-pane active">
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-1.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-2.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-3.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-4.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-5.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="popular" class="container tab-pane fade">
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-1.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-2.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-3.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-4.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-5.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="latest" class="container tab-pane fade">
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-1.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-2.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-3.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-4.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-item">
-                                <div class="post-img">
-                                    <img src="~/Content/MainTemplate/img/post-5.jpg" />
-                                </div>
-                                <div class="post-text">
-                                    <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                    <div class="post-meta">
-                                        <p>By<a href="">Admin</a></p>
-                                        <p>In<a href="">Web Design</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sidebar-widget">
-                <div class="image-widget">
-                    <a href="#"><img src="~/Content/MainTemplate/img/blog-2.jpg" alt="Image"></a>
-                </div>
-            </div>
-
-            <div class="sidebar-widget">
                 <h2 class="widget-title">Categories</h2>
                 <div class="category-widget">
                     <ul>
-                        <li><a href="">Fruit and Vegetables</a><span>(n)</span></li>
-                        <li><a href="">Dairy</a><span>(n)</span></li>
-                        <li><a href="">Meat</a><span>(n)</span></li>
-                        <li><a href="">Poultry</a><span>(n)</span></li>
-                        <li><a href="">Seafood</a><span>(n)</span></li>
-                        <li><a href="">Sugar</a><span>(n)</span></li>
-                        <li><a href="">Alocoholic Beverages</a><span>(n)</span></li>
-                        <li><a href="">Non-Alocoholic Beverages</a><span>(n)</span></li>
+                        @foreach (var foodCategory in Model.foodCategories)
+                        {
+                            var recipeCount = 0;
+                            foreach (var recipeWithCategoryName in Model.allRecipeWithFoodCategoryName)
+                            {
+                                if (foodCategory.ToLower() == recipeWithCategoryName.FoodCategoryName.ToLower())
+                                {
+                                    recipeCount++;
+                                }
+                            }
+                            <li><a href="">@foodCategory</a><span>(@recipeCount)</span></li>
+                        }
                     </ul>
-                </div>
-            </div>
-
-            <div class="sidebar-widget">
-                <div class="image-widget">
-                    <a href="#"><img src="~/Content/MainTemplate/img/blog-3.jpg" alt="Image"></a>
-                </div>
-            </div>
-
-            <div class="sidebar-widget">
-                <h2 class="widget-title">Tags Cloud</h2>
-                <div class="tag-widget">
-                    <a href="">National</a>
-                    <a href="">International</a>
-                    <a href="">Economics</a>
-                    <a href="">Politics</a>
-                    <a href="">Lifestyle</a>
-                    <a href="">Technology</a>
-                    <a href="">Trades</a>
-                </div>
-            </div>
-
-            <div class="sidebar-widget">
-                <h2 class="widget-title">Text Widget</h2>
-                <div class="text-widget">
-                    <p>
-                        Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea nec eros. Nunc eu enim non turpis id augue.
-                    </p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -701,3 +541,64 @@
 
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
+
+<script>
+    $("input[name='star']").change(function () {
+        var rating = parseInt($("input[name='star']:checked").val(), 10);
+        var recipeID = parseInt(@recipe.RecipeID);
+
+        var data = {
+            rating: rating,
+            recipeID: recipeID
+        };
+
+        $.ajax({
+            url: "/UsersPage/SubmitRating",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert("An error occurred while submitting the rating.");
+            }
+        });
+    });
+
+    $("button.addToCartBtn").click(function () {
+        // Disable the button to prevent multiple clicks
+        $(this).prop("disabled", true);
+
+        var recipeID = parseInt(@recipe.RecipeID);
+        var userID = parseInt(@user.userID);
+
+        var data = {
+            recipeID: recipeID
+        };
+
+        $.ajax({
+            url: "/UsersPage/AddToCart",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert("An error occurred while adding the product to the cart.");
+            },
+            complete: function () {
+                // Re-enable the button after the request is complete
+                $("button.custom-btn").prop("disabled", false);
+            }
+        });
+    });
+
+</script>

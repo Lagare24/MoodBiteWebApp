@@ -17,6 +17,7 @@ namespace MoodBite
         public string MoodName { get; set; }
         public int RecipeID { get; set; }
         public string RecipeName { get; set; }
+        public string FoodCategoryName { get; set; }
         public string RecipeDescription { get; set; }
         public string CookingInstruction { get; set; }
         public Nullable<System.TimeSpan> PreparationTime { get; set; }

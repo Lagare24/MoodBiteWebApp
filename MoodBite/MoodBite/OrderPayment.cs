@@ -15,10 +15,9 @@ namespace MoodBite
     public partial class OrderPayment
     {
         public int OrderPaymentID { get; set; }
-        public Nullable<int> OrderDetailID { get; set; }
+        public Nullable<decimal> AmountToBePaid { get; set; }
+        public string ModeOfPayment { get; set; }
         public Nullable<decimal> AmountPaid { get; set; }
         public Nullable<System.DateTime> DatePaid { get; set; }
-    
-        public virtual OrderDetail OrderDetail { get; set; }
     }
 }

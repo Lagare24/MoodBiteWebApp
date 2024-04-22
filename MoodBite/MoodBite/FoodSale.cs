@@ -14,11 +14,20 @@ namespace MoodBite
     
     public partial class FoodSale
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public FoodSale()
+        {
+            this.Cart = new HashSet<Cart>();
+        }
+    
         public int FoodSaleID { get; set; }
         public Nullable<int> UserRecipeID { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string Address { get; set; }
+        public Nullable<bool> Available { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Cart { get; set; }
         public virtual UserRecipe UserRecipe { get; set; }
     }
 }

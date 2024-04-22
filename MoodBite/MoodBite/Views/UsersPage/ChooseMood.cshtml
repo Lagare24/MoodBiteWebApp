@@ -1,11 +1,12 @@
-﻿
+﻿@model IEnumerable<Mood>
+
+
 @{
     ViewBag.Title = "Choose a mood";
     ViewBag.TitleHeader = "Select a mood first";
     ViewBag.TitleSubHeader = "Choose a mood";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
     User user = Session["User"] as User;
-    string usersFirstName = user.FirstName as string;
 }
 
 <!-- Favicon -->
@@ -26,11 +27,11 @@
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
 <!-- Modal -->
-<div class="modal chooseMoodModal" id="myModal" style="background-color:rgba(0,0,0,0.85);" data-backdrop="static" data-keyboard="false">
+<div class="modal chooseMoodModal" id="myModal" style="background-color:rgba(0,0,0,0.85);" onclick="handleModalClick(event)">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" data-backdrop="static" data-keyboard="false">
             <div class="modal-header">
-                <h5 class="modal-title">Hi, @usersFirstName</h5>
+                <h5 class="modal-title">Hi, @User.Identity.Name</h5>
             </div>
             @using (Html.BeginForm())
             {
@@ -38,13 +39,10 @@
                     <div class="form-group">
                         <label for="moodSelect">How are you feeling today?</label>
                         <select class="form-control" id="moodSelect" name="chosenMood">
-                            <option value="happy">Happy</option>
-                            <option value="sad">Sad</option>
-                            <option value="Angry">Angry</option>
-                            <option value="Disgusted">Disgusted</option>
-                            <option value="Fearful">Fearful</option>
-                            <option value="Surprised">Surprised</option>
-                            <option value="Euthymia">Euthymia</option>
+                            @foreach (var mood in Model)
+                            {
+                                <option value="@mood.MoodName">@mood.MoodName</option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -55,6 +53,8 @@
         </div>
     </div>
 </div>
+
+
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -80,4 +80,10 @@
         // Show the modal
         modal.modal('show');
     });
+
+    function handleModalClick(event) {
+        if (event.target === event.currentTarget || event.target.parentNode === event.currentTarget) {
+             window.location.href = 'ChooseMood';
+        }
+    }
 </script>

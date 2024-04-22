@@ -29,6 +29,8 @@ namespace MoodBite
     
         public virtual DbSet<AccountCreationLog> AccountCreationLog { get; set; }
         public virtual DbSet<Allergy> Allergy { get; set; }
+        public virtual DbSet<Cart> Cart { get; set; }
+        public virtual DbSet<FoodCategory> FoodCategory { get; set; }
         public virtual DbSet<FoodSale> FoodSale { get; set; }
         public virtual DbSet<Intolerance> Intolerance { get; set; }
         public virtual DbSet<Mood> Mood { get; set; }
@@ -48,11 +50,19 @@ namespace MoodBite
         public virtual DbSet<UserPremium> UserPremium { get; set; }
         public virtual DbSet<UserRecipe> UserRecipe { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<vw_AllRecipeDetailsWithFoodCategoryName> vw_AllRecipeDetailsWithFoodCategoryName { get; set; }
+        public virtual DbSet<vw_AllUserColWithRecipeID> vw_AllUserColWithRecipeID { get; set; }
+        public virtual DbSet<vw_CartView> vw_CartView { get; set; }
+        public virtual DbSet<vw_CheckOutView> vw_CheckOutView { get; set; }
         public virtual DbSet<vw_CoverImageOfRecipes> vw_CoverImageOfRecipes { get; set; }
+        public virtual DbSet<vw_FilterAllergy> vw_FilterAllergy { get; set; }
+        public virtual DbSet<vw_FoodSaleView> vw_FoodSaleView { get; set; }
+        public virtual DbSet<vw_ForOrderPaymentInsertionView> vw_ForOrderPaymentInsertionView { get; set; }
         public virtual DbSet<vw_IngredientWithType> vw_IngredientWithType { get; set; }
         public virtual DbSet<vw_ManageSubscriptions> vw_ManageSubscriptions { get; set; }
         public virtual DbSet<vw_ManageUploads> vw_ManageUploads { get; set; }
         public virtual DbSet<vw_ManageUsers> vw_ManageUsers { get; set; }
+        public virtual DbSet<vw_OrderDetailView> vw_OrderDetailView { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithMoodTagSimplified> vw_RecipeDetailsWithMoodTagSimplified { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithoutIngredients> vw_RecipeDetailsWithoutIngredients { get; set; }
         public virtual DbSet<vw_RecipeDetailsWithoutIngredientsWithRating> vw_RecipeDetailsWithoutIngredientsWithRating { get; set; }
@@ -61,6 +71,7 @@ namespace MoodBite
         public virtual DbSet<vw_RecommendedRecipeForMood> vw_RecommendedRecipeForMood { get; set; }
         public virtual DbSet<vw_UserDetailsWithRole> vw_UserDetailsWithRole { get; set; }
         public virtual DbSet<vw_UsersUploadCounts> vw_UsersUploadCounts { get; set; }
+        public virtual DbSet<UsersFavoriteRecipes> UsersFavoriteRecipes { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

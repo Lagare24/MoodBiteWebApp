@@ -16,6 +16,7 @@ namespace MoodBite
     {
         public int RecipeID { get; set; }
         public string RecipeName { get; set; }
+        public string FoodCategoryName { get; set; }
         public string MoodName { get; set; }
         public int userID { get; set; }
         public string Uploaded_by { get; set; }

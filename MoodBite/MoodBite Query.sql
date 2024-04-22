@@ -14,6 +14,7 @@ CREATE TABLE [User] (
 	[Address] VARCHAR(255),
 	BirthDate DATE
 )
+USE MOODBITE
 
 ALTER TABLE [User]
 ADD Gender VARCHAR(100)
@@ -406,10 +407,28 @@ CREATE TABLE OrderMaster (
 	PO_ID INT IDENTITY(1,1) PRIMARY KEY,
 	UserID INT,
 	DateOrdered DATETIME,
-	TotalAmount MONEY,
 	IsPaid BIT DEFAULT 0,
-	FOREIGN KEY(UserID) REFERENCES [User](UserID) ON DELETE CASCADE
+	FoodSaleID INT,
+	FOREIGN KEY(UserID) REFERENCES [User](UserID) ON DELETE CASCADE,
+	FOREIGN KEY(FoodSaleID) REFERENCES FoodSale(FoodSaleID) ON DELETE CASCADE
 )
+
+ALTER TABLE OrderMaster
+ADD FoodSaleID INT;
+
+ALTER TABLE OrderMaster
+ADD CONSTRAINT FK_OrderMaster_FoodSaleID FOREIGN KEY (FoodSaleID)
+REFERENCES FoodSale(FoodSaleID);
+
+INSERT INTO OrderMaster
+VALUES('5', GETDATE(), 'Babag1', 0)
+
+INSERT INTO OrderDetail
+VALUES(1, 3, 5, 380, 5*380)
+
+SELECT * FROM OrderMaster om
+INNER JOIN OrderDetail od
+ON om.PO_ID = od.PO_ID
 
 CREATE TABLE OrderDetail (
 	OrderDetailID INT IDENTITY(1,1) PRIMARY KEY,
@@ -418,6 +437,16 @@ CREATE TABLE OrderDetail (
 	Quantity INT,
 	TotalPrice MONEY,
 	FOREIGN KEY(PO_ID) REFERENCES [OrderMaster](PO_ID) ON DELETE CASCADE
+)
+
+CREATE TABLE Cart (
+	CartID INT IDENTITY(1,1) PRIMARY KEY,
+	UserID INT,
+	RecipeID INT,
+	FoodSaleID INT,
+	FOREIGN KEY(UserID) REFERENCES [User](UserID) ON DELETE CASCADE,
+	FOREIGN KEY(RecipeID) REFERENCES Recipe(RecipeID),
+	FOREIGN KEY(FoodSaleID) REFERENCES FoodSale(FoodSaleID)
 )
 
 CREATE TABLE OrderPayment (
@@ -827,7 +856,9 @@ INNER JOIN [User] u
 ON ur.UserID = u.userID
 INNER JOIN Recipe r
 ON r.RecipeID = ur.RecipeID
-LEFT JOIN vw_RecipeDetailsWithoutIngredientsWithRating rd
+LEFT JOIN vw_RecipeDetailsWithoutIngredientsWith
+
+Rating rd
 ON rd.RecipeID = r.RecipeID
 GROUP BY u.FirstName, u.LastName
 
@@ -870,6 +901,8 @@ INNER JOIN [User] u
 ON up.UserID = u.userID
 INNER JOIN Premium p
 ON p.PremiumID = up.PremiumID
+
+--UserPremium, User, Premium
  
 
  --, r.DateApproved 'Date approved', (SELECT CONCAT(u.FirstName, ' ', u.LastName) FROM [User] u WHERE r.ApprovedBy = u.userID) 'Approved by'
@@ -925,7 +958,7 @@ SELECT * FROM vw_RecommendedRecipeForMood
 
 ALTER VIEW vw_RecommendedRecipeForMood
 AS
-SELECT r.RecipeID, r.RecipeName, m.MoodName, u.userID, CONCAT(u.FirstName, ' ' ,u.LastName) as 'Uploaded by', r.DateUploaded, 
+SELECT r.RecipeID, r.RecipeName, fc.FoodCategoryName, m.MoodName, u.userID, CONCAT(u.FirstName, ' ' ,u.LastName) as 'Uploaded by', r.DateUploaded, 
 	(SELECT CONCAT(u.FirstName, ' ' ,u.LastName)
 	FROM [User] u 
 	INNER JOIN  Recipe re
@@ -942,16 +975,8 @@ INNER JOIN [User] u
 ON u.userID = ur.UserID
 INNER JOIN RecipeImage ri
 ON ri.RecipeID = r.RecipeID
-WHERE r.IsApproved = 1
-
-ALTER VIEW vw_RecipeDetailsWithoutIngredients
-AS
-SELECT m.MoodName, r.RecipeID, r.RecipeName, r.RecipeDescription, r.CookingInstruction, r.PreparationTime, r.CookingDuration, r.DateUploaded, r.IsApproved, r.DateApproved, r.ApprovedBy, ri.RecipeImageID, ri.ImageName, ri.ImageURL
-FROM Recipe r 
-INNER JOIN Mood m 
-ON r.MoodID = m.MoodID 
-INNER JOIN RecipeImage ri 
-ON ri.RecipeID = r.RecipeID
+INNER JOIN FoodCategory fc
+ON r.FoodCategoryID = fc.FoodCategoryID
 WHERE r.IsApproved = 1
 
 SELECT * FROM vw_ManageUploads
@@ -964,3 +989,330 @@ SELECT * FROM vw_RecipeDetailsWithoutIngredients
 SELECT * FROM RecipeIngredient
 
 SELECT * FROM Recipe
+
+CREATE VIEW vw_RecipeFullDetails
+AS 
+SELECT r.RecipeID, r.RecipeName, r.
+FROM Recipe r
+INNER JOIN RecipeIngredient ri
+ON r.RecipeID = ri.RecipeID
+INNER JOIN Mood m
+ON r.MoodID = m.MoodID
+
+CREATE TABLE FoodCategory (
+	FoodCategoryID INT IDENTITY(1,1) PRIMARY KEY,
+	FoodCategoryName VARCHAR(100),
+	FoodCategoryDescription VARCHAR(255)
+)
+
+ALTER TABLE Recipe
+ADD CONSTRAINT FK_Recipe_FoodCategory
+FOREIGN KEY (FoodCategoryID) REFERENCES FoodCategory(FoodCategoryID)
+
+ALTER VIEW vw_RecipeDetailsWithoutIngredients
+AS
+SELECT m.MoodName, r.RecipeID, r.RecipeName, fc.FoodCategoryName, r.RecipeDescription, r.CookingInstruction, r.PreparationTime, r.CookingDuration, r.DateUploaded, r.IsApproved, r.DateApproved, r.ApprovedBy, ri.RecipeImageID, ri.ImageName, ri.ImageURL
+FROM Recipe r 
+INNER JOIN Mood m 
+ON r.MoodID = m.MoodID 
+INNER JOIN RecipeImage ri 
+ON ri.RecipeID = r.RecipeID
+INNER JOIN FoodCategory fc
+ON r.FoodCategoryID = fc.FoodCategoryID
+WHERE r.IsApproved = 1
+
+USE MOODBITE
+
+INSERT INTO Allergy (AllergyName)
+VALUES ('Milk'),
+       ('Eggs'),
+       ('Fish'),
+       ('Shellfish'),
+       ('Tree nuts'),
+       ('Peanuts'),
+       ('Wheat'),
+       ('Soy'),
+       ('Sesame seeds'),
+       ('Sulfites'),
+       ('Mustard'),
+       ('Lupin'),
+       ('Celery'),
+       ('Mollusks');
+
+INSERT INTO Intolerance (IntoleranceName)
+VALUES ('Lactose'),
+       ('Gluten'),
+       ('Fructose'),
+       ('Histamine'),
+       ('Caffeine'),
+       ('Sulfite'),
+       ('Soy'),
+       ('Egg'),
+       ('Shellfish'),
+       ('Nut'),
+       ('Dairy'),
+       ('Wheat'),
+       ('Corn');
+
+UPDATE [User] 
+SET ProfilePicture = (SELECT BulkColumn FROM OPENROWSET(BULK 'C:\Users\Windows 10\Pictures\me.jpg', SINGLE_BLOB) AS Image)
+WHERE userId = 1
+
+
+ALTER VIEW vw_AllUserColWithRecipeID
+AS
+SELECT u.*, ur.RecipeID
+FROM [User] u
+INNER JOIN UserRecipe ur
+ON u.userID = ur.UserID
+
+DELETE FROM Allergy
+
+DBCC CHECKIDENT ('Allergy', RESEED, 0);
+
+
+MERGE INTO Allergy AS target
+USING (VALUES
+    ('Peanuts'),
+    ('Tree nuts'),
+    ('Shellfish'),
+    ('Fish'),
+    ('Eggs'),
+    ('Milk'),
+    ('Soy'),
+    ('Wheat'),
+    ('Gluten'),
+    ('Sesame'),
+    ('Mustard'),
+    ('Sulfites'),
+    ('Crab'),
+    ('Salmon'),
+    ('Shrimp'),
+    ('Lobster'),
+    ('Tuna'),
+    ('Cod'),
+    ('Sardine'),
+    ('Mussel'),
+    ('Oyster'),
+    ('Squid'),
+    ('Scallops'),
+    ('Haddock'),
+    ('Trout'),
+    ('Anchovy'),
+    ('Catfish'),
+    ('Halibut'),
+    ('Herring'),
+    ('Octopus'),
+    ('Perch'),
+    ('Pollock'),
+    ('Snapper'),
+    ('Sole'),
+    ('Surimi'),
+    ('Tilefish'),
+    ('Whitefish'),
+    ('Abalone'),
+    ('Crayfish'),
+    ('Eel'),
+    ('Mahi Mahi'),
+    ('Marlin'),
+    ('Swordfish'),
+    ('Turbot'),
+    ('Apples'),
+    ('Bananas'),
+    ('Berries'),
+    ('Mangoes'),
+    ('Peaches'),
+    ('Pineapples'),
+    ('Kiwi'),
+    ('Tomatoes'),
+    ('Carrots'),
+    ('Celery'),
+    ('Potatoes'),
+    ('Avocado'),
+    ('Cucumber'),
+    ('Bell peppers'),
+    ('Soybeans'),
+    ('Lentils'),
+    ('Peas'),
+    ('Pumpkin seeds'),
+    ('Sunflower seeds'),
+    ('Flaxseed'),
+    ('Chia seeds'),
+    ('Quinoa'),
+    ('Buckwheat'),
+    ('Barley'),
+    ('Rye'),
+    ('Oats'),
+    ('Corn'),
+    ('Rice'),
+    ('Coconut')
+) AS source (AllergyName)
+ON target.AllergyName = source.AllergyName
+WHEN NOT MATCHED THEN
+    INSERT (AllergyName)
+    VALUES (source.AllergyName);
+
+UPDATE [User] 
+SET ProfilePicture = (SELECT BulkColumn FROM OPENROWSET(BULK 'C:\Users\Windows 10\Pictures\noprofile-girl.jpg', SINGLE_BLOB) AS Image)
+WHERE userId = 2
+
+UPDATE [User] 
+SET ProfilePicture = (SELECT BulkColumn FROM OPENROWSET(BULK 'C:\Users\Windows 10\Pictures\noprofile-boy.png', SINGLE_BLOB) AS Image)
+WHERE userId = 5
+
+CREATE VIEW vw_AllRecipeDetailsWithFoodCategoryName
+AS
+SELECT r.*, fc.FoodCategoryName
+FROM Recipe r
+INNER JOIN FoodCategory fc
+ON r.FoodCategoryID = fc.FoodCategoryID
+
+USE MoodBite
+
+CREATE VIEW vw_FilterAllergy
+AS
+SELECT r.*, ri.IngredientName, ri.Quantity, ri.Unit, a.AllergyName
+FROM Recipe r
+INNER JOIN RecipeIngredient ri
+    ON r.RecipeID = ri.RecipeID
+INNER JOIN Allergy a
+    ON ri.IngredientName LIKE CONCAT('%', a.AllergyName, '%');
+
+
+SELECT *
+FROM vw_RecommendedRecipeForMood vw
+INNER JOIN RecipeIngredient ri
+ON vw.RecipeID = ri.RecipeID
+WHERE RecipeName LIKE '%Pasta%' AND MoodName = 'Happy' AND ri.IngredientName NOT IN('Pasta')
+
+
+SELECT u.Username, u.Password, u.userID, up.PremiumID
+FROM UserPremium up
+INNER JOIN [User] u
+ON up.UserID = u.userID
+
+SELECT u.Username, u.Password, u.userID, up.PremiumID
+FROM UserPremium up
+RIGHT JOIN [User] u
+ON up.UserID = u.userID
+
+SELECT u.userID, u.Username, u.Password, upr.UserPremiumID, up.UserRecipeID, r.RecipeName
+FROM [User] u
+INNER JOIN UserRecipe up
+ON u.userID = up.UserID
+INNER JOIN UserPremium upr
+ON u.userID = upr.UserID
+INNER JOIN Recipe r
+ON r.RecipeID = up.RecipeID
+ORDER BY u.userID
+
+SELECT * FROM Cart
+
+ALTER VIEW vw_CartView
+AS
+SELECT  u.userID, r.RecipeID, fs.FoodSaleID, c.CartID, r.RecipeName, fs.Price, c.Qty, (fs.Price * c.Qty) 'Total Price'
+FROM Cart c
+INNER JOIN [User] u
+ON c.UserID = u.userID
+INNER JOIN Recipe r
+ON c.RecipeID = r.RecipeID
+INNER JOIN FoodSale fs
+ON fs.FoodSaleID = c.FoodSaleID
+
+SELECT * FROM FoodSale
+
+SELECT * FROM Cart
+
+CREATE VIEW vw_CheckOutView
+AS
+SELECT cv.*, ri.ImageURL
+FROM vw_CartView cv
+INNER JOIN Recipe r
+ON cv.RecipeID = r.RecipeID
+INNER JOIN RecipeImage ri
+ON cv.RecipeID = ri.RecipeID
+
+CREATE VIEW vw_OrderDetailView
+AS
+SELECT om.PO_ID, om.CustomerID, od.TotalPrice
+FROM OrderDetail od
+INNER JOIN OrderMaster om
+ON od.PO_ID = om.PO_ID
+
+SELECT * FROM Cart
+
+SELECT * FROM OrderMaster
+SELECT * FROM OrderDetail
+SELECT * FROM OrderPayment
+SELECT * FROM FoodSale
+
+SELECT r.RecipeName, ur.UserRecipeID FROM UserRecipe ur
+INNER JOIN Recipe r
+ON ur.RecipeID = r.RecipeID
+
+SELECT * FROM FoodSale
+
+SELECT cv.*, ri.ImageURL
+FROM vw_CartView cv
+INNER JOIN Recipe r
+ON cv.RecipeID = r.RecipeID
+INNER JOIN RecipeImage ri
+ON cv.RecipeID = ri.RecipeID
+SELECT * FROM Cart
+
+ALTER TABLE OrderPayment
+DROP COLUMN CustomerID INT
+USE MOODBITE
+
+
+ALTER VIEW vw_ForOrderPaymentInsertionView
+AS
+SELECT od.*, om.CustomerID, om.CustomerAddress 'DeliveredTo', fs.Address 'DeliveredFrom', om.DateOrdered, om.IsPaid
+FROM OrderDetail od 
+INNER JOIN OrderMaster om
+ON om.PO_ID = od.PO_ID
+INNER JOIN FoodSale fs
+ON fs.FoodSaleID = od.FoodForSaleID
+WHERE om.IsPaid = 0
+
+SELECT *
+FROM OrderMaster
+WHERE CustomerID = 5
+
+UPDATE OrderMaster SET IsPaid = 1 WHERE CustomerID = 5(userinput)
+
+SELECT *
+FROM vw_FoodSaleView
+
+ALTER VIEW vw_FoodSaleView
+AS
+SELECT fs.FoodSaleID, u.userID, u.Username, u.Password, ur.UserRecipeID, r.RecipeID, r.RecipeName, fs.Price, fs.Address, fs.Available
+FROM FoodSale fs
+INNER JOIN UserRecipe ur
+ON fs.UserRecipeID = ur.UserRecipeID
+INNER JOIN Recipe r
+ON r.RecipeID = ur.RecipeID
+INNER JOIN [User] u
+ON u.userID = ur.UserID
+
+SELECT * FROM [User]
+SELECT * FROM UserRecipe
+
+DELETE FROM [User] WHERE EmailConfirmed = 0
+
+
+CREATE TABLE UsersFavoriteRecipes (
+	UsersFaveRecipeID INT IDENTITY(1,1) PRIMARY KEY,
+	UserID INT,
+	RecipeID INT,
+	FOREIGN KEY(UserID) REFERENCES [User](userID) ON DELETE CASCADE,
+	FOREIGN KEY(RecipeID) REFERENCES Recipe(RecipeID)
+)
+
+SELECT * FROM vw_AllUserColWithRecipeID
+
+SELECT * FROM UsersFavoriteRecipes
+
+SELECT * FROM Recipe
+
+USE MOODBITE

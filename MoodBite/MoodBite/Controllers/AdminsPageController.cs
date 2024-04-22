@@ -10,6 +10,15 @@ namespace MoodBite.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminsPageController : BaseController
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Overview()
+        {
+            return View();
+        }
         //Manage Users
         public ActionResult ManageUsers()
         {
@@ -28,20 +37,36 @@ namespace MoodBite.Controllers
             return RedirectToAction("./Account/Login");
         }
 
+        [HttpPost]
         public ActionResult ApproveRecipe(int id)
         {
-            var adminInCharge = Session["User"] as User;
-            var recipe = _db.Recipe.Where(model => model.RecipeID == id).FirstOrDefault();
+            if (Session["User"] != null)
+            {
+                var adminInCharge = Session["User"] as User;
+                var recipe = _db.Recipe.Where(model => model.RecipeID == id).FirstOrDefault();
 
-            recipe.IsApproved = true;
-            recipe.ApprovedBy = adminInCharge.userID;
-            recipe.DateApproved = DateTime.Today;
+                recipe.IsApproved = true;
+                recipe.ApprovedBy = adminInCharge.userID;
+                recipe.DateApproved = DateTime.Today;
 
-            _recipeRepo.Update(id, recipe);
-
-            return RedirectToAction("ManageUploads");
+                try
+                {
+                    _recipeRepo.Update(id, recipe);
+                    return Json(new { success = true });
+                }
+                catch (Exception)
+                {
+                    return Json(new { success = false });
+                    throw;
+                }
+            } else
+            {
+                return RedirectToAction("../Account/LogOut");
+            }
+            
         }
 
+        [HttpPost]
         public ActionResult RejectRecipe(int id)
         {
             var adminInCharge = Session["User"] as User;

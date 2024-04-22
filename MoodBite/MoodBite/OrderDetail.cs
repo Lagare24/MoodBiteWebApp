@@ -14,20 +14,13 @@ namespace MoodBite
     
     public partial class OrderDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OrderDetail()
-        {
-            this.OrderPayment = new HashSet<OrderPayment>();
-        }
-    
         public int OrderDetailID { get; set; }
         public Nullable<int> PO_ID { get; set; }
         public Nullable<int> FoodForSaleID { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<decimal> UnitPrice { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
     
         public virtual OrderMaster OrderMaster { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderPayment> OrderPayment { get; set; }
     }
 }

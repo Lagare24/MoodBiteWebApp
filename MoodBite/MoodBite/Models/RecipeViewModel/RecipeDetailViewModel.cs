@@ -18,5 +18,13 @@ namespace MoodBite.Models.RecipeViewModel
         public IEnumerable<vw_RecipeDetailsWithoutIngredientsWithRating> recipeDetailsWithRating;
         public IEnumerable<vw_recipeUploadersNameWithRating> recipeUploadersNameWithRatingReadMore;
         public IEnumerable<vw_UsersUploadCounts> userUploadCounts;
+        public vw_AllUserColWithRecipeID uploadersProfilePic;
+        public IEnumerable<vw_AllRecipeDetailsWithFoodCategoryName> allRecipeWithFoodCategoryName;
+        public IEnumerable<string> allergy;
+        public IEnumerable<string> foodCategories;
+        public IEnumerable<string> intolerance;
+        public UserPremium userPremium;
+        public vw_FoodSaleView foodSaleView;
+        public IEnumerable<int> faveRecipes;
     }
 }

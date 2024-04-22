@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "ConfirmEmail";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
+}
+
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+<div class="modal verificationcode" id="myModal" style="background-color:rgba(0,0,0,0.85);" onclick="handleModalClick(event)">
+    <div class="modal-dialog">
+        <div class="modal-content" data-backdrop="static" data-keyboard="false">
+            <div class="modal-header">
+                <h5 class="modal-title">Email Verification</h5>
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger custom-ul", @style = "color:red" })
+            </div>
+            @using (Html.BeginForm())
+            {
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="moodSelect">Enter the code sent to your email</label>
+                        <br />
+                        <input style="width:100%; padding:0.35rem 0.65rem" type="text" name="token"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="verificationcodeBtn">Submit</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+<script>
+    $(function () {
+        // Get the modal element
+        var modal = $('.verificationcode');
+
+        // Show the modal
+        modal.modal('show');
+    });
+
+    function handleModalClick(event) {
+        if (event.target === event.currentTarget || event.target.parentNode === event.currentTarget) {
+            window.location.href = 'ConfirmEmail';
+        }
+    }
+</script>
