@@ -10,7 +10,9 @@ using System.Web.Mvc;
 
 namespace MoodBite.Controllers
 {
+    [HandleError]
     [Authorize(Roles = "User, Admin")]
+    [OutputCache(NoStore = true, Duration = 0)]
     public class UsersPageController : BaseController
     {
         public string localChosenMood;
@@ -107,66 +109,181 @@ namespace MoodBite.Controllers
         [HttpPost]
         public ActionResult RecipeReadMore(int recipeID, int userID)
         {
-            //Session[]
             return Json(new { success = true, message = "Product has been added to your shopping cart." });
         }
 
         public ActionResult UploadRecipe()
         {
-            var model = new Recipe(); 
-            return View(model);
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = _db.User.Where(m => m.Username == User.Identity.Name).FirstOrDefault();
+                var model = new Recipe();
+                var userPremium = _db.UserPremium.Where(m => m.UserID == user.userID).FirstOrDefault();
+                Session["UserPremium"] = userPremium;
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("../Account/LogOuts");
+            }
+           
         }
 
+        //[HttpPost]
+        //public ActionResult UploadRecipe(Recipe recipe, string ingcount, string moodid, string[] ingredientName, double[] ingredientQty, string[] ingredientUnit)
+        //{
+
+        //    if (User.Identity.IsAuthenticated && User.Identity.Name != null)
+        //    {
+        //        var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
+        //        var imageFile = Request.Files.Get("imageFile");
+
+        //        var uploadRecipe = new Recipe();
+        //        uploadRecipe.RecipeID = recipe.RecipeID;
+        //        uploadRecipe.RecipeName = recipe.RecipeName;
+        //        uploadRecipe.RecipeDescription = recipe.RecipeDescription;
+        //        uploadRecipe.PreparationTime = TimeSpan.Parse(recipe.PreparationTime.ToString());
+        //        uploadRecipe.CookingDuration = TimeSpan.Parse(recipe.CookingDuration.ToString());
+        //        uploadRecipe.DateUploaded = DateTime.Today;
+        //        uploadRecipe.CookingInstruction = recipe.CookingInstruction;
+        //        uploadRecipe.IngredientsCount = Convert.ToInt32(ingcount);
+        //        uploadRecipe.IsApproved = false;
+        //        uploadRecipe.MoodID = Convert.ToInt32(moodid);
+        //        _recipeRepo.Create(uploadRecipe);
+
+        //        int newRecipeID = uploadRecipe.RecipeID;
+
+        //        if (imageFile != null && imageFile.ContentLength > 0)
+        //        {
+        //            var recipeImage = new RecipeImage();
+        //            recipeImage.RecipeID = newRecipeID;
+        //            recipeImage.ImageName = recipe.RecipeName + " cover";
+
+        //            using (var binaryReader = new BinaryReader(imageFile.InputStream))
+        //            {
+        //                recipeImage.ImageURL = binaryReader.ReadBytes(imageFile.ContentLength);
+        //            }
+        //            try
+        //            {
+        //                _recipeImageRepo.Create(recipeImage);
+        //            }
+        //            catch (Exception)
+        //            {
+        //                _recipeRepo.Delete(newRecipeID);
+        //            }
+        //        }
+
+        //        var userRecipe = new UserRecipe();
+        //        userRecipe.UserID = user.userID;
+        //        userRecipe.RecipeID = newRecipeID;
+        //        try
+        //        {
+        //            _userRecipeRepo.Create(userRecipe);
+        //            int newUserRecipeID = userRecipe.UserRecipeID;
+
+        //            var recipeIngredients = new RecipeIngredient();
+        //            for (int i = 0; i < Convert.ToInt32(ingcount); i++)
+        //            {
+        //                recipeIngredients.RecipeID = newRecipeID;
+        //                recipeIngredients.IngredientName = ingredientName[i];
+        //                recipeIngredients.Unit = ingredientUnit[i];
+        //                recipeIngredients.Quantity = ingredientQty[i];
+        //                _recipeIngredientRepo.Create(recipeIngredients);
+        //            }
+        //        }
+        //        catch (Exception)
+        //        {
+        //            _recipeImageRepo.Delete(newRecipeID);
+        //        }
+        //        return RedirectToAction("UsersHome");
+        //    }
+        //    return View();
+        //}
+
         [HttpPost]
-        public ActionResult UploadRecipe(Recipe recipe, string ingcount, string moodid, string[] ingredientName, int[] ingredientQty, string[] ingredientUnit)
+        public ActionResult UploadRecipe(Recipe recipe, string ingcount, string moodid, string[] ingredientName, double[] ingredientQty, string[] ingredientUnit, double? price, string shippedfrom)
         {
-            var user = Session["User"] as User;
-            var imageFile = Request.Files.Get("imageFile");
 
-            var uploadRecipe = new Recipe();
-            uploadRecipe.RecipeID = recipe.RecipeID;
-            uploadRecipe.RecipeName = recipe.RecipeName;
-            uploadRecipe.RecipeDescription = recipe.RecipeDescription;
-            uploadRecipe.PreparationTime = TimeSpan.Parse(recipe.PreparationTime.ToString());
-            uploadRecipe.CookingDuration = TimeSpan.Parse(recipe.CookingDuration.ToString());
-            uploadRecipe.DateUploaded = DateTime.Today;
-            uploadRecipe.CookingInstruction = recipe.CookingInstruction;
-            uploadRecipe.IngredientsCount = Convert.ToInt32(ingcount);
-            uploadRecipe.IsApproved = false;
-            uploadRecipe.MoodID = Convert.ToInt32(moodid);
-            _recipeRepo.Create(uploadRecipe);
-
-            int newRecipeID = uploadRecipe.RecipeID;
-
-            if (imageFile != null && imageFile.ContentLength > 0)
+            if (User.Identity.IsAuthenticated && User.Identity.Name != null)
             {
-                var recipeImage = new RecipeImage();
-                recipeImage.RecipeID = newRecipeID;
-                recipeImage.ImageName = recipe.RecipeName + " cover";
+                var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
+                var imageFile = Request.Files.Get("imageFile");
 
-                using (var binaryReader = new BinaryReader(imageFile.InputStream))
+                var uploadRecipe = new Recipe();
+                uploadRecipe.RecipeID = recipe.RecipeID;
+                uploadRecipe.RecipeName = recipe.RecipeName;
+                uploadRecipe.RecipeDescription = recipe.RecipeDescription;
+                uploadRecipe.PreparationTime = TimeSpan.Parse(recipe.PreparationTime.ToString());
+                uploadRecipe.CookingDuration = TimeSpan.Parse(recipe.CookingDuration.ToString());
+                uploadRecipe.DateUploaded = DateTime.Today;
+                uploadRecipe.CookingInstruction = recipe.CookingInstruction;
+                uploadRecipe.IngredientsCount = Convert.ToInt32(ingcount);
+                uploadRecipe.IsApproved = false;
+                uploadRecipe.MoodID = Convert.ToInt32(moodid);
+                _recipeRepo.Create(uploadRecipe);
+
+                int newRecipeID = uploadRecipe.RecipeID;
+
+                if (imageFile != null && imageFile.ContentLength > 0)
                 {
-                    recipeImage.ImageURL = binaryReader.ReadBytes(imageFile.ContentLength);
+                    var recipeImage = new RecipeImage();
+                    recipeImage.RecipeID = newRecipeID;
+                    recipeImage.ImageName = recipe.RecipeName + " cover";
+
+                    using (var binaryReader = new BinaryReader(imageFile.InputStream))
+                    {
+                        recipeImage.ImageURL = binaryReader.ReadBytes(imageFile.ContentLength);
+                    }
+                    try
+                    {
+                        _recipeImageRepo.Create(recipeImage);
+                    }
+                    catch (Exception)
+                    {
+                        _recipeRepo.Delete(newRecipeID);
+                    }
                 }
 
-                _recipeImageRepo.Create(recipeImage);
+                var userRecipe = new UserRecipe();
+                userRecipe.UserID = user.userID;
+                userRecipe.RecipeID = newRecipeID;
+                try
+                {
+                    _userRecipeRepo.Create(userRecipe);
+                    int newUserRecipeID = userRecipe.UserRecipeID;
+
+                    var recipeIngredients = new RecipeIngredient();
+                    for (int i = 0; i < Convert.ToInt32(ingcount); i++)
+                    {
+                        recipeIngredients.RecipeID = newRecipeID;
+                        recipeIngredients.IngredientName = ingredientName[i];
+                        recipeIngredients.Unit = ingredientUnit[i];
+                        recipeIngredients.Quantity = ingredientQty[i];
+                        _recipeIngredientRepo.Create(recipeIngredients);
+                    }
+                    if ((price > 0 || price != null) && !string.IsNullOrEmpty(shippedfrom))
+                    {
+                        var foodSale = new FoodSale();
+                        foodSale.UserRecipeID = newUserRecipeID;
+                        foodSale.Price = Convert.ToDecimal(price);
+                        foodSale.Address = shippedfrom;
+                        foodSale.Available = true;
+                        try
+                        {
+                            _foodSaleRepo.Create(foodSale);
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    _recipeImageRepo.Delete(newRecipeID);
+                }
+                return RedirectToAction("UsersHome");
             }
-
-            var userRecipe = new UserRecipe();
-            userRecipe.UserID = user.userID;
-            userRecipe.RecipeID = newRecipeID;
-            _userRecipeRepo.Create(userRecipe);
-
-            var recipeIngredients = new RecipeIngredient();
-            for (int i = 0; i < Convert.ToInt32(ingcount); i++)
-            {
-                recipeIngredients.RecipeID = newRecipeID;
-                recipeIngredients.IngredientName = ingredientName[i];
-                recipeIngredients.Unit = ingredientUnit[i];
-                recipeIngredients.Quantity = ingredientQty[i];
-                _recipeIngredientRepo.Create(recipeIngredients);
-            }
-
             return View();
         }
 
@@ -217,7 +334,7 @@ namespace MoodBite.Controllers
             }
         }
 
-        public ActionResult MyCart(int id)
+        public ActionResult MyCart()
         {
             if (Session["User"] == null)
             {
@@ -455,10 +572,20 @@ namespace MoodBite.Controllers
                 fave.UserID = user.userID;
                 fave.RecipeID = recipeID;
 
+                var existingFavorites = _db.UsersFavoriteRecipes.Where(model => model.UserID == user.userID && model.RecipeID == recipeID).FirstOrDefault();
+
                 try
                 {
-                    _userFaveRecipe.Create(fave);
-                    return Json(new { success = true, message = "Added to favorites!" });
+                    if (existingFavorites == null)
+                    {
+                        _userFaveRecipe.Create(fave);
+                        return Json(new { success = true, message = "Added to favorites!", add = true });
+                    }
+                    else
+                    {
+                        _userFaveRecipe.Delete(existingFavorites.UsersFaveRecipeID);
+                        return Json(new { success = true, message = "Removed from favorites!", add = false });
+                    }
                 }
                 catch (Exception)
                 {
@@ -470,6 +597,11 @@ namespace MoodBite.Controllers
             {
                 return RedirectToAction("../Account/LogOut");
             }
+        }
+
+        public ActionResult MyFavorites()
+        {
+            return View();
         }
     }
 }

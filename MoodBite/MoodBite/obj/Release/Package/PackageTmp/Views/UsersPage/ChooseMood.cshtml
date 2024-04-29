@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Mood>
+
+
+@{
+    ViewBag.Title = "Choose a mood";
+    ViewBag.TitleHeader = "Select a mood first";
+    ViewBag.TitleSubHeader = "Choose a mood";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
+    User user = Session["User"] as User;
+}
+
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+<!-- Modal -->
+<div class="modal chooseMoodModal" id="myModal" style="background-color:rgba(0,0,0,0.85);" onclick="handleModalClick(event)">
+    <div class="modal-dialog">
+        <div class="modal-content" data-backdrop="static" data-keyboard="false">
+            <div class="modal-header">
+                <h5 class="modal-title">Hi, @User.Identity.Name</h5>
+            </div>
+            @using (Html.BeginForm())
+            {
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="moodSelect">How are you feeling today?</label>
+                        <select class="form-control" id="moodSelect" name="chosenMood">
+                            @foreach (var mood in Model)
+                            {
+                                <option value="@mood.MoodName">@mood.MoodName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="selectMoodBtn">Next</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+
+<script>
+    $(function() {
+        // Get the modal element
+        var modal = $('.chooseMoodModal');
+
+        // Show the modal
+        modal.modal('show');
+    });
+
+    function handleModalClick(event) {
+        if (event.target === event.currentTarget || event.target.parentNode === event.currentTarget) {
+             window.location.href = 'ChooseMood';
+        }
+    }
+</script>

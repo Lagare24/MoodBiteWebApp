@@ -23,8 +23,8 @@ namespace MoodBite
             this.RecipeIntolerance = new HashSet<RecipeIntolerance>();
             this.RecipeRating = new HashSet<RecipeRating>();
             this.UserRecipe = new HashSet<UserRecipe>();
-            this.RecipeIngredient = new HashSet<RecipeIngredient>();
             this.UsersFavoriteRecipes = new HashSet<UsersFavoriteRecipes>();
+            this.RecipeIngredient = new HashSet<RecipeIngredient>();
         }
     
         public int RecipeID { get; set; }
@@ -57,8 +57,8 @@ namespace MoodBite
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRecipe> UserRecipe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RecipeIngredient> RecipeIngredient { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersFavoriteRecipes> UsersFavoriteRecipes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecipeIngredient> RecipeIngredient { get; set; }
     }
 }

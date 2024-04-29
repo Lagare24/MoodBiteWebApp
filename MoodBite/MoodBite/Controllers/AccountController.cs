@@ -13,6 +13,7 @@ using System.Web.Security;
 
 namespace MoodBite.Controllers
 {
+    [HandleError]
     public class AccountController : BaseController
     {
         [AllowAnonymous]

@@ -47,6 +47,7 @@
           <Property Name="Price" Type="money" />
           <Property Name="Address" Type="text" />
           <Property Name="Available" Type="bit" />
+          <Property Name="Stocks" Type="int" />
         </EntityType>
         <EntityType Name="Intolerance">
           <Key>
@@ -108,6 +109,10 @@
           </Key>
           <Property Name="RecipeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MoodID" Type="int" />
+          <Property Name="FoodCategoryID" Type="int" />
+          <Property Name="RecipeName" Type="text" />
+          <Property Name="RecipeDescription" Type="text" />
+          <Property Name="IngredientsCount" Type="int" />
           <Property Name="CookingInstruction" Type="text" />
           <Property Name="PreparationTime" Type="time" Precision="7" />
           <Property Name="CookingDuration" Type="time" Precision="7" />
@@ -115,10 +120,6 @@
           <Property Name="IsApproved" Type="bit" />
           <Property Name="DateApproved" Type="datetime" />
           <Property Name="ApprovedBy" Type="int" />
-          <Property Name="RecipeName" Type="text" />
-          <Property Name="IngredientsCount" Type="int" />
-          <Property Name="RecipeDescription" Type="text" />
-          <Property Name="FoodCategoryID" Type="int" />
         </EntityType>
         <EntityType Name="RecipeAllergy">
           <Key>
@@ -145,7 +146,7 @@
           <Property Name="RecipeID" Type="int" />
           <Property Name="IngredientName" Type="varchar" MaxLength="255" />
           <Property Name="Unit" Type="varchar" MaxLength="100" />
-          <Property Name="Quantity" Type="int" />
+          <Property Name="Quantity" Type="float" />
         </EntityType>
         <EntityType Name="RecipeIntolerance">
           <Key>
@@ -239,6 +240,10 @@ warning 6002: The table/view 'MoodBite.dbo.vw_AllRecipeDetailsWithFoodCategoryNa
           </Key>
           <Property Name="RecipeID" Type="int" Nullable="false" />
           <Property Name="MoodID" Type="int" />
+          <Property Name="FoodCategoryID" Type="int" />
+          <Property Name="RecipeName" Type="text" />
+          <Property Name="RecipeDescription" Type="text" />
+          <Property Name="IngredientsCount" Type="int" />
           <Property Name="CookingInstruction" Type="text" />
           <Property Name="PreparationTime" Type="time" Precision="7" />
           <Property Name="CookingDuration" Type="time" Precision="7" />
@@ -246,10 +251,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_AllRecipeDetailsWithFoodCategoryNa
           <Property Name="IsApproved" Type="bit" />
           <Property Name="DateApproved" Type="datetime" />
           <Property Name="ApprovedBy" Type="int" />
-          <Property Name="RecipeName" Type="text" />
-          <Property Name="IngredientsCount" Type="int" />
-          <Property Name="RecipeDescription" Type="text" />
-          <Property Name="FoodCategoryID" Type="int" />
           <Property Name="FoodCategoryName" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -332,6 +333,10 @@ warning 6002: The table/view 'MoodBite.dbo.vw_FilterAllergy' does not have a pri
           </Key>
           <Property Name="RecipeID" Type="int" Nullable="false" />
           <Property Name="MoodID" Type="int" />
+          <Property Name="FoodCategoryID" Type="int" />
+          <Property Name="RecipeName" Type="text" />
+          <Property Name="RecipeDescription" Type="text" />
+          <Property Name="IngredientsCount" Type="int" />
           <Property Name="CookingInstruction" Type="text" />
           <Property Name="PreparationTime" Type="time" Precision="7" />
           <Property Name="CookingDuration" Type="time" Precision="7" />
@@ -339,12 +344,8 @@ warning 6002: The table/view 'MoodBite.dbo.vw_FilterAllergy' does not have a pri
           <Property Name="IsApproved" Type="bit" />
           <Property Name="DateApproved" Type="datetime" />
           <Property Name="ApprovedBy" Type="int" />
-          <Property Name="RecipeName" Type="text" />
-          <Property Name="IngredientsCount" Type="int" />
-          <Property Name="RecipeDescription" Type="text" />
-          <Property Name="FoodCategoryID" Type="int" />
           <Property Name="IngredientName" Type="varchar" MaxLength="255" />
-          <Property Name="Quantity" Type="int" />
+          <Property Name="Quantity" Type="float" />
           <Property Name="Unit" Type="varchar" MaxLength="100" />
           <Property Name="AllergyName" Type="varchar" MaxLength="100" />
         </EntityType>
@@ -1019,6 +1020,10 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
             <DefiningQuery>SELECT 
     [vw_AllRecipeDetailsWithFoodCategoryName].[RecipeID] AS [RecipeID], 
     [vw_AllRecipeDetailsWithFoodCategoryName].[MoodID] AS [MoodID], 
+    [vw_AllRecipeDetailsWithFoodCategoryName].[FoodCategoryID] AS [FoodCategoryID], 
+    [vw_AllRecipeDetailsWithFoodCategoryName].[RecipeName] AS [RecipeName], 
+    [vw_AllRecipeDetailsWithFoodCategoryName].[RecipeDescription] AS [RecipeDescription], 
+    [vw_AllRecipeDetailsWithFoodCategoryName].[IngredientsCount] AS [IngredientsCount], 
     [vw_AllRecipeDetailsWithFoodCategoryName].[CookingInstruction] AS [CookingInstruction], 
     [vw_AllRecipeDetailsWithFoodCategoryName].[PreparationTime] AS [PreparationTime], 
     [vw_AllRecipeDetailsWithFoodCategoryName].[CookingDuration] AS [CookingDuration], 
@@ -1026,10 +1031,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_AllRecipeDetailsWithFoodCategoryName].[IsApproved] AS [IsApproved], 
     [vw_AllRecipeDetailsWithFoodCategoryName].[DateApproved] AS [DateApproved], 
     [vw_AllRecipeDetailsWithFoodCategoryName].[ApprovedBy] AS [ApprovedBy], 
-    [vw_AllRecipeDetailsWithFoodCategoryName].[RecipeName] AS [RecipeName], 
-    [vw_AllRecipeDetailsWithFoodCategoryName].[IngredientsCount] AS [IngredientsCount], 
-    [vw_AllRecipeDetailsWithFoodCategoryName].[RecipeDescription] AS [RecipeDescription], 
-    [vw_AllRecipeDetailsWithFoodCategoryName].[FoodCategoryID] AS [FoodCategoryID], 
     [vw_AllRecipeDetailsWithFoodCategoryName].[FoodCategoryName] AS [FoodCategoryName]
     FROM [dbo].[vw_AllRecipeDetailsWithFoodCategoryName] AS [vw_AllRecipeDetailsWithFoodCategoryName]</DefiningQuery>
           </EntitySet>
@@ -1090,6 +1091,10 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
             <DefiningQuery>SELECT 
     [vw_FilterAllergy].[RecipeID] AS [RecipeID], 
     [vw_FilterAllergy].[MoodID] AS [MoodID], 
+    [vw_FilterAllergy].[FoodCategoryID] AS [FoodCategoryID], 
+    [vw_FilterAllergy].[RecipeName] AS [RecipeName], 
+    [vw_FilterAllergy].[RecipeDescription] AS [RecipeDescription], 
+    [vw_FilterAllergy].[IngredientsCount] AS [IngredientsCount], 
     [vw_FilterAllergy].[CookingInstruction] AS [CookingInstruction], 
     [vw_FilterAllergy].[PreparationTime] AS [PreparationTime], 
     [vw_FilterAllergy].[CookingDuration] AS [CookingDuration], 
@@ -1097,10 +1102,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_FilterAllergy].[IsApproved] AS [IsApproved], 
     [vw_FilterAllergy].[DateApproved] AS [DateApproved], 
     [vw_FilterAllergy].[ApprovedBy] AS [ApprovedBy], 
-    [vw_FilterAllergy].[RecipeName] AS [RecipeName], 
-    [vw_FilterAllergy].[IngredientsCount] AS [IngredientsCount], 
-    [vw_FilterAllergy].[RecipeDescription] AS [RecipeDescription], 
-    [vw_FilterAllergy].[FoodCategoryID] AS [FoodCategoryID], 
     [vw_FilterAllergy].[IngredientName] AS [IngredientName], 
     [vw_FilterAllergy].[Quantity] AS [Quantity], 
     [vw_FilterAllergy].[Unit] AS [Unit], 
@@ -1460,6 +1461,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <Property Name="Available" Type="Boolean" />
           <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__FoodSaleID__2D7CBDC4" FromRole="FoodSale" ToRole="Cart" />
           <NavigationProperty Name="UserRecipe" Relationship="Self.FK__FoodSale__UserRe__1DB06A4F" FromRole="FoodSale" ToRole="UserRecipe" />
+          <Property Name="Stocks" Type="Int32" />
         </EntityType>
         <EntityType Name="Intolerance">
           <Key>
@@ -1547,8 +1549,8 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <NavigationProperty Name="RecipeIntolerance" Relationship="Self.FK__RecipeInt__Recip__6383C8BA" FromRole="Recipe" ToRole="RecipeIntolerance" />
           <NavigationProperty Name="RecipeRating" Relationship="Self.FK__RecipeRat__Recip__39237A9A" FromRole="Recipe" ToRole="RecipeRating" />
           <NavigationProperty Name="UserRecipe" Relationship="Self.FK__UserRecip__Recip__787EE5A0" FromRole="Recipe" ToRole="UserRecipe" />
+          <NavigationProperty Name="UsersFavoriteRecipes" Relationship="Self.FK__UsersFavo__Recip__61F08603" FromRole="Recipe" ToRole="UsersFavoriteRecipes" />
           <NavigationProperty Name="RecipeIngredient" Relationship="Self.FK_RecipeIngredient_RecipeID" FromRole="Recipe" ToRole="RecipeIngredient" />
-          <NavigationProperty Name="UsersFavoriteRecipes" Relationship="MoodBiteModel.FK__UsersFavo__Recip__61F08603" FromRole="Recipe" ToRole="UsersFavoriteRecipes" />
         </EntityType>
         <EntityType Name="RecipeAllergy">
           <Key>
@@ -1578,7 +1580,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <Property Name="RecipeID" Type="Int32" />
           <Property Name="IngredientName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Unit" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Quantity" Type="Double" />
           <NavigationProperty Name="Recipe" Relationship="Self.FK_RecipeIngredient_RecipeID" FromRole="RecipeIngredient" ToRole="Recipe" />
         </EntityType>
         <EntityType Name="RecipeIntolerance">
@@ -1634,6 +1636,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="EmailConfirmed" Type="Boolean" />
+          <Property Name="EmailConfirmationToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="AccountCreationLog" Relationship="Self.FK__AccountCr__UserI__3DE82FB7" FromRole="User" ToRole="AccountCreationLog" />
           <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__UserID__2B947552" FromRole="User" ToRole="Cart" />
@@ -1643,8 +1646,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <NavigationProperty Name="UserPremium" Relationship="Self.FK__UserPremi__DateS__0E6E26BF" FromRole="User" ToRole="UserPremium" />
           <NavigationProperty Name="UserRecipe" Relationship="Self.FK__UserRecip__UserI__778AC167" FromRole="User" ToRole="UserRecipe" />
           <NavigationProperty Name="UserRole" Relationship="Self.FK__UserRole__UserID__3C69FB99" FromRole="User" ToRole="UserRole" />
-          <Property Name="EmailConfirmationToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UsersFavoriteRecipes" Relationship="MoodBiteModel.FK__UsersFavo__UserI__60FC61CA" FromRole="User" ToRole="UsersFavoriteRecipes" />
+          <NavigationProperty Name="UsersFavoriteRecipes" Relationship="Self.FK__UsersFavo__UserI__60FC61CA" FromRole="User" ToRole="UsersFavoriteRecipes" />
         </EntityType>
         <EntityType Name="UserPremium">
           <Key>
@@ -1678,6 +1680,16 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <NavigationProperty Name="Role" Relationship="Self.FK__UserRole__RoleID__3D5E1FD2" FromRole="UserRole" ToRole="Role" />
           <NavigationProperty Name="User" Relationship="Self.FK__UserRole__UserID__3C69FB99" FromRole="UserRole" ToRole="User" />
         </EntityType>
+        <EntityType Name="UsersFavoriteRecipes">
+          <Key>
+            <PropertyRef Name="UsersFaveRecipeID" />
+          </Key>
+          <Property Name="UsersFaveRecipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="RecipeID" Type="Int32" />
+          <NavigationProperty Name="Recipe" Relationship="Self.FK__UsersFavo__Recip__61F08603" FromRole="UsersFavoriteRecipes" ToRole="Recipe" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UsersFavo__UserI__60FC61CA" FromRole="UsersFavoriteRecipes" ToRole="User" />
+        </EntityType>
         <EntityType Name="vw_AllRecipeDetailsWithFoodCategoryName">
           <Key>
             <PropertyRef Name="RecipeID" />
@@ -1710,10 +1722,10 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="RecipeID" Type="Int32" />
           <Property Name="EmailConfirmed" Type="Boolean" />
           <Property Name="EmailConfirmationToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="RecipeID" Type="Int32" />
         </EntityType>
         <EntityType Name="vw_CartView">
           <Key>
@@ -2249,6 +2261,18 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__UsersFavo__Recip__61F08603">
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1" />
+          <End Role="UsersFavoriteRecipes" Type="Self.UsersFavoriteRecipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeID" />
+            </Principal>
+            <Dependent Role="UsersFavoriteRecipes">
+              <PropertyRef Name="RecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RecipeIngredient_RecipeID">
           <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -2333,6 +2357,20 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__UsersFavo__UserI__60FC61CA">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersFavoriteRecipes" Type="Self.UsersFavoriteRecipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="UsersFavoriteRecipes">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MoodBiteEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AccountCreationLog" EntityType="Self.AccountCreationLog" />
           <EntitySet Name="Allergy" EntityType="Self.Allergy" />
@@ -2357,6 +2395,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <EntitySet Name="UserPremium" EntityType="Self.UserPremium" />
           <EntitySet Name="UserRecipe" EntityType="Self.UserRecipe" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" />
+          <EntitySet Name="UsersFavoriteRecipes" EntityType="Self.UsersFavoriteRecipes" />
           <EntitySet Name="vw_AllRecipeDetailsWithFoodCategoryName" EntityType="Self.vw_AllRecipeDetailsWithFoodCategoryName" />
           <EntitySet Name="vw_AllUserColWithRecipeID" EntityType="Self.vw_AllUserColWithRecipeID" />
           <EntitySet Name="vw_CartView" EntityType="Self.vw_CartView" />
@@ -2450,6 +2489,10 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
             <End Role="Recipe" EntitySet="Recipe" />
             <End Role="UserRecipe" EntitySet="UserRecipe" />
           </AssociationSet>
+          <AssociationSet Name="FK__UsersFavo__Recip__61F08603" Association="Self.FK__UsersFavo__Recip__61F08603">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
+          </AssociationSet>
           <AssociationSet Name="FK_RecipeIngredient_RecipeID" Association="Self.FK_RecipeIngredient_RecipeID">
             <End Role="Recipe" EntitySet="Recipe" />
             <End Role="RecipeIngredient" EntitySet="RecipeIngredient" />
@@ -2473,6 +2516,10 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <AssociationSet Name="FK__UserRole__UserID__3C69FB99" Association="Self.FK__UserRole__UserID__3C69FB99">
             <End Role="User" EntitySet="User" />
             <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsersFavo__UserI__60FC61CA" Association="Self.FK__UsersFavo__UserI__60FC61CA">
+            <End Role="User" EntitySet="User" />
+            <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
           </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -2509,15 +2556,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="UsersFavoriteRecipes" EntityType="MoodBiteModel.UsersFavoriteRecipes" />
-          <AssociationSet Name="FK__UsersFavo__Recip__61F08603" Association="MoodBiteModel.FK__UsersFavo__Recip__61F08603">
-            <End Role="Recipe" EntitySet="Recipe" />
-            <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UsersFavo__UserI__60FC61CA" Association="MoodBiteModel.FK__UsersFavo__UserI__60FC61CA">
-            <End Role="User" EntitySet="User" />
-            <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2530,42 +2568,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <EntityType Name="UsersFavoriteRecipes">
-          <Key>
-            <PropertyRef Name="UsersFaveRecipeID" />
-          </Key>
-          <Property Name="UsersFaveRecipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="RecipeID" Type="Int32" />
-          <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__UsersFavo__Recip__61F08603" FromRole="UsersFavoriteRecipes" ToRole="Recipe" />
-          <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__UsersFavo__UserI__60FC61CA" FromRole="UsersFavoriteRecipes" ToRole="User" />
-        </EntityType>
-        <Association Name="FK__UsersFavo__Recip__61F08603">
-          <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="0..1" />
-          <End Type="MoodBiteModel.UsersFavoriteRecipes" Role="UsersFavoriteRecipes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Recipe">
-              <PropertyRef Name="RecipeID" />
-            </Principal>
-            <Dependent Role="UsersFavoriteRecipes">
-              <PropertyRef Name="RecipeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UsersFavo__UserI__60FC61CA">
-          <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="MoodBiteModel.UsersFavoriteRecipes" Role="UsersFavoriteRecipes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="userID" />
-            </Principal>
-            <Dependent Role="UsersFavoriteRecipes">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2612,6 +2614,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <EntitySetMapping Name="FoodSale">
             <EntityTypeMapping TypeName="MoodBiteModel.FoodSale">
               <MappingFragment StoreEntitySet="FoodSale">
+                <ScalarProperty Name="Stocks" ColumnName="Stocks" />
                 <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
                 <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -2770,7 +2773,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="MoodBiteModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -2781,6 +2783,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
                 <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2813,6 +2816,15 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UsersFavoriteRecipes">
+            <EntityTypeMapping TypeName="MoodBiteModel.UsersFavoriteRecipes">
+              <MappingFragment StoreEntitySet="UsersFavoriteRecipes">
+                <ScalarProperty Name="UsersFaveRecipeID" ColumnName="UsersFaveRecipeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_AllRecipeDetailsWithFoodCategoryName">
             <EntityTypeMapping TypeName="MoodBiteModel.vw_AllRecipeDetailsWithFoodCategoryName">
               <MappingFragment StoreEntitySet="vw_AllRecipeDetailsWithFoodCategoryName">
@@ -2836,8 +2848,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <EntitySetMapping Name="vw_AllUserColWithRecipeID">
             <EntityTypeMapping TypeName="MoodBiteModel.vw_AllUserColWithRecipeID">
               <MappingFragment StoreEntitySet="vw_AllUserColWithRecipeID">
-                <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -2847,6 +2857,8 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
                 <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
                 <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
               </MappingFragment>
@@ -3166,15 +3178,6 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <FunctionImportMapping FunctionImportName="sp_InsertRecipeImage" FunctionName="MoodBiteModel.Store.sp_InsertRecipeImage" />
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MoodBiteModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MoodBiteModel.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="UsersFavoriteRecipes">
-            <EntityTypeMapping TypeName="MoodBiteModel.UsersFavoriteRecipes">
-              <MappingFragment StoreEntitySet="UsersFavoriteRecipes">
-                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UsersFaveRecipeID" ColumnName="UsersFaveRecipeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

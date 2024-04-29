@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MoodBite.Controllers
 {
+    [HandleError]
     [Authorize(Roles = "Admin")]
     public class AdminsPageController : BaseController
     {

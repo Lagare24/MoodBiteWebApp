@@ -18,7 +18,7 @@ namespace MoodBite
         public Nullable<int> RecipeID { get; set; }
         public string IngredientName { get; set; }
         public string Unit { get; set; }
-        public Nullable<int> Quantity { get; set; }
+        public Nullable<double> Quantity { get; set; }
     
         public virtual Recipe Recipe { get; set; }
     }

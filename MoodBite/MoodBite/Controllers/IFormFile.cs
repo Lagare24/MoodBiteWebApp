@@ -1,4 +1,5 @@
-﻿namespace MoodBite.Controllers
+﻿
+namespace MoodBite.Controllers
 {
     public interface IFormFile
     {

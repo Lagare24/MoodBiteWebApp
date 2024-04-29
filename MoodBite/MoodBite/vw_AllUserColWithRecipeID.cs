@@ -23,9 +23,9 @@ namespace MoodBite
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Gender { get; set; }
         public string Email { get; set; }
-        public byte[] ProfilePicture { get; set; }
-        public Nullable<int> RecipeID { get; set; }
         public Nullable<bool> EmailConfirmed { get; set; }
         public string EmailConfirmationToken { get; set; }
+        public byte[] ProfilePicture { get; set; }
+        public Nullable<int> RecipeID { get; set; }
     }
 }

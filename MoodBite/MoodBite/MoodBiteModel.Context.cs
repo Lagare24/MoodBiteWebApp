@@ -50,6 +50,7 @@ namespace MoodBite
         public virtual DbSet<UserPremium> UserPremium { get; set; }
         public virtual DbSet<UserRecipe> UserRecipe { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<UsersFavoriteRecipes> UsersFavoriteRecipes { get; set; }
         public virtual DbSet<vw_AllRecipeDetailsWithFoodCategoryName> vw_AllRecipeDetailsWithFoodCategoryName { get; set; }
         public virtual DbSet<vw_AllUserColWithRecipeID> vw_AllUserColWithRecipeID { get; set; }
         public virtual DbSet<vw_CartView> vw_CartView { get; set; }
@@ -71,7 +72,6 @@ namespace MoodBite
         public virtual DbSet<vw_RecommendedRecipeForMood> vw_RecommendedRecipeForMood { get; set; }
         public virtual DbSet<vw_UserDetailsWithRole> vw_UserDetailsWithRole { get; set; }
         public virtual DbSet<vw_UsersUploadCounts> vw_UsersUploadCounts { get; set; }
-        public virtual DbSet<UsersFavoriteRecipes> UsersFavoriteRecipes { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

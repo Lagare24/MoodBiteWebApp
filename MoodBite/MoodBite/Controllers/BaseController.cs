@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace MoodBite.Controllers
 {
+    [HandleError]
     public class BaseController : Controller
     {
         public MoodBiteEntities _db;
@@ -25,6 +26,7 @@ namespace MoodBite.Controllers
         public BaseRepository<OrderDetail> _orderDetailRepo;
         public BaseRepository<OrderPayment> _orderPaymentRepo;
         public BaseRepository<UsersFavoriteRecipes> _userFaveRecipe;
+        public BaseRepository<FoodSale> _foodSaleRepo;
 
         public BaseController()
         {
@@ -43,11 +45,14 @@ namespace MoodBite.Controllers
             _orderDetailRepo = new BaseRepository<OrderDetail>();
             _orderPaymentRepo = new BaseRepository<OrderPayment>();
             _userFaveRecipe = new BaseRepository<UsersFavoriteRecipes>();
+            _foodSaleRepo = new BaseRepository<FoodSale>();
         }
 
         //function that returns a model that contains all model for Recipe
         public RecipeDetailViewModel RecipeDetail(string chosenMood)
         {
+            var user = Session["User"] as User;
+
             //variable that contains the recommended recipes based on mood inpputed
             var recommendedRecipes = _db.vw_RecommendedRecipeForMood.Where(model => model.MoodName == chosenMood).ToList();
 
@@ -82,7 +87,7 @@ namespace MoodBite.Controllers
             recipeDetail.intolerance = _db.Intolerance.ToList().Select(model => model.IntoleranceName);
 
             //set facerecipe model
-            recipeDetail.faveRecipes = _db.UsersFavoriteRecipes.Select(model => model.RecipeID).Where(recipeId => recipeId.HasValue).Select(recipeId => recipeId.Value).ToList();
+            recipeDetail.faveRecipes = _db.UsersFavoriteRecipes.Where(model => model.UserID == user.userID).Select(model => model.RecipeID).Where(recipeId => recipeId.HasValue).Select(recipeId => recipeId.Value).ToList();
 
             //iterate through recommendedrecipes
             foreach (var recipe in recommendedRecipes)
@@ -156,6 +161,7 @@ namespace MoodBite.Controllers
                     if(allergyInpList.ElementAt(i).ToLower() == filterAllergy.ElementAt(j).AllergyName.ToLower())
                     {
                         filteredRecommendedRecipes.RemoveAt(j);
+                        break;
                     }
                 }
             }

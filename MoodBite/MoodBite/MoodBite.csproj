@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -127,6 +128,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\404Assets\script.js" />
+    <Content Include="Content\404Assets\style.css" />
     <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.rtl.css" />
@@ -224,6 +227,8 @@
     <Content Include="Content\multimedia\heartactive.svg" />
     <Content Include="Content\multimedia\imageremovebgpreview-8-1%402x.png" />
     <Content Include="Content\multimedia\MoodBiteLogo%402x.png" />
+    <Content Include="Content\multimedia\noprofile-boy.png" />
+    <Content Include="Content\multimedia\noprofile-girl.jpg" />
     <Content Include="Content\multimedia\recipecontainer%403x.png" />
     <Content Include="Content\multimedia\shareicon.svg" />
     <Content Include="Content\Site.css" />
@@ -280,6 +285,7 @@
     <Content Include="MoodBiteModel.edmx.diagram">
       <DependentUpon>MoodBiteModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\TestProfile.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -303,6 +309,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminsPageController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IFormFile.cs" />
     <Compile Include="Controllers\UsersPageController.cs" />
@@ -322,6 +329,7 @@
     <Compile Include="Models\ManageUploads\UpdateUploadsViewModel.cs" />
     <Compile Include="Models\RecipeViewModel\RecipeDetailViewModel.cs" />
     <Compile Include="Models\UploadRecipeModel\UploadRecipe.cs" />
+    <Compile Include="Models\UserViewModel\UserViewModel.cs" />
     <Compile Include="Mood.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -492,6 +500,8 @@
     <Content Include="Views\UsersPage\CheckOutPage.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\AdminsPage\Index.cshtml" />
+    <Content Include="Views\Home\ViewProfile.cshtml" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

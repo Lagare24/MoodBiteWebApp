@@ -25,6 +25,7 @@ namespace MoodBite
         public Nullable<decimal> Price { get; set; }
         public string Address { get; set; }
         public Nullable<bool> Available { get; set; }
+        public Nullable<int> Stocks { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Cart { get; set; }

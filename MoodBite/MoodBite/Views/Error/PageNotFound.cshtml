@@ -1,0 +1,43 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoodBite - Page Not Found</title>
+<link rel="stylesheet" href="~/Content/404Assets/style.css">
+<link href="~/Content/MainTemplate/img/moodbite-logo-transparentbg-icon.ico" type="image/x-icon" rel="icon">
+</head>
+
+<body>
+    <div class="content">
+        <div class="browser-bar">
+            <span class="close button"></span>
+            <span class="min button"></span>
+            <span class="max button"></span>
+        </div>
+        <div class="text"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="~/Content/404Assets/script.js"></script>
+    <script>
+        $(function () {
+            $('.text').typed({
+                strings: [
+                    "Oops! It looks like you're lost. <br /> ^1000" +
+                    "Sorry about that. <br /> ^1000" +
+                    "Let me try and help. <br /> ^1000" +
+                    "Go back <a href='@Url.Content("~/UsersPage/UsersHome")'>home</a> and start over."
+                ],
+                typeSpeed: -200,
+                showCursor: false
+            });
+        });
+    </script>
+</body>
+
+</html>
