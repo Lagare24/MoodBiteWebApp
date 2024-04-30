@@ -285,6 +285,7 @@
     <Content Include="MoodBiteModel.edmx.diagram">
       <DependentUpon>MoodBiteModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Properties\PublishProfiles\TestProfile.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
