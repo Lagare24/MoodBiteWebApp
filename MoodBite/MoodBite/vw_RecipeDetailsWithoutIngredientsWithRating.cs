@@ -29,6 +29,6 @@ namespace MoodBite
         public Nullable<int> TotalReview { get; set; }
         public int RecipeImageID { get; set; }
         public string ImageName { get; set; }
-        public byte[] ImageURL { get; set; }
+        public string ImagePath { get; set; }
     }
 }

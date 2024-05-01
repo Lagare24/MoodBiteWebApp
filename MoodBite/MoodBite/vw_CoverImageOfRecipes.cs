@@ -17,7 +17,7 @@ namespace MoodBite
         public int RecipeImageID { get; set; }
         public int RecipeID { get; set; }
         public string ImageName { get; set; }
-        public byte[] ImageURL { get; set; }
+        public string ImagePath { get; set; }
         public string RecipeName { get; set; }
         public string MoodName { get; set; }
         public string Uploaded_by { get; set; }

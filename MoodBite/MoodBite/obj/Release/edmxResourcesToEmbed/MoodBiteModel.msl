@@ -41,12 +41,12 @@
     <EntitySetMapping Name="FoodSale">
       <EntityTypeMapping TypeName="MoodBiteModel.FoodSale">
         <MappingFragment StoreEntitySet="FoodSale">
-          <ScalarProperty Name="Stocks" ColumnName="Stocks" />
           <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
           <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="Stocks" ColumnName="Stocks" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -115,6 +115,10 @@
         <MappingFragment StoreEntitySet="Recipe">
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="MoodID" ColumnName="MoodID" />
+          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
           <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
           <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
           <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
@@ -122,10 +126,6 @@
           <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
           <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
           <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
-          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
-          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -257,6 +257,10 @@
         <MappingFragment StoreEntitySet="vw_AllRecipeDetailsWithFoodCategoryName">
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="MoodID" ColumnName="MoodID" />
+          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
           <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
           <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
           <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
@@ -264,10 +268,6 @@
           <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
           <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
           <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
-          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
-          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
           <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -338,6 +338,10 @@
         <MappingFragment StoreEntitySet="vw_FilterAllergy">
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="MoodID" ColumnName="MoodID" />
+          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
           <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
           <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
           <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
@@ -345,10 +349,6 @@
           <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
           <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
           <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
-          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
-          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
           <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="Unit" ColumnName="Unit" />

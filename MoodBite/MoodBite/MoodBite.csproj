@@ -227,11 +227,19 @@
     <Content Include="Content\multimedia\heartactive.svg" />
     <Content Include="Content\multimedia\imageremovebgpreview-8-1%402x.png" />
     <Content Include="Content\multimedia\MoodBiteLogo%402x.png" />
-    <Content Include="Content\multimedia\noprofile-boy.png" />
-    <Content Include="Content\multimedia\noprofile-girl.jpg" />
     <Content Include="Content\multimedia\recipecontainer%403x.png" />
     <Content Include="Content\multimedia\shareicon.svg" />
+    <Content Include="Content\RecipeImages\banana-smoothie.jpg" />
+    <Content Include="Content\RecipeImages\chicken-empanada-recipe.png" />
+    <Content Include="Content\RecipeImages\chickencaldereta.jpg" />
+    <Content Include="Content\RecipeImages\creamy-chicken-pasta.jpg" />
+    <Content Include="Content\RecipeImages\grilled-salmon-with-lemon.jpg" />
+    <Content Include="Content\RecipeImages\pork-hamonado.jpg" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\UsersProfileImages\me.jpg" />
+    <Content Include="Content\UsersProfileImages\me_tpark.jpg" />
+    <Content Include="Content\UsersProfileImages\noprofile-boy.png" />
+    <Content Include="Content\UsersProfileImages\noprofile-girl.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="MoodBiteModel.Context.tt">
@@ -285,8 +293,7 @@
     <Content Include="MoodBiteModel.edmx.diagram">
       <DependentUpon>MoodBiteModel.edmx</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\Test.pubxml" />
-    <None Include="Properties\PublishProfiles\TestProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\TestDeploy.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -466,6 +473,9 @@
     <Compile Include="vw_RecommendedRecipeForMood.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_UploaderDetailsForReadMorePage.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_UserDetailsWithRole.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -512,7 +522,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\RecipeImages\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

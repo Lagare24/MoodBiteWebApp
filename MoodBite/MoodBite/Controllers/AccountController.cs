@@ -98,24 +98,44 @@ namespace MoodBite.Controllers
         [HttpPost]
         public ActionResult Register(User u, string confirmPasswordInp, string bod)
         {
-            var existingEmail = _db.User.Where(model => model.Email == u.Email && model.EmailConfirmed == true).FirstOrDefault();
+            var existingUser = _db.User.Where(model => (model.Email == u.Email || model.Username == u.Username) && model.EmailConfirmed == true).FirstOrDefault();
 
-            if(existingEmail != null)
+            if(existingUser != null)
             {
-                ModelState.AddModelError("", "Email is already used!");
+                if (existingUser.Email == u.Email)
+                {
+                    ModelState.AddModelError("", "Email is already taken!");
+                    return View();
+                }
+                if(existingUser.Username == u.Username)
+                {
+                    ModelState.AddModelError("", "Username is already taken!");
+                    return View();
+                }
                 return View();
             } else
             {
+                //var profilePicture = Request.Files.Get("profilePic");
+
+                //if (profilePicture != null && profilePicture.ContentLength > 0)
+                //{
+                //    using (var binaryReader = new BinaryReader(profilePicture.InputStream))
+                //    {
+                //        u.ProfilePicture = binaryReader.ReadBytes(profilePicture.ContentLength);
+                //    }
+                //}
                 var profilePicture = Request.Files.Get("profilePic");
 
                 if (profilePicture != null && profilePicture.ContentLength > 0)
                 {
-                    using (var binaryReader = new BinaryReader(profilePicture.InputStream))
-                    {
-                        u.ProfilePicture = binaryReader.ReadBytes(profilePicture.ContentLength);
-                    }
-                }
+                    string fileName = Path.GetFileName(profilePicture.FileName);
+                    string uniqueFileName = GetUniqueFileName("~/Content/UsersProfileImages/", fileName);
+                    string filePath = Path.Combine(Server.MapPath("~/Content/UsersProfileImages/"), uniqueFileName);
 
+                    profilePicture.SaveAs(filePath);
+
+                    u.ProfilePicturePath = "~/Content/UsersProfileImages/" + uniqueFileName;
+                }
                 if (u.Password != confirmPasswordInp)
                 {
                     ModelState.AddModelError("", "Password not matched");

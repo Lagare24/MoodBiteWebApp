@@ -207,7 +207,6 @@ namespace MoodBite.Controllers
             if (User.Identity.IsAuthenticated && User.Identity.Name != null)
             {
                 var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
-                var imageFile = Request.Files.Get("imageFile");
 
                 var uploadRecipe = new Recipe();
                 uploadRecipe.RecipeID = recipe.RecipeID;
@@ -224,16 +223,23 @@ namespace MoodBite.Controllers
 
                 int newRecipeID = uploadRecipe.RecipeID;
 
+                var imageFile = Request.Files.Get("imageFile");
                 if (imageFile != null && imageFile.ContentLength > 0)
                 {
                     var recipeImage = new RecipeImage();
                     recipeImage.RecipeID = newRecipeID;
                     recipeImage.ImageName = recipe.RecipeName + " cover";
 
-                    using (var binaryReader = new BinaryReader(imageFile.InputStream))
-                    {
-                        recipeImage.ImageURL = binaryReader.ReadBytes(imageFile.ContentLength);
-                    }
+                    string fileName = Path.GetFileName(imageFile.FileName);
+                    string uniqueFileName = GetUniqueFileName("~/Content/RecipeImages/", fileName);
+                    string filePath = Path.Combine(Server.MapPath("~/Content/RecipeImages/"), uniqueFileName);
+
+                    //Save the file to the specified path
+                    imageFile.SaveAs(filePath);
+
+                    // Store the file path in the database
+                    recipeImage.ImagePath = "~/Content/RecipeImages/" + uniqueFileName;
+
                     try
                     {
                         _recipeImageRepo.Create(recipeImage);
@@ -241,7 +247,50 @@ namespace MoodBite.Controllers
                     catch (Exception)
                     {
                         _recipeRepo.Delete(newRecipeID);
+                        return View();
                     }
+
+                    //using (var binaryReader = new BinaryReader(imageFile.InputStream))
+                    //{
+                    //    recipeImage.ImageURL = binaryReader.ReadBytes(imageFile.ContentLength);
+                    //}
+                    //try
+                    //{
+                    //    _recipeImageRepo.Create(recipeImage);
+                    //}
+                    //catch (Exception)
+                    //{
+                    //    _recipeRepo.Delete(newRecipeID);
+                    //}
+
+                    //var profilePicture = Request.Files.Get("profilePic");
+
+                    //if (profilePicture != null && profilePicture.ContentLength > 0)
+                    //{
+                    //    string fileName = Path.GetFileName(profilePicture.FileName);
+                    //    string uniqueFileName = GetUniqueFileName(fileName);
+                    //    string filePath = Path.Combine(Server.MapPath("~/Content/UsersProfileImages/"), uniqueFileName);
+
+                    //    // Save the file to the specified path
+                    //    profilePicture.SaveAs(filePath);
+
+                    //    // Store the file path in the database
+                    //    u.ProfilePicturePath = "~/Content/UsersProfileImages/" + uniqueFileName;
+                    //    try
+                    //    {
+                    //        _userRepo.Update(user.userID, u);
+                    //        return Json(new { success = true, message = "Profile updated successfully" });
+                    //    }
+                    //    catch (Exception)
+                    //    {
+                    //        return Json(new { success = false, message = "An error has occured" });
+                    //    }
+
+                    //}
+                    //else
+                    //{
+                    //    return Json(new { success = false, message = "An error has occured" });
+                    //}
                 }
 
                 var userRecipe = new UserRecipe();
@@ -372,7 +421,7 @@ namespace MoodBite.Controllers
                     {
                         itemExist.Qty++;
                         _cartRepo.Update(itemExist.CartID, itemExist);
-                        return Json(new { success = true, message = "Product qty has been added to your shopping cart." });
+                        return Json(new { success = true, message = "Ordered product qty has been updated to your shopping cart." });
                     }
                     else
                     {

@@ -54,7 +54,6 @@ namespace MoodBite
         public virtual DbSet<vw_AllRecipeDetailsWithFoodCategoryName> vw_AllRecipeDetailsWithFoodCategoryName { get; set; }
         public virtual DbSet<vw_AllUserColWithRecipeID> vw_AllUserColWithRecipeID { get; set; }
         public virtual DbSet<vw_CartView> vw_CartView { get; set; }
-        public virtual DbSet<vw_CheckOutView> vw_CheckOutView { get; set; }
         public virtual DbSet<vw_CoverImageOfRecipes> vw_CoverImageOfRecipes { get; set; }
         public virtual DbSet<vw_FilterAllergy> vw_FilterAllergy { get; set; }
         public virtual DbSet<vw_FoodSaleView> vw_FoodSaleView { get; set; }
@@ -70,8 +69,10 @@ namespace MoodBite
         public virtual DbSet<vw_recipeUploadersNameWithRating> vw_recipeUploadersNameWithRating { get; set; }
         public virtual DbSet<vw_RecipeWithMoodName> vw_RecipeWithMoodName { get; set; }
         public virtual DbSet<vw_RecommendedRecipeForMood> vw_RecommendedRecipeForMood { get; set; }
+        public virtual DbSet<vw_UploaderDetailsForReadMorePage> vw_UploaderDetailsForReadMorePage { get; set; }
         public virtual DbSet<vw_UserDetailsWithRole> vw_UserDetailsWithRole { get; set; }
         public virtual DbSet<vw_UsersUploadCounts> vw_UsersUploadCounts { get; set; }
+        public virtual DbSet<vw_CheckOutView> vw_CheckOutView { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

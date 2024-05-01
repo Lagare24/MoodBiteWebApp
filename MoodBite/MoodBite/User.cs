@@ -39,7 +39,7 @@ namespace MoodBite
         public string Email { get; set; }
         public Nullable<bool> EmailConfirmed { get; set; }
         public string EmailConfirmationToken { get; set; }
-        public byte[] ProfilePicture { get; set; }
+        public string ProfilePicturePath { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountCreationLog> AccountCreationLog { get; set; }

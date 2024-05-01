@@ -22,6 +22,6 @@ namespace MoodBite
         public Nullable<decimal> Price { get; set; }
         public Nullable<int> Qty { get; set; }
         public Nullable<decimal> Total_Price { get; set; }
-        public byte[] ImageURL { get; set; }
+        public string ImagePath { get; set; }
     }
 }

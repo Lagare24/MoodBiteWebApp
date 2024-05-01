@@ -48,9 +48,9 @@
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Available" Type="Boolean" />
+    <Property Name="Stocks" Type="Int32" />
     <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__FoodSaleID__2D7CBDC4" FromRole="FoodSale" ToRole="Cart" />
     <NavigationProperty Name="UserRecipe" Relationship="Self.FK__FoodSale__UserRe__1DB06A4F" FromRole="FoodSale" ToRole="UserRecipe" />
-    <Property Name="Stocks" Type="Int32" />
   </EntityType>
   <EntityType Name="Intolerance">
     <Key>
@@ -118,6 +118,10 @@
     </Key>
     <Property Name="RecipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
     <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="PreparationTime" Type="Time" Precision="7" />
     <Property Name="CookingDuration" Type="Time" Precision="7" />
@@ -125,10 +129,6 @@
     <Property Name="IsApproved" Type="Boolean" />
     <Property Name="DateApproved" Type="DateTime" Precision="3" />
     <Property Name="ApprovedBy" Type="Int32" />
-    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IngredientsCount" Type="Int32" />
-    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="FoodCategoryID" Type="Int32" />
     <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__RecipeID__2C88998B" FromRole="Recipe" ToRole="Cart" />
     <NavigationProperty Name="FoodCategory" Relationship="Self.FK_Recipe_FoodCategory" FromRole="Recipe" ToRole="FoodCategory" />
     <NavigationProperty Name="Mood" Relationship="Self.FK__Recipe__MoodID__52593CB8" FromRole="Recipe" ToRole="Mood" />
@@ -285,6 +285,10 @@
     </Key>
     <Property Name="RecipeID" Type="Int32" Nullable="false" />
     <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
     <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="PreparationTime" Type="Time" Precision="7" />
     <Property Name="CookingDuration" Type="Time" Precision="7" />
@@ -292,10 +296,6 @@
     <Property Name="IsApproved" Type="Boolean" />
     <Property Name="DateApproved" Type="DateTime" Precision="3" />
     <Property Name="ApprovedBy" Type="Int32" />
-    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IngredientsCount" Type="Int32" />
-    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="FoodCategoryID" Type="Int32" />
     <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_AllUserColWithRecipeID">
@@ -368,6 +368,10 @@
     </Key>
     <Property Name="RecipeID" Type="Int32" Nullable="false" />
     <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
     <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="PreparationTime" Type="Time" Precision="7" />
     <Property Name="CookingDuration" Type="Time" Precision="7" />
@@ -375,12 +379,8 @@
     <Property Name="IsApproved" Type="Boolean" />
     <Property Name="DateApproved" Type="DateTime" Precision="3" />
     <Property Name="ApprovedBy" Type="Int32" />
-    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IngredientsCount" Type="Int32" />
-    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="FoodCategoryID" Type="Int32" />
     <Property Name="IngredientName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Quantity" Type="Double" />
     <Property Name="Unit" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="AllergyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>

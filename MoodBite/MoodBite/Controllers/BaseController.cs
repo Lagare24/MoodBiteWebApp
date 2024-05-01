@@ -2,6 +2,7 @@
 using MoodBite.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -366,6 +367,25 @@ namespace MoodBite.Controllers
             }
 
             return recipeDetail;
+        }
+
+        public string GetUniqueFileName(string parentPath, string fileName)
+        {
+            string uniqueName = fileName;
+            int count = 1;
+            string filePath = Path.Combine(Server.MapPath(parentPath), uniqueName);
+
+            while (System.IO.File.Exists(filePath))
+            {
+                // If the file already exists, append a number to the filename
+                string extension = Path.GetExtension(fileName);
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                uniqueName = $"{fileNameWithoutExtension}_{count}{extension}";
+                filePath = Path.Combine(Server.MapPath(parentPath), uniqueName);
+                count++;
+            }
+
+            return uniqueName;
         }
 
     }

@@ -79,7 +79,7 @@ namespace MoodBite.Controllers
                             u.EmailConfirmed = existingUser.EmailConfirmed;
                             u.EmailConfirmationToken = existingUser.EmailConfirmationToken;
                             u.BirthDate = dateOfBirthModel;
-                            u.ProfilePicture = existingUser.ProfilePicture;
+                            u.ProfilePicturePath = existingUser.ProfilePicturePath;
 
                             _userRepo.Update(user.userID, u);
                             return Json(new { success = true, message = "Profile updated successfully" });
@@ -89,22 +89,50 @@ namespace MoodBite.Controllers
 
                             if (profilePicture != null && profilePicture.ContentLength > 0)
                             {
-                                using (var binaryReader = new BinaryReader(profilePicture.InputStream))
-                                {
-                                    u = user;
-                                    u.Email = existingUser.Email;
-                                    u.EmailConfirmed = existingUser.EmailConfirmed;
-                                    u.EmailConfirmationToken = existingUser.EmailConfirmationToken;
-                                    u.BirthDate = dateOfBirthModel;
-                                    u.ProfilePicture = binaryReader.ReadBytes(profilePicture.ContentLength);
+                                string fileName = Path.GetFileName(profilePicture.FileName);
+                                string uniqueFileName = GetUniqueFileName("~/Content/UsersProfileImages/", fileName);
+                                string filePath = Path.Combine(Server.MapPath("~/Content/UsersProfileImages/"), uniqueFileName);
 
+                                // Save the file to the specified path
+                                profilePicture.SaveAs(filePath);
+
+                                // Store the file path in the database
+                                u.ProfilePicturePath = "~/Content/UsersProfileImages/" + uniqueFileName;
+                                try
+                                {
                                     _userRepo.Update(user.userID, u);
                                     return Json(new { success = true, message = "Profile updated successfully" });
                                 }
-                            } else
-                            {
-                                return Json(new { success = true, message = "An error has occured" });
+                                catch (Exception)
+                                {
+                                    return Json(new { success = false, message = "An error has occured" });
+                                }
+                                
                             }
+                            else
+                            {
+                                return Json(new { success = false, message = "An error has occured" });
+                            }
+                            //var profilePicture = Request.Files.Get("profilePic");
+
+                            //if (profilePicture != null && profilePicture.ContentLength > 0)
+                            //{
+                            //    using (var binaryReader = new BinaryReader(profilePicture.InputStream))
+                            //    {
+                            //        u = user;
+                            //        u.Email = existingUser.Email;
+                            //        u.EmailConfirmed = existingUser.EmailConfirmed;
+                            //        u.EmailConfirmationToken = existingUser.EmailConfirmationToken;
+                            //        u.BirthDate = dateOfBirthModel;
+                            //        u.ProfilePicturePath = binaryReader.ReadBytes(profilePicture.ContentLength);
+
+                            //        _userRepo.Update(user.userID, u);
+                            //        return Json(new { success = true, message = "Profile updated successfully" });
+                            //    }
+                            //} else
+                            //{
+                            //    return Json(new { success = true, message = "An error has occured" });
+                            //}
                         }
                     } else
                     {
