@@ -158,7 +158,7 @@
     <Property Name="RecipeImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="RecipeID" Type="Int32" />
     <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="ImageURL" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Recipe" Relationship="Self.FK__RecipeIma__Recip__59C55456" FromRole="RecipeImage" ToRole="Recipe" />
   </EntityType>
   <EntityType Name="RecipeIngredient">
@@ -226,7 +226,7 @@
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="EmailConfirmed" Type="Boolean" />
     <Property Name="EmailConfirmationToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProfilePicturePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="AccountCreationLog" Relationship="Self.FK__AccountCr__UserI__3DE82FB7" FromRole="User" ToRole="AccountCreationLog" />
     <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__UserID__2B947552" FromRole="User" ToRole="Cart" />
     <NavigationProperty Name="OrderMaster" Relationship="Self.FK__OrderMast__UserI__2EDAF651" FromRole="User" ToRole="OrderMaster" />
@@ -313,7 +313,7 @@
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="EmailConfirmed" Type="Boolean" />
     <Property Name="EmailConfirmationToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProfilePicturePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="RecipeID" Type="Int32" />
   </EntityType>
   <EntityType Name="vw_CartView">
@@ -332,23 +332,6 @@
     <Property Name="Qty" Type="Int32" />
     <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
-  <EntityType Name="vw_CheckOutView">
-    <Key>
-      <PropertyRef Name="userID" />
-      <PropertyRef Name="RecipeID" />
-      <PropertyRef Name="FoodSaleID" />
-      <PropertyRef Name="CartID" />
-    </Key>
-    <Property Name="userID" Type="Int32" Nullable="false" />
-    <Property Name="RecipeID" Type="Int32" Nullable="false" />
-    <Property Name="FoodSaleID" Type="Int32" Nullable="false" />
-    <Property Name="CartID" Type="Int32" Nullable="false" />
-    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="Qty" Type="Int32" />
-    <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="ImageURL" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
   <EntityType Name="vw_CoverImageOfRecipes">
     <Key>
       <PropertyRef Name="RecipeImageID" />
@@ -357,7 +340,7 @@
     <Property Name="RecipeImageID" Type="Int32" Nullable="false" />
     <Property Name="RecipeID" Type="Int32" Nullable="false" />
     <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="ImageURL" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Uploaded_by" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
@@ -506,7 +489,7 @@
     <Property Name="ApprovedBy" Type="Int32" />
     <Property Name="RecipeImageID" Type="Int32" Nullable="false" />
     <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="ImageURL" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_RecipeDetailsWithoutIngredientsWithRating">
     <Key>
@@ -528,7 +511,7 @@
     <Property Name="TotalReview" Type="Int32" />
     <Property Name="RecipeImageID" Type="Int32" Nullable="false" />
     <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="ImageURL" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_recipeUploadersNameWithRating">
     <Key>
@@ -583,7 +566,17 @@
     <Property Name="DateApproved" Type="DateTime" Precision="3" />
     <Property Name="RecipeImageID" Type="Int32" Nullable="false" />
     <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="ImageURL" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vw_UploaderDetailsForReadMorePage">
+    <Key>
+      <PropertyRef Name="UploadedBy" />
+      <PropertyRef Name="Rating" />
+      <PropertyRef Name="TotalReview" />
+    </Key>
+    <Property Name="UploadedBy" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Rating" Type="Double" Nullable="false" />
+    <Property Name="TotalReview" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="vw_UserDetailsWithRole">
     <Key>
@@ -988,7 +981,6 @@
     <EntitySet Name="vw_AllRecipeDetailsWithFoodCategoryName" EntityType="Self.vw_AllRecipeDetailsWithFoodCategoryName" />
     <EntitySet Name="vw_AllUserColWithRecipeID" EntityType="Self.vw_AllUserColWithRecipeID" />
     <EntitySet Name="vw_CartView" EntityType="Self.vw_CartView" />
-    <EntitySet Name="vw_CheckOutView" EntityType="Self.vw_CheckOutView" />
     <EntitySet Name="vw_CoverImageOfRecipes" EntityType="Self.vw_CoverImageOfRecipes" />
     <EntitySet Name="vw_FilterAllergy" EntityType="Self.vw_FilterAllergy" />
     <EntitySet Name="vw_FoodSaleView" EntityType="Self.vw_FoodSaleView" />
@@ -1004,6 +996,7 @@
     <EntitySet Name="vw_recipeUploadersNameWithRating" EntityType="Self.vw_recipeUploadersNameWithRating" />
     <EntitySet Name="vw_RecipeWithMoodName" EntityType="Self.vw_RecipeWithMoodName" />
     <EntitySet Name="vw_RecommendedRecipeForMood" EntityType="Self.vw_RecommendedRecipeForMood" />
+    <EntitySet Name="vw_UploaderDetailsForReadMorePage" EntityType="Self.vw_UploaderDetailsForReadMorePage" />
     <EntitySet Name="vw_UserDetailsWithRole" EntityType="Self.vw_UserDetailsWithRole" />
     <EntitySet Name="vw_UsersUploadCounts" EntityType="Self.vw_UsersUploadCounts" />
     <AssociationSet Name="FK__AccountCr__UserI__3DE82FB7" Association="Self.FK__AccountCr__UserI__3DE82FB7">
@@ -1145,6 +1138,7 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="vw_CheckOutView" EntityType="MoodBiteModel.vw_CheckOutView" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -1157,4 +1151,21 @@
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
   </ComplexType>
+  <EntityType Name="vw_CheckOutView">
+    <Key>
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="RecipeID" />
+      <PropertyRef Name="FoodSaleID" />
+      <PropertyRef Name="CartID" />
+    </Key>
+    <Property Name="userID" Type="Int32" Nullable="false" />
+    <Property Name="RecipeID" Type="Int32" Nullable="false" />
+    <Property Name="FoodSaleID" Type="Int32" Nullable="false" />
+    <Property Name="CartID" Type="Int32" Nullable="false" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Qty" Type="Int32" />
+    <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

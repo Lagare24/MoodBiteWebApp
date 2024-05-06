@@ -17,6 +17,7 @@ namespace MoodBite
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Premium()
         {
+            this.BuyPremiumTransaction = new HashSet<BuyPremiumTransaction>();
             this.UserPremium = new HashSet<UserPremium>();
         }
     
@@ -25,6 +26,8 @@ namespace MoodBite
         public Nullable<decimal> Price { get; set; }
         public Nullable<int> Duration { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BuyPremiumTransaction> BuyPremiumTransaction { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserPremium> UserPremium { get; set; }
     }

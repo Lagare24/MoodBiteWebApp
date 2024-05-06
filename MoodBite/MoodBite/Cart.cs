@@ -21,6 +21,8 @@ namespace MoodBite
         public Nullable<int> Qty { get; set; }
     
         public virtual FoodSale FoodSale { get; set; }
+        public virtual FoodSale FoodSale1 { get; set; }
+        public virtual FoodSale FoodSale2 { get; set; }
         public virtual Recipe Recipe { get; set; }
         public virtual User User { get; set; }
     }

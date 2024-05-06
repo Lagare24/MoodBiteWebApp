@@ -9,5 +9,6 @@ namespace MoodBite.Models.ManageUploads
     {
         public IEnumerable<RecipeIngredient> recipeIngredient;
         public Recipe recipe;
+        public RecipeImage recipeImage;
     }
 }

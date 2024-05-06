@@ -29,7 +29,7 @@
 <link href="~/Content/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
-<h2 style="margin:4rem 0 0">Checkout</h2>
+<h2 style="margin:1.5rem 0 0">Checkout</h2>
 <h6>ShopName + ShopLocation</h6>
 
 <div class="container row">
@@ -73,30 +73,30 @@
         <div>
             @foreach (var item in Model)
             {
-                string mimeType = "image/jpeg";
-                if (item.ImageURL != null && item.ImageURL.Length > 0)
-                {
-                    // Determine the MIME type based on the first few bytes of the image data
-                    byte[] imageData = item.ImageURL;
-                    string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
+                //string mimeType = "image/jpeg";
+                //if (item.ImageURL != null && item.ImageURL.Length > 0)
+                //{
+                //    // Determine the MIME type based on the first few bytes of the image data
+                //    byte[] imageData = item.ImageURL;
+                //    string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
 
-                    if (firstBytes.StartsWith("GIF8"))
-                    {
-                        mimeType = "image/gif";
-                    }
-                    else if (firstBytes.StartsWith("\xFF\xD8"))
-                    {
-                        mimeType = "image/jpeg";
-                    }
-                    else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
-                    {
-                        mimeType = "image/png";
-                    }
-                }
+                //    if (firstBytes.StartsWith("GIF8"))
+                //    {
+                //        mimeType = "image/gif";
+                //    }
+                //    else if (firstBytes.StartsWith("\xFF\xD8"))
+                //    {
+                //        mimeType = "image/jpeg";
+                //    }
+                //    else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
+                //    {
+                //        mimeType = "image/png";
+                //    }
+                //}
 
                 <div class="row" style="justify-content:center; align-items:center;">
                     <div class="col-md-1"><span>@item.Qty</span>x</div>
-                    <div class="col-md-2"><img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(item.ImageURL)}")" width="60px" height="60px" style="border-radius:50%;" /></div>
+                    <div class="col-md-2"><img src="@Url.Content(item.ImagePath)" width="60px" height="60px" style="border-radius:50%;" /></div>
                     <div class="col-md-6">@item.RecipeName</div>
                     <div class="col-md-3">&#8369; @Convert.ToDecimal(item.Total_Price).ToString("0.00")</div>
 

@@ -45,6 +45,6 @@ C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Webpages.Razor.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Helpers.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Mvc.xml
+C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\obj\Release\MoodBite.csprojResolveAssemblyReference.cache
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\obj\Release\MoodBite.dll
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\obj\Release\MoodBite.pdb
-C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\obj\Release\MoodBite.csprojResolveAssemblyReference.cache

@@ -38,6 +38,8 @@
     <a href="~/AdminsPage/AddUser" class="btn custom-btn" style="padding: 5px 10px;">Add new</a>
 </div>*@
 
+@Html.Partial("_Loader")
+  
 <table id="manageuserstable" class="table table-striped">
     <thead>
         <tr>
@@ -81,9 +83,9 @@
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="actionsDropdown">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Details</a>
-                            <a class="dropdown-item" href="#">Delete</a>
+                            <a class="dropdown-item" href="#" onclick="editUser(@item.ID)">Edit</a>
+                            <a class="dropdown-item" href="#" onclick="viewUserDetails(@item.ID)">Details</a>
+                            <a class="dropdown-item" href="#" onclick="deleteUser(@item.ID)">Delete</a>
                         </div>
                     </div>
                 </td>
@@ -119,4 +121,47 @@
         // Initialize DataTable
         $('#manageuserstable').DataTable();
     });
+
+    function editUser(id) {
+        showLoader();
+        window.location.href = `/AdminsPage/EditUser/${id}`;
+        //hideLoader();
+    }
+
+    function viewUserDetails(id) {
+        showLoader();
+        window.location.href = `/AdminsPage/ViewUserDetails/${id}`;
+        //hideLoader();
+    }
+
+    function deleteUser(id) {
+        /*
+        if yes then do this (showLoader();
+        window.location.href = `/AdminsPage/DeleteUser/${id}`;)
+        otherwise just do nothing
+        */
+        if(confirm("Are you sure you want to delete this user?")){
+            showLoader();
+            $.ajax({
+                url: '/AdminsPage/DeleteUser/' + id,
+                type: 'POST',
+                success: function (response) {
+                    if (response.success) {
+                        alert('User deleted successfully!');
+                        window.location.reload();
+                    } else {
+                        alert('Failed to delete user.');
+                        window.location.reload();
+                    }
+                },
+                error: function () {
+                    alert('An error occurred.');
+                },
+                complete: function () {
+                    hideLoader();
+                }
+            });
+        }
+        //hideLoader();
+    }
 </script>

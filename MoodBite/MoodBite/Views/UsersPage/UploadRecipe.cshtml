@@ -16,6 +16,7 @@
     Session["ProfileActive"] = ia;
 
     var userPremium = Session["UserPremium"] as UserPremium;
+    var foodCategory = Session["FoodCategory"] as List<FoodCategory>;
 }
 
 <!-- Favicon -->
@@ -40,6 +41,8 @@
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
 
+@Html.Partial("_Loader")
+
 @using (Html.BeginForm("UploadRecipe", "UsersPage", FormMethod.Post, new { enctype = "multipart/form-data" })) {
 @*<form id="uploadRecipeForm">*@
     @Html.AntiForgeryToken()
@@ -55,6 +58,28 @@
                 @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-12">Food Category</label>
+            <div class="col-md-12">
+                <select class="form-control" name="foodcategory" id="foodcategory" required>
+                    @foreach (var fc in foodCategory)
+                    {
+                        if (fc.FoodCategoryID != Model.FoodCategoryID)
+                        {
+                            <option value="@fc.FoodCategoryID">@fc.FoodCategoryName</option>
+                        }
+                        else
+                        {
+                            <option value="@fc.FoodCategoryID" selected>@fc.FoodCategoryName</option>
+
+                        }
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.RecipeDescription, "Recipe Description", htmlAttributes: new { @class = "control-label col-md-12" })
@@ -84,7 +109,7 @@
         @*@Html.Label("Ingredients", new { @class = "control-label col-md-12" })*@
         <label class="control-label col-md-12" style="display:block;">Ingredients</label>
         <div id="ingredients-container">
-            <div class="form-group ingredient-row" style="display: block;">
+            <div class="form-group ingredient-row" style="display: none;">
                 <div class="row" style="margin:0">
                     <div class="col-md-3 ingname">
                         <input class="form-control ingredient-name" placeholder="Ingredient Name" id="ingredientName" name="ingredientName[]" required />
@@ -190,7 +215,7 @@
                     <option value="4">Disgusted</option>
                     <option value="5">Fearful</option>
                     <option value="6">Surprised</option>
-                    <option value="1002">Euthymia</option>
+                    <option value="7">Euthymia</option>
                 </select>
                 <span class="text-danger"></span>
             </div>
@@ -265,7 +290,7 @@
 <script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
 
 <script>
-    var ingredientCount = 1;
+    var ingredientCount = parseInt(document.getElementById('ingcount').value);
 
     document.getElementById('imageInput').addEventListener('change', function (event) {
         var input = event.target;
@@ -283,24 +308,27 @@
     });
 
     $(document).ready(function () {
+        var ingredientCount = parseInt(document.getElementById('ingcount').value);
+
         // Add ingredient row
         $("#add-ingredient").click(function (e) {
             e.preventDefault();
             var container = $("#ingredients-container");
-            var templateRow = container.find(".ingredient-row").first().clone();
-            var newRow = templateRow.clone().show(); // Clone the template row and show it
-            newRow.find("input").val(""); // Clear input values
+            var templateRow = container.find(".ingredient-row").first();
+            var newRow;
 
-            //newRow.find("input").prop("disabled", false);
-            //newRow.find("select").prop("disabled", false);
+            if (templateRow.length) {
+                newRow = templateRow.clone().show(); // Clone the template row and show it
+                newRow.find("input").val(""); // Clear input values
+            } else {
+                // If no rows exist, clone the template row directly
+                newRow = container.children().first().clone().show();
+            }
 
             container.append(newRow);
             ingredientCount++;
-
             document.getElementById('ingcount').value = String(ingredientCount);
-
-            //container.find(".ingredient-row").not(newRow).find("input").prop("disabled", true);
-            //container.find(".ingredient-row").not(newRow).find("select").prop("disabled", true);
+            //alert("add: " + ingredientCount);
         });
 
         // Remove ingredient row
@@ -311,6 +339,7 @@
 
             ingredientCount--;
             document.getElementById('ingcount').value = String(ingredientCount);
+            //alert("remove: " + ingredientCount);
         });
     });
 
@@ -329,16 +358,15 @@
         });
     });
 
-    @*$(document).ready(function () {
+    $(document).ready(function () {
         $('#upload-recipe-btn').click(function (e) {
-            alert("before");
-
+            $('#loadertxt').text('Uploading recipe...');
+            showLoader();
             e.preventDefault();
-            alert("after");
 
-            var uploadRecipeFormData = new FormData($("#uploadRecipeForm")[0]);
+            var uploadRecipeFormData = new FormData($('form')[0]);
             uploadRecipeFormData.append("ingcount", ingredientCount);
-            uploadRecipeFormData.append("moodid", $('#moodid').val);
+            uploadRecipeFormData.append("moodid", $('#moodid').val());
 
             //$('input[name="ingredientName[]"]').each(function () {
             //    uploadRecipeFormData.append("ingredientName[]", $(this).val());
@@ -349,13 +377,13 @@
             //    uploadRecipeFormData.append("ingredientQty[]", value);
             //});
 
-            //$('input[name="ingredientUnit[]"]').each(function () {
-            //    uploadRecipeFormData.append("ingredientUnit[]", $(this).val());
-            //});
+            $('input[name="ingredientUnit[]"]').each(function () {
+                uploadRecipeFormData.append("ingredientUnit[]", $(this).val());
+            });
 
-            if (parseFloat($('#price').val) > 0 && $('#shippedfrom').val != "") {
-                uploadRecipeFormData.append("price", parseFloat($('#price').val));
-                uploadRecipeFormData.append("shippedfrom", $('#shippedfrom').val);
+            if (parseFloat($('#price').val()) > 0 && $('#shippedfrom').val() != "") {
+                uploadRecipeFormData.append("price", parseFloat($('#price').val()));
+                uploadRecipeFormData.append("shippedfrom", $('#shippedfrom').val());
             } else {
                 uploadRecipeFormData.append("price", 0);
                 uploadRecipeFormData.append("shippedfrom", "");
@@ -370,11 +398,10 @@
                 contentType: false,
                 success: function (response) {
                     if (response.success) {
-                        alert(response.message);
+                        alert(response.msg);
                         window.location.href = '@Url.Action("UsersHome", "UsersPage")'
                     } else {
-                        alert(response.message);
-                        window.location.reload();
+                        alert(response.msg);
                     }
                 },
                 error: function (xhr, status, error) {
@@ -382,5 +409,5 @@
                 }
             });
         });
-    });*@
+    });
 </script>

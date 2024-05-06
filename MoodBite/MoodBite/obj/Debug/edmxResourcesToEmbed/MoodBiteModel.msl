@@ -4,601 +4,318 @@
     <EntitySetMapping Name="AccountCreationLog">
       <EntityTypeMapping TypeName="MoodBiteModel.AccountCreationLog">
         <MappingFragment StoreEntitySet="AccountCreationLog">
-          <ScalarProperty Name="AccountCreationLogID" ColumnName="AccountCreationLogID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="AccountCreationLogID" ColumnName="AccountCreationLogID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Allergy">
       <EntityTypeMapping TypeName="MoodBiteModel.Allergy">
         <MappingFragment StoreEntitySet="Allergy">
-          <ScalarProperty Name="AllergyID" ColumnName="AllergyID" />
           <ScalarProperty Name="AllergyName" ColumnName="AllergyName" />
+          <ScalarProperty Name="AllergyID" ColumnName="AllergyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BuyPremiumTransaction">
+      <EntityTypeMapping TypeName="MoodBiteModel.BuyPremiumTransaction">
+        <MappingFragment StoreEntitySet="BuyPremiumTransaction">
+          <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+          <ScalarProperty Name="amoountPaid" ColumnName="amoountPaid" />
+          <ScalarProperty Name="premiumTypeID" ColumnName="premiumTypeID" />
+          <ScalarProperty Name="customerEmail" ColumnName="customerEmail" />
+          <ScalarProperty Name="transactionID" ColumnName="transactionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Cart">
       <EntityTypeMapping TypeName="MoodBiteModel.Cart">
         <MappingFragment StoreEntitySet="Cart">
-          <ScalarProperty Name="CartID" ColumnName="CartID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
           <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="CartID" ColumnName="CartID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="FoodCategory">
       <EntityTypeMapping TypeName="MoodBiteModel.FoodCategory">
         <MappingFragment StoreEntitySet="FoodCategory">
-          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
-          <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
           <ScalarProperty Name="FoodCategoryDescription" ColumnName="FoodCategoryDescription" />
+          <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
+          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="FoodSale">
       <EntityTypeMapping TypeName="MoodBiteModel.FoodSale">
         <MappingFragment StoreEntitySet="FoodSale">
-          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
-          <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Available" ColumnName="Available" />
           <ScalarProperty Name="Stocks" ColumnName="Stocks" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
+          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Intolerance">
       <EntityTypeMapping TypeName="MoodBiteModel.Intolerance">
         <MappingFragment StoreEntitySet="Intolerance">
-          <ScalarProperty Name="IntoleranceID" ColumnName="IntoleranceID" />
           <ScalarProperty Name="IntoleranceName" ColumnName="IntoleranceName" />
+          <ScalarProperty Name="IntoleranceID" ColumnName="IntoleranceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Mood">
       <EntityTypeMapping TypeName="MoodBiteModel.Mood">
         <MappingFragment StoreEntitySet="Mood">
-          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
           <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OrderDetail">
       <EntityTypeMapping TypeName="MoodBiteModel.OrderDetail">
         <MappingFragment StoreEntitySet="OrderDetail">
-          <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
-          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
-          <ScalarProperty Name="FoodForSaleID" ColumnName="FoodForSaleID" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
           <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="FoodForSaleID" ColumnName="FoodForSaleID" />
+          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
+          <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OrderMaster">
       <EntityTypeMapping TypeName="MoodBiteModel.OrderMaster">
         <MappingFragment StoreEntitySet="OrderMaster">
-          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
-          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-          <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
-          <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
           <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+          <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OrderPayment">
       <EntityTypeMapping TypeName="MoodBiteModel.OrderPayment">
         <MappingFragment StoreEntitySet="OrderPayment">
-          <ScalarProperty Name="OrderPaymentID" ColumnName="OrderPaymentID" />
-          <ScalarProperty Name="AmountToBePaid" ColumnName="AmountToBePaid" />
-          <ScalarProperty Name="ModeOfPayment" ColumnName="ModeOfPayment" />
-          <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
           <ScalarProperty Name="DatePaid" ColumnName="DatePaid" />
+          <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+          <ScalarProperty Name="ModeOfPayment" ColumnName="ModeOfPayment" />
+          <ScalarProperty Name="AmountToBePaid" ColumnName="AmountToBePaid" />
+          <ScalarProperty Name="OrderPaymentID" ColumnName="OrderPaymentID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Premium">
       <EntityTypeMapping TypeName="MoodBiteModel.Premium">
         <MappingFragment StoreEntitySet="Premium">
-          <ScalarProperty Name="PremiumID" ColumnName="PremiumID" />
-          <ScalarProperty Name="PremiumType" ColumnName="PremiumType" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PremiumType" ColumnName="PremiumType" />
+          <ScalarProperty Name="PremiumID" ColumnName="PremiumID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Recipe">
       <EntityTypeMapping TypeName="MoodBiteModel.Recipe">
         <MappingFragment StoreEntitySet="Recipe">
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
-          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
-          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
-          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
-          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
-          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
-          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
           <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
+          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RecipeAllergy">
       <EntityTypeMapping TypeName="MoodBiteModel.RecipeAllergy">
         <MappingFragment StoreEntitySet="RecipeAllergy">
-          <ScalarProperty Name="RecipeAllergyID" ColumnName="RecipeAllergyID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="AllergyID" ColumnName="AllergyID" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="RecipeAllergyID" ColumnName="RecipeAllergyID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RecipeImage">
       <EntityTypeMapping TypeName="MoodBiteModel.RecipeImage">
         <MappingFragment StoreEntitySet="RecipeImage">
-          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
           <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RecipeIngredient">
       <EntityTypeMapping TypeName="MoodBiteModel.RecipeIngredient">
         <MappingFragment StoreEntitySet="RecipeIngredient">
-          <ScalarProperty Name="RecipeIngredientID" ColumnName="RecipeIngredientID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="RecipeIngredientID" ColumnName="RecipeIngredientID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RecipeIntolerance">
       <EntityTypeMapping TypeName="MoodBiteModel.RecipeIntolerance">
         <MappingFragment StoreEntitySet="RecipeIntolerance">
-          <ScalarProperty Name="RecipeIntoleranceID" ColumnName="RecipeIntoleranceID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="IntoleranceID" ColumnName="IntoleranceID" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="RecipeIntoleranceID" ColumnName="RecipeIntoleranceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RecipeRating">
       <EntityTypeMapping TypeName="MoodBiteModel.RecipeRating">
         <MappingFragment StoreEntitySet="RecipeRating">
-          <ScalarProperty Name="RecipeRatingID" ColumnName="RecipeRatingID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="RecipeRatingID" ColumnName="RecipeRatingID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Role">
       <EntityTypeMapping TypeName="MoodBiteModel.Role">
         <MappingFragment StoreEntitySet="Role">
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
           <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="MoodBiteModel.sysdiagrams">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
+    <EntitySetMapping Name="Testimonials">
+      <EntityTypeMapping TypeName="MoodBiteModel.Testimonials">
+        <MappingFragment StoreEntitySet="Testimonials">
+          <ScalarProperty Name="tMsg" ColumnName="tMsg" />
+          <ScalarProperty Name="tProfession" ColumnName="tProfession" />
+          <ScalarProperty Name="tEmail" ColumnName="tEmail" />
+          <ScalarProperty Name="tName" ColumnName="tName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="User">
       <EntityTypeMapping TypeName="MoodBiteModel.User">
         <MappingFragment StoreEntitySet="User">
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-          <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
           <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
+          <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserPremium">
       <EntityTypeMapping TypeName="MoodBiteModel.UserPremium">
         <MappingFragment StoreEntitySet="UserPremium">
-          <ScalarProperty Name="UserPremiumID" ColumnName="UserPremiumID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="PremiumID" ColumnName="PremiumID" />
           <ScalarProperty Name="DateSubscribed" ColumnName="DateSubscribed" />
+          <ScalarProperty Name="PremiumID" ColumnName="PremiumID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserPremiumID" ColumnName="UserPremiumID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserRecipe">
       <EntityTypeMapping TypeName="MoodBiteModel.UserRecipe">
         <MappingFragment StoreEntitySet="UserRecipe">
-          <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserRole">
       <EntityTypeMapping TypeName="MoodBiteModel.UserRole">
         <MappingFragment StoreEntitySet="UserRole">
-          <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UsersFavoriteRecipes">
       <EntityTypeMapping TypeName="MoodBiteModel.UsersFavoriteRecipes">
         <MappingFragment StoreEntitySet="UsersFavoriteRecipes">
-          <ScalarProperty Name="UsersFaveRecipeID" ColumnName="UsersFaveRecipeID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UsersFaveRecipeID" ColumnName="UsersFaveRecipeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="vw_AllRecipeDetailsWithFoodCategoryName">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_AllRecipeDetailsWithFoodCategoryName">
         <MappingFragment StoreEntitySet="vw_AllRecipeDetailsWithFoodCategoryName">
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
-          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
-          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
-          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
-          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
-          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
-          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
           <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
+          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
+          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="vw_AllUserColWithRecipeID">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_AllUserColWithRecipeID">
         <MappingFragment StoreEntitySet="vw_AllUserColWithRecipeID">
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-          <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
-          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
+          <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="vw_CartView">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_CartView">
         <MappingFragment StoreEntitySet="vw_CartView">
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
-          <ScalarProperty Name="CartID" ColumnName="CartID" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Qty" ColumnName="Qty" />
           <ScalarProperty Name="Total_Price" ColumnName="Total Price" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_CoverImageOfRecipes">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_CoverImageOfRecipes">
-        <MappingFragment StoreEntitySet="vw_CoverImageOfRecipes">
-          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
-          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_FilterAllergy">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_FilterAllergy">
-        <MappingFragment StoreEntitySet="vw_FilterAllergy">
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
-          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
-          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
-          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
-          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
-          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
-          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-          <ScalarProperty Name="AllergyName" ColumnName="AllergyName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_FoodSaleView">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_FoodSaleView">
-        <MappingFragment StoreEntitySet="vw_FoodSaleView">
-          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
           <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Available" ColumnName="Available" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_ForOrderPaymentInsertionView">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_ForOrderPaymentInsertionView">
-        <MappingFragment StoreEntitySet="vw_ForOrderPaymentInsertionView">
-          <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
-          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
-          <ScalarProperty Name="FoodForSaleID" ColumnName="FoodForSaleID" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-          <ScalarProperty Name="DeliveredTo" ColumnName="DeliveredTo" />
-          <ScalarProperty Name="DeliveredFrom" ColumnName="DeliveredFrom" />
-          <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
-          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_IngredientWithType">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_IngredientWithType">
-        <MappingFragment StoreEntitySet="vw_IngredientWithType">
-          <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
-          <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
-          <ScalarProperty Name="IngredientTypeName" ColumnName="IngredientTypeName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_ManageSubscriptions">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageSubscriptions">
-        <MappingFragment StoreEntitySet="vw_ManageSubscriptions">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="First_name" ColumnName="First name" />
-          <ScalarProperty Name="Last_name" ColumnName="Last name" />
-          <ScalarProperty Name="Premium_type" ColumnName="Premium type" />
-          <ScalarProperty Name="Date_of_Subscription" ColumnName="Date of Subscription" />
-          <ScalarProperty Name="Expiry_date" ColumnName="Expiry date" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_ManageUploads">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageUploads">
-        <MappingFragment StoreEntitySet="vw_ManageUploads">
-          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
-          <ScalarProperty Name="Date_uploaded" ColumnName="Date uploaded" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_ManageUsers">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageUsers">
-        <MappingFragment StoreEntitySet="vw_ManageUsers">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="First_name" ColumnName="First name" />
-          <ScalarProperty Name="Last_name" ColumnName="Last name" />
-          <ScalarProperty Name="Role" ColumnName="Role" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_OrderDetailView">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_OrderDetailView">
-        <MappingFragment StoreEntitySet="vw_OrderDetailView">
-          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
-          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_RecipeDetailsWithMoodTagSimplified">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeDetailsWithMoodTagSimplified">
-        <MappingFragment StoreEntitySet="vw_RecipeDetailsWithMoodTagSimplified">
-          <ScalarProperty Name="RecipeIngredientID" ColumnName="RecipeIngredientID" />
+          <ScalarProperty Name="CartID" ColumnName="CartID" />
+          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-          <ScalarProperty Name="IngredientTypeName" ColumnName="IngredientTypeName" />
-          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
-          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
-          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
-          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_RecipeDetailsWithoutIngredients">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeDetailsWithoutIngredients">
-        <MappingFragment StoreEntitySet="vw_RecipeDetailsWithoutIngredients">
-          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
-          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
-          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
-          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
-          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
-          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
-          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_RecipeDetailsWithoutIngredientsWithRating">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeDetailsWithoutIngredientsWithRating">
-        <MappingFragment StoreEntitySet="vw_RecipeDetailsWithoutIngredientsWithRating">
-          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
-          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
-          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
-          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
-          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="Rating" ColumnName="Rating" />
-          <ScalarProperty Name="TotalReview" ColumnName="TotalReview" />
-          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
-          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_recipeUploadersNameWithRating">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_recipeUploadersNameWithRating">
-        <MappingFragment StoreEntitySet="vw_recipeUploadersNameWithRating">
-          <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
           <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="Rating" ColumnName="Rating" />
-          <ScalarProperty Name="TotalReview" ColumnName="TotalReview" />
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vw_RecipeWithMoodName">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeWithMoodName">
-        <MappingFragment StoreEntitySet="vw_RecipeWithMoodName">
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
-          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
-          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
-          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
-          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
-          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_RecommendedRecipeForMood">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecommendedRecipeForMood">
-        <MappingFragment StoreEntitySet="vw_RecommendedRecipeForMood">
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
-          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
-          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
-          <ScalarProperty Name="Approved_by" ColumnName="Approved by" />
-          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
-          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_UploaderDetailsForReadMorePage">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_UploaderDetailsForReadMorePage">
-        <MappingFragment StoreEntitySet="vw_UploaderDetailsForReadMorePage">
-          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
-          <ScalarProperty Name="Rating" ColumnName="Rating" />
-          <ScalarProperty Name="TotalReview" ColumnName="TotalReview" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_UserDetailsWithRole">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_UserDetailsWithRole">
-        <MappingFragment StoreEntitySet="vw_UserDetailsWithRole">
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
-          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vw_UsersUploadCounts">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_UsersUploadCounts">
-        <MappingFragment StoreEntitySet="vw_UsersUploadCounts">
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="TotalUpload" ColumnName="TotalUpload" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="MoodBiteModel.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="MoodBiteModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="MoodBiteModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MoodBiteModel.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MoodBiteModel.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MoodBiteModel.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MoodBiteModel.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_InsertRecipeImage" FunctionName="MoodBiteModel.Store.sp_InsertRecipeImage" />
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MoodBiteModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MoodBiteModel.Store.sp_upgraddiagrams" />
     <EntitySetMapping Name="vw_CheckOutView">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_CheckOutView">
         <MappingFragment StoreEntitySet="vw_CheckOutView">
@@ -611,6 +328,290 @@
           <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="userID" ColumnName="userID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_CoverImageOfRecipes">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_CoverImageOfRecipes">
+        <MappingFragment StoreEntitySet="vw_CoverImageOfRecipes">
+          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
+          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_FilterAllergy">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_FilterAllergy">
+        <MappingFragment StoreEntitySet="vw_FilterAllergy">
+          <ScalarProperty Name="AllergyName" ColumnName="AllergyName" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
+          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
+          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_FoodSaleView">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_FoodSaleView">
+        <MappingFragment StoreEntitySet="vw_FoodSaleView">
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_ForOrderPaymentInsertionView">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_ForOrderPaymentInsertionView">
+        <MappingFragment StoreEntitySet="vw_ForOrderPaymentInsertionView">
+          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
+          <ScalarProperty Name="DeliveredFrom" ColumnName="DeliveredFrom" />
+          <ScalarProperty Name="DeliveredTo" ColumnName="DeliveredTo" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="FoodForSaleID" ColumnName="FoodForSaleID" />
+          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
+          <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_ManageSubscriptions">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageSubscriptions">
+        <MappingFragment StoreEntitySet="vw_ManageSubscriptions">
+          <ScalarProperty Name="Expiry_date" ColumnName="Expiry date" />
+          <ScalarProperty Name="Date_of_Subscription" ColumnName="Date of Subscription" />
+          <ScalarProperty Name="Premium_type" ColumnName="Premium type" />
+          <ScalarProperty Name="Last_name" ColumnName="Last name" />
+          <ScalarProperty Name="First_name" ColumnName="First name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_ManageUploads">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageUploads">
+        <MappingFragment StoreEntitySet="vw_ManageUploads">
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Date_uploaded" ColumnName="Date uploaded" />
+          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_ManageUsers">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_ManageUsers">
+        <MappingFragment StoreEntitySet="vw_ManageUsers">
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Last_name" ColumnName="Last name" />
+          <ScalarProperty Name="First_name" ColumnName="First name" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_OrderDetailView">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_OrderDetailView">
+        <MappingFragment StoreEntitySet="vw_OrderDetailView">
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_RecipeDetailsWithoutIngredients">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeDetailsWithoutIngredients">
+        <MappingFragment StoreEntitySet="vw_RecipeDetailsWithoutIngredients">
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
+          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_RecipeDetailsWithoutIngredientsWithRating">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeDetailsWithoutIngredientsWithRating">
+        <MappingFragment StoreEntitySet="vw_RecipeDetailsWithoutIngredientsWithRating">
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
+          <ScalarProperty Name="TotalReview" ColumnName="TotalReview" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_recipeUploadersNameWithRating">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_recipeUploadersNameWithRating">
+        <MappingFragment StoreEntitySet="vw_recipeUploadersNameWithRating">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="TotalReview" ColumnName="TotalReview" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_RecipeWithMoodName">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecipeWithMoodName">
+        <MappingFragment StoreEntitySet="vw_RecipeWithMoodName">
+          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
+          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_RecommendedRecipeForMood">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_RecommendedRecipeForMood">
+        <MappingFragment StoreEntitySet="vw_RecommendedRecipeForMood">
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="Approved_by" ColumnName="Approved by" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+          <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_RoleView">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_RoleView">
+        <MappingFragment StoreEntitySet="vw_RoleView">
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_UploaderDetailsForReadMorePage">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_UploaderDetailsForReadMorePage">
+        <MappingFragment StoreEntitySet="vw_UploaderDetailsForReadMorePage">
+          <ScalarProperty Name="TotalReview" ColumnName="TotalReview" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_UserDetailsWithRole">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_UserDetailsWithRole">
+        <MappingFragment StoreEntitySet="vw_UserDetailsWithRole">
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_UsersUploadCounts">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_UsersUploadCounts">
+        <MappingFragment StoreEntitySet="vw_UsersUploadCounts">
+          <ScalarProperty Name="TotalUpload" ColumnName="TotalUpload" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_UserRecipeView">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_UserRecipeView">
+        <MappingFragment StoreEntitySet="vw_UserRecipeView">
+          <ScalarProperty Name="ForSale" ColumnName="ForSale" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
+          <ScalarProperty Name="Stocks" ColumnName="Stocks" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
+          <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
+          <ScalarProperty Name="MoodName" ColumnName="MoodName" />
+          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+          <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+          <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+          <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+          <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+          <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
+          <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
+          <ScalarProperty Name="MoodID" ColumnName="MoodID" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="UserRecipeID" ColumnName="UserRecipeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

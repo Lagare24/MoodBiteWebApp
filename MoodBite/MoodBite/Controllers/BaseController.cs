@@ -2,6 +2,7 @@
 using MoodBite.Repository;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -16,7 +17,7 @@ namespace MoodBite.Controllers
         public BaseRepository<Mood> _moodRepo;
         public BaseRepository<User> _userRepo;
         public BaseRepository<UserRole> _userRoleRepo;
-        public BaseRepository<UserPremium> _userPremiumRecipe;
+        public BaseRepository<UserPremium> _userPremium;
         public BaseRepository<Recipe> _recipeRepo;
         public BaseRepository<UserRecipe> _userRecipeRepo;
         public BaseRepository<RecipeImage> _recipeImageRepo;
@@ -28,6 +29,8 @@ namespace MoodBite.Controllers
         public BaseRepository<OrderPayment> _orderPaymentRepo;
         public BaseRepository<UsersFavoriteRecipes> _userFaveRecipe;
         public BaseRepository<FoodSale> _foodSaleRepo;
+        public BaseRepository<Testimonials> _testimonyRepo;
+        public BaseRepository<BuyPremiumTransaction> _buyPremTransactionRepo;
 
         public BaseController()
         {
@@ -35,7 +38,7 @@ namespace MoodBite.Controllers
             _moodRepo = new BaseRepository<Mood>();
             _userRepo = new BaseRepository<MoodBite.User>();
             _userRoleRepo = new BaseRepository<UserRole>();
-            _userPremiumRecipe = new BaseRepository<UserPremium>();
+            _userPremium = new BaseRepository<UserPremium>();
             _recipeRepo = new BaseRepository<Recipe>();
             _userRecipeRepo = new BaseRepository<UserRecipe>();
             _recipeImageRepo = new BaseRepository<RecipeImage>();
@@ -47,6 +50,8 @@ namespace MoodBite.Controllers
             _orderPaymentRepo = new BaseRepository<OrderPayment>();
             _userFaveRecipe = new BaseRepository<UsersFavoriteRecipes>();
             _foodSaleRepo = new BaseRepository<FoodSale>();
+            _testimonyRepo = new BaseRepository<Testimonials>();
+            _buyPremTransactionRepo = new BaseRepository<BuyPremiumTransaction>();
         }
 
         //function that returns a model that contains all model for Recipe
@@ -79,13 +84,13 @@ namespace MoodBite.Controllers
             recipeDetail.recipeDetailsWithRating = recipeRating;
 
             //set allergy model
-            recipeDetail.allergy = _db.Allergy.ToList().Select(model => model.AllergyName);
+            recipeDetail.allergy = _db.Allergy.ToList().OrderBy(model => model.AllergyName).Select(model => model.AllergyName);
 
             //set foodCategories model
-            recipeDetail.foodCategories = _db.FoodCategory.Select(model => model.FoodCategoryName).ToList();
+            recipeDetail.foodCategories = _db.FoodCategory.OrderBy(model => model.FoodCategoryName).Select(model => model.FoodCategoryName).ToList();
 
             //set intolorannce model
-            recipeDetail.intolerance = _db.Intolerance.ToList().Select(model => model.IntoleranceName);
+            recipeDetail.intolerance = _db.Intolerance.ToList().OrderBy(model => model.IntoleranceName).Select(model => model.IntoleranceName);
 
             //set facerecipe model
             recipeDetail.faveRecipes = _db.UsersFavoriteRecipes.Where(model => model.UserID == user.userID).Select(model => model.RecipeID).Where(recipeId => recipeId.HasValue).Select(recipeId => recipeId.Value).ToList();
@@ -138,7 +143,7 @@ namespace MoodBite.Controllers
             }
             else
             {
-                intoleranceInpList = allergyInp.ToList();
+                intoleranceInpList = intoleranceInp.ToList();
             }
 
             if (foodCategoryInp == null)
@@ -147,7 +152,7 @@ namespace MoodBite.Controllers
             }
             else
             {
-                foodCategoryInpList = allergyInp.ToList();
+                foodCategoryInpList = foodCategoryInp.ToList();
             }
 
             var filterAllergy = _db.vw_FilterAllergy.ToList();
@@ -245,128 +250,136 @@ namespace MoodBite.Controllers
 
         public RecipeDetailViewModel ReadMore(int id)
         {
-            //contains the details of recipe that will be rendered in RecipeReadMore
-            var recipeDetail = new RecipeDetailViewModel();
-
-            //contains the recipe for read more
-            var recipe = _db.vw_RecommendedRecipeForMood.Where(model => model.RecipeID == id).FirstOrDefault();
-
-            //uploadersprofile info
-            var userProfile = _db.vw_AllUserColWithRecipeID.Where(model => model.RecipeID == id).FirstOrDefault();
-
-            //contains the images of recipe for read more
-            var recipeImages = _db.vw_CoverImageOfRecipes.Where(model => model.RecipeID == id).FirstOrDefault();
-
-            //contains the ingredients of recipe for read more
-            var recipeIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).Select(model => new { model.IngredientName, model.Quantity, model.Unit }).ToList();
-
-            //contains the recipe details without ingredients for read more
-            var recipeDetailsWithoutIngredients = _db.vw_RecipeDetailsWithoutIngredients.Where(model => model.RecipeID == id).FirstOrDefault();
-
-            //chosen mood data from Session
-            var chosenMood = Session["ChosenMood"] as String;
-
-            //contains all the images of recipe
-            var allRecipeImages = _db.vw_CoverImageOfRecipes.Where(model => model.MoodName == chosenMood && model.RecipeID != id).ToList();
-
-            //contains all the recipes
-            var allRecommendedRecipes = _db.vw_RecommendedRecipeForMood.Where(model => model.MoodName == chosenMood && model.RecipeID != id).ToList();
-
-            //contains all recipe ingredients
-            var allRecipeIngredients = new Dictionary<string, List<string>>();
-
-            //contains the ratings of recipe
-            var recipeRating = _db.vw_RecipeDetailsWithoutIngredientsWithRating.ToList();
-
-            //contains all the recipe uploaders details with recipe rating 
-            var recipeUploadersNameWithRatingReadMore = _db.vw_recipeUploadersNameWithRating.ToList();
-
-            //contains the total recipe uploads of the uploader
-            var userUploadCounts = _db.vw_UsersUploadCounts.ToList();
-
-            //set recipeReadMore model
-            recipeDetail.recipeReadMore = recipe;
-
-            //set recipeImagesReadMore model
-            recipeDetail.recipeImagesReadMore = recipeImages;
-
-            //set recipeIngredientsReadMore model
-            recipeDetail.recipeIngredientsReadMore = recipeIngredients.Select(model => new RecipeIngredient { IngredientName = model.IngredientName, Unit = model.Unit, Quantity = model.Quantity }).ToList();
-
-            //set recipeDetailsWithoutIngredientsReadMore model
-            recipeDetail.recipeDetailsWithoutIngredientsReadMore = recipeDetailsWithoutIngredients;
-
-            //set recipeDetailsWithRating model
-            recipeDetail.recipeDetailsWithRating = recipeRating;
-
-            //set recipeUploadersNameWithRatingReadMore model
-            recipeDetail.recipeUploadersNameWithRatingReadMore = recipeUploadersNameWithRatingReadMore;
-
-            //set userUploadCounts model
-            recipeDetail.userUploadCounts = userUploadCounts;
-
-            //set uploadersProfilePic mode/
-            recipeDetail.uploadersProfilePic = userProfile;
-
-            //set allRecipeWithFoodCategoryName
-            recipeDetail.allRecipeWithFoodCategoryName = _db.vw_AllRecipeDetailsWithFoodCategoryName.ToList();
-
-            //set allergy model
-            recipeDetail.allergy = _db.Allergy.ToList().Select(model => model.AllergyName);
-
-            //set foodCategories
-            recipeDetail.foodCategories = _db.FoodCategory.Select(model => model.FoodCategoryName).ToList();
-
-            //set intolorannce
-            recipeDetail.intolerance = _db.Intolerance.ToList().Select(model => model.IntoleranceName);
-
-            //set userpremium model
-            var user = Session["User"] as User;
-            recipeDetail.userPremium = _db.UserPremium.Where(model => model.UserID == user.userID).FirstOrDefault();
-
-            //set foodSale model
-            recipeDetail.foodSaleView = _db.vw_FoodSaleView.Where(model => model.RecipeID == id).FirstOrDefault();
-
-            //check if theres available recommended recipes
-            if (allRecommendedRecipes.Count != 0)
+            try
             {
-                //iterate through available recommended recipes model
-                foreach (var recomRecipe in allRecommendedRecipes)
+                //contains the details of recipe that will be rendered in RecipeReadMore
+                var recipeDetail = new RecipeDetailViewModel();
+
+                //contains the recipe for read more
+                var recipe = _db.vw_RecommendedRecipeForMood.Where(model => model.RecipeID == id).FirstOrDefault();
+
+                //uploadersprofile info
+                var userProfile = _db.vw_AllUserColWithRecipeID.Where(model => model.RecipeID == id).FirstOrDefault();
+
+                //contains the images of recipe for read more
+                var recipeImages = _db.vw_CoverImageOfRecipes.Where(model => model.RecipeID == id).FirstOrDefault();
+
+                //contains the ingredients of recipe for read more
+                var recipeIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).Select(model => new { model.IngredientName, model.Quantity, model.Unit }).ToList();
+
+                //contains the recipe details without ingredients for read more
+                var recipeDetailsWithoutIngredients = _db.vw_RecipeDetailsWithoutIngredients.Where(model => model.RecipeID == id).FirstOrDefault();
+
+                //chosen mood data from Session
+                var chosenMood = Session["ChosenMood"] as String;
+
+                //contains all the images of recipe
+                var allRecipeImages = _db.vw_CoverImageOfRecipes.Where(model => model.MoodName == chosenMood && model.RecipeID != id).ToList();
+
+                //contains all the recipes
+                var allRecommendedRecipes = _db.vw_RecommendedRecipeForMood.Where(model => model.MoodName == chosenMood && model.RecipeID != id).ToList();
+
+                //contains all recipe ingredients
+                var allRecipeIngredients = new Dictionary<string, List<string>>();
+
+                //contains the ratings of recipe
+                var recipeRating = _db.vw_RecipeDetailsWithoutIngredientsWithRating.ToList();
+
+                //contains all the recipe uploaders details with recipe rating 
+                var recipeUploadersNameWithRatingReadMore = _db.vw_recipeUploadersNameWithRating.ToList();
+
+                //contains the total recipe uploads of the uploader
+                var userUploadCounts = _db.vw_UsersUploadCounts.ToList();
+
+                //set recipeReadMore model
+                recipeDetail.recipeReadMore = recipe;
+
+                //set recipeImagesReadMore model
+                recipeDetail.recipeImagesReadMore = recipeImages;
+
+                //set recipeIngredientsReadMore model
+                recipeDetail.recipeIngredientsReadMore = recipeIngredients.Select(model => new RecipeIngredient { IngredientName = model.IngredientName, Unit = model.Unit, Quantity = model.Quantity }).ToList();
+
+                //set recipeDetailsWithoutIngredientsReadMore model
+                recipeDetail.recipeDetailsWithoutIngredientsReadMore = recipeDetailsWithoutIngredients;
+
+                //set recipeDetailsWithRating model
+                recipeDetail.recipeDetailsWithRating = recipeRating;
+
+                //set recipeUploadersNameWithRatingReadMore model
+                recipeDetail.recipeUploadersNameWithRatingReadMore = recipeUploadersNameWithRatingReadMore;
+
+                //set userUploadCounts model
+                recipeDetail.userUploadCounts = userUploadCounts;
+
+                //set uploadersProfilePic mode/
+                recipeDetail.uploadersProfilePic = userProfile;
+
+                //set allRecipeWithFoodCategoryName
+                recipeDetail.allRecipeWithFoodCategoryName = _db.vw_AllRecipeDetailsWithFoodCategoryName.ToList();
+
+                //set allergy model
+                recipeDetail.allergy = _db.Allergy.ToList().Select(model => model.AllergyName);
+
+                //set foodCategories
+                recipeDetail.foodCategories = _db.FoodCategory.Select(model => model.FoodCategoryName).ToList();
+
+                //set intolorannce
+                recipeDetail.intolerance = _db.Intolerance.ToList().Select(model => model.IntoleranceName);
+
+                //set userpremium model
+                var user = Session["User"] as User;
+                recipeDetail.userPremium = _db.UserPremium.Where(model => model.UserID == user.userID).FirstOrDefault();
+
+                //set foodSale model
+                recipeDetail.foodSaleView = _db.vw_FoodSaleView.Where(model => model.RecipeID == id).FirstOrDefault();
+
+                //check if theres available recommended recipes
+                if (allRecommendedRecipes.Count != 0)
                 {
-                    //check if the the container for recipeingredients has already have this key to avoid duplication, if key doesnt exist then create the key otherwise ignore
-                    if (!allRecipeIngredients.ContainsKey(recomRecipe.RecipeName))
+                    //iterate through available recommended recipes model
+                    foreach (var recomRecipe in allRecommendedRecipes)
                     {
-                        //creating key for recipeingredients
-                        allRecipeIngredients[recomRecipe.RecipeName] = new List<string>();
-
-                        //SELECT ingredientname from recipeingredients where recipeid = recommeneded recipeid
-                        var recipeIngredientsTable = _db.RecipeIngredient.Where(model => model.RecipeID == recomRecipe.RecipeID).Select(model => new { model.IngredientName }).ToList();
-
-                        //iterate through the table
-                        foreach (var ingredient in recipeIngredientsTable)
+                        //check if the the container for recipeingredients has already have this key to avoid duplication, if key doesnt exist then create the key otherwise ignore
+                        if (!allRecipeIngredients.ContainsKey(recomRecipe.RecipeName))
                         {
-                            //for current recipe, add its ingredients
-                            allRecipeIngredients[recomRecipe.RecipeName].Add(ingredient.IngredientName);
+                            //creating key for recipeingredients
+                            allRecipeIngredients[recomRecipe.RecipeName] = new List<string>();
+
+                            //SELECT ingredientname from recipeingredients where recipeid = recommeneded recipeid
+                            var recipeIngredientsTable = _db.RecipeIngredient.Where(model => model.RecipeID == recomRecipe.RecipeID).Select(model => new { model.IngredientName }).ToList();
+
+                            //iterate through the table
+                            foreach (var ingredient in recipeIngredientsTable)
+                            {
+                                //for current recipe, add its ingredients
+                                allRecipeIngredients[recomRecipe.RecipeName].Add(ingredient.IngredientName);
+                            }
                         }
                     }
+
+                    //set imagesOfRecipe model
+                    recipeDetail.imagesOfRecipe = allRecipeImages;
+
+                    //set recommendedRecipes model
+                    recipeDetail.recommendedRecipes = allRecommendedRecipes;
+
+                    //set recipeIngredients model
+                    recipeDetail.recipeIngredients = allRecipeIngredients;
                 }
+                else
+                {
+                    //if theres no available recommended recipe then display appropriate message
+                    ViewBag.NoRecipesWithSimilarMoodTagMsg = "Out of recipe...";
+                }
+                return recipeDetail;
 
-                //set imagesOfRecipe model
-                recipeDetail.imagesOfRecipe = allRecipeImages;
-
-                //set recommendedRecipes model
-                recipeDetail.recommendedRecipes = allRecommendedRecipes;
-
-                //set recipeIngredients model
-                recipeDetail.recipeIngredients = allRecipeIngredients;
             }
-            else
+            catch (Exception)
             {
-                //if theres no available recommended recipe then display appropriate message
                 ViewBag.NoRecipesWithSimilarMoodTagMsg = "Out of recipe...";
+                return null;
             }
-
-            return recipeDetail;
         }
 
         public string GetUniqueFileName(string parentPath, string fileName)
@@ -386,6 +399,19 @@ namespace MoodBite.Controllers
             }
 
             return uniqueName;
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new EmailAddressAttribute();
+                return addr.IsValid(email);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }

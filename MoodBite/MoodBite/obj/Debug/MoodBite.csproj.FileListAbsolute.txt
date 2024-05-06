@@ -48,6 +48,7 @@ C:\Users\Windows 10\Documents\Visual Studio 2015\Projects\MoodBite\MoodBite\bin\
 C:\Users\Windows 10\Documents\Visual Studio 2015\Projects\MoodBite\MoodBite\bin\EntityFramework.xml
 C:\Users\Windows 10\Documents\Visual Studio 2015\Projects\MoodBite\MoodBite\bin\EntityFramework.SqlServer.xml
 C:\Users\Windows 10\Documents\Visual Studio 2015\Projects\MoodBite\MoodBite\obj\Debug\MoodBite.csprojResolveAssemblyReference.cache
+C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\obj\Debug\MoodBite.csprojResolveAssemblyReference.cache
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\ApplicationInsights.config
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\roslyn\csc.exe
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -75,6 +76,9 @@ C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Micros
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Microsoft.ApplicationInsights.dll
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Newtonsoft.Json.dll
+C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Rotativa.dll
+C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Select.HtmlToPdf.dll
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Helpers.dll
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Mvc.dll
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Razor.dll
@@ -89,12 +93,14 @@ C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Micros
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Microsoft.ApplicationInsights.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Newtonsoft.Json.xml
+C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Select.HtmlToPdf.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Razor.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Webpages.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Webpages.Deployment.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Webpages.Razor.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Helpers.xml
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\System.Web.Mvc.xml
+C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\bin\Select.Html.dep
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\obj\Debug\MoodBite.dll
 C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\obj\Debug\MoodBite.pdb
-C:\Users\Windows 10\Documents\GitHub\MoodBiteWebApp\MoodBite\MoodBite\obj\Debug\MoodBite.csprojResolveAssemblyReference.cache

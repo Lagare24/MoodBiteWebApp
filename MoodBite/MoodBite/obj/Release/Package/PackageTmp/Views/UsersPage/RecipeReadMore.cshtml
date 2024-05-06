@@ -40,26 +40,26 @@
     //ViewBag.TitleSubheader = $"{recipe.RecipeName}";
 
     // Default MIME type
-    string mimeType = "image/jpeg";
-    if (recipe.ImageURL != null && recipe.ImageURL.Length > 0)
-    {
-        // Determine the MIME type based on the first few bytes of the image data
-        byte[] imageData = recipe.ImageURL;
-        string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
+    //string mimeType = "image/jpeg";
+    //if (recipe.ImageURL != null && recipe.ImageURL.Length > 0)
+    //{
+    //    // Determine the MIME type based on the first few bytes of the image data
+    //    byte[] imageData = recipe.ImageURL;
+    //    string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
 
-        if (firstBytes.StartsWith("GIF8"))
-        {
-            mimeType = "image/gif";
-        }
-        else if (firstBytes.StartsWith("\xFF\xD8"))
-        {
-            mimeType = "image/jpeg";
-        }
-        else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
-        {
-            mimeType = "image/png";
-        }
-    }
+    //    if (firstBytes.StartsWith("GIF8"))
+    //    {
+    //        mimeType = "image/gif";
+    //    }
+    //    else if (firstBytes.StartsWith("\xFF\xD8"))
+    //    {
+    //        mimeType = "image/jpeg";
+    //    }
+    //    else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
+    //    {
+    //        mimeType = "image/png";
+    //    }
+    //}
     var ingredientName = new List<string>();
     var ingredientQty = new List<int>();
     var ingredientUnit = new List<string>();
@@ -99,7 +99,15 @@
 <div class="row">
     <div class="col-lg-8">
         <div class="single-content recipecontent">
-            <img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(recipe.ImageURL)}")" />
+            @*<img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(recipe.ImageURL)}")" style="width:730px; height: 550px;"/>*@
+            @if (!string.IsNullOrEmpty(recipe.ImagePath))
+            {
+                <img src="@Url.Content(recipe.ImagePath)" style="width:730px; height: 550px;" />
+            }
+            else
+            {
+                <img src="https://placehold.co/730x550" style="width:730px; height: 550px;" />
+            }
             <div style="display:flex; justify-content:space-between; align-items:center">
                 <div>
                     <h6 class="inline-block">This recipe contains: </h6>
@@ -220,7 +228,7 @@
         </div>*@
         <div class="single-bio">
             <div class="single-bio-img">
-                @{ 
+                @*@{ 
                     if (Model.uploadersProfilePic.ProfilePicture != null && Model.uploadersProfilePic.ProfilePicture.Length > 0)
                     {
                         // Determine the MIME type based on the first few bytes of the image data
@@ -240,8 +248,15 @@
                             mimeType = "image/png";
                         }
                     }
+                }*@
+                @if (string.IsNullOrEmpty(Model.uploadersProfilePic.ProfilePicturePath))
+                {
+                    <img src="~/Content/UsersProfileImages/noprofile-boy.png" />
                 }
-                <img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(Model.uploadersProfilePic.ProfilePicture)}")" />
+                else
+                {
+                    <img src="@Url.Content(Model.uploadersProfilePic.ProfilePicturePath)" />
+                }
             </div>
             <div class="single-bio-text">
                 <h3>Uploaders Info</h3>
@@ -455,29 +470,29 @@
                     {
                         foreach (var recom in Model.recommendedRecipes)
                         {
-                            // Default MIME type
-                            if (recom.ImageURL != null && recom.ImageURL.Length > 0)
-                            {
-                                // Determine the MIME type based on the first few bytes of the image data
-                                byte[] imageData = recom.ImageURL;
-                                string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
+                            //// Default MIME type
+                            //if (recom.ImageURL != null && recom.ImageURL.Length > 0)
+                            //{
+                            //    // Determine the MIME type based on the first few bytes of the image data
+                            //    byte[] imageData = recom.ImageURL;
+                            //    string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
 
-                                if (firstBytes.StartsWith("GIF8"))
-                                {
-                                    mimeType = "image/gif";
-                                }
-                                else if (firstBytes.StartsWith("\xFF\xD8"))
-                                {
-                                    mimeType = "image/jpeg";
-                                }
-                                else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
-                                {
-                                    mimeType = "image/png";
-                                }
-                            }
+                            //    if (firstBytes.StartsWith("GIF8"))
+                            //    {
+                            //        mimeType = "image/gif";
+                            //    }
+                            //    else if (firstBytes.StartsWith("\xFF\xD8"))
+                            //    {
+                            //        mimeType = "image/jpeg";
+                            //    }
+                            //    else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
+                            //    {
+                            //        mimeType = "image/png";
+                            //    }
+                            //}
                             <div class="post-item">
                                 <div class="post-img">
-                                    <img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(recom.ImageURL)}")" />
+                                    <img src="@Url.Content(recom.ImagePath)" />
                                 </div>
                                 <div class="post-text">
                                     <a href="">@recom.RecipeName</a>

@@ -1,0 +1,286 @@
+﻿@model User
+
+@{
+    ViewBag.Title = "Edit User";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
+
+    var userRoleSession = Session["UserRole"] as vw_RoleView;
+}
+
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Wano Quin:wght@900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Blinker:wght@300;400;700&display=swap" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+@Html.Partial("_Loader")
+
+<h5 style="padding:1rem 0 0.5rem"><a href="#" style="text-decoration:none" onclick="history.back()">Go back</a></h5>
+<h2>Update @Html.Raw(Model.Username + "'s") profile</h2>
+<div class="container row" style="display:flex; flex-direction:row; justify-content:center; margin-top:1rem">
+    <form style="display:flex;">
+        @Html.HiddenFor(model => model.userID)
+        <div class="col-md-3" style="display:flex; align-items:center; flex-direction:column">
+            @if (Model.ProfilePicturePath == null)
+            {
+                if (Model.Gender.ToLower() == "male")
+                {
+                    <img src="~/Content/UsersProfileImages/noprofile-boy.png" style="border-radius:50%; border:1px solid black; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />
+                }
+                else
+                {
+                    <img src="~/Content/UsersProfileImages/noprofile-girl.jpg" style="border-radius:50%; border:1px solid black; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />
+                }
+            }
+            else
+            {
+                @*<img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(Model.ProfilePicture)}")" style="border-radius:50%; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />*@
+                <img src="@Url.Content(Model.ProfilePicturePath)" style="border-radius:50%; border:1px solid black; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />
+            }
+            <label class="btn custom-btn" style="width:55%; font-size:1.15rem; padding:0 0.25px; margin-top:0.90rem">
+                Change photo
+                <input type="file" id="profilepicinp" name="profilePic" accept="image/*" title="Select an image" style="width:0px;" />
+            </label>
+        </div>
+        <div class="col-md-9 viewprofile">
+            <div class="row">
+                <div class="control-group">
+                    <label>Username</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @required = "required" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: white; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-user"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Password</label>
+                    <div class="input-group" id="show-hide-new-password">
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @required = "required", @id = "pwdinp", @value = Model.Password })
+                        <div class="input-group-append">
+                            <div class="input-group-text newpwd" style="background-color: white; cursor:pointer; border: none; position: absolute; right: 1%; top: 4%;">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Email</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @required = "required", @type = "email", @disabled = "true" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: transparent; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-envelope"></i></div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="control-group">
+                    <label>First Name</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @required = "required" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: white; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-user"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Last Name</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @required = "required" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: white; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-user"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Address</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @required = "required" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: white; border: none; position: absolute; right: 1%; top: 9%;"><i class="fa fa-home" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Birthdate</label>
+                    <div class="input-group date" id="date" data-target-input="nearest">
+                        @*@Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control datetimepicker-input", @name = "bod", @data_target = "#date", @data_toggle = "datetimepicker" })*@
+                        @if (Model.BirthDate.HasValue)
+                        {
+                            <input type="text" class="form-control datetimepicker-input" id="dobinp" value="@Model.BirthDate.Value.ToString("MM/dd/yyyy")" placeholder="Date of Birth" name="bod" data-target="#date" data-toggle="datetimepicker" />
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Date of Birth" name="bod" data-target="#date" data-toggle="datetimepicker" />
+                        }
+                        @*<input type="text" class="form-control datetimepicker-input" placeholder="Date of Birth" name="bod" data-target="#date" data-toggle="datetimepicker" />*@
+                        <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
+                            <div class="input-group-text" style="background-color: white; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-calendar-alt"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Gender</label>
+                    <div class="input-group">
+                        @if (Model.Gender.ToLower() == "male")
+                        {
+                            @Html.DropDownListFor(model => model.Gender, new SelectList(new[]
+                            {
+                                new SelectListItem { Text = "Male", Value = "Male" },
+                                new SelectListItem { Text = "Female", Value = "Female" }
+                            }, "Value", "Text"), new { @class = "custom-select form-control" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(model => model.Gender, new SelectList(new[]
+                            {
+                                new SelectListItem { Text = "Female", Value = "Female" },
+                                new SelectListItem { Text = "Male", Value = "Male" }
+                            }, "Value", "Text"), new { @class = "custom-select form-control" })
+                        }
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: white; border: none; position: absolute; right: 1%; top: 9%;"><i class="fa fa-chevron-down"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Role</label>
+                    <div class="input-group">
+                        @if (userRoleSession.Rolename == "Admin")
+                        {
+                            @*@Html.DropDownListFor(model => model.Rolename, new SelectList(new[]
+                            {
+                                new SelectListItem { Value = "1", Text = "Admin" },
+                                new SelectListItem { Value = "2", Text = "User" }
+                            }, "Value", "Text"), new { @class = "custom-select form-control" })*@
+                            <select class="custom-select form-control" name="rolename" id="rolename">
+                                <option value="1" selected>Admin</option>
+                                <option value="2">User</option>
+                            </select>
+                        }
+                        else
+                        {
+                            @*@Html.DropDownListFor(model => model.Rolename, new SelectList(new[]
+                            {
+                                new SelectListItem { Value = "2", Text = "User" },
+                                new SelectListItem { Value = "1", Text = "Admin" }
+                            }, "Value", "Text"), new { @class = "custom-select form-control" })*@
+                            <select class="custom-select form-control" name="rolename" id="rolename">
+                                <option value="1">Admin</option>
+                                <option value="2" selected>User</option>
+                            </select>
+                        }
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: white; border: none; position: absolute; right: 1%; top: 9%;"><i class="fa fa-chevron-down"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; margin:1rem 0; width:40% !important">
+                    <button class="btn custom-btn" id="saveChangeBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+<script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
+
+<script>
+    document.getElementById('profilepicinp').addEventListener('change', function (event) {
+        var input = event.target;
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            var imgElement = document.getElementById('profilepicdisplay');
+            imgElement.src = reader.result;
+            //imgElement.style.display = 'block';
+        };
+
+        if (input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+    $(document).ready(function () {
+        $('#saveChangeBtn').click(function (event) {
+            event.preventDefault();
+            $('#loadertxt').text('Saving changes...');
+            showLoader();
+            var formData = new FormData($('form')[0]);
+
+            formData.append('pwdinp', $('#pwdinp').val());
+            formData.append('dob', $('#dobinp').val());
+            formData.append('rolename', $('#rolename').val());
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("EditUser", "AdminsPage")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result.success) {
+                        alert("Profile updated successfully!");
+                    } else {
+                        alert("An error occurred: " + result.message);
+                    }
+                    window.location.reload;
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred: " + error);
+                    window.location.reload;
+                },
+                complete: function () {
+                    hideLoader();
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('.newpwd').click(function () {
+            var passwordField = $('#show-hide-new-password input');
+            var icon = $(this).find('i');
+
+            if (passwordField.attr('type') === 'password') {
+                passwordField.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordField.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+    });
+</script>

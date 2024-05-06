@@ -1,71 +1,84 @@
 body {
-    background: #000;
-    color: #fff;
-    font-family: "Lucida Console", Monaco, monospace;
-    line-height: 1.5;
+  background-color: #2F3242;
+}
+svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -250px;
+  margin-left: -400px;
+}
+.message-box {
+  height: 200px;
+  width: 380px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: 50px;
+  color: #FFF;
+  font-family: Roboto;
+  font-weight: 300;
+}
+.message-box h1 {
+  font-size: 60px;
+  line-height: 46px;
+  margin-bottom: 40px;
+}
+.buttons-con .action-link-wrap {
+  margin-top: 40px;
+}
+.buttons-con .action-link-wrap a {
+  background: #68c950;
+  padding: 8px 25px;
+  border-radius: 4px;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s linear;
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: 10px
+}
+.buttons-con .action-link-wrap a:hover {
+  background: #5A5C6C;
+  color: #fff;
 }
 
-a {
-    color: #fff;
-    text-decoration: none;
-    border-bottom: solid 2px;
+#Polygon-1 , #Polygon-2 , #Polygon-3 , #Polygon-4 , #Polygon-4, #Polygon-5 {
+  animation: float 1s infinite ease-in-out alternate;
+}
+#Polygon-2 {
+  animation-delay: .2s; 
+}
+#Polygon-3 {
+  animation-delay: .4s; 
+}
+#Polygon-4 {
+  animation-delay: .6s; 
+}
+#Polygon-5 {
+  animation-delay: .8s; 
 }
 
-@media (min-width: 640px) {
-    body {
-        /*background-color:white;*/
-        background-image: url(../multimedia/imageremovebgpreview-8-1@2x.png);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        min-height: 100vh;
-    }
-
-    .content {
-        width: 500px;
-        height: 300px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        background-color: #333;
-        padding: 45px 20px 20px;
-        box-sizing: border-box;
-        box-shadow: 0 0 25px rgba(0, 0, 0, .5);
-        border-radius: 5px 5px 0 0;
-    }
-
-    .browser-bar {
-        background: #f9f9f3;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        padding: 5px;
-        overflow: hidden;
-        border-radius: 5px 5px 0 0;
-    }
-
-    .button {
-        display: inline-block;
-        float: left;
-        border-radius: 50%;
-        width: 15px;
-        height: 15px;
-        margin-right: 5px;
-    }
-
-    .close {
-        background: #fc635d;
-    }
-
-    .min {
-        background: #fdbc40;
-    }
-
-    .max {
-        background: #34c84a;
-    }
+@keyframes float {
+	100% {
+    transform: translateY(20px);
+  }
+}
+@media (max-width: 450px) {
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -190px;
+  }
+  .message-box {
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -190px;
+    text-align: center;
+  }
 }

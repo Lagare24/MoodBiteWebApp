@@ -18,6 +18,8 @@ namespace MoodBite
         public FoodSale()
         {
             this.Cart = new HashSet<Cart>();
+            this.Cart1 = new HashSet<Cart>();
+            this.Cart2 = new HashSet<Cart>();
         }
     
         public int FoodSaleID { get; set; }
@@ -29,6 +31,10 @@ namespace MoodBite
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Cart { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Cart1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Cart2 { get; set; }
         public virtual UserRecipe UserRecipe { get; set; }
     }
 }

@@ -4,7 +4,7 @@
 
 @{
     ViewBag.Title = "Home";
-
+    ViewBag.LoaderMsg = "Loading...";
     string a = "active";
     string ia = "inactive";
 
@@ -72,49 +72,67 @@
 <!-- Template Stylesheet -->
 <link href="~/Content/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet"/>
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
-<form action="~/UsersPage/UsersHome" method="post">
 
+@*<form action="~/UsersPage/UsersHome" method="post">*@
+    @Html.Partial("_Loader")
     <div class="search-widget" style="margin:4rem 0 0">
-        <input class="form-control" name="search" type="text" placeholder="Search Keyword" value="@Session["SearchInput"]">
-        <button type="submit" class="btn" style="right:12.5%;"><i class="fa fa-search"></i></button>
+        <input class="form-control" name="search" type="text" id="searchinp" onkeydown="handleSearchInput(event)"  placeholder="Search Keyword" value="@Html.Raw(Session["SearchInput"] as string)">
+        <button class="btn" id="searchbtn" onclick="searchRecipe()" style="right:12.5%;"><i class="fa fa-search"></i></button>
     </div>
-
+@*filterSearch(btnID, selectID, containerID, hiddenInpName)*@
     <div>
-        <div class="mt-2 allercb" style="margin: 0 7rem;">
-            <span class="mr-2"><b>Filter search by Allergies:</b></span>
-            <br />
-            @foreach (var allergy in Model.allergy)
-        {
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" style="width:20px;height:20px" type="checkbox" id="@allergy" name="allergyInp[]" value="@allergy">
-                    <label class="form-check-label" for="@allergy">@allergy</label>
-                </div>
-    }
+        <div class="mt-2 allercb" style="margin: 0 7rem; ">
+            <div id="allergyContainer" style="margin-bottom:0.5rem; padding:0.5rem; overflow:auto">
+                <span class="mr-2"><b>Filter search by Allergies:</b></span>
+            </div>
+            <select class="form-control" name="allergyInp" id="allergySelect" style="width:100px; display:inline-block">
+                @foreach (var allergy in Model.allergy)
+                {
+                    var counter = 1;
+                    <option value="@counter">@allergy</option>
+                    counter++;
+                }
+            </select>
+            <button class="btn btn-success" id="addAllergy" onclick="filterSearch('addAllergy', 'allergySelect', 'allergyContainer', 'allergyInp[]')">
+                <i class="fas fa-plus"></i>
+            </button>
         </div>
+
         <div class="mt-2 intolcb" style="margin: 0 7rem;">
-            <span class="mr-2"><b>Filter search by Intolerance:</b></span>
-            <br />
-            @foreach (var intolerance in Model.intolerance)
-        {
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" style="width:20px;height:20px" type="checkbox" id="@intolerance" name="intoleranceInp[]" value="@intolerance">
-                    <label class="form-check-label" for="@intolerance">@intolerance</label>
-                </div>
-        }
+            <div id="intoleranceContainer" style="margin-bottom:0.5rem; padding:0.5rem; overflow:auto">
+                <span class="mr-2"><b>Filter search by Intolerance:</b></span>
+            </div>
+            <select class="form-control" name="intoleranceInp" id="intoleranceSelect" style="width:100px; display:inline-block">
+                @foreach (var intolerance in Model.intolerance)
+                {
+                    var counter = 1;
+                    <option value="@counter">@intolerance</option>
+                    counter++;
+                }
+            </select>
+            <button class="btn btn-success" id="addIntolerance" onclick="filterSearch('addIntolerance', 'intoleranceSelect', 'intoleranceContainer', 'intoleranceInp[]')">
+                <i class="fas fa-plus"></i>
+            </button>
         </div>
+
         <div class="mt-2 foodcatcb" style="margin: 0 7rem;">
-            <span class="mr-2"><b>Filter search by Food Category:</b></span>
-            <br />
-            @foreach (var fc in Model.foodCategories)
-        {
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" style="width:20px;height:20px" type="checkbox" id="@fc" name="foodCategoryInp[]" value="@fc">
-                    <label class="form-check-label" for="@fc">@fc</label>
-                </div>
-    }
+            <div id="fcContainer" style="margin-bottom:0.5rem; padding:0.5rem; overflow:auto">
+                <span class="mr-2"><b>Filter search by Food Categories:</b></span>
+            </div>
+            <select class="form-control" name="fcInp" id="intoleranceSelect" style="width:100px; display:inline-block">
+                @foreach (var fc in Model.foodCategories)
+                {
+                    var counter = 1;
+                    <option value="@counter">@fc</option>
+                    counter++;
+                }
+            </select>
+            <button class="btn btn-success" id="addFc" onclick="filterSearch('addFc', 'intoleranceSelect', 'fcContainer', 'foodCategoryInp[]')">
+                <i class="fas fa-plus"></i>
+            </button>
         </div>
     </div>
-</form>
+@*</form>*@
 
 
 <div style="padding-top:2rem">
@@ -130,60 +148,26 @@
                 <div class="col-md-4 flex-recipe-container">
                     <div class="blog-item" style="width:100%; display: flex;justify-content: center; align-items: center; flex-direction: column;">
                         <div class="blog-img" style="width:200px; margin:0 auto">
-                            @*@{
-                                // Default MIME type
-                                string mimeType = "image/jpeg";
-                                if (recipe.ImagePath != null && recipe.ImageURL.Length > 0)
-                                {
-                                    // Determine the MIME type based on the first few bytes of the image data
-                                    byte[] imageData = recipe.ImageURL;
-                                    string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
+                            @{
+                                string imagePath = Url.Content(recipe.ImagePath);
+                                bool imageExists = System.IO.File.Exists(Server.MapPath(imagePath));
+                            }
 
-                                    if (firstBytes.StartsWith("GIF8"))
-                                    {
-                                        mimeType = "image/gif";
-                                    }
-                                    else if (firstBytes.StartsWith("\xFF\xD8"))
-                                    {
-                                        mimeType = "image/jpeg";
-                                    }
-                                    else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
-                                    {
-                                        mimeType = "image/png";
-                                    }
-                                }
-                            }*@
-                            <img class="recipe-img" src="@Url.Content(recipe.ImagePath)" alt="RecipeImageCover" style="border-radius:50%; animation: spin 60s linear infinite; height:200px" data-animate-on-scroll />
+                            @if (imageExists)
+                            {
+                                <img class="recipe-img" src="@imagePath" alt="RecipeImageCover" style="border-radius:50%; animation: spin 60s linear infinite; height:200px" data-animate-on-scroll />
+                            }
+                            else
+                            {
+                                <img class="recipe-img" src="https://placehold.co/200x200" alt="image not found" style="border-radius:50%; height:200px" data-animate-on-scroll />
+                            }
                         </div>
-                        <div class="blog-content" onclick="window.location.href='RecipeReadMore/@recipe.RecipeID'" style="background-image: url(../../Content/multimedia/recipecontainer@3x.png); background-repeat:no-repeat; background-size:cover; width:250px; height:250px; background-color:unset; background-position:center; box-shadow:unset; left:0 !important; z-index:0; cursor:pointer">
+                        <div class="blog-content" onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" style="background-image: url(../../Content/multimedia/recipecontainer@3x.png); background-repeat:no-repeat; background-size:cover; width:250px; height:250px; background-color:unset; background-position:center; box-shadow:unset; left:0 !important; z-index:0; cursor:pointer">
                             <h2 class="blog-title" style="text-align:center">@recipe.RecipeName</h2>
                             <h6 class="blog-title" style="text-align:center">@recipe.FoodCategoryName</h6>
                             @{
                         string dateUploaded = "";
                         double recipeRating = 0;
-
-                                @*foreach (var recipeDetail in Model.recipeDetailsWithoutIngredients)
-                                    {
-                                        if (recipeDetail.RecipeID == recipe.RecipeID)
-                                        {
-                                            dateUploaded = Convert.ToDateTime(recipeDetail.DateUploaded).ToShortDateString();
-                                            recipeRating = 0;
-                                            foreach (var recipesRating in Model.recipeDetailsWithRating)
-                                            {
-                                                if (recipesRating.RecipeID == recipeDetail.RecipeID)
-                                                {
-                                                    recipeRating = Convert.ToDouble(recipesRating.Rating);
-                                                    break;
-                                                }
-                                            }
-                                            <div class="blog-meta">
-                                                <p><i class="far fa-user"></i>@recipe.Uploaded_by</p>
-                                                <p><i class="far fa-calendar-alt"></i>@dateUploaded</p>
-                                                <p><i class="far fa-star"></i>(@recipeRating)</p>
-                                            </div>
-                                            break;
-                                        }
-                                    }*@
                             }
 
                             <div class="blog-text recipe-btn userhomerecipebtn" style="display:block">
@@ -194,10 +178,10 @@
                         }
                         else
                         {
-                                    <a style="position:relative; left:100px"><img class="active-heart" style="cursor:pointer" src="~/Content/multimedia/heartactive.svg" data-recipe-id="@recipe.RecipeID" /></a>
+                                    <a style="position:relative; z-index:99999; left:100px"><img class="active-heart" style="cursor:pointer" src="~/Content/multimedia/heartactive.svg" data-recipe-id="@recipe.RecipeID" /></a>
                         }
 
-                                <a style="position:relative; left:132.5px"><img style="cursor:pointer" src="~/Content/multimedia/shareicon.svg" /></a>
+                                <a style="position:relative; z-index:99999; left:132.5px"><img style="cursor:pointer" data-recipe-shareID="@recipe.RecipeID" src="~/Content/multimedia/shareicon.svg" onclick="showModal(event)"/></a>
                             </div>
                         </div>
                     </div> <!--end of blog-item-->
@@ -205,10 +189,12 @@
         }
     } else
     {
-                                    <h3 style="text-align:center"><i>Out of recipes...</i></h3>
+    <h3 style="text-align:center"><i>Out of recipes...</i></h3>
     }
     </div>
     </div>
+
+    @Html.Partial("_Modal")
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -294,6 +280,69 @@
             }
         });
     });
+
+    function filterSearch(btnID, selectID, containerID, hiddenInpName) {
+        var select = document.getElementById(selectID);
+        var selectedOption = select.options[select.selectedIndex].text;
+        var container = document.getElementById(containerID);
+
+        // Check if the selected option already exists
+        var existingSpans = container.getElementsByTagName('span');
+        for (var i = 0; i < existingSpans.length; i++) {
+            if (existingSpans[i].textContent === selectedOption) {
+                return;
+            }
+        }
+
+        var span = document.createElement('span');
+        span.style.border = '1px solid black';
+        span.style.padding = '0.25rem 0.65rem';
+        span.style.borderRadius = '20px';
+        span.style.marginRight = '0.3rem';
+        span.style.cursor = "pointer";
+
+        var icon = document.createElement('i');
+        icon.className = 'fas fa-times';
+        icon.style.marginRight = '0.15rem';
+
+        span.appendChild(icon);
+        span.appendChild(document.createTextNode(selectedOption));
+
+        container.appendChild(span);
+
+        // Create hidden input with the selected option value
+        var hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = hiddenInpName;
+        hiddenInput.value = selectedOption;
+
+        // Append the hidden input to the container
+        container.appendChild(hiddenInput);
+
+        // Add click event listener to the span element
+        span.addEventListener('click', function() {
+            container.removeChild(span); // Remove the span element
+            container.removeChild(hiddenInput); // Remove the corresponding hidden input
+        });
+    }
+
+    function readMore(event) {
+        var element = event.target;
+        var recipeID = parseInt(element.getAttribute("data-recipe-id"));
+        console.log("id " + recipeID);
+
+        var modal = $('#myModal');
+        if (modal.is(':visible')) {
+            console.log("Modal is visible. Redirection disabled.");
+            return;
+        }
+
+        if (isNaN(recipeID)) {
+            alert("An error occured, please try again.");
+        } else {
+            window.location.href = `RecipeReadMore/${recipeID}`;
+        }
+    }
 
 </script>
 

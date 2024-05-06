@@ -14,6 +14,8 @@
 </head>
 
 <body>
+
+    @*<img src="~/Content/UsersProfileImages/recipecontainer@3x.png" />*@
     <div class="content">
         <div class="browser-bar">
             <span class="close button"></span>
@@ -28,11 +30,11 @@
         $(function () {
             $('.text').typed({
                 strings: [
-                    "[Error 404] <br />" +
+                    "<h3 style='margin:0.25rem'>[Error 404]</h3>" +
                     "Oops! It looks like you're lost. <br /> ^1000" +
                     "Sorry about that. <br /> ^1000" +
                     "Let me try and help. <br /> ^1000" +
-                    "Go back <a href='@Url.Content("~/UsersPage/UsersHome")'>home</a> and start over."
+                    "Go <a href='@Url.Content("~/UsersPage/UsersHome")'>back</a> and start over."
                 ],
                 typeSpeed: -200,
                 showCursor: false

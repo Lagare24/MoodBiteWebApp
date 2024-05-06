@@ -85,6 +85,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Select.HtmlToPdf, Version=23.2.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
+      <HintPath>..\packages\Select.HtmlToPdf.23.2.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -128,7 +141,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\404Assets\script.js" />
     <Content Include="Content\404Assets\style.css" />
     <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-5.3.3-dist\css\bootstrap-grid.min.css" />
@@ -252,6 +264,7 @@
       <DependentUpon>MoodBiteModel.edmx</DependentUpon>
       <LastGenOutput>MoodBiteModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\bootstrap.js" />
@@ -293,7 +306,8 @@
     <Content Include="MoodBiteModel.edmx.diagram">
       <DependentUpon>MoodBiteModel.edmx</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\TestDeploy.pubxml" />
+    <Content Include="App_Browsers\qt.browser" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -310,6 +324,9 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BuyPremiumTransaction.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cart.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -392,13 +409,7 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="RoleType.cs" />
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>MoodBiteModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>MoodBiteModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagrams.cs">
+    <Compile Include="Testimonials.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
@@ -440,9 +451,6 @@
     <Compile Include="vw_ForOrderPaymentInsertionView.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="vw_IngredientWithType.cs">
-      <DependentUpon>MoodBiteModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="vw_ManageSubscriptions.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -453,9 +461,6 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_OrderDetailView.cs">
-      <DependentUpon>MoodBiteModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="vw_RecipeDetailsWithMoodTagSimplified.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_RecipeDetailsWithoutIngredients.cs">
@@ -473,10 +478,16 @@
     <Compile Include="vw_RecommendedRecipeForMood.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_RoleView.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_UploaderDetailsForReadMorePage.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_UserDetailsWithRole.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_UserRecipeView.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_UsersUploadCounts.cs">
@@ -489,13 +500,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\InputMood.cshtml" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Shared\_LandingPageLayout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_StandardLayout.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -513,6 +522,16 @@
     <Content Include="Views\AdminsPage\Index.cshtml" />
     <Content Include="Views\Home\ViewProfile.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\AdminsPage\EditUser.cshtml" />
+    <Content Include="Views\Shared\_Loader.cshtml" />
+    <Content Include="Views\AdminsPage\ViewUserDetails.cshtml" />
+    <Content Include="Views\AdminsPage\RecipeDetails.cshtml" />
+    <Content Include="Views\UsersPage\ViewForDownloadRecipe.cshtml" />
+    <Content Include="Views\Shared\_Modal.cshtml" />
+    <Content Include="Views\Home\BuyPremium.cshtml" />
+    <Content Include="Views\UsersPage\MyUploads.cshtml" />
+    <Content Include="Views\UsersPage\EditRecipe.cshtml" />
+    <Content Include="Views\UsersPage\RecipeDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -9,5 +9,10 @@ namespace MoodBite.Models.UserViewModel
     {
         public User user;
         public UserRole userRole;
+        public vw_RoleView userRoleView;
+        public UserPremium userPremium;
+        public Premium premiumType;
+        public List<UserRecipe> userRecipe;
+        public List<FoodSale> foodSale;
     }
 }

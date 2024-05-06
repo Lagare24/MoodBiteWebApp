@@ -144,7 +144,7 @@
           <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -211,7 +211,7 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
           <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
-          <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -286,7 +286,7 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
           <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
-          <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -305,28 +305,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vw_CheckOutView">
-      <EntityTypeMapping TypeName="MoodBiteModel.vw_CheckOutView">
-        <MappingFragment StoreEntitySet="vw_CheckOutView">
-          <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
-          <ScalarProperty Name="CartID" ColumnName="CartID" />
-          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Qty" ColumnName="Qty" />
-          <ScalarProperty Name="Total_Price" ColumnName="Total Price" />
-          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="vw_CoverImageOfRecipes">
       <EntityTypeMapping TypeName="MoodBiteModel.vw_CoverImageOfRecipes">
         <MappingFragment StoreEntitySet="vw_CoverImageOfRecipes">
           <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
           <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
           <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
           <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
           <ScalarProperty Name="MoodName" ColumnName="MoodName" />
           <ScalarProperty Name="Uploaded_by" ColumnName="Uploaded by" />
@@ -479,7 +464,7 @@
           <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
           <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
           <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -501,7 +486,7 @@
           <ScalarProperty Name="TotalReview" ColumnName="TotalReview" />
           <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
           <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -552,7 +537,16 @@
           <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
           <ScalarProperty Name="RecipeImageID" ColumnName="RecipeImageID" />
           <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_UploaderDetailsForReadMorePage">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_UploaderDetailsForReadMorePage">
+        <MappingFragment StoreEntitySet="vw_UploaderDetailsForReadMorePage">
+          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="TotalReview" ColumnName="TotalReview" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -605,5 +599,20 @@
     <FunctionImportMapping FunctionImportName="sp_InsertRecipeImage" FunctionName="MoodBiteModel.Store.sp_InsertRecipeImage" />
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MoodBiteModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MoodBiteModel.Store.sp_upgraddiagrams" />
+    <EntitySetMapping Name="vw_CheckOutView">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_CheckOutView">
+        <MappingFragment StoreEntitySet="vw_CheckOutView">
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="Total_Price" ColumnName="Total Price" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+          <ScalarProperty Name="CartID" ColumnName="CartID" />
+          <ScalarProperty Name="FoodSaleID" ColumnName="FoodSaleID" />
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
