@@ -1,5 +1,170 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MoodBiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MoodBiteEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AccountCreationLog" EntityType="MoodBiteModel.AccountCreationLog" />
+    <EntitySet Name="Allergy" EntityType="MoodBiteModel.Allergy" />
+    <EntitySet Name="BuyPremiumTransaction" EntityType="MoodBiteModel.BuyPremiumTransaction" />
+    <EntitySet Name="Cart" EntityType="MoodBiteModel.Cart" />
+    <EntitySet Name="FoodCategory" EntityType="MoodBiteModel.FoodCategory" />
+    <EntitySet Name="FoodSale" EntityType="MoodBiteModel.FoodSale" />
+    <EntitySet Name="Intolerance" EntityType="MoodBiteModel.Intolerance" />
+    <EntitySet Name="Mood" EntityType="MoodBiteModel.Mood" />
+    <EntitySet Name="OrderDetail" EntityType="MoodBiteModel.OrderDetail" />
+    <EntitySet Name="OrderMaster" EntityType="MoodBiteModel.OrderMaster" />
+    <EntitySet Name="OrderPayment" EntityType="MoodBiteModel.OrderPayment" />
+    <EntitySet Name="Premium" EntityType="MoodBiteModel.Premium" />
+    <EntitySet Name="Recipe" EntityType="MoodBiteModel.Recipe" />
+    <EntitySet Name="RecipeAllergy" EntityType="MoodBiteModel.RecipeAllergy" />
+    <EntitySet Name="RecipeImage" EntityType="MoodBiteModel.RecipeImage" />
+    <EntitySet Name="RecipeIngredient" EntityType="MoodBiteModel.RecipeIngredient" />
+    <EntitySet Name="RecipeIntolerance" EntityType="MoodBiteModel.RecipeIntolerance" />
+    <EntitySet Name="RecipeRating" EntityType="MoodBiteModel.RecipeRating" />
+    <EntitySet Name="Role" EntityType="MoodBiteModel.Role" />
+    <EntitySet Name="Testimonials" EntityType="MoodBiteModel.Testimonials" />
+    <EntitySet Name="User" EntityType="MoodBiteModel.User" />
+    <EntitySet Name="UserPremium" EntityType="MoodBiteModel.UserPremium" />
+    <EntitySet Name="UserRecipe" EntityType="MoodBiteModel.UserRecipe" />
+    <EntitySet Name="UserRole" EntityType="MoodBiteModel.UserRole" />
+    <EntitySet Name="UsersFavoriteRecipes" EntityType="MoodBiteModel.UsersFavoriteRecipes" />
+    <EntitySet Name="vw_AllRecipeDetailsWithFoodCategoryName" EntityType="MoodBiteModel.vw_AllRecipeDetailsWithFoodCategoryName" />
+    <EntitySet Name="vw_AllUserColWithRecipeID" EntityType="MoodBiteModel.vw_AllUserColWithRecipeID" />
+    <EntitySet Name="vw_CartView" EntityType="MoodBiteModel.vw_CartView" />
+    <EntitySet Name="vw_CheckOutView" EntityType="MoodBiteModel.vw_CheckOutView" />
+    <EntitySet Name="vw_CoverImageOfRecipes" EntityType="MoodBiteModel.vw_CoverImageOfRecipes" />
+    <EntitySet Name="vw_FilterAllergy" EntityType="MoodBiteModel.vw_FilterAllergy" />
+    <EntitySet Name="vw_FoodSaleView" EntityType="MoodBiteModel.vw_FoodSaleView" />
+    <EntitySet Name="vw_ForOrderPaymentInsertionView" EntityType="MoodBiteModel.vw_ForOrderPaymentInsertionView" />
+    <EntitySet Name="vw_ManageSubscriptions" EntityType="MoodBiteModel.vw_ManageSubscriptions" />
+    <EntitySet Name="vw_ManageUploads" EntityType="MoodBiteModel.vw_ManageUploads" />
+    <EntitySet Name="vw_ManageUsers" EntityType="MoodBiteModel.vw_ManageUsers" />
+    <EntitySet Name="vw_OrderDetailView" EntityType="MoodBiteModel.vw_OrderDetailView" />
+    <EntitySet Name="vw_RecipeDetailsWithoutIngredients" EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredients" />
+    <EntitySet Name="vw_RecipeDetailsWithoutIngredientsWithRating" EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredientsWithRating" />
+    <EntitySet Name="vw_recipeUploadersNameWithRating" EntityType="MoodBiteModel.vw_recipeUploadersNameWithRating" />
+    <EntitySet Name="vw_RecipeWithMoodName" EntityType="MoodBiteModel.vw_RecipeWithMoodName" />
+    <EntitySet Name="vw_RecommendedRecipeForMood" EntityType="MoodBiteModel.vw_RecommendedRecipeForMood" />
+    <EntitySet Name="vw_RoleView" EntityType="MoodBiteModel.vw_RoleView" />
+    <EntitySet Name="vw_UploaderDetailsForReadMorePage" EntityType="MoodBiteModel.vw_UploaderDetailsForReadMorePage" />
+    <EntitySet Name="vw_UserDetailsWithRole" EntityType="MoodBiteModel.vw_UserDetailsWithRole" />
+    <EntitySet Name="vw_UsersUploadCounts" EntityType="MoodBiteModel.vw_UsersUploadCounts" />
+    <AssociationSet Name="FK__AccountCr__UserI__3DE82FB7" Association="MoodBiteModel.FK__AccountCr__UserI__3DE82FB7">
+      <End Role="User" EntitySet="User" />
+      <End Role="AccountCreationLog" EntitySet="AccountCreationLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RecipeAll__Aller__1CBC4616" Association="MoodBiteModel.FK__RecipeAll__Aller__1CBC4616">
+      <End Role="Allergy" EntitySet="Allergy" />
+      <End Role="RecipeAllergy" EntitySet="RecipeAllergy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BuyPremiu__premi__4F47C5E3" Association="MoodBiteModel.FK__BuyPremiu__premi__4F47C5E3">
+      <End Role="Premium" EntitySet="Premium" />
+      <End Role="BuyPremiumTransaction" EntitySet="BuyPremiumTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__FoodSaleID__123EB7A3" Association="MoodBiteModel.FK__Cart__FoodSaleID__123EB7A3">
+      <End Role="FoodSale" EntitySet="FoodSale" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__FoodSaleID__1332DBDC" Association="MoodBiteModel.FK__Cart__FoodSaleID__1332DBDC">
+      <End Role="FoodSale" EntitySet="FoodSale" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__FoodSaleID__14270015" Association="MoodBiteModel.FK__Cart__FoodSaleID__14270015">
+      <End Role="FoodSale" EntitySet="FoodSale" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__RecipeID__2C88998B" Association="MoodBiteModel.FK__Cart__RecipeID__2C88998B">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__UserID__2B947552" Association="MoodBiteModel.FK__Cart__UserID__2B947552">
+      <End Role="User" EntitySet="User" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Recipe_FoodCategory" Association="MoodBiteModel.FK_Recipe_FoodCategory">
+      <End Role="FoodCategory" EntitySet="FoodCategory" />
+      <End Role="Recipe" EntitySet="Recipe" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FoodSale__UserRe__17036CC0" Association="MoodBiteModel.FK__FoodSale__UserRe__17036CC0">
+      <End Role="UserRecipe" EntitySet="UserRecipe" />
+      <End Role="FoodSale" EntitySet="FoodSale" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RecipeInt__Intol__208CD6FA" Association="MoodBiteModel.FK__RecipeInt__Intol__208CD6FA">
+      <End Role="Intolerance" EntitySet="Intolerance" />
+      <End Role="RecipeIntolerance" EntitySet="RecipeIntolerance" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Recipe__MoodID__52593CB8" Association="MoodBiteModel.FK__Recipe__MoodID__52593CB8">
+      <End Role="Mood" EntitySet="Mood" />
+      <End Role="Recipe" EntitySet="Recipe" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__PO_ID__31B762FC" Association="MoodBiteModel.FK__OrderDeta__PO_ID__31B762FC">
+      <End Role="OrderMaster" EntitySet="OrderMaster" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderMast__UserI__2EDAF651" Association="MoodBiteModel.FK__OrderMast__UserI__2EDAF651">
+      <End Role="User" EntitySet="User" />
+      <End Role="OrderMaster" EntitySet="OrderMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserPremi__Premi__25518C17" Association="MoodBiteModel.FK__UserPremi__Premi__25518C17">
+      <End Role="Premium" EntitySet="Premium" />
+      <End Role="UserPremium" EntitySet="UserPremium" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Recipe__Approved__5441852A" Association="MoodBiteModel.FK__Recipe__Approved__5441852A">
+      <End Role="User" EntitySet="User" />
+      <End Role="Recipe" EntitySet="Recipe" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RecipeAll__Recip__5DCAEF64" Association="MoodBiteModel.FK__RecipeAll__Recip__5DCAEF64">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="RecipeAllergy" EntitySet="RecipeAllergy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RecipeIma__Recip__59C55456" Association="MoodBiteModel.FK__RecipeIma__Recip__59C55456">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="RecipeImage" EntitySet="RecipeImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RecipeInt__Recip__6383C8BA" Association="MoodBiteModel.FK__RecipeInt__Recip__6383C8BA">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="RecipeIntolerance" EntitySet="RecipeIntolerance" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RecipeRat__Recip__39237A9A" Association="MoodBiteModel.FK__RecipeRat__Recip__39237A9A">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="RecipeRating" EntitySet="RecipeRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRecip__Recip__787EE5A0" Association="MoodBiteModel.FK__UserRecip__Recip__787EE5A0">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="UserRecipe" EntitySet="UserRecipe" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UsersFavo__Recip__61F08603" Association="MoodBiteModel.FK__UsersFavo__Recip__61F08603">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RecipeIngredient_RecipeID" Association="MoodBiteModel.FK_RecipeIngredient_RecipeID">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="RecipeIngredient" EntitySet="RecipeIngredient" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RecipeRat__UserI__382F5661" Association="MoodBiteModel.FK__RecipeRat__UserI__382F5661">
+      <End Role="User" EntitySet="User" />
+      <End Role="RecipeRating" EntitySet="RecipeRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRole__RoleID__282DF8C2" Association="MoodBiteModel.FK__UserRole__RoleID__282DF8C2">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserPremi__DateS__0E6E26BF" Association="MoodBiteModel.FK__UserPremi__DateS__0E6E26BF">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserPremium" EntitySet="UserPremium" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRecip__UserI__778AC167" Association="MoodBiteModel.FK__UserRecip__UserI__778AC167">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserRecipe" EntitySet="UserRecipe" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRole__UserID__3C69FB99" Association="MoodBiteModel.FK__UserRole__UserID__3C69FB99">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UsersFavo__UserI__60FC61CA" Association="MoodBiteModel.FK__UsersFavo__UserI__60FC61CA">
+      <End Role="User" EntitySet="User" />
+      <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
+    </AssociationSet>
+    <EntitySet Name="vw_UserRecipeView" EntityType="MoodBiteModel.vw_UserRecipeView" />
+  </EntityContainer>
   <EntityType Name="AccountCreationLog">
     <Key>
       <PropertyRef Name="AccountCreationLogID" />
@@ -7,7 +172,7 @@
     <Property Name="AccountCreationLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="Int32" />
     <Property Name="DateCreated" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="User" Relationship="Self.FK__AccountCr__UserI__3DE82FB7" FromRole="AccountCreationLog" ToRole="User" />
+    <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__AccountCr__UserI__3DE82FB7" FromRole="AccountCreationLog" ToRole="User" />
   </EntityType>
   <EntityType Name="Allergy">
     <Key>
@@ -15,7 +180,18 @@
     </Key>
     <Property Name="AllergyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="AllergyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="RecipeAllergy" Relationship="Self.FK__RecipeAll__Aller__5EBF139D" FromRole="Allergy" ToRole="RecipeAllergy" />
+    <NavigationProperty Name="RecipeAllergy" Relationship="MoodBiteModel.FK__RecipeAll__Aller__1CBC4616" FromRole="Allergy" ToRole="RecipeAllergy" />
+  </EntityType>
+  <EntityType Name="BuyPremiumTransaction">
+    <Key>
+      <PropertyRef Name="transactionID" />
+    </Key>
+    <Property Name="transactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="premiumTypeID" Type="Int32" />
+    <Property Name="amoountPaid" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="phoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Premium" Relationship="MoodBiteModel.FK__BuyPremiu__premi__4F47C5E3" FromRole="BuyPremiumTransaction" ToRole="Premium" />
   </EntityType>
   <EntityType Name="Cart">
     <Key>
@@ -26,9 +202,11 @@
     <Property Name="RecipeID" Type="Int32" />
     <Property Name="FoodSaleID" Type="Int32" />
     <Property Name="Qty" Type="Int32" />
-    <NavigationProperty Name="FoodSale" Relationship="Self.FK__Cart__FoodSaleID__2D7CBDC4" FromRole="Cart" ToRole="FoodSale" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK__Cart__RecipeID__2C88998B" FromRole="Cart" ToRole="Recipe" />
-    <NavigationProperty Name="User" Relationship="Self.FK__Cart__UserID__2B947552" FromRole="Cart" ToRole="User" />
+    <NavigationProperty Name="FoodSale" Relationship="MoodBiteModel.FK__Cart__FoodSaleID__123EB7A3" FromRole="Cart" ToRole="FoodSale" />
+    <NavigationProperty Name="FoodSale1" Relationship="MoodBiteModel.FK__Cart__FoodSaleID__1332DBDC" FromRole="Cart" ToRole="FoodSale" />
+    <NavigationProperty Name="FoodSale2" Relationship="MoodBiteModel.FK__Cart__FoodSaleID__14270015" FromRole="Cart" ToRole="FoodSale" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__Cart__RecipeID__2C88998B" FromRole="Cart" ToRole="Recipe" />
+    <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__Cart__UserID__2B947552" FromRole="Cart" ToRole="User" />
   </EntityType>
   <EntityType Name="FoodCategory">
     <Key>
@@ -37,7 +215,7 @@
     <Property Name="FoodCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="FoodCategoryDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK_Recipe_FoodCategory" FromRole="FoodCategory" ToRole="Recipe" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK_Recipe_FoodCategory" FromRole="FoodCategory" ToRole="Recipe" />
   </EntityType>
   <EntityType Name="FoodSale">
     <Key>
@@ -49,8 +227,10 @@
     <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Available" Type="Boolean" />
     <Property Name="Stocks" Type="Int32" />
-    <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__FoodSaleID__2D7CBDC4" FromRole="FoodSale" ToRole="Cart" />
-    <NavigationProperty Name="UserRecipe" Relationship="Self.FK__FoodSale__UserRe__1DB06A4F" FromRole="FoodSale" ToRole="UserRecipe" />
+    <NavigationProperty Name="Cart" Relationship="MoodBiteModel.FK__Cart__FoodSaleID__123EB7A3" FromRole="FoodSale" ToRole="Cart" />
+    <NavigationProperty Name="Cart1" Relationship="MoodBiteModel.FK__Cart__FoodSaleID__1332DBDC" FromRole="FoodSale" ToRole="Cart" />
+    <NavigationProperty Name="Cart2" Relationship="MoodBiteModel.FK__Cart__FoodSaleID__14270015" FromRole="FoodSale" ToRole="Cart" />
+    <NavigationProperty Name="UserRecipe" Relationship="MoodBiteModel.FK__FoodSale__UserRe__17036CC0" FromRole="FoodSale" ToRole="UserRecipe" />
   </EntityType>
   <EntityType Name="Intolerance">
     <Key>
@@ -58,7 +238,7 @@
     </Key>
     <Property Name="IntoleranceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="IntoleranceName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="RecipeIntolerance" Relationship="Self.FK__RecipeInt__Intol__6477ECF3" FromRole="Intolerance" ToRole="RecipeIntolerance" />
+    <NavigationProperty Name="RecipeIntolerance" Relationship="MoodBiteModel.FK__RecipeInt__Intol__208CD6FA" FromRole="Intolerance" ToRole="RecipeIntolerance" />
   </EntityType>
   <EntityType Name="Mood">
     <Key>
@@ -66,7 +246,7 @@
     </Key>
     <Property Name="MoodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK__Recipe__MoodID__52593CB8" FromRole="Mood" ToRole="Recipe" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__Recipe__MoodID__52593CB8" FromRole="Mood" ToRole="Recipe" />
   </EntityType>
   <EntityType Name="OrderDetail">
     <Key>
@@ -78,7 +258,7 @@
     <Property Name="Quantity" Type="Int32" />
     <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="OrderMaster" Relationship="Self.FK__OrderDeta__PO_ID__31B762FC" FromRole="OrderDetail" ToRole="OrderMaster" />
+    <NavigationProperty Name="OrderMaster" Relationship="MoodBiteModel.FK__OrderDeta__PO_ID__31B762FC" FromRole="OrderDetail" ToRole="OrderMaster" />
   </EntityType>
   <EntityType Name="OrderMaster">
     <Key>
@@ -89,8 +269,8 @@
     <Property Name="DateOrdered" Type="DateTime" Precision="3" />
     <Property Name="CustomerAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="IsPaid" Type="Boolean" />
-    <NavigationProperty Name="OrderDetail" Relationship="Self.FK__OrderDeta__PO_ID__31B762FC" FromRole="OrderMaster" ToRole="OrderDetail" />
-    <NavigationProperty Name="User" Relationship="Self.FK__OrderMast__UserI__2EDAF651" FromRole="OrderMaster" ToRole="User" />
+    <NavigationProperty Name="OrderDetail" Relationship="MoodBiteModel.FK__OrderDeta__PO_ID__31B762FC" FromRole="OrderMaster" ToRole="OrderDetail" />
+    <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__OrderMast__UserI__2EDAF651" FromRole="OrderMaster" ToRole="User" />
   </EntityType>
   <EntityType Name="OrderPayment">
     <Key>
@@ -110,7 +290,8 @@
     <Property Name="PremiumType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Duration" Type="Int32" />
-    <NavigationProperty Name="UserPremium" Relationship="Self.FK__UserPremi__Premi__0F624AF8" FromRole="Premium" ToRole="UserPremium" />
+    <NavigationProperty Name="BuyPremiumTransaction" Relationship="MoodBiteModel.FK__BuyPremiu__premi__4F47C5E3" FromRole="Premium" ToRole="BuyPremiumTransaction" />
+    <NavigationProperty Name="UserPremium" Relationship="MoodBiteModel.FK__UserPremi__Premi__25518C17" FromRole="Premium" ToRole="UserPremium" />
   </EntityType>
   <EntityType Name="Recipe">
     <Key>
@@ -129,17 +310,17 @@
     <Property Name="IsApproved" Type="Boolean" />
     <Property Name="DateApproved" Type="DateTime" Precision="3" />
     <Property Name="ApprovedBy" Type="Int32" />
-    <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__RecipeID__2C88998B" FromRole="Recipe" ToRole="Cart" />
-    <NavigationProperty Name="FoodCategory" Relationship="Self.FK_Recipe_FoodCategory" FromRole="Recipe" ToRole="FoodCategory" />
-    <NavigationProperty Name="Mood" Relationship="Self.FK__Recipe__MoodID__52593CB8" FromRole="Recipe" ToRole="Mood" />
-    <NavigationProperty Name="User" Relationship="Self.FK__Recipe__Approved__5441852A" FromRole="Recipe" ToRole="User" />
-    <NavigationProperty Name="RecipeAllergy" Relationship="Self.FK__RecipeAll__Recip__5DCAEF64" FromRole="Recipe" ToRole="RecipeAllergy" />
-    <NavigationProperty Name="RecipeImage" Relationship="Self.FK__RecipeIma__Recip__59C55456" FromRole="Recipe" ToRole="RecipeImage" />
-    <NavigationProperty Name="RecipeIntolerance" Relationship="Self.FK__RecipeInt__Recip__6383C8BA" FromRole="Recipe" ToRole="RecipeIntolerance" />
-    <NavigationProperty Name="RecipeRating" Relationship="Self.FK__RecipeRat__Recip__39237A9A" FromRole="Recipe" ToRole="RecipeRating" />
-    <NavigationProperty Name="UserRecipe" Relationship="Self.FK__UserRecip__Recip__787EE5A0" FromRole="Recipe" ToRole="UserRecipe" />
-    <NavigationProperty Name="UsersFavoriteRecipes" Relationship="Self.FK__UsersFavo__Recip__61F08603" FromRole="Recipe" ToRole="UsersFavoriteRecipes" />
-    <NavigationProperty Name="RecipeIngredient" Relationship="Self.FK_RecipeIngredient_RecipeID" FromRole="Recipe" ToRole="RecipeIngredient" />
+    <NavigationProperty Name="Cart" Relationship="MoodBiteModel.FK__Cart__RecipeID__2C88998B" FromRole="Recipe" ToRole="Cart" />
+    <NavigationProperty Name="FoodCategory" Relationship="MoodBiteModel.FK_Recipe_FoodCategory" FromRole="Recipe" ToRole="FoodCategory" />
+    <NavigationProperty Name="Mood" Relationship="MoodBiteModel.FK__Recipe__MoodID__52593CB8" FromRole="Recipe" ToRole="Mood" />
+    <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__Recipe__Approved__5441852A" FromRole="Recipe" ToRole="User" />
+    <NavigationProperty Name="RecipeAllergy" Relationship="MoodBiteModel.FK__RecipeAll__Recip__5DCAEF64" FromRole="Recipe" ToRole="RecipeAllergy" />
+    <NavigationProperty Name="RecipeImage" Relationship="MoodBiteModel.FK__RecipeIma__Recip__59C55456" FromRole="Recipe" ToRole="RecipeImage" />
+    <NavigationProperty Name="RecipeIntolerance" Relationship="MoodBiteModel.FK__RecipeInt__Recip__6383C8BA" FromRole="Recipe" ToRole="RecipeIntolerance" />
+    <NavigationProperty Name="RecipeRating" Relationship="MoodBiteModel.FK__RecipeRat__Recip__39237A9A" FromRole="Recipe" ToRole="RecipeRating" />
+    <NavigationProperty Name="UserRecipe" Relationship="MoodBiteModel.FK__UserRecip__Recip__787EE5A0" FromRole="Recipe" ToRole="UserRecipe" />
+    <NavigationProperty Name="UsersFavoriteRecipes" Relationship="MoodBiteModel.FK__UsersFavo__Recip__61F08603" FromRole="Recipe" ToRole="UsersFavoriteRecipes" />
+    <NavigationProperty Name="RecipeIngredient" Relationship="MoodBiteModel.FK_RecipeIngredient_RecipeID" FromRole="Recipe" ToRole="RecipeIngredient" />
   </EntityType>
   <EntityType Name="RecipeAllergy">
     <Key>
@@ -148,8 +329,8 @@
     <Property Name="RecipeAllergyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="RecipeID" Type="Int32" />
     <Property Name="AllergyID" Type="Int32" />
-    <NavigationProperty Name="Allergy" Relationship="Self.FK__RecipeAll__Aller__5EBF139D" FromRole="RecipeAllergy" ToRole="Allergy" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK__RecipeAll__Recip__5DCAEF64" FromRole="RecipeAllergy" ToRole="Recipe" />
+    <NavigationProperty Name="Allergy" Relationship="MoodBiteModel.FK__RecipeAll__Aller__1CBC4616" FromRole="RecipeAllergy" ToRole="Allergy" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__RecipeAll__Recip__5DCAEF64" FromRole="RecipeAllergy" ToRole="Recipe" />
   </EntityType>
   <EntityType Name="RecipeImage">
     <Key>
@@ -159,7 +340,7 @@
     <Property Name="RecipeID" Type="Int32" />
     <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK__RecipeIma__Recip__59C55456" FromRole="RecipeImage" ToRole="Recipe" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__RecipeIma__Recip__59C55456" FromRole="RecipeImage" ToRole="Recipe" />
   </EntityType>
   <EntityType Name="RecipeIngredient">
     <Key>
@@ -170,7 +351,7 @@
     <Property Name="IngredientName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="Unit" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Quantity" Type="Double" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK_RecipeIngredient_RecipeID" FromRole="RecipeIngredient" ToRole="Recipe" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK_RecipeIngredient_RecipeID" FromRole="RecipeIngredient" ToRole="Recipe" />
   </EntityType>
   <EntityType Name="RecipeIntolerance">
     <Key>
@@ -179,8 +360,8 @@
     <Property Name="RecipeIntoleranceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="RecipeID" Type="Int32" />
     <Property Name="IntoleranceID" Type="Int32" />
-    <NavigationProperty Name="Intolerance" Relationship="Self.FK__RecipeInt__Intol__6477ECF3" FromRole="RecipeIntolerance" ToRole="Intolerance" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK__RecipeInt__Recip__6383C8BA" FromRole="RecipeIntolerance" ToRole="Recipe" />
+    <NavigationProperty Name="Intolerance" Relationship="MoodBiteModel.FK__RecipeInt__Intol__208CD6FA" FromRole="RecipeIntolerance" ToRole="Intolerance" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__RecipeInt__Recip__6383C8BA" FromRole="RecipeIntolerance" ToRole="Recipe" />
   </EntityType>
   <EntityType Name="RecipeRating">
     <Key>
@@ -190,8 +371,8 @@
     <Property Name="UserID" Type="Int32" />
     <Property Name="RecipeID" Type="Int32" />
     <Property Name="Rate" Type="Double" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK__RecipeRat__Recip__39237A9A" FromRole="RecipeRating" ToRole="Recipe" />
-    <NavigationProperty Name="User" Relationship="Self.FK__RecipeRat__UserI__382F5661" FromRole="RecipeRating" ToRole="User" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__RecipeRat__Recip__39237A9A" FromRole="RecipeRating" ToRole="Recipe" />
+    <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__RecipeRat__UserI__382F5661" FromRole="RecipeRating" ToRole="User" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -199,17 +380,17 @@
     </Key>
     <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Rolename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="UserRole" Relationship="Self.FK__UserRole__RoleID__3D5E1FD2" FromRole="Role" ToRole="UserRole" />
+    <NavigationProperty Name="UserRole" Relationship="MoodBiteModel.FK__UserRole__RoleID__282DF8C2" FromRole="Role" ToRole="UserRole" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
+  <EntityType Name="Testimonials">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tProfession" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tMsg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -227,15 +408,15 @@
     <Property Name="EmailConfirmed" Type="Boolean" />
     <Property Name="EmailConfirmationToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="ProfilePicturePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="AccountCreationLog" Relationship="Self.FK__AccountCr__UserI__3DE82FB7" FromRole="User" ToRole="AccountCreationLog" />
-    <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__UserID__2B947552" FromRole="User" ToRole="Cart" />
-    <NavigationProperty Name="OrderMaster" Relationship="Self.FK__OrderMast__UserI__2EDAF651" FromRole="User" ToRole="OrderMaster" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK__Recipe__Approved__5441852A" FromRole="User" ToRole="Recipe" />
-    <NavigationProperty Name="RecipeRating" Relationship="Self.FK__RecipeRat__UserI__382F5661" FromRole="User" ToRole="RecipeRating" />
-    <NavigationProperty Name="UserPremium" Relationship="Self.FK__UserPremi__DateS__0E6E26BF" FromRole="User" ToRole="UserPremium" />
-    <NavigationProperty Name="UserRecipe" Relationship="Self.FK__UserRecip__UserI__778AC167" FromRole="User" ToRole="UserRecipe" />
-    <NavigationProperty Name="UserRole" Relationship="Self.FK__UserRole__UserID__3C69FB99" FromRole="User" ToRole="UserRole" />
-    <NavigationProperty Name="UsersFavoriteRecipes" Relationship="Self.FK__UsersFavo__UserI__60FC61CA" FromRole="User" ToRole="UsersFavoriteRecipes" />
+    <NavigationProperty Name="AccountCreationLog" Relationship="MoodBiteModel.FK__AccountCr__UserI__3DE82FB7" FromRole="User" ToRole="AccountCreationLog" />
+    <NavigationProperty Name="Cart" Relationship="MoodBiteModel.FK__Cart__UserID__2B947552" FromRole="User" ToRole="Cart" />
+    <NavigationProperty Name="OrderMaster" Relationship="MoodBiteModel.FK__OrderMast__UserI__2EDAF651" FromRole="User" ToRole="OrderMaster" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__Recipe__Approved__5441852A" FromRole="User" ToRole="Recipe" />
+    <NavigationProperty Name="RecipeRating" Relationship="MoodBiteModel.FK__RecipeRat__UserI__382F5661" FromRole="User" ToRole="RecipeRating" />
+    <NavigationProperty Name="UserPremium" Relationship="MoodBiteModel.FK__UserPremi__DateS__0E6E26BF" FromRole="User" ToRole="UserPremium" />
+    <NavigationProperty Name="UserRecipe" Relationship="MoodBiteModel.FK__UserRecip__UserI__778AC167" FromRole="User" ToRole="UserRecipe" />
+    <NavigationProperty Name="UserRole" Relationship="MoodBiteModel.FK__UserRole__UserID__3C69FB99" FromRole="User" ToRole="UserRole" />
+    <NavigationProperty Name="UsersFavoriteRecipes" Relationship="MoodBiteModel.FK__UsersFavo__UserI__60FC61CA" FromRole="User" ToRole="UsersFavoriteRecipes" />
   </EntityType>
   <EntityType Name="UserPremium">
     <Key>
@@ -245,8 +426,8 @@
     <Property Name="UserID" Type="Int32" />
     <Property Name="PremiumID" Type="Int32" />
     <Property Name="DateSubscribed" Type="DateTime" Precision="0" />
-    <NavigationProperty Name="Premium" Relationship="Self.FK__UserPremi__Premi__0F624AF8" FromRole="UserPremium" ToRole="Premium" />
-    <NavigationProperty Name="User" Relationship="Self.FK__UserPremi__DateS__0E6E26BF" FromRole="UserPremium" ToRole="User" />
+    <NavigationProperty Name="Premium" Relationship="MoodBiteModel.FK__UserPremi__Premi__25518C17" FromRole="UserPremium" ToRole="Premium" />
+    <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__UserPremi__DateS__0E6E26BF" FromRole="UserPremium" ToRole="User" />
   </EntityType>
   <EntityType Name="UserRecipe">
     <Key>
@@ -255,9 +436,9 @@
     <Property Name="UserRecipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="Int32" />
     <Property Name="RecipeID" Type="Int32" />
-    <NavigationProperty Name="FoodSale" Relationship="Self.FK__FoodSale__UserRe__1DB06A4F" FromRole="UserRecipe" ToRole="FoodSale" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK__UserRecip__Recip__787EE5A0" FromRole="UserRecipe" ToRole="Recipe" />
-    <NavigationProperty Name="User" Relationship="Self.FK__UserRecip__UserI__778AC167" FromRole="UserRecipe" ToRole="User" />
+    <NavigationProperty Name="FoodSale" Relationship="MoodBiteModel.FK__FoodSale__UserRe__17036CC0" FromRole="UserRecipe" ToRole="FoodSale" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__UserRecip__Recip__787EE5A0" FromRole="UserRecipe" ToRole="Recipe" />
+    <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__UserRecip__UserI__778AC167" FromRole="UserRecipe" ToRole="User" />
   </EntityType>
   <EntityType Name="UserRole">
     <Key>
@@ -266,8 +447,8 @@
     <Property Name="UserRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="Int32" />
     <Property Name="RoleID" Type="Int32" />
-    <NavigationProperty Name="Role" Relationship="Self.FK__UserRole__RoleID__3D5E1FD2" FromRole="UserRole" ToRole="Role" />
-    <NavigationProperty Name="User" Relationship="Self.FK__UserRole__UserID__3C69FB99" FromRole="UserRole" ToRole="User" />
+    <NavigationProperty Name="Role" Relationship="MoodBiteModel.FK__UserRole__RoleID__282DF8C2" FromRole="UserRole" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__UserRole__UserID__3C69FB99" FromRole="UserRole" ToRole="User" />
   </EntityType>
   <EntityType Name="UsersFavoriteRecipes">
     <Key>
@@ -276,8 +457,8 @@
     <Property Name="UsersFaveRecipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="Int32" />
     <Property Name="RecipeID" Type="Int32" />
-    <NavigationProperty Name="Recipe" Relationship="Self.FK__UsersFavo__Recip__61F08603" FromRole="UsersFavoriteRecipes" ToRole="Recipe" />
-    <NavigationProperty Name="User" Relationship="Self.FK__UsersFavo__UserI__60FC61CA" FromRole="UsersFavoriteRecipes" ToRole="User" />
+    <NavigationProperty Name="Recipe" Relationship="MoodBiteModel.FK__UsersFavo__Recip__61F08603" FromRole="UsersFavoriteRecipes" ToRole="Recipe" />
+    <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__UsersFavo__UserI__60FC61CA" FromRole="UsersFavoriteRecipes" ToRole="User" />
   </EntityType>
   <EntityType Name="vw_AllRecipeDetailsWithFoodCategoryName">
     <Key>
@@ -331,6 +512,23 @@
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Qty" Type="Int32" />
     <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="vw_CheckOutView">
+    <Key>
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="RecipeID" />
+      <PropertyRef Name="FoodSaleID" />
+      <PropertyRef Name="CartID" />
+    </Key>
+    <Property Name="userID" Type="Int32" Nullable="false" />
+    <Property Name="RecipeID" Type="Int32" Nullable="false" />
+    <Property Name="FoodSaleID" Type="Int32" Nullable="false" />
+    <Property Name="CartID" Type="Int32" Nullable="false" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Qty" Type="Int32" />
+    <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_CoverImageOfRecipes">
     <Key>
@@ -401,14 +599,6 @@
     <Property Name="DateOrdered" Type="DateTime" Precision="3" />
     <Property Name="IsPaid" Type="Boolean" />
   </EntityType>
-  <EntityType Name="vw_IngredientWithType">
-    <Key>
-      <PropertyRef Name="IngredientID" />
-    </Key>
-    <Property Name="IngredientID" Type="Int32" Nullable="false" />
-    <Property Name="IngredientName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="IngredientTypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-  </EntityType>
   <EntityType Name="vw_ManageSubscriptions">
     <Key>
       <PropertyRef Name="ID" />
@@ -427,7 +617,7 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" />
     <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Uploaded_by" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Uploaded_by" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="Date_uploaded" Type="DateTime" Precision="3" />
     <Property Name="Status" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
     <Property Name="DateApproved" Type="DateTime" Precision="3" />
@@ -449,26 +639,6 @@
     <Property Name="PO_ID" Type="Int32" Nullable="false" />
     <Property Name="CustomerID" Type="Int32" />
     <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
-  </EntityType>
-  <EntityType Name="vw_RecipeDetailsWithMoodTagSimplified">
-    <Key>
-      <PropertyRef Name="RecipeIngredientID" />
-      <PropertyRef Name="RecipeID" />
-    </Key>
-    <Property Name="RecipeIngredientID" Type="Int32" Nullable="false" />
-    <Property Name="RecipeID" Type="Int32" Nullable="false" />
-    <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IngredientName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="Quantity" Type="Int32" />
-    <Property Name="Unit" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="IngredientTypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="PreparationTime" Type="Time" Precision="7" />
-    <Property Name="CookingDuration" Type="Time" Precision="7" />
-    <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
-    <Property Name="DateApproved" Type="DateTime" Precision="3" />
-    <Property Name="ApprovedBy" Type="Int32" />
   </EntityType>
   <EntityType Name="vw_RecipeDetailsWithoutIngredients">
     <Key>
@@ -521,7 +691,7 @@
     </Key>
     <Property Name="UserRecipeID" Type="Int32" Nullable="false" />
     <Property Name="userID" Type="Int32" Nullable="false" />
-    <Property Name="UploadedBy" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UploadedBy" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="RecipeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="Rating" Type="Double" />
     <Property Name="TotalReview" Type="Int32" />
@@ -535,6 +705,10 @@
     </Key>
     <Property Name="RecipeID" Type="Int32" Nullable="false" />
     <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
     <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="PreparationTime" Type="Time" Precision="7" />
     <Property Name="CookingDuration" Type="Time" Precision="7" />
@@ -542,11 +716,9 @@
     <Property Name="IsApproved" Type="Boolean" />
     <Property Name="DateApproved" Type="DateTime" Precision="3" />
     <Property Name="ApprovedBy" Type="Int32" />
-    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IngredientsCount" Type="Int32" />
     <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="userID" Type="Int32" Nullable="false" />
-    <Property Name="Uploaded_by" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Uploaded_by" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_RecommendedRecipeForMood">
     <Key>
@@ -560,7 +732,7 @@
     <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="userID" Type="Int32" Nullable="false" />
-    <Property Name="Uploaded_by" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Uploaded_by" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="DateUploaded" Type="DateTime" Precision="3" />
     <Property Name="Approved_by" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="DateApproved" Type="DateTime" Precision="3" />
@@ -568,13 +740,20 @@
     <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="vw_RoleView">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="Rolename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="vw_UploaderDetailsForReadMorePage">
     <Key>
       <PropertyRef Name="UploadedBy" />
       <PropertyRef Name="Rating" />
       <PropertyRef Name="TotalReview" />
     </Key>
-    <Property Name="UploadedBy" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UploadedBy" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="Rating" Type="Double" Nullable="false" />
     <Property Name="TotalReview" Type="Int32" Nullable="false" />
   </EntityType>
@@ -602,10 +781,10 @@
     <Property Name="TotalUpload" Type="Int32" />
   </EntityType>
   <Association Name="FK__AccountCr__UserI__3DE82FB7">
-    <End Role="User" Type="Self.User" Multiplicity="0..1">
+    <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="AccountCreationLog" Type="Self.AccountCreationLog" Multiplicity="*" />
+    <End Type="MoodBiteModel.AccountCreationLog" Role="AccountCreationLog" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="userID" />
@@ -615,11 +794,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__RecipeAll__Aller__5EBF139D">
-    <End Role="Allergy" Type="Self.Allergy" Multiplicity="0..1">
+  <Association Name="FK__RecipeAll__Aller__1CBC4616">
+    <End Type="MoodBiteModel.Allergy" Role="Allergy" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="RecipeAllergy" Type="Self.RecipeAllergy" Multiplicity="*" />
+    <End Type="MoodBiteModel.RecipeAllergy" Role="RecipeAllergy" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Allergy">
         <PropertyRef Name="AllergyID" />
@@ -629,9 +808,47 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Cart__FoodSaleID__2D7CBDC4">
-    <End Role="FoodSale" Type="Self.FoodSale" Multiplicity="0..1" />
-    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+  <Association Name="FK__BuyPremiu__premi__4F47C5E3">
+    <End Type="MoodBiteModel.Premium" Role="Premium" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="MoodBiteModel.BuyPremiumTransaction" Role="BuyPremiumTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Premium">
+        <PropertyRef Name="PremiumID" />
+      </Principal>
+      <Dependent Role="BuyPremiumTransaction">
+        <PropertyRef Name="premiumTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cart__FoodSaleID__123EB7A3">
+    <End Type="MoodBiteModel.FoodSale" Role="FoodSale" Multiplicity="0..1" />
+    <End Type="MoodBiteModel.Cart" Role="Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoodSale">
+        <PropertyRef Name="FoodSaleID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="FoodSaleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cart__FoodSaleID__1332DBDC">
+    <End Type="MoodBiteModel.FoodSale" Role="FoodSale" Multiplicity="0..1" />
+    <End Type="MoodBiteModel.Cart" Role="Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoodSale">
+        <PropertyRef Name="FoodSaleID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="FoodSaleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cart__FoodSaleID__14270015">
+    <End Type="MoodBiteModel.FoodSale" Role="FoodSale" Multiplicity="0..1" />
+    <End Type="MoodBiteModel.Cart" Role="Cart" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FoodSale">
         <PropertyRef Name="FoodSaleID" />
@@ -642,8 +859,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Cart__RecipeID__2C88998B">
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1" />
-    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="0..1" />
+    <End Type="MoodBiteModel.Cart" Role="Cart" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Recipe">
         <PropertyRef Name="RecipeID" />
@@ -654,10 +871,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Cart__UserID__2B947552">
-    <End Role="User" Type="Self.User" Multiplicity="0..1">
+    <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <End Type="MoodBiteModel.Cart" Role="Cart" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="userID" />
@@ -668,8 +885,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Recipe_FoodCategory">
-    <End Role="FoodCategory" Type="Self.FoodCategory" Multiplicity="0..1" />
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+    <End Type="MoodBiteModel.FoodCategory" Role="FoodCategory" Multiplicity="0..1" />
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FoodCategory">
         <PropertyRef Name="FoodCategoryID" />
@@ -679,11 +896,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__FoodSale__UserRe__1DB06A4F">
-    <End Role="UserRecipe" Type="Self.UserRecipe" Multiplicity="0..1">
+  <Association Name="FK__FoodSale__UserRe__17036CC0">
+    <End Type="MoodBiteModel.UserRecipe" Role="UserRecipe" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="FoodSale" Type="Self.FoodSale" Multiplicity="*" />
+    <End Type="MoodBiteModel.FoodSale" Role="FoodSale" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserRecipe">
         <PropertyRef Name="UserRecipeID" />
@@ -693,11 +910,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__RecipeInt__Intol__6477ECF3">
-    <End Role="Intolerance" Type="Self.Intolerance" Multiplicity="0..1">
+  <Association Name="FK__RecipeInt__Intol__208CD6FA">
+    <End Type="MoodBiteModel.Intolerance" Role="Intolerance" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="RecipeIntolerance" Type="Self.RecipeIntolerance" Multiplicity="*" />
+    <End Type="MoodBiteModel.RecipeIntolerance" Role="RecipeIntolerance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Intolerance">
         <PropertyRef Name="IntoleranceID" />
@@ -708,10 +925,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Recipe__MoodID__52593CB8">
-    <End Role="Mood" Type="Self.Mood" Multiplicity="0..1">
+    <End Type="MoodBiteModel.Mood" Role="Mood" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Mood">
         <PropertyRef Name="MoodID" />
@@ -722,10 +939,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__OrderDeta__PO_ID__31B762FC">
-    <End Role="OrderMaster" Type="Self.OrderMaster" Multiplicity="0..1">
+    <End Type="MoodBiteModel.OrderMaster" Role="OrderMaster" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <End Type="MoodBiteModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="OrderMaster">
         <PropertyRef Name="PO_ID" />
@@ -736,10 +953,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__OrderMast__UserI__2EDAF651">
-    <End Role="User" Type="Self.User" Multiplicity="0..1">
+    <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="OrderMaster" Type="Self.OrderMaster" Multiplicity="*" />
+    <End Type="MoodBiteModel.OrderMaster" Role="OrderMaster" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="userID" />
@@ -749,11 +966,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserPremi__Premi__0F624AF8">
-    <End Role="Premium" Type="Self.Premium" Multiplicity="0..1">
+  <Association Name="FK__UserPremi__Premi__25518C17">
+    <End Type="MoodBiteModel.Premium" Role="Premium" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="UserPremium" Type="Self.UserPremium" Multiplicity="*" />
+    <End Type="MoodBiteModel.UserPremium" Role="UserPremium" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Premium">
         <PropertyRef Name="PremiumID" />
@@ -764,10 +981,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Recipe__Approved__5441852A">
-    <End Role="User" Type="Self.User" Multiplicity="0..1">
+    <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="userID" />
@@ -778,10 +995,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__RecipeAll__Recip__5DCAEF64">
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1">
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="RecipeAllergy" Type="Self.RecipeAllergy" Multiplicity="*" />
+    <End Type="MoodBiteModel.RecipeAllergy" Role="RecipeAllergy" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Recipe">
         <PropertyRef Name="RecipeID" />
@@ -792,10 +1009,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__RecipeIma__Recip__59C55456">
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1">
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="RecipeImage" Type="Self.RecipeImage" Multiplicity="*" />
+    <End Type="MoodBiteModel.RecipeImage" Role="RecipeImage" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Recipe">
         <PropertyRef Name="RecipeID" />
@@ -806,10 +1023,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__RecipeInt__Recip__6383C8BA">
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1">
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="RecipeIntolerance" Type="Self.RecipeIntolerance" Multiplicity="*" />
+    <End Type="MoodBiteModel.RecipeIntolerance" Role="RecipeIntolerance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Recipe">
         <PropertyRef Name="RecipeID" />
@@ -820,8 +1037,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__RecipeRat__Recip__39237A9A">
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1" />
-    <End Role="RecipeRating" Type="Self.RecipeRating" Multiplicity="*" />
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="0..1" />
+    <End Type="MoodBiteModel.RecipeRating" Role="RecipeRating" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Recipe">
         <PropertyRef Name="RecipeID" />
@@ -832,8 +1049,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__UserRecip__Recip__787EE5A0">
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1" />
-    <End Role="UserRecipe" Type="Self.UserRecipe" Multiplicity="*" />
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="0..1" />
+    <End Type="MoodBiteModel.UserRecipe" Role="UserRecipe" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Recipe">
         <PropertyRef Name="RecipeID" />
@@ -844,8 +1061,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__UsersFavo__Recip__61F08603">
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1" />
-    <End Role="UsersFavoriteRecipes" Type="Self.UsersFavoriteRecipes" Multiplicity="*" />
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="0..1" />
+    <End Type="MoodBiteModel.UsersFavoriteRecipes" Role="UsersFavoriteRecipes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Recipe">
         <PropertyRef Name="RecipeID" />
@@ -856,10 +1073,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RecipeIngredient_RecipeID">
-    <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1">
+    <End Type="MoodBiteModel.Recipe" Role="Recipe" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="RecipeIngredient" Type="Self.RecipeIngredient" Multiplicity="*" />
+    <End Type="MoodBiteModel.RecipeIngredient" Role="RecipeIngredient" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Recipe">
         <PropertyRef Name="RecipeID" />
@@ -870,10 +1087,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__RecipeRat__UserI__382F5661">
-    <End Role="User" Type="Self.User" Multiplicity="0..1">
+    <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="RecipeRating" Type="Self.RecipeRating" Multiplicity="*" />
+    <End Type="MoodBiteModel.RecipeRating" Role="RecipeRating" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="userID" />
@@ -883,11 +1100,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserRole__RoleID__3D5E1FD2">
-    <End Role="Role" Type="Self.Role" Multiplicity="0..1">
+  <Association Name="FK__UserRole__RoleID__282DF8C2">
+    <End Type="MoodBiteModel.Role" Role="Role" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <End Type="MoodBiteModel.UserRole" Role="UserRole" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Role">
         <PropertyRef Name="RoleID" />
@@ -898,10 +1115,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__UserPremi__DateS__0E6E26BF">
-    <End Role="User" Type="Self.User" Multiplicity="0..1">
+    <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="UserPremium" Type="Self.UserPremium" Multiplicity="*" />
+    <End Type="MoodBiteModel.UserPremium" Role="UserPremium" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="userID" />
@@ -912,10 +1129,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__UserRecip__UserI__778AC167">
-    <End Role="User" Type="Self.User" Multiplicity="0..1">
+    <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="UserRecipe" Type="Self.UserRecipe" Multiplicity="*" />
+    <End Type="MoodBiteModel.UserRecipe" Role="UserRecipe" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="userID" />
@@ -926,10 +1143,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__UserRole__UserID__3C69FB99">
-    <End Role="User" Type="Self.User" Multiplicity="0..1">
+    <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <End Type="MoodBiteModel.UserRole" Role="UserRole" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="userID" />
@@ -940,10 +1157,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__UsersFavo__UserI__60FC61CA">
-    <End Role="User" Type="Self.User" Multiplicity="0..1">
+    <End Type="MoodBiteModel.User" Role="User" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="UsersFavoriteRecipes" Type="Self.UsersFavoriteRecipes" Multiplicity="*" />
+    <End Type="MoodBiteModel.UsersFavoriteRecipes" Role="UsersFavoriteRecipes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="userID" />
@@ -953,219 +1170,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="MoodBiteEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="AccountCreationLog" EntityType="Self.AccountCreationLog" />
-    <EntitySet Name="Allergy" EntityType="Self.Allergy" />
-    <EntitySet Name="Cart" EntityType="Self.Cart" />
-    <EntitySet Name="FoodCategory" EntityType="Self.FoodCategory" />
-    <EntitySet Name="FoodSale" EntityType="Self.FoodSale" />
-    <EntitySet Name="Intolerance" EntityType="Self.Intolerance" />
-    <EntitySet Name="Mood" EntityType="Self.Mood" />
-    <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" />
-    <EntitySet Name="OrderMaster" EntityType="Self.OrderMaster" />
-    <EntitySet Name="OrderPayment" EntityType="Self.OrderPayment" />
-    <EntitySet Name="Premium" EntityType="Self.Premium" />
-    <EntitySet Name="Recipe" EntityType="Self.Recipe" />
-    <EntitySet Name="RecipeAllergy" EntityType="Self.RecipeAllergy" />
-    <EntitySet Name="RecipeImage" EntityType="Self.RecipeImage" />
-    <EntitySet Name="RecipeIngredient" EntityType="Self.RecipeIngredient" />
-    <EntitySet Name="RecipeIntolerance" EntityType="Self.RecipeIntolerance" />
-    <EntitySet Name="RecipeRating" EntityType="Self.RecipeRating" />
-    <EntitySet Name="Role" EntityType="Self.Role" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-    <EntitySet Name="User" EntityType="Self.User" />
-    <EntitySet Name="UserPremium" EntityType="Self.UserPremium" />
-    <EntitySet Name="UserRecipe" EntityType="Self.UserRecipe" />
-    <EntitySet Name="UserRole" EntityType="Self.UserRole" />
-    <EntitySet Name="UsersFavoriteRecipes" EntityType="Self.UsersFavoriteRecipes" />
-    <EntitySet Name="vw_AllRecipeDetailsWithFoodCategoryName" EntityType="Self.vw_AllRecipeDetailsWithFoodCategoryName" />
-    <EntitySet Name="vw_AllUserColWithRecipeID" EntityType="Self.vw_AllUserColWithRecipeID" />
-    <EntitySet Name="vw_CartView" EntityType="Self.vw_CartView" />
-    <EntitySet Name="vw_CoverImageOfRecipes" EntityType="Self.vw_CoverImageOfRecipes" />
-    <EntitySet Name="vw_FilterAllergy" EntityType="Self.vw_FilterAllergy" />
-    <EntitySet Name="vw_FoodSaleView" EntityType="Self.vw_FoodSaleView" />
-    <EntitySet Name="vw_ForOrderPaymentInsertionView" EntityType="Self.vw_ForOrderPaymentInsertionView" />
-    <EntitySet Name="vw_IngredientWithType" EntityType="Self.vw_IngredientWithType" />
-    <EntitySet Name="vw_ManageSubscriptions" EntityType="Self.vw_ManageSubscriptions" />
-    <EntitySet Name="vw_ManageUploads" EntityType="Self.vw_ManageUploads" />
-    <EntitySet Name="vw_ManageUsers" EntityType="Self.vw_ManageUsers" />
-    <EntitySet Name="vw_OrderDetailView" EntityType="Self.vw_OrderDetailView" />
-    <EntitySet Name="vw_RecipeDetailsWithMoodTagSimplified" EntityType="Self.vw_RecipeDetailsWithMoodTagSimplified" />
-    <EntitySet Name="vw_RecipeDetailsWithoutIngredients" EntityType="Self.vw_RecipeDetailsWithoutIngredients" />
-    <EntitySet Name="vw_RecipeDetailsWithoutIngredientsWithRating" EntityType="Self.vw_RecipeDetailsWithoutIngredientsWithRating" />
-    <EntitySet Name="vw_recipeUploadersNameWithRating" EntityType="Self.vw_recipeUploadersNameWithRating" />
-    <EntitySet Name="vw_RecipeWithMoodName" EntityType="Self.vw_RecipeWithMoodName" />
-    <EntitySet Name="vw_RecommendedRecipeForMood" EntityType="Self.vw_RecommendedRecipeForMood" />
-    <EntitySet Name="vw_UploaderDetailsForReadMorePage" EntityType="Self.vw_UploaderDetailsForReadMorePage" />
-    <EntitySet Name="vw_UserDetailsWithRole" EntityType="Self.vw_UserDetailsWithRole" />
-    <EntitySet Name="vw_UsersUploadCounts" EntityType="Self.vw_UsersUploadCounts" />
-    <AssociationSet Name="FK__AccountCr__UserI__3DE82FB7" Association="Self.FK__AccountCr__UserI__3DE82FB7">
-      <End Role="User" EntitySet="User" />
-      <End Role="AccountCreationLog" EntitySet="AccountCreationLog" />
-    </AssociationSet>
-    <AssociationSet Name="FK__RecipeAll__Aller__5EBF139D" Association="Self.FK__RecipeAll__Aller__5EBF139D">
-      <End Role="Allergy" EntitySet="Allergy" />
-      <End Role="RecipeAllergy" EntitySet="RecipeAllergy" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Cart__FoodSaleID__2D7CBDC4" Association="Self.FK__Cart__FoodSaleID__2D7CBDC4">
-      <End Role="FoodSale" EntitySet="FoodSale" />
-      <End Role="Cart" EntitySet="Cart" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Cart__RecipeID__2C88998B" Association="Self.FK__Cart__RecipeID__2C88998B">
-      <End Role="Recipe" EntitySet="Recipe" />
-      <End Role="Cart" EntitySet="Cart" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Cart__UserID__2B947552" Association="Self.FK__Cart__UserID__2B947552">
-      <End Role="User" EntitySet="User" />
-      <End Role="Cart" EntitySet="Cart" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Recipe_FoodCategory" Association="Self.FK_Recipe_FoodCategory">
-      <End Role="FoodCategory" EntitySet="FoodCategory" />
-      <End Role="Recipe" EntitySet="Recipe" />
-    </AssociationSet>
-    <AssociationSet Name="FK__FoodSale__UserRe__1DB06A4F" Association="Self.FK__FoodSale__UserRe__1DB06A4F">
-      <End Role="UserRecipe" EntitySet="UserRecipe" />
-      <End Role="FoodSale" EntitySet="FoodSale" />
-    </AssociationSet>
-    <AssociationSet Name="FK__RecipeInt__Intol__6477ECF3" Association="Self.FK__RecipeInt__Intol__6477ECF3">
-      <End Role="Intolerance" EntitySet="Intolerance" />
-      <End Role="RecipeIntolerance" EntitySet="RecipeIntolerance" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Recipe__MoodID__52593CB8" Association="Self.FK__Recipe__MoodID__52593CB8">
-      <End Role="Mood" EntitySet="Mood" />
-      <End Role="Recipe" EntitySet="Recipe" />
-    </AssociationSet>
-    <AssociationSet Name="FK__OrderDeta__PO_ID__31B762FC" Association="Self.FK__OrderDeta__PO_ID__31B762FC">
-      <End Role="OrderMaster" EntitySet="OrderMaster" />
-      <End Role="OrderDetail" EntitySet="OrderDetail" />
-    </AssociationSet>
-    <AssociationSet Name="FK__OrderMast__UserI__2EDAF651" Association="Self.FK__OrderMast__UserI__2EDAF651">
-      <End Role="User" EntitySet="User" />
-      <End Role="OrderMaster" EntitySet="OrderMaster" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UserPremi__Premi__0F624AF8" Association="Self.FK__UserPremi__Premi__0F624AF8">
-      <End Role="Premium" EntitySet="Premium" />
-      <End Role="UserPremium" EntitySet="UserPremium" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Recipe__Approved__5441852A" Association="Self.FK__Recipe__Approved__5441852A">
-      <End Role="User" EntitySet="User" />
-      <End Role="Recipe" EntitySet="Recipe" />
-    </AssociationSet>
-    <AssociationSet Name="FK__RecipeAll__Recip__5DCAEF64" Association="Self.FK__RecipeAll__Recip__5DCAEF64">
-      <End Role="Recipe" EntitySet="Recipe" />
-      <End Role="RecipeAllergy" EntitySet="RecipeAllergy" />
-    </AssociationSet>
-    <AssociationSet Name="FK__RecipeIma__Recip__59C55456" Association="Self.FK__RecipeIma__Recip__59C55456">
-      <End Role="Recipe" EntitySet="Recipe" />
-      <End Role="RecipeImage" EntitySet="RecipeImage" />
-    </AssociationSet>
-    <AssociationSet Name="FK__RecipeInt__Recip__6383C8BA" Association="Self.FK__RecipeInt__Recip__6383C8BA">
-      <End Role="Recipe" EntitySet="Recipe" />
-      <End Role="RecipeIntolerance" EntitySet="RecipeIntolerance" />
-    </AssociationSet>
-    <AssociationSet Name="FK__RecipeRat__Recip__39237A9A" Association="Self.FK__RecipeRat__Recip__39237A9A">
-      <End Role="Recipe" EntitySet="Recipe" />
-      <End Role="RecipeRating" EntitySet="RecipeRating" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UserRecip__Recip__787EE5A0" Association="Self.FK__UserRecip__Recip__787EE5A0">
-      <End Role="Recipe" EntitySet="Recipe" />
-      <End Role="UserRecipe" EntitySet="UserRecipe" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UsersFavo__Recip__61F08603" Association="Self.FK__UsersFavo__Recip__61F08603">
-      <End Role="Recipe" EntitySet="Recipe" />
-      <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RecipeIngredient_RecipeID" Association="Self.FK_RecipeIngredient_RecipeID">
-      <End Role="Recipe" EntitySet="Recipe" />
-      <End Role="RecipeIngredient" EntitySet="RecipeIngredient" />
-    </AssociationSet>
-    <AssociationSet Name="FK__RecipeRat__UserI__382F5661" Association="Self.FK__RecipeRat__UserI__382F5661">
-      <End Role="User" EntitySet="User" />
-      <End Role="RecipeRating" EntitySet="RecipeRating" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UserRole__RoleID__3D5E1FD2" Association="Self.FK__UserRole__RoleID__3D5E1FD2">
-      <End Role="Role" EntitySet="Role" />
-      <End Role="UserRole" EntitySet="UserRole" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UserPremi__DateS__0E6E26BF" Association="Self.FK__UserPremi__DateS__0E6E26BF">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserPremium" EntitySet="UserPremium" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UserRecip__UserI__778AC167" Association="Self.FK__UserRecip__UserI__778AC167">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserRecipe" EntitySet="UserRecipe" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UserRole__UserID__3C69FB99" Association="Self.FK__UserRole__UserID__3C69FB99">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserRole" EntitySet="UserRole" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UsersFavo__UserI__60FC61CA" Association="Self.FK__UsersFavo__UserI__60FC61CA">
-      <End Role="User" EntitySet="User" />
-      <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
-    </AssociationSet>
-    <FunctionImport Name="sp_alterdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_creatediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_dropdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MoodBiteModel.sp_helpdiagramdefinition_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MoodBiteModel.sp_helpdiagrams_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_InsertRecipeImage">
-      <Parameter Name="RecipeID" Mode="In" Type="Int32" />
-      <Parameter Name="ImageName" Mode="In" Type="String" />
-      <Parameter Name="ImagePath" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_renamediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="new_diagramname" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_upgraddiagrams" />
-    <EntitySet Name="vw_CheckOutView" EntityType="MoodBiteModel.vw_CheckOutView" />
-  </EntityContainer>
-  <ComplexType Name="sp_helpdiagramdefinition_Result">
-    <Property Type="Int32" Name="version" Nullable="true" />
-    <Property Type="Binary" Name="definition" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_helpdiagrams_Result">
-    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-    <Property Type="Int32" Name="OwnerID" Nullable="false" />
-  </ComplexType>
-  <EntityType Name="vw_CheckOutView">
+  <EntityType Name="vw_UserRecipeView">
     <Key>
+      <PropertyRef Name="UserRecipeID" />
       <PropertyRef Name="userID" />
+      <PropertyRef Name="Uploaded_by" />
       <PropertyRef Name="RecipeID" />
-      <PropertyRef Name="FoodSaleID" />
-      <PropertyRef Name="CartID" />
+      <PropertyRef Name="Status" />
+      <PropertyRef Name="ForSale" />
     </Key>
+    <Property Name="UserRecipeID" Type="Int32" Nullable="false" />
     <Property Name="userID" Type="Int32" Nullable="false" />
+    <Property Name="Uploaded_by" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
     <Property Name="RecipeID" Type="Int32" Nullable="false" />
-    <Property Name="FoodSaleID" Type="Int32" Nullable="false" />
-    <Property Name="CartID" Type="Int32" Nullable="false" />
+    <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
     <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
+    <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PreparationTime" Type="Time" Precision="7" />
+    <Property Name="CookingDuration" Type="Time" Precision="7" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="DateApproved" Type="DateTime" Precision="3" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FoodSaleID" Type="Int32" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="Qty" Type="Int32" />
-    <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Available" Type="Boolean" />
+    <Property Name="Stocks" Type="Int32" />
+    <Property Name="RecipeImageID" Type="Int32" />
+    <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="ForSale" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

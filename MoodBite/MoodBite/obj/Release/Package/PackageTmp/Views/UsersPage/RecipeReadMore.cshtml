@@ -36,30 +36,6 @@
 
     var recipe = Model.recipeImagesReadMore;
     ViewBag.Title = $"{recipe.RecipeName}";
-    //ViewBag.TitleHeader = $"{recipe.RecipeName}";
-    //ViewBag.TitleSubheader = $"{recipe.RecipeName}";
-
-    // Default MIME type
-    //string mimeType = "image/jpeg";
-    //if (recipe.ImageURL != null && recipe.ImageURL.Length > 0)
-    //{
-    //    // Determine the MIME type based on the first few bytes of the image data
-    //    byte[] imageData = recipe.ImageURL;
-    //    string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
-
-    //    if (firstBytes.StartsWith("GIF8"))
-    //    {
-    //        mimeType = "image/gif";
-    //    }
-    //    else if (firstBytes.StartsWith("\xFF\xD8"))
-    //    {
-    //        mimeType = "image/jpeg";
-    //    }
-    //    else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
-    //    {
-    //        mimeType = "image/png";
-    //    }
-    //}
     var ingredientName = new List<string>();
     var ingredientQty = new List<int>();
     var ingredientUnit = new List<string>();
@@ -96,18 +72,26 @@
 <!-- Template Stylesheet -->
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
+
+@Html.Partial("_Loader")
 <div class="row">
     <div class="col-lg-8">
         <div class="single-content recipecontent">
-            @*<img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(recipe.ImageURL)}")" style="width:730px; height: 550px;"/>*@
-            @if (!string.IsNullOrEmpty(recipe.ImagePath))
+            @{
+                string imagePath = Url.Content(recipe.ImagePath);
+                bool imageExists = System.IO.File.Exists(Server.MapPath(imagePath));
+            }
+            @if (imageExists)
             {
+                <h5 @*style="padding:1rem 0 0.5rem"*@><a href="#" style="text-decoration:none" onclick="history.back()">Go back</a></h5>
                 <img src="@Url.Content(recipe.ImagePath)" style="width:730px; height: 550px;" />
             }
             else
             {
+                <h5 @*style="padding:1rem 0 0.5rem"*@><a href="#" style="text-decoration:none" onclick="history.back()">Go back</a></h5>
                 <img src="https://placehold.co/730x550" style="width:730px; height: 550px;" />
             }
+            
             <div style="display:flex; justify-content:space-between; align-items:center">
                 <div>
                     <h6 class="inline-block">This recipe contains: </h6>
@@ -163,14 +147,14 @@
             </div>
             <div style="margin:0 0 1rem">
                 <h4 style="display:inline-block; margin-right:1rem">Cooking Instruction</h4>
-                <i class="fas fa-microphone"></i>
+                <i class="fas fa-microphone" style="cursor:pointer" onclick="readInstructions()"></i>
                 @{
                     var cookingInstruction = Model.recipeDetailsWithoutIngredientsReadMore.CookingInstruction as string;
                     string[] steps = cookingInstruction.Split(new string[] { "./ " }, StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (var step in steps)
                     {
-                        <p>@step</p>
+                        <p class="cooking-step">@step</p>
                     }
                 }
             </div>
@@ -198,7 +182,7 @@
 
             </div>
             <div class="blog-text recipe-readmore-btn">
-                <button class="btn custom-btn" href="#">Download Recipe</button>
+                <button class="btn custom-btn" onclick="downloadRecipe()">Download Recipe</button>
 
                 @if (Model.userPremium != null && Model.foodSaleView != null)
                 {
@@ -217,38 +201,8 @@
                 }
             </div>
         </div>
-        @*<div class="single-tags">
-            <a href="">National</a>
-            <a href="">International</a>
-            <a href="">Economics</a>
-            <a href="">Politics</a>
-            <a href="">Lifestyle</a>
-            <a href="">Technology</a>
-            <a href="">Trades</a>
-        </div>*@
         <div class="single-bio">
             <div class="single-bio-img">
-                @*@{ 
-                    if (Model.uploadersProfilePic.ProfilePicture != null && Model.uploadersProfilePic.ProfilePicture.Length > 0)
-                    {
-                        // Determine the MIME type based on the first few bytes of the image data
-                        byte[] imageData = Model.uploadersProfilePic.ProfilePicture;
-                        string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
-
-                        if (firstBytes.StartsWith("GIF8"))
-                        {
-                            mimeType = "image/gif";
-                        }
-                        else if (firstBytes.StartsWith("\xFF\xD8"))
-                        {
-                            mimeType = "image/jpeg";
-                        }
-                        else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
-                        {
-                            mimeType = "image/png";
-                        }
-                    }
-                }*@
                 @if (string.IsNullOrEmpty(Model.uploadersProfilePic.ProfilePicturePath))
                 {
                     <img src="~/Content/UsersProfileImages/noprofile-boy.png" />
@@ -312,152 +266,6 @@
                 </div>
             </div>
         </div>
-
-        @* back next buttons *@
-        <div>
-            @*<div class="single-related">
-            <div class="owl-carousel related-slider">
-                <div class="owl-nav" >
-                    <div class="owl-prev">
-                        <a><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="owl-next disabled">
-                        <a><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <div class="post-img">
-                        <img src="~/Content/MainTemplate/img/post-1.jpg" />
-                    </div>
-                    <div class="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div class="post-meta">
-                            <p>By<a href="">Admin</a></p>
-                            <p>In<a href="">Web Design</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <div class="post-img">
-                        <img src="~/Content/MainTemplate/img/post-2.jpg" />
-                    </div>
-                    <div class="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div class="post-meta">
-                            <p>By<a href="">Admin</a></p>
-                            <p>In<a href="">Web Design</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <div class="post-img">
-                        <img src="~/Content/MainTemplate/img/post-3.jpg" />
-                    </div>
-                    <div class="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div class="post-meta">
-                            <p>By<a href="">Admin</a></p>
-                            <p>In<a href="">Web Design</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <div class="post-img">
-                        <img src="~/Content/MainTemplate/img/post-4.jpg" />
-                    </div>
-                    <div class="post-text">
-                        <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                        <div class="post-meta">
-                            <p>By<a href="">Admin</a></p>
-                            <p>In<a href="">Web Design</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-        </div>
-
-        @* comment section *@
-        <div>
-            @*<div class="single-comment">
-            <h2>3 Comments</h2>
-            <ul class="comment-list">
-                <li class="comment-item">
-                    <div class="comment-body">
-                        <div class="comment-img">
-                            <img src="~/Content/MainTemplate/img/user.jpg" />
-                        </div>
-                        <div class="comment-text">
-                            <h3><a href="">Josh Dunn</a></h3>
-                            <span>01 Jan 2045 at 12:00pm</span>
-                            <p>
-                                Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
-                            </p>
-                            <a class="btn" href="">Reply</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="comment-item">
-                    <div class="comment-body">
-                        <div class="comment-img">
-                            <img src="~/Content/MainTemplate/img/user.jpg" />
-                        </div>
-                        <div class="comment-text">
-                            <h3><a href="">Josh Dunn</a></h3>
-                            <p><span>01 Jan 2045 at 12:00pm</span></p>
-                            <p>
-                                Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
-                            </p>
-                            <a class="btn" href="">Reply</a>
-                        </div>
-                    </div>
-                    <ul class="comment-child">
-                        <li class="comment-item">
-                            <div class="comment-body">
-                                <div class="comment-img">
-                                    <img src="~/Content/MainTemplate/img/user.jpg" />
-                                </div>
-                                <div class="comment-text">
-                                    <h3><a href="">Josh Dunn</a></h3>
-                                    <p><span>01 Jan 2045 at 12:00pm</span></p>
-                                    <p>
-                                        Lorem ipsum dolor sit amet elit. Integer lorem augue purus mollis sapien, non eros leo in nunc. Donec a nulla vel turpis tempor ac vel justo. In hac platea dictumst.
-                                    </p>
-                                    <a class="btn" href="">Reply</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="comment-form">
-            <h2>Leave a comment</h2>
-            <form>
-                <div class="form-group">
-                    <label for="name">Name *</label>
-                    <input type="text" class="form-control" id="name">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" class="form-control" id="email">
-                </div>
-                <div class="form-group">
-                    <label for="website">Website</label>
-                    <input type="url" class="form-control" id="website">
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Message *</label>
-                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Post Comment" class="btn custom-btn">
-                </div>
-            </form>
-        </div>*@
-        </div>
-        
     </div>
 
     <div class="col-lg-4">
@@ -470,26 +278,6 @@
                     {
                         foreach (var recom in Model.recommendedRecipes)
                         {
-                            //// Default MIME type
-                            //if (recom.ImageURL != null && recom.ImageURL.Length > 0)
-                            //{
-                            //    // Determine the MIME type based on the first few bytes of the image data
-                            //    byte[] imageData = recom.ImageURL;
-                            //    string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
-
-                            //    if (firstBytes.StartsWith("GIF8"))
-                            //    {
-                            //        mimeType = "image/gif";
-                            //    }
-                            //    else if (firstBytes.StartsWith("\xFF\xD8"))
-                            //    {
-                            //        mimeType = "image/jpeg";
-                            //    }
-                            //    else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
-                            //    {
-                            //        mimeType = "image/png";
-                            //    }
-                            //}
                             <div class="post-item">
                                 <div class="post-img">
                                     <img src="@Url.Content(recom.ImagePath)" />
@@ -507,15 +295,8 @@
                     {
                         <i>@ViewBag.NoRecipesWithSimilarMoodTagMsg</i>
                     }
-
                 </div>
             </div>
-
-            @*<div class="sidebar-widget">
-                <div class="image-widget">
-                    <a href="#"><img src="~/Content/MainTemplate/img/blog-1.jpg" alt="Image"></a>
-                </div>
-            </div>*@
 
             <div class="sidebar-widget">
                 <h2 class="widget-title">Categories</h2>
@@ -532,14 +313,12 @@
                                 }
                             }
                             <li><a href="">@foodCategory</a><span>(@recipeCount)</span></li>
-                        }
-                    </ul>
+                        }                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -574,6 +353,7 @@
             success: function (response) {
                 if (response.success) {
                     alert(response.message);
+                    window.location.reload();
                 } else {
                     alert(response.message);
                 }
@@ -616,4 +396,72 @@
         });
     });
 
+    function synthesizeText(text) {
+        const settings = {
+            async: true,
+            crossDomain: true,
+            url: 'https://cloudlabs-text-to-speech.p.rapidapi.com/synthesize',
+            method: 'POST',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'X-RapidAPI-Key': '777090ea31mshacde7b7b8764951p19b7f5jsnf5535ffeabac',
+                'X-RapidAPI-Host': 'cloudlabs-text-to-speech.p.rapidapi.com'
+            },
+            data: {
+                voice_code: 'en-US-1',
+                text: text,
+                speed: '1.00',
+                pitch: '1.00',
+                output_type: 'audio_url'
+            }
+        };
+
+        // Change the microphone icon to active state
+        var microphoneIcon = document.querySelector('.fas.fa-microphone');
+        microphoneIcon.classList.add('active');
+
+        $.ajax(settings)
+            .done(function (response) {
+                console.log(response);
+                var audioUrl = response.result.audio_url;
+                var audio = new Audio(audioUrl);
+
+                // Revert the microphone icon to inactive state after audio playback ends
+                audio.onended = function () {
+                    microphoneIcon.classList.remove('active');
+                };
+
+                audio.play();
+            })
+            .fail(function (xhr, status, error) {
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+
+                // Display an error message to the user
+                alert('Sorry, the text-to-speech feature is currently unavailable. Please try again later.');
+                microphoneIcon.classList.remove('active');
+            });
+    }
+
+    function readInstructions() {
+        var cookingInstructions = [];
+        $("p.cooking-step").each(function () {
+            cookingInstructions.push($(this).text());
+        });
+
+        var text = cookingInstructions.join(". ");
+        synthesizeText(text);
+    }
+    function downloadRecipe() {
+        $('#loadertxt').text('Please wait...');
+        showLoader();
+        var backToTopButton = document.getElementsByClassName('back-to-top')[0];
+        backToTopButton.click();
+
+        setTimeout(function() {
+            window.location.href = '/UsersPage/DownloadRecipe/' + @recipe.RecipeID;
+            hideLoader();
+        }, 2000);
+    }
 </script>

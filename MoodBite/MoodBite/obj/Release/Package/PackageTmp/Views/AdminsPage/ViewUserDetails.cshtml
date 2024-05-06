@@ -1,0 +1,223 @@
+﻿@using MoodBite.Models.UserViewModel
+
+@model UserViewModel
+
+@{
+    ViewBag.Title = "View Users Details";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
+}
+
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Wano Quin:wght@900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Blinker:wght@300;400;700&display=swap" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+@Html.Partial("_Loader")
+
+<h5 style="padding:1rem 0 0.5rem"><a href="#" style="text-decoration:none" onclick="history.back()">Go back</a></h5>
+<h2>Viewing @Html.Raw(Model.user.Username + "'s") profile</h2>
+<div class="container row" style="display:flex; flex-direction:row; justify-content:center; margin-top:1rem">
+    <form style="display:flex;">
+        @Html.HiddenFor(model => model.user.userID)
+        <div class="col-md-3" style="display:flex; align-items:center; flex-direction:column">
+            @if (Model.user.ProfilePicturePath == null)
+            {
+                if (Model.user.Gender.ToLower() == "male")
+                {
+                    <img src="~/Content/UsersProfileImages/noprofile-boy.png" style="border-radius:50%; border:1px solid black; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />
+                }
+                else
+                {
+                    <img src="~/Content/UsersProfileImages/noprofile-girl.jpg" style="border-radius:50%; border:1px solid black; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />
+                }
+            }
+            else
+            {
+                @*<img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(Model.ProfilePicture)}")" style="border-radius:50%; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />*@
+                <img src="@Url.Content(Model.user.ProfilePicturePath)" style="border-radius:50%; border:1px solid black; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />
+            }
+        </div>
+        <div class="col-md-9 viewprofile">
+            <div class="row">
+                <div class="control-group">
+                    <label>Username</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.user.Username, new { @class = "form-control", @required = "required", @disabled = "disabled" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: transparent; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-user"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Email</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.user.Email, new { @class = "form-control", @required = "required", @type = "email", @disabled = "true" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: transparent; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-envelope"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>First Name</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.user.FirstName, new { @class = "form-control", @required = "required", @disabled = "disabled" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: transparent; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-user"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Last Name</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.user.LastName, new { @class = "form-control", @required = "required", @disabled = "disabled" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: transparent; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-user"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Birthdate</label>
+                    <div class="input-group date" id="date" data-target-input="nearest">
+                        @*@Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control datetimepicker-input", @name = "bod", @data_target = "#date", @data_toggle = "datetimepicker" })*@
+                        @if (Model.user.BirthDate.HasValue)
+                        {
+                            <input type="text" class="form-control datetimepicker-input" id="dobinp" value="@Model.user.BirthDate.Value.ToString("MM/dd/yyyy")" placeholder="Date of Birth" name="bod" data-target="#date" data-toggle="datetimepicker" disabled/>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Date of Birth" name="bod" data-target="#date" data-toggle="datetimepicker" disabled/>
+                        }
+                        @*<input type="text" class="form-control datetimepicker-input" placeholder="Date of Birth" name="bod" data-target="#date" data-toggle="datetimepicker" />*@
+                        <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
+                            <div class="input-group-text" style="background-color: transparent; border: none; position: absolute; right: 1%; top: 9%;"><i class="far fa-calendar-alt"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Gender</label>
+                    <div class="input-group">
+                        @Html.DropDownListFor(model => model.user.Gender, new SelectList(new[]
+                            {
+                                new SelectListItem { Text = "Male", Value = "Male" },
+                                new SelectListItem { Text = "Female", Value = "Female" }
+                            }, "Value", "Text"), new { @class = "custom-select form-control", @disabled = "disabled"})
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Role</label>
+                    <div class="input-group">
+                        @if (Model.userRoleView.Rolename == "Admin")
+                        {
+                            @Html.DropDownListFor(model => model.userRoleView.Rolename, new SelectList(new[]
+                            {
+                                new SelectListItem { Value = "1", Text = "Admin" },
+                                new SelectListItem { Value = "2", Text = "User" }
+                            }, "Value", "Text"), new { @class = "custom-select form-control", @disabled = "disabled" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(model => model.userRoleView.Rolename, new SelectList(new[]
+                            {
+                                new SelectListItem { Value = "2", Text = "User" },
+                                new SelectListItem { Value = "1", Text = "Admin" }
+                            }, "Value", "Text"), new { @class = "custom-select form-control", @disabled = "disabled" })
+                        }
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Premium type</label>
+                    <div class="input-group">
+                        @if (Model.premiumType != null)
+                        {
+                            <input class="form-control" value="@Model.premiumType.PremiumType" disabled />
+                        }
+                        else
+                        {
+                            <input class="form-control" value="None" disabled />
+                        }
+                    </div>
+                </div>
+                @if (Model.premiumType != null)
+                {
+                    <div class="control-group">
+                        <label>Date of Subscription</label>
+                        <div class="input-group">
+                            <input class="form-control" value="@Model.userPremium.DateSubscribed" disabled />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Subscription expiration date</label>
+                        <div class="input-group">
+                            @{
+                                var dateSubscribed = Model.userPremium.DateSubscribed;
+                                var expirationDate = Model.userPremium.DateSubscribed.Value.AddDays(Convert.ToDouble(Model.premiumType.Duration));
+                            }
+                            <input class="form-control" value="@expirationDate" disabled />
+                        </div>
+                    </div>
+                                if (Model.foodSale.Count > 0)
+                                {
+                        <div class="control-group">
+                            <label>Total count of uploaded recipes for sale</label>
+                            <div class="input-group">
+                                <input class="form-control" value="@Model.foodSale.Count" disabled />
+                            </div>
+                        </div>
+                                }
+                                else
+                                {
+                                    <div class="control-group">
+                                        <label>Total count of uploaded recipes for sale</label>
+                                        <div class="input-group">
+                                            <input class="form-control" value="0" disabled />
+                                        </div>
+                                    </div>
+                                    }
+                                }
+                @if (Model.userRecipe.Count > 0)
+                {
+                    <div class="control-group">
+                        <label>Total count of uploaded recipes</label>
+                        <div class="input-group">
+                            <input class="form-control" value="@Model.userRecipe.Count" disabled />
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="control-group">
+                        <label>Total of Uploaded Recipes</label>
+                        <div class="input-group">
+                            <input class="form-control" value="0" disabled />
+                        </div>
+                    </div>
+                }
+                <div class="control-group" style="width:100% !important; padding-right:45px">
+                    <label>Address</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.user.Address, new { @class = "form-control", @required = "required", @disabled = "disabled" })
+                        <div class="input-group-append">
+                            <div class="input-group-text" style="background-color: transparent; border: none; position: absolute; right: 1%; top: 9%;"><i class="fa fa-home" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -167,8 +167,46 @@
     //        }
     //    });
     //});
-
-
-    
 })(jQuery);
+
+function showLoader() {
+    $('#loaderContainer').show();
+    $('html').css('pointer-events', 'none');
+    $('html').css('cursor', 'progress !important');
+}
+
+function hideLoader() {
+    $('#loaderContainer').hide();
+    $('html').css('pointer-events', 'auto');
+    $('html').css('cursor', 'auto');
+}
+
+$(document).ready(function () {
+    $('.newpwd').click(function () {
+        var passwordField = $('#show-hide-new-password input');
+        var icon = $(this).find('i');
+
+        if (passwordField.attr('type') === 'password') {
+            passwordField.attr('type', 'text');
+            icon.removeClass('fa-eye').addClass('fa-eye-slash');
+        } else {
+            passwordField.attr('type', 'password');
+            icon.removeClass('fa-eye-slash').addClass('fa-eye');
+        }
+    });
+});
+$(document).ready(function () {
+    $('.oldpwd').click(function () {
+        var passwordField = $('#show-hide-old-password input');
+        var icon = $(this).find('i');
+
+        if (passwordField.attr('type') === 'password') {
+            passwordField.attr('type', 'text');
+            icon.removeClass('fa-eye').addClass('fa-eye-slash');
+        } else {
+            passwordField.attr('type', 'password');
+            icon.removeClass('fa-eye-slash').addClass('fa-eye');
+        }
+    });
+});
 

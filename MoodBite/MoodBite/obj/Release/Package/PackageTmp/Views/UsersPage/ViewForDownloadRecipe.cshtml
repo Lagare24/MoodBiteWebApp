@@ -1,0 +1,244 @@
+﻿@using MoodBite.Models.RecipeViewModel
+
+@model RecipeDetailViewModel
+@{
+    string chosenMood = (string)Session["ChosenMood"];
+    string iconName = "";
+
+    var containsAllergens = new List<string>();
+    var user = Session["User"] as User;
+
+    switch (chosenMood?.ToLower())
+    {
+        case "happy":
+            iconName = "far fa-smile";
+            break;
+        case "sad":
+            iconName = "far fa-sad-tear";
+            break;
+        case "angry":
+            iconName = "far fa-angry";
+            break;
+        case "disgusted":
+            iconName = "far fa-grimace";
+            break;
+        case "fearful":
+            iconName = "far fa-flushed";
+            break;
+        case "surprised":
+            iconName = "far fa-surprise";
+            break;
+        case "euthymia":
+            iconName = "far fa-grin";
+            break;
+    }
+
+    var recipe = Model.recipeImagesReadMore;
+    ViewBag.Title = $"{recipe.RecipeName}";
+    var ingredientName = new List<string>();
+    var ingredientQty = new List<int>();
+    var ingredientUnit = new List<string>();
+    var allergens = string.Empty;
+
+    foreach (var recipeIngredient in Model.recipeIngredientsReadMore)
+    {
+        ingredientName.Add(recipeIngredient.IngredientName);
+        ingredientQty.Add(Convert.ToInt32(recipeIngredient.Quantity));
+        ingredientUnit.Add(recipeIngredient.Unit);
+        if (Model.allergy.Select(model => model.ToLower()).Contains(recipeIngredient.IngredientName.ToLower()))
+        {
+            containsAllergens.Add(recipeIngredient.IngredientName);
+        }
+        allergens = string.Join(", ", containsAllergens);
+    }
+}
+
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+<div class="row" style="width:100% !important">
+    <div class="col-lg-12">
+        <div class="single-content recipecontent">
+            @if (!string.IsNullOrEmpty(recipe.ImagePath))
+            {
+                <img src="@Url.Content(recipe.ImagePath)" style="width:730px; display:block; margin:0 auto;" />
+            }
+            else
+            {
+                <img src="https://placehold.co/730x550" style="width:730px; display:block; margin:0 auto;" />
+            }
+            <div style="display:flex; justify-content:space-between; align-items:center">
+                <div>
+                    <h6 class="inline-block">This recipe contains: </h6>
+                    <span><i>@allergens</i></span>
+                    <h2 style="display:block">@Html.Raw(recipe.RecipeName) by @Html.Raw(recipe.Uploaded_by)</h2>
+                </div>
+            </div>
+            <p>
+                @Model.recipeDetailsWithoutIngredientsReadMore.RecipeDescription
+            </p>
+            <div style="margin:0;padding:0;" class="row">
+                <div class="col-md-6" style="margin:0;padding:0;">
+                    <h4>Preparation Time</h4>
+                    <p>
+                        @Model.recipeDetailsWithoutIngredientsReadMore.PreparationTime
+                    </p>
+                </div>
+                <div class="col-md-6" style="margin:0; padding:0;">
+                    <h4>Cooking Duration</h4>
+                    <p>
+                        @Model.recipeDetailsWithoutIngredientsReadMore.CookingDuration
+                    </p>
+                </div>
+            </div>
+            <h4>Ingredients</h4>
+            <div class="form-check row" style="margin-bottom:1rem; padding:0 1rem 0 0; width:max-content;">
+                <table>
+                    <tbody>
+                        @for (int i = 0; i < Model.recipeIngredientsReadMore.Count(); i++)
+            {
+                            <tr>
+                                <td class="ingredient-qty " style="padding:0 0 0 1rem !important; text-align:right;">@ingredientQty.ElementAt(i)</td>
+                                <td class="ingredient-unit" style="padding:0 0 0 1rem !important; text-align:left;">@ingredientUnit.ElementAt(i)</td>
+                                <td class="ingredient-name" style="padding:0 0 0 1rem !important; text-align:left;">@ingredientName.ElementAt(i)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin:0 0 1rem">
+                <h4 style="display:inline-block; margin-right:1rem">Cooking Instruction</h4>
+                @{
+                    var cookingInstruction = Model.recipeDetailsWithoutIngredientsReadMore.CookingInstruction as string;
+                    string[] steps = cookingInstruction.Split(new string[] { "./ " }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var step in steps)
+                    {
+                        <p>@step</p>
+                    }
+                }
+            </div>
+            @{
+                containsAllergens.Clear();
+                ingredientName.Clear();
+                ingredientQty.Clear();
+                ingredientUnit.Clear();
+            }
+            <div style="margin:0 0 1rem">
+                <h4>Rating</h4>
+                @{
+                    double recipeRating = 0;
+                    int totalReviews = 0;
+                    foreach (var recipesRating in Model.recipeDetailsWithRating)
+                    {
+                        if (recipesRating.RecipeID == Model.recipeDetailsWithoutIngredientsReadMore.RecipeID)
+                        {
+                            recipeRating = Convert.ToDouble(recipesRating.Rating);
+                            totalReviews = Convert.ToInt32(recipesRating.TotalReview);
+                        }
+                    }
+                }
+                <h6>@recipeRating<i class="far fa-star"> (@totalReviews Reviews)</i></h6>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="copyright" style="width:100%">
+    <div class="container">
+        <p style="text-align:center">Copyright &copy; @DateTime.Today.Year -<a href="#"> MoodBite</a>, All Right Reserved.</p>
+    </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+
+<script>
+    $("input[name='star']").change(function () {
+        var rating = parseInt($("input[name='star']:checked").val(), 10);
+        var recipeID = parseInt(@recipe.RecipeID);
+
+        var data = {
+            rating: rating,
+            recipeID: recipeID
+        };
+
+        $.ajax({
+            url: "/UsersPage/SubmitRating",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert("An error occurred while submitting the rating.");
+            }
+        });
+    });
+
+    $("button.addToCartBtn").click(function () {
+        // Disable the button to prevent multiple clicks
+        $(this).prop("disabled", true);
+
+        var recipeID = parseInt(@recipe.RecipeID);
+        var userID = parseInt(@user.userID);
+
+        var data = {
+            recipeID: recipeID
+        };
+
+        $.ajax({
+            url: "/UsersPage/AddToCart",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert("An error occurred while adding the product to the cart.");
+            },
+            complete: function () {
+                // Re-enable the button after the request is complete
+                $("button.custom-btn").prop("disabled", false);
+            }
+        });
+    });
+
+</script>

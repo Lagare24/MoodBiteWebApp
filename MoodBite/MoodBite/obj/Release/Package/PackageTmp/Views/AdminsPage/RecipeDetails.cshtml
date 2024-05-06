@@ -1,0 +1,373 @@
+﻿@model Recipe
+
+@{
+    ViewBag.Title = "Recipe Details";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
+
+    var recipeIngredients = Session["recipeIngredients"] as List<RecipeIngredient>;
+    var recipeImage = Session["recipeImage"] as RecipeImage;
+    var uploaderInfo = Session["uploaderInfo"] as User;
+    var foodCategory = Session["foodCategory"] as List<FoodCategory>;
+    //var userPremium = Session["userPremium"] as UserPremium;
+}
+
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+
+@Html.Partial("_Loader")
+
+@Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h5 style="padding:1rem 0 0.5rem"><a href="#" onclick="history.back()">Go back</a></h5>
+    <h2>Details of @Html.Raw(Model.RecipeName) Recipe by @Html.Raw(uploaderInfo.FirstName + " " + uploaderInfo.LastName)</h2>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label for="imageFile" class="control-label col-md-12">Recipe's Cover Picture</label>
+        <div class="form-group">
+            <div class="col-md-12">
+                <img id="selectedImage" src="@Url.Content(recipeImage.ImagePath)" alt="@recipeImage.ImageName" style="display: block; max-width: 300px; max-height: 300px;" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RecipeName, "Recipe Name", htmlAttributes: new { @class = "control-label col-md-12" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.RecipeName, new { htmlAttributes = new { @class = "form-control", @required = "true", @disabled ="true" } })
+            @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-12">Food Category</label>
+        <div class="col-md-12">
+            <select class="form-control" name="foodcategory" id="foodcategory" required disabled>
+                @foreach (var fc in foodCategory)
+                {
+                    if (fc.FoodCategoryID != Model.FoodCategoryID)
+                    {
+                        <option value="@fc.FoodCategoryID">@fc.FoodCategoryName</option>
+                    }
+                    else
+                    {
+                        <option value="@fc.FoodCategoryID" selected>@fc.FoodCategoryName</option>
+
+                    }
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RecipeDescription, "Recipe Description", htmlAttributes: new { @class = "control-label col-md-12" })
+        <div class="col-md-12">
+            @Html.TextAreaFor(model => model.RecipeDescription, new { @class = "form-control", @rows = 4, @cols = 100, @required = "true", @readonly = "true" })
+            @Html.ValidationMessageFor(model => model.RecipeDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PreparationTime, "Preparation Time (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.PreparationTime, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true", @disabled = "true" } })
+            @Html.ValidationMessageFor(model => model.PreparationTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CookingDuration, "Cooking Duration (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.CookingDuration, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true", @disabled = "true" } })
+            @Html.ValidationMessageFor(model => model.CookingDuration, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+    @*@Html.Label("Ingredients", new { @class = "control-label col-md-12" })*@
+    <label class="control-label col-md-12" style="display:block;">Ingredients</label>
+
+    <div id="ingredients-container">
+        <div class="row" style="margin:0">
+            <h6 style="display:inline; margin:0" class="col-md-7">Ingredient name</h6>
+            <h6 style="display:inline" class="col-md-2">Qty</h6>
+            <h6 style="display:inline" class="col-md-3">Unit</h6>
+        </div>
+        @foreach (var item in recipeIngredients)
+        {
+            <div class="form-group ingredient-row" style="display: block;">
+                <div class="row" style="margin:0">
+                    <div class="col-md-7 ingname">
+                        <input class="form-control ingredient-name" placeholder="Ingredient Name" id="ingredientName" name="ingredientName[]" value="@item.IngredientName" required disabled/>
+                    </div>
+                    <div class="col-md-2 ingqty">
+                        <input class="form-control ingredient-quantity" placeholder="Quantity" type="number" min="0" id="ingredientQty" name="ingredientQty[]" value="@item.Quantity" required disabled/>
+                    </div>
+                    <div class="col-md-3 ingunit">
+                        <div>
+                            @{
+                                var listOfUnitMeasures = new[]
+                                {
+                            new SelectListItem { Value = "tbsp", Text = "Tablespoon (tbsp)" },
+                            new SelectListItem { Value = "tsp", Text = "Teaspoon (tsp)" },
+                            new SelectListItem { Value = "minced", Text = "Minced" },
+                            new SelectListItem { Value = "c", Text = "Cup (c)" },
+                            new SelectListItem { Value = "fl oz", Text = "Fluid Ounce (fl oz)" },
+                            new SelectListItem { Value = "pt", Text = "Pint (pt)" },
+                            new SelectListItem { Value = "qt", Text = "Quart (qt)" },
+                            new SelectListItem { Value = "gal", Text = "Gallon (gal)" },
+                            new SelectListItem { Value = "ml", Text = "Milliliter (ml)"},
+                            new SelectListItem { Value = "L", Text = "Liter (L)" },
+                            new SelectListItem { Value = "g", Text = "Gram (g)" },
+                            new SelectListItem { Value = "kg", Text = "Kilogram (kg)" },
+                            new SelectListItem { Value = "lb", Text = "Pound (lb)" },
+                            new SelectListItem { Value = "oz", Text = "Ounce (oz)" },
+                            new SelectListItem { Value = "in", Text = "Inch (in)" },
+                            new SelectListItem { Value = "cm", Text = "Centimeter (cm)" },
+                            new SelectListItem { Value = "dash", Text = "Dash" },
+                            new SelectListItem { Value = "pinch", Text = "Pinch" },
+                            new SelectListItem { Value = "smidgen", Text = "Smidgen" },
+                            new SelectListItem { Value = "drop", Text = "Drop" },
+                            new SelectListItem { Value = "handful", Text = "Handful" },
+                            new SelectListItem { Value = "sprig", Text = "Sprig" },
+                            new SelectListItem { Value = "bunch", Text = "Bunch" },
+                            new SelectListItem { Value = "clove", Text = "Clove" },
+                            new SelectListItem { Value = "slice", Text = "Slice" },
+                            new SelectListItem { Value = "fillet", Text = "Fillet" },
+                            new SelectListItem { Value = "whole", Text = "Whole" },
+                            new SelectListItem { Value = "head", Text = "Head" },
+                            new SelectListItem { Value = "bulb", Text = "Bulb" },
+                            new SelectListItem { Value = "stalk", Text = "Stalk" },
+                            new SelectListItem { Value = "leaf", Text = "Leaf" },
+                            new SelectListItem { Value = "zest", Text = "Zest" },
+                            new SelectListItem { Value = "peel", Text = "Peel" },
+                            new SelectListItem { Value = "grind", Text = "Grind" },
+                            new SelectListItem { Value = "crushed", Text = "Crushed" },
+                            new SelectListItem { Value = "diced", Text = "Diced" }
+                        };
+                                listOfUnitMeasures = listOfUnitMeasures.OrderBy(list => list.Text).ToArray();
+
+                                //most
+                                var unitMeasurementPlaceholder = @item.Unit;
+                            }
+                        </div><!--list of measurements-->
+                        <select class="form-control ingredient-unit" id="ingredientUnit" name="ingredientUnit[]" required disabled>
+                            @foreach (var list in @listOfUnitMeasures)
+                            {
+                                if (list.Value != unitMeasurementPlaceholder)
+                                {
+                                    <option value="@list.Value">@list.Text</option>
+                                }
+                                else
+                                {
+                                    <option selected value="@list.Value">@list.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+                                }
+    </div>
+
+    <div>
+        <input type="hidden" id="ingcount" name="ingcount" value="@Model.IngredientsCount" />
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CookingInstruction, "Cooking Instruction", htmlAttributes: new { @class = "control-label col-md-12" })
+        <div class="col-md-12">
+            @Html.TextAreaFor(model => model.CookingInstruction, new { @class = "form-control", @rows = 10, @cols = 100, @readonly = "true" })
+            @Html.ValidationMessageFor(model => model.CookingInstruction, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="moodid" class="control-label col-md-12">Mood Tag</label>
+        <div class="col-md-12">
+            <select id="moodid" name="moodid" class="form-control" disabled>
+                @switch (Model.MoodID)
+                {
+                    case 1:
+                        <option selected value="1">Happy</option>
+                        <option value="2">Sad</option>
+                        <option value="3">Angry</option>
+                        <option value="4">Disgusted</option>
+                        <option value="5">Fearful</option>
+                        <option value="6">Surprised</option>
+                        <option value="7">Euthymia</option>
+                        break;
+                    case 2:
+                        <option value="1">Happy</option>
+                        <option selected value="2">Sad</option>
+                        <option value="3">Angry</option>
+                        <option value="4">Disgusted</option>
+                        <option value="5">Fearful</option>
+                        <option value="6">Surprised</option>
+                        <option value="7">Euthymia</option>
+                        break;
+                    case 3:
+                        <option value="1">Happy</option>
+                        <option value="2">Sad</option>
+                        <option selected value="3">Angry</option>
+                        <option value="4">Disgusted</option>
+                        <option value="5">Fearful</option>
+                        <option value="6">Surprised</option>
+                        <option value="7">Euthymia</option>
+                        break;
+                    case 4:
+                        <option value="1">Happy</option>
+                        <option value="2">Sad</option>
+                        <option value="3">Angry</option>
+                        <option selected value="4">Disgusted</option>
+                        <option value="5">Fearful</option>
+                        <option value="6">Surprised</option>
+                        <option value="7">Euthymia</option>
+                        break;
+                    case 5:
+                        <option value="1">Happy</option>
+                        <option value="2">Sad</option>
+                        <option value="3">Angry</option>
+                        <option value="4">Disgusted</option>
+                        <option selected value="5">Fearful</option>
+                        <option value="6">Surprised</option>
+                        <option value="7">Euthymia</option>
+                        break;
+                    case 6:
+                        <option value="1">Happy</option>
+                        <option value="2">Sad</option>
+                        <option value="3">Angry</option>
+                        <option value="4">Disgusted</option>
+                        <option value="5">Fearful</option>
+                        <option selected value="6">Surprised</option>
+                        <option value="7">Euthymia</option>
+                        break;
+                    case 7:
+                        <option value="1">Happy</option>
+                        <option value="2">Sad</option>
+                        <option value="3">Angry</option>
+                        <option value="4">Disgusted</option>
+                        <option value="5">Fearful</option>
+                        <option value="6">Surprised</option>
+                        <option selected value="7">Euthymia</option>
+                        break;
+                }
+            </select>
+            <span class="text-danger"></span>
+        </div> <!--Mood tag Select Option Element-->
+    </div>
+
+    <div class="form-group" style="margin-top:3rem">
+        <div class="col-md-offset-2 col-md-12">
+            <button class="btn custom-btn" id="upload-recipe-btn" onclick="goBack()" style="width:100%">Go back</button>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+
+<script>
+    function goBack() {
+        showLoader();
+        history.back();
+    }
+
+    document.getElementById('imageInput').addEventListener('change', function (event) {
+        var input = event.target;
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            var imgElement = document.getElementById('selectedImage');
+            imgElement.src = reader.result;
+            imgElement.style.display = 'block';
+        };
+
+        if (input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+    var ingredientCount = parseInt(document.getElementById('ingcount').value);
+
+    $(document).ready(function () {
+        // Add ingredient row
+        $("#add-ingredient").click(function (e) {
+            e.preventDefault();
+
+            try {
+                var container = $("#ingredients-container");
+                var templateRow = container.find(".ingredient-row").first().clone();
+                var newRow = templateRow.clone().show(); // Clone the template row and show it
+                newRow.find("input").val(""); // Clear input values
+
+                //newRow.find("input").prop("disabled", false);
+                //newRow.find("select").prop("disabled", false);
+
+                container.append(newRow);
+                ingredientCount++;
+
+                document.getElementById('ingcount').value = String(ingredientCount);
+            } catch (e) {
+                alert(e.message);
+            }
+
+            //container.find(".ingredient-row").not(newRow).find("input").prop("disabled", true);
+            //container.find(".ingredient-row").not(newRow).find("select").prop("disabled", true);
+        });
+
+        // Remove ingredient row
+        $(document).on("click", ".remove-ingredient", function (e) {
+            e.preventDefault();
+            var row = $(this).closest(".ingredient-row");
+            row.remove();
+
+            ingredientCount--;
+            document.getElementById('ingcount').value = String(ingredientCount);
+        });
+    });
+
+    document.querySelectorAll('input[name="forsale"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            var saleOptionDiv = document.getElementById('saleoption');
+            if (this.value === 'Yes') {
+                saleOptionDiv.style.display = 'block';
+                document.getElementById('price').setAttribute('required', 'required');
+                document.getElementById('shippedfrom').setAttribute('required', 'required')
+            } else {
+                saleOptionDiv.style.display = 'none';
+                document.getElementById('price').removeAttribute('required');
+                document.getElementById('shippedfrom').removeAttribute('required')
+            }
+        });
+    });
+</script>

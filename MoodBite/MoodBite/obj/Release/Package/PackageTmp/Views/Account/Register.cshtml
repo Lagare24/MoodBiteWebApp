@@ -3,6 +3,7 @@
     ViewBag.Title = "Register";
     ViewBag.TitleHeader = "Creating Account";
     ViewBag.TitleSubHeader = "Register";
+    ViewBag.LoaderMsg = "Creating account...";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
 }
 <!-- Favicon -->
@@ -22,6 +23,8 @@
 <!-- Template Stylesheet -->
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
+
+@Html.Partial("_Loader")
 
 <div class="row align-items-center">
     <div class="col-lg-7" style="margin-top:-30rem">
@@ -48,7 +51,7 @@
                 @Html.ValidationSummary(true, "", new { @class = "alert alert-danger custom-ul", @style = "color:red" })
 
                 <div class="control-group" style="display:flex">
-                    <img src="http://via.placeholder.com/150x150" style="border-radius:50%; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" alt="Upload Profile Picture"/>
+                    <img src="http://via.placeholder.com/150x150" style="border-radius:50%; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture"/>
                 </div>
 
                 <div class="control-group">
@@ -61,13 +64,13 @@
                 </div>
                 <div class="control-group">
                     <div class="input-group">
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email", @required = "required", @type = "email" })
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email", @required = "required"})
                         <div class="input-group-append">
                             <div class="input-group-text"><i class="far fa-envelope"></i></div>
                         </div>
                     </div>
                 </div>
-                <div class="control-group">
+                <div class="control-group"> 
                     <div class="input-group" id="show-hide-password">
                         @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @required = "required" })
                         <div class="input-group-append">
@@ -79,7 +82,7 @@
                 </div>
                 <div class="control-group">
                     <div class="input-group" id="show-hide-confirm-password">
-                        <input type="password" class="form-control" name="confirmPasswordInp" placeholder="Confirm Password" required="required" />
+                        <input type="password" class="form-control" name="confirmPasswordInp" id="confirmPasswordInp" placeholder="Confirm Password" required="required" />
                         <div class="input-group-append">
                             <div class="input-group-text confpwd" style="cursor:pointer">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
@@ -114,7 +117,7 @@
                 <div class="control-group">
                     <div class="control-group">
                         <div class="input-group date" id="date" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" placeholder="Date of Birth" name="bod" data-target="#date" data-toggle="datetimepicker" />
+                            <input type="text" class="form-control datetimepicker-input" placeholder="Date of Birth" name="bod" id="bod" data-target="#date" data-toggle="datetimepicker" />
                             <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                             </div>
@@ -141,11 +144,11 @@
                     </div>
                 </div>
                 <div>
-                    <button class="btn custom-btn" type="submit">Register</button>
+                    <button class="btn custom-btn" id="registerBtn" type="submit">Register</button>
                 </div>
                 <div class="control-group">
                     <div class="input-group dont-have-account-link-container" style="justify-content:center; align-items:center; margin-top:2rem">
-                        <a href="~/Account/LogIn" style="color:rgba(255,255,255, 0.8);">Already have an account?</a>
+                        <a href="~/Account/LogIn" style="color:rgba(255,255,255, 0.8);" onclick="showLoader()">Already have an account?</a>
                     </div>
                 </div>
             }
@@ -216,6 +219,41 @@
                 passwordField.attr('type', 'password');
                 icon.removeClass('fa-eye-slash').addClass('fa-eye');
             }
+        });
+    });
+
+
+    $(document).ready(function() {
+        $(document).on("click", "#registerBtn", function (event) {
+            event.preventDefault();
+            showLoader();
+
+            var formData = new FormData($('form')[0]);
+
+            formData.append('confirmPasswordInp', $('#confirmPasswordInp').val);
+            formData.append('bod', $('#bod').val);
+
+            $.ajax({
+                url: '@Url.Action("Register", "Account")',
+                type: "post",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result.success) {
+                        alert("Verification code sent to your email. Please check your inbox.");
+                        window.location.href ='@Url.Action("ConfirmEmail", "Account")';
+                    } else {
+                        alert(result.msg);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred: " + error);
+                },
+                complete: function () {
+                    hideLoader();
+                }
+            });
         });
     });
 </script>

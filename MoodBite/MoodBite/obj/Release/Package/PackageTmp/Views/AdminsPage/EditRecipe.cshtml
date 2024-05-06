@@ -1,11 +1,8 @@
-﻿@using MoodBite.Models.ManageUploads
-
-@model UpdateUploadsViewModel
-
+﻿@model Recipe
 
 @{
-    ViewBag.Title = "Upload Recipe";
-    ViewBag.TitleHeader = "Upload Recipe";
+    ViewBag.Title = "Edit recipe";
+    ViewBag.TitleHeader = "Edit recipe";
     ViewBag.SubHeader = "";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
 
@@ -16,6 +13,11 @@
     Session["UploadActive"] = a;
     Session["CartActive"] = ia;
     Session["ProfileActive"] = ia;
+
+    var recipeIngredients = Session["recipeIngredients"] as List<RecipeIngredient>;
+    var recipeImage = Session["recipeImage"] as RecipeImage;
+    var uploaderInfo = Session["uploaderInfo"] as User;
+    var foodCategory = Session["FoodCategory"] as List<FoodCategory>;
 }
 <!-- Favicon -->
 <link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
@@ -35,43 +37,67 @@
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
 
-@using (Html.BeginForm("UploadRecipe", "UsersPage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@Html.Partial("_Loader")
+
+@using (Html.BeginForm("EditRecipe", "AdminsPage", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.RecipeID)
 
     <div class="form-horizontal">
-        <h5 style="padding:1rem 0 0.5rem"><a href="~/AdminsPage/ManageUploads">Go back</a></h5>
+        <h5 style="padding:1rem 0 0.5rem"><a href="#" onclick="history.back()">Go back</a></h5>
+        <h2>Update @Html.Raw(Model.RecipeName) Recipe by @Html.Raw(uploaderInfo.FirstName + " " + uploaderInfo.LastName)</h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.recipe.RecipeName, "Recipe Name", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.RecipeName, "Recipe Name", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.EditorFor(model => model.recipe.RecipeName, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
-                @Html.ValidationMessageFor(model => model.recipe.RecipeName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.RecipeName, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.recipe.RecipeDescription, "Recipe Description", htmlAttributes: new { @class = "control-label col-md-12" })
+            <label class="control-label col-md-12">Food Category</label>
             <div class="col-md-12">
-                @Html.TextAreaFor(model => model.recipe.RecipeDescription, new { @class = "form-control", @rows = 4, @cols = 100, @required = "true" })
-                @Html.ValidationMessageFor(model => model.recipe.RecipeDescription, "", new { @class = "text-danger" })
+                <select class="form-control" name="foodcategory" id="foodcategory" required>
+                    @foreach (var fc in foodCategory)
+                    {
+                        if (fc.FoodCategoryID != Model.FoodCategoryID)
+                        {
+                            <option value="@fc.FoodCategoryID">@fc.FoodCategoryName</option>
+                        }
+                        else
+                        {
+                            <option value="@fc.FoodCategoryID" selected>@fc.FoodCategoryName</option>
+
+                        }
+                    }
+                </select>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.recipe.PreparationTime, "Preparation Time (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.RecipeDescription, "Recipe Description", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.EditorFor(model => model.recipe.PreparationTime, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true" } })
-                @Html.ValidationMessageFor(model => model.recipe.PreparationTime, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.RecipeDescription, new { @class = "form-control", @rows = 4, @cols = 100, @required = "true" })
+                @Html.ValidationMessageFor(model => model.RecipeDescription, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.recipe.CookingDuration, "Cooking Duration (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.PreparationTime, "Preparation Time (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.EditorFor(model => model.recipe.CookingDuration, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true" } })
-                @Html.ValidationMessageFor(model => model.recipe.CookingDuration, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.PreparationTime, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true" } })
+                @Html.ValidationMessageFor(model => model.PreparationTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CookingDuration, "Cooking Duration (hours:minutes:seconds)", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.CookingDuration, new { htmlAttributes = new { @class = "form-control", @placeholder = "ex. 24:60:60", @required = "true" } })
+                @Html.ValidationMessageFor(model => model.CookingDuration, "", new { @class = "text-danger" })
 
             </div>
         </div>
@@ -79,9 +105,9 @@
         @*@Html.Label("Ingredients", new { @class = "control-label col-md-12" })*@
         <label class="control-label col-md-12" style="display:block;">Ingredients</label>
 
-        @foreach (var item in Model.recipeIngredient)
-        {
-            <div id="ingredients-container">
+        <div id="ingredients-container">
+            @foreach (var item in recipeIngredients)
+            {
                 <div class="form-group ingredient-row" style="display: block;">
                     <div class="row" style="margin:0">
                         <div class="col-md-3 ingname">
@@ -96,6 +122,8 @@
                                     var listOfUnitMeasures = new[]
                                     {
                                 new SelectListItem { Value = "tbsp", Text = "Tablespoon (tbsp)" },
+                                new SelectListItem { Value = "tsp", Text = "Teaspoon (tsp)" },
+                                new SelectListItem { Value = "minced", Text = "Minced" },
                                 new SelectListItem { Value = "c", Text = "Cup (c)" },
                                 new SelectListItem { Value = "fl oz", Text = "Fluid Ounce (fl oz)" },
                                 new SelectListItem { Value = "pt", Text = "Pint (pt)" },
@@ -156,9 +184,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
                                     }
+        </div>
+
 
 
         <div class="form-group">
@@ -168,14 +196,14 @@
         </div>
 
         <div>
-            <input type="hidden" id="ingcount" name="ingcount" value="0" />
+            <input type="hidden" id="ingcount" name="ingcount" value="@Model.IngredientsCount" />
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.recipe.CookingInstruction, "Cooking Instruction", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.CookingInstruction, "Cooking Instruction", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
-                @Html.TextAreaFor(model => model.recipe.CookingInstruction, new { @class = "form-control", @rows = 10, @cols = 100 })
-                @Html.ValidationMessageFor(model => model.recipe.CookingInstruction, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.CookingInstruction, new { @class = "form-control", @rows = 10, @cols = 100 })
+                @Html.ValidationMessageFor(model => model.CookingInstruction, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -183,55 +211,70 @@
             <label for="moodid" class="control-label col-md-12">Mood Tag</label>
             <div class="col-md-12">
                 <select id="moodid" name="moodid" class="form-control">
-                    @switch (Model.recipe.MoodID)
+                    @switch (Model.MoodID)
                     {
                         case 1:
                             <option selected value="1">Happy</option>
                             <option value="2">Sad</option>
                             <option value="3">Angry</option>
-                            <option value="4">Surprised</option>
-                            <option value="5">Disgusted</option>
-                            <option value="6">Fearful</option>
+                            <option value="4">Disgusted</option>
+                            <option value="5">Fearful</option>
+                            <option value="6">Surprised</option>
+                            <option value="7">Euthymia</option>
                             break;
                         case 2:
                             <option value="1">Happy</option>
                             <option selected value="2">Sad</option>
                             <option value="3">Angry</option>
-                            <option value="4">Surprised</option>
-                            <option value="5">Disgusted</option>
-                            <option value="6">Fearful</option>
+                            <option value="4">Disgusted</option>
+                            <option value="5">Fearful</option>
+                            <option value="6">Surprised</option>
+                            <option value="7">Euthymia</option>
                             break;
                         case 3:
                             <option value="1">Happy</option>
                             <option value="2">Sad</option>
                             <option selected value="3">Angry</option>
-                            <option value="4">Surprised</option>
-                            <option value="5">Disgusted</option>
-                            <option value="6">Fearful</option>
+                            <option value="4">Disgusted</option>
+                            <option value="5">Fearful</option>
+                            <option value="6">Surprised</option>
+                            <option value="7">Euthymia</option>
                             break;
                         case 4:
                             <option value="1">Happy</option>
                             <option value="2">Sad</option>
                             <option value="3">Angry</option>
-                            <option selected value="4">Surprised</option>
-                            <option value="5">Disgusted</option>
-                            <option value="6">Fearful</option>
+                            <option selected value="4">Disgusted</option>
+                            <option value="5">Fearful</option>
+                            <option value="6">Surprised</option>
+                            <option value="7">Euthymia</option>
                             break;
                         case 5:
                             <option value="1">Happy</option>
                             <option value="2">Sad</option>
                             <option value="3">Angry</option>
-                            <option value="4">Surprised</option>
-                            <option selected value="5">Disgusted</option>
-                            <option value="6">Fearful</option>
+                            <option value="4">Disgusted</option>
+                            <option selected value="5">Fearful</option>
+                            <option value="6">Surprised</option>
+                            <option value="7">Euthymia</option>
                             break;
                         case 6:
                             <option value="1">Happy</option>
                             <option value="2">Sad</option>
                             <option value="3">Angry</option>
-                            <option value="4">Surprised</option>
-                            <option value="5">Disgusted</option>
-                            <option selected value="6">Fearful</option>
+                            <option value="4">Disgusted</option>
+                            <option value="5">Fearful</option>
+                            <option selected value="6">Surprised</option>
+                            <option value="7">Euthymia</option>
+                            break;
+                        case 7:
+                            <option value="1">Happy</option>
+                            <option value="2">Sad</option>
+                            <option value="3">Angry</option>
+                            <option value="4">Disgusted</option>
+                            <option value="5">Fearful</option>
+                            <option value="6">Surprised</option>
+                            <option selected value="7">Euthymia</option>
                             break;
                     }
                 </select>
@@ -242,43 +285,26 @@
         <div class="form-group">
             <label for="imageFile" class="control-label col-md-12">Upload Recipes Cover Picture</label>
             <div class="col-md-12">
-                <input type="file" name="imageFile" id="imageInput" accept="image/*" required />
+                @if (!string.IsNullOrEmpty(recipeImage.ImagePath))
+                {
+                    <input type="file" name="imageFile" id="imageInput" accept="image/*" />
+                }
+                else
+                {
+                    <input type="file" name="imageFile" id="imageInput" accept="image/*" required />
+                }
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-12">
-                <img id="selectedImage" src="#" alt="Selected Image" style="display: none; max-width: 300px; max-height: 300px;" />
-            </div>
-        </div>
-
-        <div class="form-group col-md-12">
-            <label>Do you want to sell this recipe?</label>
-            <label>Yes</label>
-            <input type="radio" name="forsale" value="Yes" />
-            <label>No</label>
-            <input type="radio" checked name="forsale" value="No" />
-        </div>
-
-        <div class="saleoption" id="saleoption" style="display:none">
-            <div class="form-group">
-                <label class="control-label col-md-12">Price</label>
-                <div class="col-md-12">
-                    <input style="width:50%" class="form-control ingredient-quantity" placeholder="P00.00" type="number" min="0" id="price" name="Price" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-12">Shipped from</label>
-                <div class="col-md-12">
-                    <input class="form-control ingredient-quantity" placeholder="Address" type="text" id="shippedfrom" name="shippedfrom" />
-                </div>
+                <img id="selectedImage" src="@Url.Content(recipeImage.ImagePath)" alt="Selected Image" style="display: block; max-width: 300px; max-height: 300px;" />
             </div>
         </div>
 
         <div class="form-group" style="margin-top:3rem">
             <div class="col-md-offset-2 col-md-12">
-                <button class="btn custom-btn" id="upload-recipe-btn" type="submit" style="width:100%">Update Recipe</button>
+                <button class="btn custom-btn" id="upload-recipe-btn" onclick="saveChanges()" type="submit" style="width:100%">Update Recipe</button>
             </div>
         </div>
     </div>
@@ -301,6 +327,11 @@
 <script src="~/Content/MainTemplate/js/main.js"></script>
 
 <script>
+
+    function saveChanges() {
+        $('#loadertxt').text('Saving changes...');
+        showLoader();
+    }
     document.getElementById('imageInput').addEventListener('change', function (event) {
         var input = event.target;
         var reader = new FileReader();
@@ -315,24 +346,29 @@
             reader.readAsDataURL(input.files[0]);
         }
     });
-    var ingredientCount = 1;
+    var ingredientCount = parseInt(document.getElementById('ingcount').value);
 
     $(document).ready(function () {
         // Add ingredient row
         $("#add-ingredient").click(function (e) {
             e.preventDefault();
-            var container = $("#ingredients-container");
-            var templateRow = container.find(".ingredient-row").first().clone();
-            var newRow = templateRow.clone().show(); // Clone the template row and show it
-            newRow.find("input").val(""); // Clear input values
+            
+            try {
+                var container = $("#ingredients-container");
+                var templateRow = container.find(".ingredient-row").first().clone();
+                var newRow = templateRow.clone().show(); // Clone the template row and show it
+                newRow.find("input").val(""); // Clear input values
 
-            //newRow.find("input").prop("disabled", false);
-            //newRow.find("select").prop("disabled", false);
+                //newRow.find("input").prop("disabled", false);
+                //newRow.find("select").prop("disabled", false);
 
-            container.append(newRow);
-            ingredientCount++;
+                container.append(newRow);
+                ingredientCount++;
 
-            document.getElementById('ingcount').value = String(ingredientCount);
+                document.getElementById('ingcount').value = String(ingredientCount);
+            } catch (e) {
+                alert(e.message);
+            }
 
             //container.find(".ingredient-row").not(newRow).find("input").prop("disabled", true);
             //container.find(".ingredient-row").not(newRow).find("select").prop("disabled", true);

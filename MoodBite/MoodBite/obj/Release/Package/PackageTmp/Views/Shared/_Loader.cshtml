@@ -1,0 +1,52 @@
+﻿
+<style>
+    .loaderContainer {
+        z-index: 999999;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 0 auto;
+    }
+
+    .loader {
+        width: 50px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 8px solid #0000;
+        border-right-color: #ffa50097;
+        animation: l24 1s infinite linear;
+    }
+
+        .loader:before,
+        .loader:after {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: inherit;
+            animation: inherit;
+            animation-duration: 2s;
+        }
+
+        .loader:after {
+            animation-duration: 4s;
+        }
+
+    @@keyframes l24 {
+        100% {
+            transform: rotate(1turn);
+        }
+    }
+</style>
+
+@{ 
+
+}
+
+<div class="loaderContainer" id="loaderContainer" style="display:none; width:100%;">
+    <div class="loader"></div>
+
+    <h5 id="loadertxt" style="color:#ffa50097">@Html.Raw(ViewBag.LoaderMsg)</h5>
+</div>

@@ -1,7 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Manage Users";
+    ViewBag.Title = "Admins Dashboard";
     ViewBag.TitleHeader = "List of Users";
     ViewBag.SubHeader = "";
+    ViewBag.LoaderMsg = "Please wait...";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
 
     string a = "active";
@@ -32,6 +33,9 @@
 <!-- Template Stylesheet -->
 <link href="~/Content/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+
+@Html.Partial("_Loader")
 
 <div style="display:flex; flex-direction:row;">
     <div style="width:15%; margin-right:1rem;">
@@ -90,8 +94,10 @@
         // Click event handlers for navigation
         $('.admin-btns').click(function (e) {
             e.preventDefault();
+            showLoader();
             var url = $(this).attr('href');
             loadPartialView(url);
+            hideLoader();
         });
     });
 

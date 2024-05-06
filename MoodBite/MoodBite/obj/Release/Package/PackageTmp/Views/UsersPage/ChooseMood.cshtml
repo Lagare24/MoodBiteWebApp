@@ -5,6 +5,7 @@
     ViewBag.Title = "Choose a mood";
     ViewBag.TitleHeader = "Select a mood first";
     ViewBag.TitleSubHeader = "Choose a mood";
+    ViewBag.LoaderMsg = "Generating recommended recipes...";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
     User user = Session["User"] as User;
 }
@@ -26,6 +27,8 @@
 <!-- Template Stylesheet -->
 <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
 
+
+
 <!-- Modal -->
 <div class="modal chooseMoodModal" id="myModal" style="background-color:rgba(0,0,0,0.85);" onclick="handleModalClick(event)">
     <div class="modal-dialog">
@@ -46,8 +49,11 @@
                         </select>
                     </div>
                 </div>
+                <div style="z-index:999">
+                    @Html.Partial("_Loader")
+                </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="selectMoodBtn">Next</button>
+                    <button onclick="showLoader()" type="submit" class="btn btn-primary" id="selectMoodBtn">Next</button>
                 </div>
             }
         </div>

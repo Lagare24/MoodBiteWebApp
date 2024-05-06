@@ -1,0 +1,53 @@
+﻿<div class="modal myModal" id="myModal" style="background-color:rgba(0,0,0,0.85);">
+    <div class="modal-dialog">
+        <div class="modal-content" data-backdrop="static" data-keyboard="false">
+            <div class="modal-header">
+                <h5 class="modal-title">Share this recipe with your friends</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="recipeUrlInput" style="width:100%; display:block; margin-bottom:1rem;" readonly />
+                    <button onclick="copyToClipboard()" style="width:100%; display:block; margin-bottom:1.5rem;" type="submit" class="btn btn-primary" id="selectMoodBtn">Copy to clipboard</button>
+                    <div style="z-index:9999">
+                        @Html.Partial("_Loader")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showModal(event) {
+        var element = event.target;
+        var recipeID = parseInt(element.getAttribute("data-recipe-shareID"));
+        console.log("showModal ID: " + recipeID);
+        if (isNaN(recipeID)) {
+            alert("An error occured, please try again.");
+        } else {
+            var leftPart = window.location.protocol + "//" + window.location.host;
+            var recipeUrl = leftPart + "/UsersPage/RecipeReadMore/" + recipeID;
+            var recipeUrlInput = document.getElementById("recipeUrlInput");
+            alert(leftPart);
+            alert(recipeID);
+            alert(recipeUrl);
+            recipeUrlInput.value = recipeUrl;
+        }
+        var modal = $('.myModal');
+        modal.modal('show');
+    }
+
+    function copyToClipboard() {
+        var recipeUrlInput = document.getElementById("recipeUrlInput");
+        recipeUrlInput.select();
+        document.execCommand("copy");
+        console.log("Text copied to clipboard: " + recipeUrlInput.value);
+
+        var copyBtn = document.getElementById("selectMoodBtn");
+        copyBtn.innerText = "Copied to clipboard";
+
+        setTimeout(function () {
+            copyBtn.innerText = "Copy to clipboard";
+        }, 2000);
+    }
+</script>

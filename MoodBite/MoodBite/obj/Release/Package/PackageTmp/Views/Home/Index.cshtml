@@ -1,10 +1,616 @@
-﻿
+﻿@model IEnumerable<Testimonials>
+
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LandingPageLayout.cshtml";
+    string homeUrl = User.Identity.IsAuthenticated ? Url.Content("~/UsersPage/UsersHome") : Url.Content("~/Home/Index");
+    string signIn_signOut = User.Identity.IsAuthenticated ? Url.Content("~/Account/LogOut") : Url.Content("~/Account/LogIn");
+    //ViewBag.SignIn_SignOut_Btn_Txt = User.Identity.IsAuthenticated ? "Sign Out" : "Sign In";
+    ViewBag.SignInNow_SignOut_Btn_Txt = User.Identity.IsAuthenticated ? "Sign Out" : "Sign In Now";
+
+
+    
 }
-<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>MoodBite</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free Website Template" name="keywords">
+    <meta content="Free Website Template" name="description">
 
-<h1 class="title-header">Mood<span>Bite</span></h1>
+    <!-- Favicon -->
+    <link href="~/Content/MainTemplate/img/moodbite-logo-transparentbg-icon.ico" type="image/x-icon" rel="icon">
 
-<h3 class="description">A Mood-based Food Recommendation Web App</h3>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+    <link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Template Stylesheet -->
+    <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Nav Bar Start -->
+    <div class="navbar navbar-expand-lg bg-light navbar-light">
+        <div class="container-fluid">
+            <a href="@homeUrl" class="navbar-brand">Mood<span>Bite</span></a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav ml-auto">
+                    <a href="@homeUrl" class="nav-item nav-link active">Home</a>
+                    <a href="#about" class="nav-item nav-link">About</a>
+                    <a href="#feature" class="nav-item nav-link">Feature</a>
+                    <a href="#price" class="nav-item nav-link">Price</a>
+                    <a href="#contact" class="nav-item nav-link">Contact</a>
+                    @*<div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Menu</a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">View Profile</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a href="~/Account/LogOut" class="dropdown-item">Log Out</a>
+                            }
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Nav Bar End -->
+    <!-- Carousel Start -->
+    <div class="carousel" id="homeTopPage">
+        <div class="container-fluid">
+            <div class="owl-carousel">
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="~/Content/MainTemplate/img/carousel-1.jpg" alt="Image">
+                    </div>
+                    <div class="carousel-text" id="home">
+                        @*@RenderBody()*@
+                        <h1 class="title-header">Mood<span>Bite</span></h1>
+
+                        <h3 class="description">A Mood-based Food Recommendation Web App</h3>
+                        <div class="carousel-btn">
+                            <a class="btn custom-btn" href="~/Account/Register">Get Started</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="btn custom-btn" href="~/Account/LogOut">Sign Out</a>
+                            }
+                            else
+                            {
+                                <a class="btn custom-btn" href="~/Account/LogIn">Sign In</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="~/Content/MainTemplate/img/accurate-recommendation.jpg" alt="Image">
+                    </div>
+                    <div class="carousel-text">
+                        <h1>Mood-based <span>Recommendation</span></h1>
+                        <p>
+                            This makes choosing what to eat easier and more enjoyable. Say goodbye to food stress and hello to a personalized, time-saving, and allergy-friendly food recommendation site.
+                        </p>
+                        <div class="carousel-btn">
+                            <a class="btn custom-btn" href="~/Account/Register">Get Started</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="btn custom-btn" href="~/Account/LogOut">Sign Out</a>
+
+                            }
+                            else
+                            {
+                                <a class="btn custom-btn" href="~/Account/LogIn">Sign In</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="~/Content/MainTemplate/img/order-online-delivery.jpg" alt="Image">
+                    </div>
+                    <div class="carousel-text">
+                        <h1>Online Order <span>Delivery</span></h1>
+                        <p>
+                            Don't have the time to prepare the recipes you've been browsing? No need to worry! You can now easily order a variety of delicious foods directly from this site at your comfort.
+                        </p>
+                        <div class="carousel-btn">
+                            <a class="btn custom-btn" href="~/Account/Register">Get Started</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="btn custom-btn" href="~/Account/LogOut">Sign Out</a>
+
+                            }
+                            else
+                            {
+                                <a class="btn custom-btn" href="~/Account/LogIn">Sign In</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Start -->
+    <div class="about" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="about-content">
+                        <div class="section-header text-center">
+                            <p>About Us</p>
+                            <h2>Welcome to MoodBite</h2>
+                        </div>
+                        <div class="about-text">
+                            <p>
+                                MoodBite is a Mood-based Recipe Recommendation Web App! We are passionate about helping you discover delicious recipes that perfectly match your mood. Our goal is to provide a unique and personalized cooking experience that brings joy and satisfaction to your kitchen.
+                            </p>
+                            <p>
+                                At MoodBite, we understand the close connection between food and mood. Whether you're feeling happy, sad, or angry, our app is here to inspire you with a wide selection of recipes tailored to your emotional state. We believe that cooking the right dish can enhance your mood and create memorable culinary experiences.
+                            </p>
+                            <p>
+                                Our user-friendly interface allows you to easily explore and navigate through a variety of recipes. Simply select your current mood, and we'll generate a selection of dishes that match your emotional state. You can browse through the recipes and cook the ones that catch your interest. If you don't feel like cooking, you also have the option to order prepared meals directly from our partner restaurants and other food sellers.
+                            </p>
+                            <p>
+                                Additionally, we provide step-by-step instructions and ingredient lists to make your cooking process seamless and enjoyable. You can save your favorite recipes, filter recommended recipes to match your preferences, and share your favorite recipes with friends and family.
+                            </p>
+                            <p>
+                                We are committed to continuously improving MoodBite to enhance your experience and deliver the best recipe recommendations for every mood. We value your feedback and suggestions, so please feel free to reach out to us. Get ready to embark on a delightful journey of flavors and emotions with MoodBite!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+    <!-- Video Modal Start-->
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <!-- 16:9 aspect ratio -->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="" id="video" allowscriptaccess="always" allow="autoplay"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Video Modal End -->
+    <!-- Feature Start -->
+    <div class="feature" id="feature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="section-header">
+                        <p>Why Use MoodBite</p>
+                        <h2>Our Key Features</h2>
+                    </div>
+                    <div class="feature-text">
+                        <div class="feature-img">
+                            <div class="row">
+                                <div class="col-6">
+                                    <img src="~/Content/MainTemplate/img/feature-1.jpg" alt="Image">
+                                </div>
+                                <div class="col-6">
+                                    <img src="~/Content/MainTemplate/img/feature-2.jpg" alt="Image">
+                                </div>
+                                <div class="col-6">
+                                    <img src="~/Content/MainTemplate/img/feature-3.jpg" alt="Image">
+                                </div>
+                                <div class="col-6">
+                                    <img src="~/Content/MainTemplate/img/feature-4.jpg" alt="Image">
+                                </div>
+                            </div>
+                        </div>
+                        <p>
+                            MoodBite offers personalized recommendations based on your mood, helping you discover new experiences and manage your emotions. It enhances engagement and focuses on your well-being, promoting a positive and balanced lifestyle.
+                        </p>
+                        <a class="btn custom-btn" href="@signIn_signOut">@ViewBag.SignInNow_SignOut_Btn_Txt</a>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="feature-item">
+                                <i class="flaticon-cooking"></i>
+                                <h3>Mood Recognition</h3>
+                                <p>
+                                    Enhance user experience with our advanced technology that recognizes and understands emotions based on facial expressions. Enjoy personalized interactions and tailored experiences.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="feature-item">
+                                <i class="flaticon-vegetable"></i>
+                                <h3>Allergy Filtration</h3>
+                                <p>
+                                    Make informed choices by customizing filters for allergies and dietary restrictions. Easily browse recipes, products, or content that meet your specific needs, ensuring a safe and enjoyable experience.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="feature-item">
+                                <i class="flaticon-medal"></i>
+                                <h3>Online Order Delivery</h3>
+                                <p>
+                                    Conveniently enjoy restaurant-quality food delivered to your home. Explore tasty meals from premium users and place orders through our user-friendly platform.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="feature-item">
+                                <i class="flaticon-meat"></i>
+                                <h3>Upload Own Recipe</h3>
+                                <p>
+                                    Share your cooking creations with others. Easily add recipes with ingredients and instructions, connect with food lovers, and receive feedback to improve your skills.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="feature-item">
+                                <i class="flaticon-courier"></i>
+                                <h3>Download Recipe</h3>
+                                <p>
+                                    Discover diverse recipes and download them for offline viewing. Access a variety of recipes shared by cooks and food enthusiasts, even without an internet connection.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="feature-item">
+                                <i class="flaticon-fruits-and-vegetables"></i>
+                                <h3>Sell Recipe</h3>
+                                <p>
+                                    Exclusive for premium users, sell your delicious recipes and earn recognition and income. Connect with a wide audience and turn your cooking passion into a rewarding venture.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Feature End -->
+    <!-- Food Start -->
+    <div class="food" id="price" style="margin-bottom:0">
+        <div class="container">
+            <div class="row align-items-stretch">
+                <div class="col-md-4">
+                    <div class="food-item">
+                        <i class="flaticon-burger"></i>
+                        <h2>Free</h2>
+                        <h6>&#8369;0 per month</h6>
+                        <p>
+                            <ul>
+                                <li>Enjoy the free features offered by MoodBite</li>
+                            </ul>
+                        </p>
+                        <a href="~/UsersPage/UsersHome">Continue for free</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="food-item">
+                        <i class="flaticon-snack"></i>
+                        <h2>Starter</h2>
+                        <h6>&#8369;29 per month</h6>
+                        <p>
+                            <ul>
+                                <li>Have option to order the food uploaded by sellers</li>
+                                <li>Can sell your uploaded recipe (2 recipe only)</li>
+                            </ul>
+                        </p>
+                        <a href="~/Home/BuyPremium/1">Subscribe</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="food-item">
+                        <i class="flaticon-cocktail"></i>
+                        <h2>Pro</h2>
+                        <h6>&#8369;55 per month</h6>
+                        <p>
+                            <ul>
+                                <li>Have option to order the food uploaded by sellers</li>
+                                <li>Can sell your uploaded recipe (unlimited)</li>
+                            </ul>
+                        </p>
+                        <a href="~/Home/BuyPremium/2">Subscribe</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Food End -->
+    <!-- Testimonial Start -->
+    <div class="testimonial" style="margin-top:0; background-color:white;"> 
+        <h2 style="text-align:center">Feedbacks</h2>
+        <div class="container">
+            <div class="owl-carousel testimonials-carousel">
+                @foreach (var item in Model)
+                {
+                    <div class="testimonial-item">
+                        <p>
+                            @item.tMsg
+                        </p>
+                        <h2>@item.tName</h2>
+                        <h3>@item.tProfession</h3>
+                    </div>
+                }
+
+                @*<div class="testimonial-item">
+                    <div class="testimonial-img">
+                        <img src="~/Content/MainTemplate/img/testimonial-2.jpg" alt="Image">
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet elit. Phasel nec preti mi. Curabit facilis ornare velit non vulput
+                    </p>
+                    <h2>Client Name</h2>
+                    <h3>Profession</h3>
+                </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-img">
+                        <img src="~/Content/MainTemplate/img/testimonial-3.jpg" alt="Image">
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet elit. Phasel nec preti mi. Curabit facilis ornare velit non vulput
+                    </p>
+                    <h2>Client Name</h2>
+                    <h3>Profession</h3>
+                </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-img">
+                        <img src="~/Content/MainTemplate/img/testimonial-4.jpg" alt="Image">
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet elit. Phasel nec preti mi. Curabit facilis ornare velit non vulput
+                    </p>
+                    <h2>Client Name</h2>
+                    <h3>Profession</h3>
+                </div>*@
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+    <!-- Contact Start -->
+    <div class="contact" id="contact">
+        <div class="container">
+            <div class="section-header text-center">
+                <p>Contact Us</p>
+                <h2>Contact For Any Query</h2>
+            </div>
+            <div class="row align-items-center contact-information">
+                <div class="col-md-6 col-lg-3">
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fa fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Address</h3>
+                            <p>6015 A.C. Cortes Avenue, Mandaue City, Cebu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fa fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Call Us</h3>
+                            <p>+032 341 5884</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Email Us</h3>
+                            <p>mbcares@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fa fa-share"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Follow Us</h3>
+                            <div class="contact-social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-youtube"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+    <!-- Footer Start -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="footer-contact">
+                                <h2>Our Address</h2>
+                                <p><i class="fa fa-map-marker-alt"></i>6015 A.C. Cortes Avenue, Mandaue City, Cebu</p>
+                                <p><i class="fa fa-phone-alt"></i>+032 341 5884</p>
+                                <p><i class="fa fa-envelope"></i>mbcares@gmail.com</p>
+                                <div class="footer-social">
+                                    <a href=""><i class="fab fa-twitter"></i></a>
+                                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                                    <a href=""><i class="fab fa-youtube"></i></a>
+                                    <a href=""><i class="fab fa-instagram"></i></a>
+                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="footer-link">
+                                <h2>Quick Links</h2>
+                                <a href="">Terms of use</a>
+                                <a href="">Privacy policy</a>
+                                <a href="">Cookies</a>
+                                <a href="">Help</a>
+                                <a href="">FQAs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="footer-newsletter">
+                        <h2>Give feedback</h2>
+                        <p>
+                            What do you think about our website?
+                        </p>
+                        <div class="row contact-form">
+                            <div class="col-md-12">
+                                <div id="success"></div>
+                                <form>
+                                    <div class="control-group">
+                                        <input type="text" class="form-control" id="name" placeholder="Your Name" name="name" required data-validation-required-message="Please enter your name" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group">
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required data-validation-required-message="Please enter your email" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group">
+                                        <input type="text" class="form-control" name="profession" id="subject" placeholder="Profession" required data-validation-required-message="Please enter your profession" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group">
+                                        <textarea class="form-control" id="message" name="message" placeholder="Message" required data-validation-required-message="Please enter your message"></textarea>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div>
+                                        <button class="btn custom-btn" type="submit" id="sendMessageButton">Send Message</button>
+                                        @Html.Partial("_Loader")
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <p>Copyright &copy; @DateTime.Today.Year -<a href="#"> MoodBite</a>, All Right Reserved.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+    <script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/Content/MainTemplate/js/main.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            // Function to handle click event on nav links
+            $('.nav-item.nav-link').click(function(){
+                // Remove active class from all nav links
+                $('.nav-item.nav-link').removeClass('active');
+                // Add active class to the clicked nav link
+                $(this).addClass('active');
+            });
+
+
+            var sectionIDs = ['#home', '#about', '#feature', '#price', '#contact'];
+
+
+            // Function to handle scroll event
+            $(window).scroll(function () {
+                var scrollDistance = $(window).scrollTop();
+                // Assign IDs of the sections you want to target
+                var sectionIDs = ['#homeTopPage', '#about', '#feature', '#price', '#contact'];
+                $(sectionIDs).each(function (i, sectionID) {
+                    var sectionTop = $(sectionID).offset().top;
+                    var sectionBottom = sectionTop + $(sectionID).outerHeight();
+                    if (scrollDistance >= sectionTop && scrollDistance < sectionBottom) {
+                        // Remove active class from all nav links
+                        $('.nav-item.nav-link').removeClass('active');
+                        // Add active class to the corresponding nav link
+                        if (sectionID === '#homeTopPage') {
+                            $('.nav-item.nav-link[href="@homeUrl"]').addClass('active');
+                        } else {
+                            $('.nav-item.nav-link[href="' + sectionID + '"]').addClass('active');
+                        }
+                    }
+                });
+            }).scroll(); // Trigger scroll event on page load
+        });
+
+        $(document).ready(function() {
+            $(document).on('click', '#sendMessageButton', function(event) {
+            event.preventDefault();
+            showLoader();
+
+            $.ajax({
+              url: '@Url.Action("SubmitTestimony", "Home")',
+              type: 'POST',
+              data: {
+                name: $('#name').val(),
+                email: $('#email').val(),
+                profession: $('#subject').val(),
+                message: $('#message').val()
+              },
+              success: function(response) {
+                alert(response.msg);
+                window.location.reload();
+              },
+              error: function(xhr, status, error) {
+                console.log('An error has occurred: ' + error);
+                window.location.reload();
+              },
+              complete: function() {
+                hideLoader();
+              }
+            });
+          });
+        });
+    </script>
+</body>
+</html>

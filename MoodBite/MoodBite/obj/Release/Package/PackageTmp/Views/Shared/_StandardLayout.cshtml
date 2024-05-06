@@ -4,6 +4,7 @@
     var cartActive = Session["CartActive"] as string;
     var profileActive = Session["ProfileActive"] as string;
     var user = Session["User"] as User;
+    ViewBag.LoaderMsg = "Please wait...";
 
 
     var manageUploads = Session["MUploadsActive"] as string;
@@ -94,6 +95,30 @@
     <!-- Template Stylesheet -->
     <link href="~/Content/MainTemplate/css/global.css" rel="stylesheet" />
     <link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+    <style>
+        .fas.fa-microphone {
+        color: gray; /* Set the initial color of the icon */
+        transition: color 0.3s ease-in-out; /* Add a smooth transition effect */
+    }
+
+    .fas.fa-microphone.active {
+        color: green; /* Change the color or apply any other styling to indicate the active state */
+        animation: pulse 1s infinite;
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    </style>
 </head>
 
 <body>
@@ -105,15 +130,6 @@
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            @*@if (User.Identity.IsAuthenticated && User.IsInRole("User") && ViewContext.RouteData.Values["action"].ToString().ToLower() == "usershome")
-            {
-                <div class="search-widget">
-                    <form action="~/UsersPage/UsersHome" method="post">
-                        <input class="form-control" name="search" type="text" placeholder="Search Keyword" value="@Session["SearchInput"]">
-                        <button type="submit" class="btn"><i class="fa fa-search"></i></button>
-                    </form>
-                </div>
-            }*@
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto" style="width:100%; justify-content:flex-end; gap:1.5rem">
@@ -143,74 +159,38 @@
                                     <i class="fas fa-bars"></i>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="left: -93px;">
-                                    <a class="dropdown-item viewprofile" href="~/Home/ViewProfile"><p style="margin:0">@User.Identity.Name</p><i class="fas fa-user"></i>View Profile</a>
-                                    <a class="dropdown-item uploadrecipe" href="~/UsersPage/UploadRecipe"><i class="fas fa-cloud-upload-alt"></i> Upload Recipe</a>
-                                    <a class="dropdown-item uploadrecipe" href="~/UsersPage/MyUploads"><i class="far fa-file-alt"></i> My Uploads</a>
-                                    <a class="dropdown-item faverecipe" href="#"><i class="fas fa-heart"></i> My Favorite Recipes</a>
-                                    <a class="dropdown-item customizedrecipe" href="#"><i class="fas fa-book"></i> My Customized Recipes</a>
-                                    <a class="dropdown-item" href="~/Account/LogOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                                    <a class="dropdown-item viewprofile" href="~/Home/ViewProfile" onclick="showLoader()"><p style="margin:0">@User.Identity.Name</p><i class="fas fa-user"></i>View Profile</a>
+                                    <a class="dropdown-item uploadrecipe" href="~/UsersPage/UploadRecipe" onclick="showLoader()"><i class="fas fa-cloud-upload-alt"></i> Upload Recipe</a>
+                                    <a class="dropdown-item uploadrecipe" href="~/UsersPage/MyUploads" onclick="showLoader()"><i class="far fa-file-alt"></i> My Uploads</a>
+                                    <a class="dropdown-item faverecipe" href="#"><i class="fas fa-heart" onclick="showLoader()"></i> My Favorite Recipes</a>
+                                    <a class="dropdown-item customizedrecipe" href="#"><i class="fas fa-book" onclick="showLoader()"></i> My Customized Recipes</a>
+                                    <a class="dropdown-item" href="~/Account/LogOut"><i class="fas fa-sign-out-alt" onclick="showLoader()"></i> Log Out</a>
                                 </div>
                             </div>
-                            @*<a style="color:black" href="#price" class="nav-item nav-link @profileActive">Profile</a>*@
-                            @*<a style="color:black" href="~/Account/LogOut" class="nav-item nav-link btn" style="background-color: #fbaf32; color: white;">Log Out</a>*@
                         }
                         else if (User.IsInRole("Admin"))
                         {
-                            @*<a href="~/AdminsPage/ManageUploads" class="nav-item nav-link @manageUploads">Manage Uploads</a>
-                            <a href="~/AdminsPage/ManageSubscriptions" class="nav-item nav-link @manageSubscriptions">Manage Subscriptions</a>
-                            <a href="#price" class="nav-item nav-link @profileActive">Profile</a>
-                            <a href="~/Account/LogOut" class="nav-item nav-link btn" style="background-color: #fbaf32; color: white;">Log Out</a>*@
                             <div class="dropdown" style="height:36px;">
                                 <button class="btn btn-secondary dropdown-toggle cust-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height:36px; background-color:#fbaf32">
                                     <i class="fas fa-bars"></i>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="left: -93px;">
-                                    <a class="dropdown-item" href="~/Home/ViewProfile"><p style="margin:0">@User.Identity.Name</p><i class="fas fa-user"></i> View Profile</a>
-                                    <a class="dropdown-item" href="~/Account/LogOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                                    <a class="dropdown-item" href="~/Home/ViewProfile" onclick="showLoader()"><p style="margin:0">@User.Identity.Name</p><i class="fas fa-user"></i> View Profile</a>
+                                    <a class="dropdown-item" href="~/Account/LogOut" onclick="showLoader()"><i class="fas fa-sign-out-alt"></i> Log Out</a>
                                 </div>
                             </div>
                         }
                     }
-                    @*<div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Menu</a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">View Profile</a>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                            <a href="~/Account/LogOut" class="dropdown-item">Log Out</a>
-                            }
-                        </div>
-                    </div>*@
                 </div>
             </div>
         </div>
     </div>
     <!-- Nav Bar End -->
-    <!-- Page Header Start -->
-    @*<div class="page-header mb-0" id="homeTopPage" >
-        <div class="container">
-            @if (User.Identity.IsAuthenticated && User.IsInRole("User") && ViewContext.RouteData.Values["action"].ToString().ToLower() == "usershome")
-            {
-                
-            }
-            else
-            {
-                <div class="row">
-                    <div class="col-12">
-                        <h2>@ViewBag.TitleHeader</h2>
-                    </div>
-                    <div class="col-12">
-                        <p>@ViewBag.TitleSubHeader</p>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>*@
-    <!-- Page Header End -->
+
     <!-- Booking Start -->
-    @*<div class="@((ViewContext.RouteData.Values["controller"].ToString().Equals("UsersPage", StringComparison.OrdinalIgnoreCase)) ? "blog" : "booking")">*@
     <div class="@classParentContainerName" style="background-image:url(../../Content/multimedia/imageremovebgpreview-8-1@2x.png); background-repeat:no-repeat; background-size:cover; padding-top:@paddingTop; margin-bottom:@marginBottom;">
         <div class="container">
+            @*@Html.Partial("_Loader")*@
             @RenderBody()
         </div>
     </div>
@@ -230,7 +210,7 @@
                                 <p><i class="fa fa-envelope"></i>mbcares@gmail.com</p>
                                 <div class="footer-social">
                                     <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                                    <a href="www.facebook.com"><i class="fab fa-facebook-f"></i></a>
                                     <a href=""><i class="fab fa-youtube"></i></a>
                                     <a href=""><i class="fab fa-instagram"></i></a>
                                     <a href=""><i class="fab fa-linkedin-in"></i></a>
@@ -260,15 +240,29 @@
                                 <div id="success"></div>
                                 <form name="sentMessage" id="contactForm" novalidate="novalidate">
                                     <div class="control-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
+                                        @if (User.Identity.IsAuthenticated && Session["User"] != null)
+                                        {
+                                            <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" value="@Html.Raw(user.FirstName + ' ' + user.LastName)" data-validation-required-message="Please enter your name" readonly/>
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
+                                        }
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="control-group">
-                                        <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
+                                        @if (User.Identity.IsAuthenticated && Session["User"] != null)
+                                        {
+                                            <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" value="@Html.Raw(user.Email)" data-validation-required-message="Please enter your email" readonly />
+                                        }
+                                        else
+                                        {
+                                            <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
+                                        }
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="control-group">
-                                        <input type="text" class="form-control" id="subject" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject" />
+                                        <input type="text" class="form-control" id="subject" placeholder="Profession" required="required" data-validation-required-message="Please enter a profession" />
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="control-group">
@@ -410,6 +404,48 @@
             });
         });
 
+        //$(document).ready(function () {
+        //    // Store the original search widget
+        //    var originalSearchWidget = $('.search-widget').clone();
+
+        //    // Function to handle scroll event
+        //    $(window).scroll(function () {
+        //        // Check if the navbar has become sticky
+        //        var isNavSticky = $('.navbar').hasClass('nav-sticky');
+
+        //        // Check if the search widget has already been transferred
+        //        var searchWidgetExists = $('.navbar .search-widget').length > 0;
+
+        //        if (isNavSticky && !searchWidgetExists) {
+        //            // Find the first element in the navbar
+        //            var firstElement = $('.container-fluid').children().first();
+        //            // Clone the original search widget and insert it after the first element
+        //            var clonedSearchWidget = originalSearchWidget.clone();
+        //            firstElement.after(clonedSearchWidget);
+
+        //            // Set the width of the search input to 45rem
+        //            clonedSearchWidget.find('input[type="text"]').css('width', '45rem');
+        //            // Set the right attribute of the search input to 4.5%
+        //            clonedSearchWidget.find('input[type="text"]').css('right', '4.5%');
+        //        } else if (!isNavSticky && searchWidgetExists) {
+        //            // Remove the search widget from the sticky navbar if it's not sticky
+        //            $('.navbar .search-widget').remove();
+        //        }
+
+        //        // Adjust the width and right attribute of the search input field based on the navbar sticky state
+        //        if (searchWidgetExists) {
+        //            var searchInput = $('.navbar .search-widget input[type="text"]');
+        //            if (isNavSticky) {
+        //                searchInput.css('width', '45rem');
+        //                searchInput.css('right', '4.5%');
+        //            } else {
+        //                searchInput.css('width', ''); // Remove the width style
+        //                searchInput.css('right', ''); // Remove the right style
+        //            }
+        //        }
+        //    });
+        //});
+
         $(document).ready(function () {
             // Store the original search widget
             var originalSearchWidget = $('.search-widget').clone();
@@ -433,9 +469,15 @@
                     clonedSearchWidget.find('input[type="text"]').css('width', '45rem');
                     // Set the right attribute of the search input to 4.5%
                     clonedSearchWidget.find('input[type="text"]').css('right', '4.5%');
+
+                    // Hide the original search widget
+                    $('.container .search-widget').hide();
                 } else if (!isNavSticky && searchWidgetExists) {
                     // Remove the search widget from the sticky navbar if it's not sticky
                     $('.navbar .search-widget').remove();
+
+                    // Show the original search widget
+                    $('.container .search-widget').show();
                 }
 
                 // Adjust the width and right attribute of the search input field based on the navbar sticky state
@@ -452,10 +494,61 @@
             });
         });
 
+
+        function searchRecipe() {
+            event.preventDefault();
+            $('#loadertxt').text('Searching...');
+            showLoader();
+
+            var allergyValues = $('input[name="allergyInp[]"]').map(function() {
+                return this.value;
+            }).get();
+
+            var intoleranceValues = $('input[name="intoleranceInp[]"]').map(function() {
+                return this.value;
+            }).get();
+
+            var foodCategoryValues = $('input[name="foodCategoryInp[]"]').map(function() {
+                return this.value;
+            }).get();
+
+            $.ajax({
+                url: '@Url.Action("UsersHome", "UsersPage")',
+                data: {
+                    search: $('#searchinp').val(),
+                    allergyInp: allergyValues,
+                    intoleranceInp: intoleranceValues,
+                    foodCategoryInp: foodCategoryValues
+                },
+                type: 'post',
+                success: function(response) {
+                    if (response.success) {
+                        window.location.href = '@Url.Content("~/UsersPage/UsersHome")';
+                    } else {
+                        alert(response.msg);
+                        window.location.reload();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert(error);
+                    window.location.reload();
+                },
+                complete: function() {}
+            });
+        }
+
+        function handleSearchInput(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById("searchbtn").click(); // Trigger click event on the search button
+            }
+        }
+
         $(document).ready(function () {
             // Initialize DataTable
             $('#example').DataTable();
         });
+
     </script>
 </body>
 </html>

@@ -1,0 +1,237 @@
+﻿@model Premium
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #e6ebf4
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 5px 6px 6px 2px #e9ecef
+        }
+
+        .heading {
+            font-size: 23px;
+            font-weight: 00
+        }
+
+        .text {
+            font-size: 16px;
+            font-weight: 500;
+            color: #b1b6bd
+        }
+
+        .pricing {
+            border: 2px solid #304FFE;
+            background-color: #f2f5ff
+        }
+
+        .business {
+            font-size: 20px;
+            font-weight: 500
+        }
+
+        .plan {
+            color: #aba4a4
+        }
+
+        .dollar {
+            font-size: 16px;
+            color: #6b6b6f
+        }
+
+        .amount {
+            font-size: 50px;
+            font-weight: 500
+        }
+
+        .year {
+            font-size: 20px;
+            color: #6b6b6f;
+            margin-top: 19px
+        }
+
+        .detail {
+            font-size: 22px;
+            font-weight: 500
+        }
+
+        .cvv {
+            height: 44px;
+            width: 73px;
+            border: 2px solid #eee
+        }
+
+        .cvv:focus {
+            box-shadow: none;
+            border: 2px solid #304FFE
+        }
+
+        .email-text {
+            height: 55px;
+            border: 2px solid #eee
+        }
+
+        .email-text:focus {
+            box-shadow: none;
+            border: 2px solid #304FFE
+        }
+
+        .payment-button {
+            height: 70px;
+            font-size: 20px
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container mt-5 mb-5 d-flex justify-content-center">
+        <div class="card p-5">
+            <div>
+                <h5><a href="#" style="text-decoration:none" onclick="history.back()">Go back</a></h5>
+                <h4 class="heading">Upgrade your plan</h4>
+                <p class="text">Please make the payment to start enjoying all the features of our premium plan as soon
+                    as
+                    possible</p>
+            </div>
+            <div class="pricing p-3 rounded mt-4 d-flex justify-content-between">
+                <div class="images d-flex flex-row align-items-center"> <img src="https://i.imgur.com/S17BrTx.png"
+                        class="rounded" width="60">
+                    <div class="d-flex flex-column ml-4"> 
+                        <span class="business">@Model.PremiumType</span>
+                    </div>
+                </div> <!--pricing table-->
+                <div class="d-flex flex-row align-items-center"> <sup class="dollar font-weight-bold">&#8369;</sup>
+                    <span class="amount ml-1 mr-1">@Model.Price</span> <span class="year font-weight-bold">/ month</span>
+                </div>
+                <!-- /pricing table-->
+            </div> <span class="detail mt-5">Payment details</span>
+            <div class="credit rounded mt-4 d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-row align-items-center">
+                    <img src="https://i.imgur.com/qHX7vY1.png" class="rounded" width="70">
+                    <div class="d-flex flex-column ml-3">
+                        <span class="business">Gcash</span>
+                        <input class="plan" required name="gcash" id="gcashInput" disabled />
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" required value="gcashRB" name="paymentMethod"
+                        onchange="handlePaymentMethodChange()" />
+                </div>
+            </div>
+            <div class="credit rounded mt-2 d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-row align-items-center">
+                    <img src="https://i.imgur.com/qHX7vY1.png" class="rounded" width="70">
+                    <div class="d-flex flex-column ml-3">
+                        <span class="business">Paymaya</span>
+                        <input class="plan" name="paymaya" required id="paymayaInput" disabled />
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" required name="paymentMethod" value="paymayaRB"
+                        onchange="handlePaymentMethodChange()" />
+                </div>
+            </div>
+            <h6 class="mt-4 text-primary">Enter the email address used in creating your account</h6>
+            <div class="email mt-2"> <input type="email" class="form-control email-text" id="email" placeholder="Email Address"
+                    required>
+            </div>
+            <div class="mt-3" style="margin-bottom:1rem"> <button class="btn btn-primary btn-block payment-button" onclick="SubmitPayment()">Pay Now <i
+                        class="fa fa-long-arrow-right"></i></button> 
+            </div>
+            @Html.Partial("_Loader")
+
+
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+    <script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/Content/MainTemplate/js/main.js"></script>
+    <script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+        function handlePaymentMethodChange() {
+            var gcashInput = document.getElementById("gcashInput");
+            var paymayaInput = document.getElementById("paymayaInput");
+            var gcashRadioButton = document.querySelector('input[name="paymentMethod"][value="gcashRB"]');
+            var paymayaRadioButton = document.querySelector('input[name="paymentMethod"][value="paymayaRB"]');
+
+            if (gcashRadioButton.checked) {
+                gcashInput.disabled = false;
+                paymayaInput.disabled = true;
+            } else if (paymayaRadioButton.checked) {
+                gcashInput.disabled = true;
+                paymayaInput.disabled = false;
+            }
+        }
+
+
+        function SubmitPayment() {
+            $('#loadertxt').text('Processing payment...');
+            showLoader();
+            
+            var gcashInput = document.getElementById('gcashInput');
+            var paymayaInput = document.getElementById('paymayaInput');
+            var phoneNumber = '09';
+            if (gcashInput.disabled) {
+                phoneNumber = paymayaInput.value;
+            } else {
+                phoneNumber = gcashInput.value;
+            }
+
+            $.ajax({
+                url: '@Url.Action("BuyPremium", "Home")',
+                type: 'post',
+                data: { phoneNumber: phoneNumber, email: $('#email').val() },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.msg);
+                        window.location.href = '@Url.Content("~/Account/LogIn")';
+                    } else {
+                        alert(response.msg);
+                        window.location.reload();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('An error has occurred: ' + error);
+                    window.location.reload();
+                },
+                complete: function () {
+                    hideLoader();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
