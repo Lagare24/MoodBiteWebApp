@@ -1,4 +1,6 @@
-﻿@model IEnumerable<vw_UserRecipeView>
+﻿@using MoodBite.Models.FoodSaleModel
+
+@model FooSaleViewModel
 
 @{
     ViewBag.Title = "My Uploads";
@@ -43,7 +45,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.userRecipe)
         {
             <tr>
                 <td width="15%"><img src="@Url.Content(item.ImagePath)" alt="@item.ImageName" width="60px" height="60px" style="border-radius:20px; display:block; margin:0 auto;"/></td>

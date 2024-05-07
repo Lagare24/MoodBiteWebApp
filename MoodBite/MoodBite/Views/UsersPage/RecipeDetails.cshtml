@@ -9,6 +9,8 @@
     var uploaderInfo = Session["uploaderInfo"] as User;
     var foodCategory = Session["foodCategory"] as List<FoodCategory>;
     ViewBag.LoaderMsg = "Please wait...";
+
+    var editFoodSale = TempData["editFoodSale"] as vw_UserRecipeView;
 }
 
 <!-- Favicon -->
@@ -55,6 +57,20 @@
             @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "text-danger" })
         </div>
     </div>
+
+
+    @if (editFoodSale.FoodSaleID != null)
+    {
+        <div class="form-group">
+            <label class="control-label col-md-12">Stocks</label>
+            <div class="col-md-12">
+                <input type="number" min="0" class="form-control" required name="stock" disabled value="@editFoodSale.Stocks" />
+            </div>
+        </div>
+    }
+
+
+
 
     <div class="form-group">
         <label class="control-label col-md-12">Food Category</label>

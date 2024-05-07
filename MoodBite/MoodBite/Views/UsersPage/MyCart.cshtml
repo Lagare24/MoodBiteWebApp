@@ -118,7 +118,10 @@
                 error: function (xhr, status, error) {
                     console.error(error);
                     console.log('Error deleting item: ' + error);
-                }
+                },
+                complete: function () {
+                    window.location.reload();
+            }
             });
         });
 

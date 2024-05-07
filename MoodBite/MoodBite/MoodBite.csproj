@@ -352,6 +352,7 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CartModel\CartViewModel.cs" />
+    <Compile Include="Models\FoodSaleModel\FooSaleViewModel.cs" />
     <Compile Include="Models\ManageUploads\UpdateUploadsViewModel.cs" />
     <Compile Include="Models\RecipeViewModel\RecipeDetailViewModel.cs" />
     <Compile Include="Models\UploadRecipeModel\UploadRecipe.cs" />
