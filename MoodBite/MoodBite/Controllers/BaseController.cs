@@ -209,13 +209,13 @@ namespace MoodBite.Controllers
             recipeDetail.recipeDetailsWithRating = recipeRating;
 
             //set allergy model
-            recipeDetail.allergy = _db.Allergy.ToList().Select(model => model.AllergyName);
+            recipeDetail.allergy = _db.Allergy.ToList().OrderBy(model => model.AllergyName).Select(model => model.AllergyName);
 
             //set foodCategories model
-            recipeDetail.foodCategories = _db.FoodCategory.Select(model => model.FoodCategoryName).ToList();
+            recipeDetail.foodCategories = _db.FoodCategory.OrderBy(model => model.FoodCategoryName).Select(model => model.FoodCategoryName).ToList();
 
             //set intolorannce model
-            recipeDetail.intolerance = _db.Intolerance.ToList().Select(model => model.IntoleranceName);
+            recipeDetail.intolerance = _db.Intolerance.ToList().OrderBy(model => model.IntoleranceName).Select(model => model.IntoleranceName);
 
             //set facerecipe model
             recipeDetail.faveRecipes = _db.UsersFavoriteRecipes.Select(model => model.RecipeID).Where(recipeId => recipeId.HasValue).Select(recipeId => recipeId.Value).ToList();

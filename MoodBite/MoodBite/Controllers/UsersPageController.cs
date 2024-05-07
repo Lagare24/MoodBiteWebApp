@@ -143,7 +143,7 @@ namespace MoodBite.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadRecipe(Recipe recipe, string foodcategory, string ingcount, string moodid, string[] ingredientName, double[] ingredientQty, string[] ingredientUnit, double? price, string shippedfrom)
+        public ActionResult UploadRecipe(Recipe recipe, string foodcategory, string ingcount, string moodid, string[] ingredientName, double[] ingredientQty, string[] ingredientUnit, double? price, string shippedfrom, string stock)
         {
 
             if (User.Identity.IsAuthenticated && User.Identity.Name != null)
@@ -218,6 +218,7 @@ namespace MoodBite.Controllers
                         foodSale.UserRecipeID = newUserRecipeID;
                         foodSale.Price = Convert.ToDecimal(price);
                         foodSale.Address = shippedfrom;
+                        foodSale.Stocks = Convert.ToInt32(stock);
                         foodSale.Available = true;
                         try
                         {

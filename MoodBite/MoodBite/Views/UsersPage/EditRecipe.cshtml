@@ -59,6 +59,14 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-12">Stocks</label>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.RecipeName, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="control-label col-md-12">Food Category</label>
             <div class="col-md-12">
                 <select class="form-control" name="foodcategory" id="foodcategory" required>

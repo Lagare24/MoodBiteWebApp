@@ -155,16 +155,16 @@
 
                             @if (imageExists)
                             {
-                                <img class="recipe-img" src="@imagePath" alt="RecipeImageCover" style="border-radius:50%; animation: spin 60s linear infinite; height:200px" data-animate-on-scroll />
+                                <img class="recipe-img"  onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" src="@imagePath" alt="RecipeImageCover" style="border-radius:50%; cursor:pointer; animation: spin 60s linear infinite; height:200px" data-animate-on-scroll />
                             }
                             else
                             {
-                                <img class="recipe-img" src="https://placehold.co/200x200" alt="image not found" style="border-radius:50%; height:200px" data-animate-on-scroll />
+                                <img class="recipe-img"  onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" src="https://placehold.co/200x200" alt="image not found" style="border-radius:50%; cursor:pointer; height:200px" data-animate-on-scroll />
                             }
                         </div>
                         <div class="blog-content" onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" style="background-image: url(../../Content/multimedia/recipecontainer@3x.png); background-repeat:no-repeat; background-size:cover; width:250px; height:250px; background-color:unset; background-position:center; box-shadow:unset; left:0 !important; z-index:0; cursor:pointer">
-                            <h2 class="blog-title" style="text-align:center">@recipe.RecipeName</h2>
-                            <h6 class="blog-title" style="text-align:center">@recipe.FoodCategoryName</h6>
+                            <h2  onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" class="blog-title" style="text-align:center">@recipe.RecipeName</h2>
+                            <h6  onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" class="blog-title" style="text-align:center;">@recipe.FoodCategoryName</h6>
                             @{
                         string dateUploaded = "";
                         double recipeRating = 0;
