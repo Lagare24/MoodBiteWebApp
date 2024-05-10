@@ -1,4 +1,6 @@
-﻿@model IEnumerable<vw_UserRecipeView>
+﻿@using MoodBite.Models.FoodSaleModel
+
+@model FooSaleViewModel
 
 @{
     ViewBag.Title = "My Uploads";
@@ -43,7 +45,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.userRecipe)
         {
             <tr>
                 <td width="15%"><img src="@Url.Content(item.ImagePath)" alt="@item.ImageName" width="60px" height="60px" style="border-radius:20px; display:block; margin:0 auto;"/></td>
@@ -56,7 +58,7 @@
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="actionsDropdown">
-                            <a class="dropdown-item" href="~/UsersPage/EditRecipe/@item.RecipeID" onclick="showLoader()">Edit</a>
+                            <a class="dropdown-item" href="#" onclick="editRecipe(@item.RecipeID)">Edit</a>
                             <a class="dropdown-item" href="~/UsersPage/RecipeDetails/@item.RecipeID" onclick="showLoader()">Details</a>
                             <a class="dropdown-item" href="#" onclick="showLoader()">Delete</a>
                         </div>
@@ -84,9 +86,19 @@
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
 <script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+
+<script src="~/Content/HideSomeeAds/removewatermark.js"></script>
 <script>
     $(document).ready(function () {
         // Initialize DataTable
         $('#myUploadsTable').DataTable();
     });
+
+    function editRecipe(recipeID) {
+        showLoader();
+
+        var recipeIDInt = parseInt(recipeID);
+
+        window.location.href = `@Url.Content("~/UsersPage/EditRecipe/")${recipeIDInt}`;;
+    }
 </script>

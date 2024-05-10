@@ -88,6 +88,8 @@
     <Property Name="DateOrdered" Type="datetime" />
     <Property Name="CustomerAddress" Type="varchar" MaxLength="255" />
     <Property Name="IsPaid" Type="bit" />
+    <Property Name="EstimatedArrivalTime" Type="int" />
+    <Property Name="DeliveryFee" Type="int" />
   </EntityType>
   <EntityType Name="OrderPayment">
     <Key>
@@ -176,6 +178,16 @@
     </Key>
     <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Rolename" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Testimonials">
     <Key>
@@ -294,6 +306,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_CartView' does not have a primary 
     <Property Name="RecipeName" Type="text" />
     <Property Name="Price" Type="money" />
     <Property Name="Qty" Type="int" />
+    <Property Name="stocks" Type="int" />
     <Property Name="Total Price" Type="money" />
   </EntityType>
   <!--Errors Found During Generation:
@@ -312,6 +325,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_CheckOutView' does not have a prim
     <Property Name="RecipeName" Type="text" />
     <Property Name="Price" Type="money" />
     <Property Name="Qty" Type="int" />
+    <Property Name="stocks" Type="int" />
     <Property Name="Total Price" Type="money" />
     <Property Name="ImagePath" Type="varchar" MaxLength="255" />
   </EntityType>
@@ -355,6 +369,27 @@ warning 6002: The table/view 'MoodBite.dbo.vw_FilterAllergy' does not have a pri
     <Property Name="AllergyName" Type="varchar" MaxLength="100" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_FilterFC' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_FilterFC">
+    <Key>
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="RecipeID" Type="int" Nullable="false" />
+    <Property Name="MoodID" Type="int" />
+    <Property Name="FoodCategoryID" Type="int" />
+    <Property Name="RecipeName" Type="text" />
+    <Property Name="RecipeDescription" Type="text" />
+    <Property Name="IngredientsCount" Type="int" />
+    <Property Name="CookingInstruction" Type="text" />
+    <Property Name="PreparationTime" Type="time" Precision="7" />
+    <Property Name="CookingDuration" Type="time" Precision="7" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="DateApproved" Type="datetime" />
+    <Property Name="ApprovedBy" Type="int" />
+    <Property Name="FoodCategoryName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_FoodSaleView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_FoodSaleView">
     <Key>
@@ -391,6 +426,43 @@ warning 6002: The table/view 'MoodBite.dbo.vw_ForOrderPaymentInsertionView' does
     <Property Name="DeliveredFrom" Type="text" />
     <Property Name="DateOrdered" Type="datetime" />
     <Property Name="IsPaid" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_IncomingOrderView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_IncomingOrderView">
+    <Key>
+      <PropertyRef Name="OrderDetailID" />
+      <PropertyRef Name="PO_ID" />
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="OrderDetailID" Type="int" Nullable="false" />
+    <Property Name="PO_ID" Type="int" Nullable="false" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="DateOrdered" Type="datetime" />
+    <Property Name="CustomerAddress" Type="varchar" MaxLength="255" />
+    <Property Name="IsPaid" Type="bit" />
+    <Property Name="EstimatedArrivalTime" Type="int" />
+    <Property Name="DeliveryFee" Type="int" />
+    <Property Name="FoodForSaleID" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="UnitPrice" Type="money" />
+    <Property Name="TotalPrice" Type="money" />
+    <Property Name="Shop Address" Type="text" />
+    <Property Name="RecipeID" Type="int" Nullable="false" />
+    <Property Name="MoodID" Type="int" />
+    <Property Name="FoodCategoryID" Type="int" />
+    <Property Name="RecipeName" Type="text" />
+    <Property Name="RecipeDescription" Type="text" />
+    <Property Name="IngredientsCount" Type="int" />
+    <Property Name="CookingInstruction" Type="text" />
+    <Property Name="PreparationTime" Type="time" Precision="7" />
+    <Property Name="CookingDuration" Type="time" Precision="7" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="DateApproved" Type="datetime" />
+    <Property Name="ApprovedBy" Type="int" />
+    <Property Name="ImagePath" Type="varchar" MaxLength="255" />
+    <Property Name="ImageName" Type="varchar" MaxLength="255" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_ManageSubscriptions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -487,6 +559,33 @@ warning 6002: The table/view 'MoodBite.dbo.vw_RecipeDetailsWithoutIngredientsWit
     <Property Name="RecipeImageID" Type="int" Nullable="false" />
     <Property Name="ImageName" Type="varchar" MaxLength="255" />
     <Property Name="ImagePath" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_RecipeReadMoreStocksView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_RecipeReadMoreStocksView">
+    <Key>
+      <PropertyRef Name="FoodSaleID" />
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="FoodSaleID" Type="int" Nullable="false" />
+    <Property Name="UserRecipeID" Type="int" />
+    <Property Name="Price" Type="money" />
+    <Property Name="Address" Type="text" />
+    <Property Name="Available" Type="bit" />
+    <Property Name="Stocks" Type="int" />
+    <Property Name="RecipeID" Type="int" Nullable="false" />
+    <Property Name="MoodID" Type="int" />
+    <Property Name="FoodCategoryID" Type="int" />
+    <Property Name="RecipeName" Type="text" />
+    <Property Name="RecipeDescription" Type="text" />
+    <Property Name="IngredientsCount" Type="int" />
+    <Property Name="CookingInstruction" Type="text" />
+    <Property Name="PreparationTime" Type="time" Precision="7" />
+    <Property Name="CookingDuration" Type="time" Precision="7" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="DateApproved" Type="datetime" />
+    <Property Name="ApprovedBy" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_recipeUploadersNameWithRating' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1029,6 +1128,53 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_FilterSearchByAllergy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="chosenMood" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="recipeNameKeyword" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="allergyname" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_FilterSearchByAllergyAndFoodCat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="chosenMood" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="recipeNameKeyword" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="allergyname" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="fcname" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_FilterSearchByFoodCat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="chosenMood" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="recipeNameKeyword" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="fcname" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="MoodBiteModelStoreContainer">
     <EntitySet Name="AccountCreationLog" EntityType="Self.AccountCreationLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Allergy" EntityType="Self.Allergy" Schema="dbo" store:Type="Tables" />
@@ -1049,6 +1195,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     <EntitySet Name="RecipeIntolerance" EntityType="Self.RecipeIntolerance" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RecipeRating" EntityType="Self.RecipeRating" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Testimonials" EntityType="Self.Testimonials" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserPremium" EntityType="Self.UserPremium" Schema="dbo" store:Type="Tables" />
@@ -1099,6 +1246,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_CartView].[RecipeName] AS [RecipeName], 
     [vw_CartView].[Price] AS [Price], 
     [vw_CartView].[Qty] AS [Qty], 
+    [vw_CartView].[stocks] AS [stocks], 
     [vw_CartView].[Total Price] AS [Total Price]
     FROM [dbo].[vw_CartView] AS [vw_CartView]</DefiningQuery>
     </EntitySet>
@@ -1111,6 +1259,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_CheckOutView].[RecipeName] AS [RecipeName], 
     [vw_CheckOutView].[Price] AS [Price], 
     [vw_CheckOutView].[Qty] AS [Qty], 
+    [vw_CheckOutView].[stocks] AS [stocks], 
     [vw_CheckOutView].[Total Price] AS [Total Price], 
     [vw_CheckOutView].[ImagePath] AS [ImagePath]
     FROM [dbo].[vw_CheckOutView] AS [vw_CheckOutView]</DefiningQuery>
@@ -1147,6 +1296,24 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_FilterAllergy].[AllergyName] AS [AllergyName]
     FROM [dbo].[vw_FilterAllergy] AS [vw_FilterAllergy]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="vw_FilterFC" EntityType="Self.vw_FilterFC" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_FilterFC].[RecipeID] AS [RecipeID], 
+    [vw_FilterFC].[MoodID] AS [MoodID], 
+    [vw_FilterFC].[FoodCategoryID] AS [FoodCategoryID], 
+    [vw_FilterFC].[RecipeName] AS [RecipeName], 
+    [vw_FilterFC].[RecipeDescription] AS [RecipeDescription], 
+    [vw_FilterFC].[IngredientsCount] AS [IngredientsCount], 
+    [vw_FilterFC].[CookingInstruction] AS [CookingInstruction], 
+    [vw_FilterFC].[PreparationTime] AS [PreparationTime], 
+    [vw_FilterFC].[CookingDuration] AS [CookingDuration], 
+    [vw_FilterFC].[DateUploaded] AS [DateUploaded], 
+    [vw_FilterFC].[IsApproved] AS [IsApproved], 
+    [vw_FilterFC].[DateApproved] AS [DateApproved], 
+    [vw_FilterFC].[ApprovedBy] AS [ApprovedBy], 
+    [vw_FilterFC].[FoodCategoryName] AS [FoodCategoryName]
+    FROM [dbo].[vw_FilterFC] AS [vw_FilterFC]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vw_FoodSaleView" EntityType="Self.vw_FoodSaleView" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vw_FoodSaleView].[FoodSaleID] AS [FoodSaleID], 
@@ -1175,6 +1342,38 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_ForOrderPaymentInsertionView].[DateOrdered] AS [DateOrdered], 
     [vw_ForOrderPaymentInsertionView].[IsPaid] AS [IsPaid]
     FROM [dbo].[vw_ForOrderPaymentInsertionView] AS [vw_ForOrderPaymentInsertionView]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_IncomingOrderView" EntityType="Self.vw_IncomingOrderView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_IncomingOrderView].[OrderDetailID] AS [OrderDetailID], 
+    [vw_IncomingOrderView].[PO_ID] AS [PO_ID], 
+    [vw_IncomingOrderView].[CustomerID] AS [CustomerID], 
+    [vw_IncomingOrderView].[DateOrdered] AS [DateOrdered], 
+    [vw_IncomingOrderView].[CustomerAddress] AS [CustomerAddress], 
+    [vw_IncomingOrderView].[IsPaid] AS [IsPaid], 
+    [vw_IncomingOrderView].[EstimatedArrivalTime] AS [EstimatedArrivalTime], 
+    [vw_IncomingOrderView].[DeliveryFee] AS [DeliveryFee], 
+    [vw_IncomingOrderView].[FoodForSaleID] AS [FoodForSaleID], 
+    [vw_IncomingOrderView].[Quantity] AS [Quantity], 
+    [vw_IncomingOrderView].[UnitPrice] AS [UnitPrice], 
+    [vw_IncomingOrderView].[TotalPrice] AS [TotalPrice], 
+    [vw_IncomingOrderView].[Shop Address] AS [Shop Address], 
+    [vw_IncomingOrderView].[RecipeID] AS [RecipeID], 
+    [vw_IncomingOrderView].[MoodID] AS [MoodID], 
+    [vw_IncomingOrderView].[FoodCategoryID] AS [FoodCategoryID], 
+    [vw_IncomingOrderView].[RecipeName] AS [RecipeName], 
+    [vw_IncomingOrderView].[RecipeDescription] AS [RecipeDescription], 
+    [vw_IncomingOrderView].[IngredientsCount] AS [IngredientsCount], 
+    [vw_IncomingOrderView].[CookingInstruction] AS [CookingInstruction], 
+    [vw_IncomingOrderView].[PreparationTime] AS [PreparationTime], 
+    [vw_IncomingOrderView].[CookingDuration] AS [CookingDuration], 
+    [vw_IncomingOrderView].[DateUploaded] AS [DateUploaded], 
+    [vw_IncomingOrderView].[IsApproved] AS [IsApproved], 
+    [vw_IncomingOrderView].[DateApproved] AS [DateApproved], 
+    [vw_IncomingOrderView].[ApprovedBy] AS [ApprovedBy], 
+    [vw_IncomingOrderView].[ImagePath] AS [ImagePath], 
+    [vw_IncomingOrderView].[ImageName] AS [ImageName]
+    FROM [dbo].[vw_IncomingOrderView] AS [vw_IncomingOrderView]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_ManageSubscriptions" EntityType="Self.vw_ManageSubscriptions" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -1250,6 +1449,29 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_RecipeDetailsWithoutIngredientsWithRating].[ImageName] AS [ImageName], 
     [vw_RecipeDetailsWithoutIngredientsWithRating].[ImagePath] AS [ImagePath]
     FROM [dbo].[vw_RecipeDetailsWithoutIngredientsWithRating] AS [vw_RecipeDetailsWithoutIngredientsWithRating]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_RecipeReadMoreStocksView" EntityType="Self.vw_RecipeReadMoreStocksView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_RecipeReadMoreStocksView].[FoodSaleID] AS [FoodSaleID], 
+    [vw_RecipeReadMoreStocksView].[UserRecipeID] AS [UserRecipeID], 
+    [vw_RecipeReadMoreStocksView].[Price] AS [Price], 
+    [vw_RecipeReadMoreStocksView].[Address] AS [Address], 
+    [vw_RecipeReadMoreStocksView].[Available] AS [Available], 
+    [vw_RecipeReadMoreStocksView].[Stocks] AS [Stocks], 
+    [vw_RecipeReadMoreStocksView].[RecipeID] AS [RecipeID], 
+    [vw_RecipeReadMoreStocksView].[MoodID] AS [MoodID], 
+    [vw_RecipeReadMoreStocksView].[FoodCategoryID] AS [FoodCategoryID], 
+    [vw_RecipeReadMoreStocksView].[RecipeName] AS [RecipeName], 
+    [vw_RecipeReadMoreStocksView].[RecipeDescription] AS [RecipeDescription], 
+    [vw_RecipeReadMoreStocksView].[IngredientsCount] AS [IngredientsCount], 
+    [vw_RecipeReadMoreStocksView].[CookingInstruction] AS [CookingInstruction], 
+    [vw_RecipeReadMoreStocksView].[PreparationTime] AS [PreparationTime], 
+    [vw_RecipeReadMoreStocksView].[CookingDuration] AS [CookingDuration], 
+    [vw_RecipeReadMoreStocksView].[DateUploaded] AS [DateUploaded], 
+    [vw_RecipeReadMoreStocksView].[IsApproved] AS [IsApproved], 
+    [vw_RecipeReadMoreStocksView].[DateApproved] AS [DateApproved], 
+    [vw_RecipeReadMoreStocksView].[ApprovedBy] AS [ApprovedBy]
+    FROM [dbo].[vw_RecipeReadMoreStocksView] AS [vw_RecipeReadMoreStocksView]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_recipeUploadersNameWithRating" EntityType="Self.vw_recipeUploadersNameWithRating" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

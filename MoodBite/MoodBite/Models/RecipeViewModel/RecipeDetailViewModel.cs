@@ -26,5 +26,7 @@ namespace MoodBite.Models.RecipeViewModel
         public UserPremium userPremium;
         public vw_FoodSaleView foodSaleView;
         public IEnumerable<int> faveRecipes;
+        public vw_RecipeReadMoreStocksView recipeStocksView;
+        public List<vw_IncomingOrderView> incomingOrderView;
     }
 }

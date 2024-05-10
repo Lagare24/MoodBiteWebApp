@@ -25,6 +25,8 @@ namespace MoodBite
         public Nullable<System.DateTime> DateOrdered { get; set; }
         public string CustomerAddress { get; set; }
         public Nullable<bool> IsPaid { get; set; }
+        public Nullable<int> EstimatedArrivalTime { get; set; }
+        public Nullable<int> DeliveryFee { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }

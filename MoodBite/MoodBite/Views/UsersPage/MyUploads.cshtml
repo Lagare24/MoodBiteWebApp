@@ -58,7 +58,7 @@
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="actionsDropdown">
-                            <a class="dropdown-item" href="~/UsersPage/EditRecipe/@item.RecipeID" onclick="showLoader()">Edit</a>
+                            <a class="dropdown-item" href="#" onclick="editRecipe(@item.RecipeID)">Edit</a>
                             <a class="dropdown-item" href="~/UsersPage/RecipeDetails/@item.RecipeID" onclick="showLoader()">Details</a>
                             <a class="dropdown-item" href="#" onclick="showLoader()">Delete</a>
                         </div>
@@ -93,4 +93,12 @@
         // Initialize DataTable
         $('#myUploadsTable').DataTable();
     });
+
+    function editRecipe(recipeID) {
+        showLoader();
+
+        var recipeIDInt = parseInt(recipeID);
+
+        window.location.href = `@Url.Content("~/UsersPage/EditRecipe/")${recipeIDInt}`;;
+    }
 </script>

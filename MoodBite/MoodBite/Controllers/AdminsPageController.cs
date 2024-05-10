@@ -349,7 +349,7 @@ namespace MoodBite.Controllers
 
                 return View(recipe);
             }
-            return RedirectToAction("ManageUploads");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

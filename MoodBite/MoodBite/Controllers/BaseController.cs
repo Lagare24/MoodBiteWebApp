@@ -57,7 +57,7 @@ namespace MoodBite.Controllers
         //function that returns a model that contains all model for Recipe
         public RecipeDetailViewModel RecipeDetail(string chosenMood)
         {
-            var user = Session["User"] as User;
+            var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
 
             //variable that contains the recommended recipes based on mood inpputed
             var recommendedRecipes = _db.vw_RecommendedRecipeForMood.Where(model => model.MoodName == chosenMood).ToList();
@@ -95,6 +95,19 @@ namespace MoodBite.Controllers
             //set facerecipe model
             recipeDetail.faveRecipes = _db.UsersFavoriteRecipes.Where(model => model.UserID == user.userID).Select(model => model.RecipeID).Where(recipeId => recipeId.HasValue).Select(recipeId => recipeId.Value).ToList();
 
+            //set incoming recipe modal model
+            var isUserPremium = _db.UserPremium.Where(model => model.UserID == user.userID).FirstOrDefault();
+            if (isUserPremium != null)
+            {
+                var incomingOrderList = _db.vw_IncomingOrderView.Where(model => model.CustomerID == user.userID).ToList();
+                recipeDetail.incomingOrderView = incomingOrderList;
+            }
+
+            //var orderMaster = _db.OrderMaster.Where(model => model.CustomerID == user.userID).FirstOrDefault();
+
+            ////set incomingOrderView model
+            //recipeDetail.incomingOrderView = _db.vw_IncomingOrderView.Where(model => model.PO_ID == );
+
             //iterate through recommendedrecipes
             foreach (var recipe in recommendedRecipes)
             {
@@ -127,65 +140,98 @@ namespace MoodBite.Controllers
         public RecipeDetailViewModel RecipeDetail(string chosenMood, string search, string[] allergyInp, string[] intoleranceInp, string[] foodCategoryInp)
         {
             List<string> allergyInpList;
-            List<string> intoleranceInpList;
             List<string> foodCategoryInpList;
-            if (allergyInp == null)
-            {
-                allergyInpList = new List<string>();
-            } else
-            {
-                allergyInpList = allergyInp.ToList();
-            }
-
-            if (intoleranceInp == null)
-            {
-                intoleranceInpList = new List<string>();
-            }
-            else
-            {
-                intoleranceInpList = intoleranceInp.ToList();
-            }
-
-            if (foodCategoryInp == null)
-            {
-                foodCategoryInpList = new List<string>();
-            }
-            else
-            {
-                foodCategoryInpList = foodCategoryInp.ToList();
-            }
-
-            var filterAllergy = _db.vw_FilterAllergy.ToList();
-
-            var filteredRecommendedRecipes = _db.vw_FilterAllergy.ToList();
-
-
-            for (var i = 0; i < allergyInpList.Count(); i++)
-            {
-                for (int j = 0; j < filterAllergy.Count(); j++)
-                {
-                    if(allergyInpList.ElementAt(i).ToLower() == filterAllergy.ElementAt(j).AllergyName.ToLower())
-                    {
-                        filteredRecommendedRecipes.RemoveAt(j);
-                        break;
-                    }
-                }
-            }
-
             //variable that contains the recommended recipes based on mood inpputed
             var recommendedRecipes = _db.vw_RecommendedRecipeForMood.Where(model => model.MoodName == chosenMood && model.RecipeName.Contains(search)).ToList();
 
-            var filteredAllergyNames = filteredRecommendedRecipes.Select(filteredModel => filteredModel.AllergyName).ToList();
-
-            if(allergyInp != null)
+            if (allergyInp != null && foodCategoryInp != null)
             {
-                recommendedRecipes = _db.vw_RecommendedRecipeForMood
-                .Where(model => (model.MoodName == chosenMood &&
-                                model.RecipeName.Contains(search)) &&
-                                filteredAllergyNames.All(allergyName => model.RecipeID.ToString().Contains(allergyName)))
-                .ToList();
+                allergyInpList = allergyInp.ToList();
+                foodCategoryInpList = foodCategoryInp.ToList();
+
+                var filteredRecipes = _db.sp_FilterSearchByAllergyAndFoodCat(chosenMood, search, string.Join(",", allergyInpList), string.Join(",", foodCategoryInpList))
+                    .AsEnumerable()
+                    .Select(result => new vw_RecommendedRecipeForMood
+                    {
+                        RecipeID = result.RecipeID,
+                        RecipeName = result.RecipeName,
+                        FoodCategoryName = result.FoodCategoryName,
+                        MoodName = result.MoodName,
+                        userID = result.userID,
+                        Uploaded_by = result.Uploaded_by,
+                        DateUploaded = result.DateUploaded,
+                        Approved_by = result.Approved_by,
+                        DateApproved = result.DateApproved,
+                        RecipeImageID = result.RecipeImageID,
+                        ImageName = result.ImageName,
+                        ImagePath = result.ImagePath
+                    })
+                    .ToList();
+
+                recommendedRecipes = filteredRecipes;
+            } else
+            {
+                allergyInpList = null;
+                foodCategoryInpList = null;
             }
-            
+
+            if (allergyInp != null)
+            {
+                allergyInpList = allergyInp.ToList();
+                var filteredRecipes = _db.sp_FilterSearchByAllergy(chosenMood, search, string.Join(",", allergyInpList))
+                .AsEnumerable()
+                .Select(result => new vw_RecommendedRecipeForMood
+                {
+                    RecipeID = result.RecipeID,
+                    RecipeName = result.RecipeName,
+                    FoodCategoryName = result.FoodCategoryName,
+                    MoodName = result.MoodName,
+                    userID = result.userID,
+                    Uploaded_by = result.Uploaded_by,
+                    DateUploaded = result.DateUploaded,
+                    Approved_by = result.Approved_by,
+                    DateApproved = result.DateApproved,
+                    RecipeImageID = result.RecipeImageID,
+                    ImageName = result.ImageName,
+                    ImagePath = result.ImagePath
+                })
+                .ToList();
+
+                recommendedRecipes = filteredRecipes;
+            }
+            else
+            {
+                allergyInpList = null;
+            }
+
+            if (foodCategoryInp != null)
+            {
+                foodCategoryInpList = foodCategoryInp.ToList();
+                var filteredRecipes = _db.sp_FilterSearchByFoodCat(chosenMood, search, string.Join(",", foodCategoryInpList))
+                .AsEnumerable()
+                .Select(result => new vw_RecommendedRecipeForMood
+                {
+                    RecipeID = result.RecipeID,
+                    RecipeName = result.RecipeName,
+                    FoodCategoryName = result.FoodCategoryName,
+                    MoodName = result.MoodName,
+                    userID = result.userID,
+                    Uploaded_by = result.Uploaded_by,
+                    DateUploaded = result.DateUploaded,
+                    Approved_by = result.Approved_by,
+                    DateApproved = result.DateApproved,
+                    RecipeImageID = result.RecipeImageID,
+                    ImageName = result.ImageName,
+                    ImagePath = result.ImagePath
+                })
+                .ToList();
+
+                recommendedRecipes = filteredRecipes;
+            }
+            else
+            {
+                foodCategoryInpList = null;
+            }
 
             //variable that contains the ingredients of recipe (raw)
             var recipeDetailsNoIngredients = _db.vw_RecipeDetailsWithoutIngredients.Where(model => model.MoodName == chosenMood && model.RecipeName.Contains(search)).ToList();
@@ -219,6 +265,15 @@ namespace MoodBite.Controllers
 
             //set facerecipe model
             recipeDetail.faveRecipes = _db.UsersFavoriteRecipes.Select(model => model.RecipeID).Where(recipeId => recipeId.HasValue).Select(recipeId => recipeId.Value).ToList();
+
+            //set incoming recipe modal model
+            var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
+            var isUserPremium = _db.UserPremium.Where(model => model.UserID == user.userID).FirstOrDefault();
+            if (isUserPremium != null)
+            {
+                var incomingOrderList = _db.vw_IncomingOrderView.Where(model => model.CustomerID == user.userID).ToList();
+                recipeDetail.incomingOrderView = incomingOrderList;
+            }
 
             //iterate through recommendedrecipes
             foreach (var recipe in recommendedRecipes)
@@ -333,6 +388,9 @@ namespace MoodBite.Controllers
 
                 //set foodSale model
                 recipeDetail.foodSaleView = _db.vw_FoodSaleView.Where(model => model.RecipeID == id).FirstOrDefault();
+
+                //set recipereadmore stocks view
+                //recipeDetail.recipeStocksView = _db.vw_RecipeReadMoreStocksView.Where(model => model.FoodSaleID == )
 
                 //check if theres available recommended recipes
                 if (allRecommendedRecipes.Count != 0)

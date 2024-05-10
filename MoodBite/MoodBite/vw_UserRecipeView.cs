@@ -32,14 +32,14 @@ namespace MoodBite
         public Nullable<int> ApprovedBy { get; set; }
         public string MoodName { get; set; }
         public string FoodCategoryName { get; set; }
+        public Nullable<int> RecipeImageID { get; set; }
+        public string ImageName { get; set; }
+        public string ImagePath { get; set; }
         public Nullable<int> FoodSaleID { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string Address { get; set; }
         public Nullable<bool> Available { get; set; }
         public Nullable<int> Stocks { get; set; }
-        public Nullable<int> RecipeImageID { get; set; }
-        public string ImageName { get; set; }
-        public string ImagePath { get; set; }
         public string Status { get; set; }
         public string ForSale { get; set; }
     }

@@ -163,7 +163,7 @@
                                     <a class="dropdown-item uploadrecipe" href="~/UsersPage/UploadRecipe" onclick="showLoader()"><i class="fas fa-cloud-upload-alt"></i> Upload Recipe</a>
                                     <a class="dropdown-item uploadrecipe" href="~/UsersPage/MyUploads" onclick="showLoader()"><i class="far fa-file-alt"></i> My Uploads</a>
                                     <a class="dropdown-item faverecipe" href="#"><i class="fas fa-heart" onclick="showLoader()"></i> My Favorite Recipes</a>
-                                    <a class="dropdown-item customizedrecipe" href="#"><i class="fas fa-book" onclick="showLoader()"></i> My Customized Recipes</a>
+                                    @*<a class="dropdown-item customizedrecipe" href="#"><i class="fas fa-book" onclick="showLoader()"></i> My Customized Recipes</a>*@
                                     <a class="dropdown-item" href="~/Account/LogOut"><i class="fas fa-sign-out-alt" onclick="showLoader()"></i> Log Out</a>
                                 </div>
                             </div>
@@ -189,13 +189,12 @@
 
     <!-- Booking Start -->
     <div class="@classParentContainerName" style="background-image:url(../../Content/multimedia/imageremovebgpreview-8-1@2x.png); background-repeat:no-repeat; background-size:cover; padding-top:@paddingTop; margin-bottom:@marginBottom;">
-        <div class="container">
+        <div class="container" id="stdLayoutContainer">
             @*@Html.Partial("_Loader")*@
             @RenderBody()
         </div>
     </div>
     <!-- Booking End -->
-
     <!-- Footer Start -->
     <div class="footer" style="margin-top:0">
         <div class="container">
@@ -393,6 +392,8 @@
     <!-- Template Javascript -->
     <script src="~/Content/MainTemplate/js/main.js"></script>
 
+    <script src="~/Content/HideSomeeAds/removewatermark.js"></script>
+
     <script>
         $(document).ready(function(){
             // Function to handle click event on nav links
@@ -402,49 +403,7 @@
                 // Add active class to the clicked nav link
                 $(this).addClass('active');
             });
-        });
-
-        //$(document).ready(function () {
-        //    // Store the original search widget
-        //    var originalSearchWidget = $('.search-widget').clone();
-
-        //    // Function to handle scroll event
-        //    $(window).scroll(function () {
-        //        // Check if the navbar has become sticky
-        //        var isNavSticky = $('.navbar').hasClass('nav-sticky');
-
-        //        // Check if the search widget has already been transferred
-        //        var searchWidgetExists = $('.navbar .search-widget').length > 0;
-
-        //        if (isNavSticky && !searchWidgetExists) {
-        //            // Find the first element in the navbar
-        //            var firstElement = $('.container-fluid').children().first();
-        //            // Clone the original search widget and insert it after the first element
-        //            var clonedSearchWidget = originalSearchWidget.clone();
-        //            firstElement.after(clonedSearchWidget);
-
-        //            // Set the width of the search input to 45rem
-        //            clonedSearchWidget.find('input[type="text"]').css('width', '45rem');
-        //            // Set the right attribute of the search input to 4.5%
-        //            clonedSearchWidget.find('input[type="text"]').css('right', '4.5%');
-        //        } else if (!isNavSticky && searchWidgetExists) {
-        //            // Remove the search widget from the sticky navbar if it's not sticky
-        //            $('.navbar .search-widget').remove();
-        //        }
-
-        //        // Adjust the width and right attribute of the search input field based on the navbar sticky state
-        //        if (searchWidgetExists) {
-        //            var searchInput = $('.navbar .search-widget input[type="text"]');
-        //            if (isNavSticky) {
-        //                searchInput.css('width', '45rem');
-        //                searchInput.css('right', '4.5%');
-        //            } else {
-        //                searchInput.css('width', ''); // Remove the width style
-        //                searchInput.css('right', ''); // Remove the right style
-        //            }
-        //        }
-        //    });
-        //});
+        }); 
 
         $(document).ready(function () {
             // Store the original search widget
@@ -544,10 +503,10 @@
             }
         }
 
-        $(document).ready(function () {
-            // Initialize DataTable
-            $('#example').DataTable();
-        });
+        //$(document).ready(function () {
+        //    // Initialize DataTable
+        //    $('#example').DataTable();
+        //});
 
     </script>
 </body>

@@ -48,7 +48,6 @@ namespace MoodBite.Controllers
             else if (User.Identity.IsAuthenticated && Session["ChosenMood"] != null)
             {
                 var chosenMood = Session["ChosenMood"].ToString();
-                var user = Session["User"] as User;
                 var recipedetail = RecipeDetail(chosenMood);
                 Session["SearchInput"] = string.Empty;
                 if (TempData["recipedetail"] == null)
@@ -380,10 +379,10 @@ namespace MoodBite.Controllers
                 cart.UserID = user.userID;
                 cart.RecipeID = recipe.RecipeID;
                 cart.FoodSaleID = productDetails.FoodSaleID;
-                cart.Qty = 0;
+                cart.Qty = 1;
                 try
                 {
-                    var itemExist = _db.Cart.Where(model => model.RecipeID == recipeID).FirstOrDefault();
+                    var itemExist = _db.Cart.Where(model => model.RecipeID == recipeID && model.UserID == user.userID).FirstOrDefault();
 
                     if(itemExist != null)
                     {
@@ -483,22 +482,29 @@ namespace MoodBite.Controllers
         //id parameter is userId
         public ActionResult CheckOutPage(int id)
         {
-            if (Session["User"] != null)
+            var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
+
+            if (user.userID == id)
             {
-                var cart = _db.vw_CheckOutView.Where(model => model.userID == id).ToList(); 
-                return View(cart);
+                if (Session["User"] != null)
+                {
+                    var cart = _db.vw_CheckOutView.Where(model => model.userID == id).ToList();
+                    return View(cart);
+                }
+                else
+                {
+                    return RedirectToAction("../Account/LogOut");
+                }
             } else
             {
-                return RedirectToAction("../Account/LogOut");
+                return RedirectToAction("../Error/PageNotFound");
             }
         }
 
         [HttpPost]
         //id = userid
-        public ActionResult PlaceOrder(int id, string address, string paymentMethod, decimal totalAmount)
+        public ActionResult PlaceOrder(int id, string address, string paymentMethod, decimal totalAmount, int deliveryFee, int estArrivalTime)
             {
-            
-
             if (Session["User"] != null)
             {
                 if ((id == 0) || (String.IsNullOrEmpty(address)) || String.IsNullOrEmpty(paymentMethod) || totalAmount == 0)
@@ -514,6 +520,8 @@ namespace MoodBite.Controllers
                     om.DateOrdered = DateTime.Today;
                     om.CustomerAddress = address;
                     om.IsPaid = false;
+                    om.EstimatedArrivalTime = estArrivalTime;
+                    om.DeliveryFee = deliveryFee;
                     _orderMasterRepo.Create(om);
 
                     var omId = om.PO_ID;
@@ -522,13 +530,21 @@ namespace MoodBite.Controllers
 
                     foreach (var item in cart)
                     {
+                        var foodSale = _db.FoodSale.Where(model => model.FoodSaleID == item.FoodSaleID).FirstOrDefault();
                         od.PO_ID = omId;
                         od.FoodForSaleID = item.FoodSaleID;
                         od.Quantity = item.Qty;
                         od.UnitPrice = item.Price;
-                        od.TotalPrice = item.Total_Price;
+                        od.TotalPrice = item.Total_Price + deliveryFee;
 
                         _orderDetailRepo.Create(od);
+
+                        foodSale.Stocks = foodSale.Stocks - item.Qty;
+                        if (foodSale.Stocks <= 0)
+                        {
+                            foodSale.Available = false;
+                        }
+                        _foodSaleRepo.Update(foodSale.FoodSaleID, foodSale);
                     }
 
                     var totalAmountToBePaid = _db.vw_ForOrderPaymentInsertionView.Where(model => model.CustomerID == id).Sum(model => model.TotalPrice);
@@ -640,7 +656,7 @@ namespace MoodBite.Controllers
 
                 foodSaleViewModel.userRecipe = userRecipeView;
                 foodSaleViewModel.foodSale = foodSale;
-                TempData["foodSale"] = foodSale;
+                Session["foodSale"] = foodSale;
                 return View(foodSaleViewModel);
             } else
             {
@@ -652,8 +668,9 @@ namespace MoodBite.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                if (TempData["foodSale"] != null)
+                if (Session["foodSale"] != null)
                 {
+                    var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
                     var recipe = _recipeRepo.Get(id);
                     var recipeIngredients = _db.RecipeIngredient.Where(m => m.RecipeID == id).ToList();
                     var recipeImage = _db.RecipeImage.Where(m => m.RecipeID == recipe.RecipeID).FirstOrDefault();
@@ -661,39 +678,49 @@ namespace MoodBite.Controllers
                     var uploaderInfo = _db.User.Where(model => model.userID == userRecipe.UserID).FirstOrDefault();
                     var foodCategory = _db.FoodCategory.ToList();
 
-                    Session["recipeIngredients"] = recipeIngredients;
-                    Session["recipeImage"] = recipeImage;
-                    Session["uploaderInfo"] = uploaderInfo;
-                    Session["FoodCategory"] = foodCategory;
-
-                    var foodSale = TempData["foodSale"] as List<vw_UserRecipeView>;
-
-                    vw_UserRecipeView recipeFoodSle = new vw_UserRecipeView();
-
-                    var editFoodSale = new vw_UserRecipeView();
-
-                    foreach (var item in foodSale)
+                    if (user.userID == userRecipe.UserID)
                     {
-                        if(item.RecipeID == id)
+                        Session["recipeIngredients"] = recipeIngredients;
+                        Session["recipeImage"] = recipeImage;
+                        Session["uploaderInfo"] = uploaderInfo;
+                        Session["FoodCategory"] = foodCategory;
+
+                        var foodSale = Session["foodSale"] as List<vw_UserRecipeView>;
+
+                        vw_UserRecipeView recipeFoodSle = new vw_UserRecipeView();
+
+                        var editFoodSale = new vw_UserRecipeView();
+
+                        foreach (var item in foodSale)
                         {
-                            editFoodSale = item;
-                            break;
+                            if (item.RecipeID == id)
+                            {
+                                editFoodSale = item;
+                                break;
+                            }
+                            else
+                            {
+                                editFoodSale = null;
+                            }
                         }
+
+                        Session["editFoodSale"] = editFoodSale;
+
+                        return View(recipe);
+                    } else
+                    {
+                        return RedirectToAction("../Error/PageNotFound");
                     }
-
-                    TempData["editFoodSale"] = editFoodSale;
-
-                    return View(recipe);
                 } else
                 {
                     return RedirectToAction("../Account/LogOut");
                 }
             }
-            return RedirectToAction("ManageUploads");
+            return RedirectToAction("../Account/LogOut");
         }
 
         [HttpPost]
-        public ActionResult EditRecipe(Recipe recipe, string foodcategory, string ingcount, string moodid, string[] ingredientName, int[] ingredientQty, string[] ingredientUnit)
+        public ActionResult EditRecipe(Recipe recipe, string foodcategory, string ingcount, string moodid, string[] ingredientName, int[] ingredientQty, string[] ingredientUnit, int stock)
         {
             if (Session["recipeIngredients"] != null && Session["recipeImage"] != null && Session["uploaderInfo"] != null)
             {
@@ -785,40 +812,48 @@ namespace MoodBite.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                if (TempData["foodSale"] != null)
+                if (Session["foodSale"] != null)
                 {
+                    var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
                     var recipe = _recipeRepo.Get(id);
                     var recipeIngredients = _db.RecipeIngredient.Where(m => m.RecipeID == id).ToList();
                     var recipeImage = _db.RecipeImage.Where(m => m.RecipeID == recipe.RecipeID).FirstOrDefault();
                     var userRecipe = _db.UserRecipe.Where(model => model.RecipeID == recipe.RecipeID).FirstOrDefault();
-                    var uploaderInfo = _db.User.Where(model => model.userID == userRecipe.UserID).FirstOrDefault();
-                    var foodCategory = _db.FoodCategory.ToList();
-                    var userPremium = _db.UserPremium.Where(model => model.UserID == uploaderInfo.userID).FirstOrDefault();
-
-                    Session["recipeIngredients"] = recipeIngredients;
-                    Session["recipeImage"] = recipeImage;
-                    Session["uploaderInfo"] = uploaderInfo;
-                    Session["foodCategory"] = foodCategory;
-                    //Session["userPremium"] = userPremium;
-
-                    var foodSale = TempData["foodSale"] as List<vw_UserRecipeView>;
-
-                    vw_UserRecipeView recipeFoodSle = new vw_UserRecipeView();
-
-                    var editFoodSale = new vw_UserRecipeView();
-
-                    foreach (var item in foodSale)
+                    if (user.userID == userRecipe.UserID)
                     {
-                        if (item.RecipeID == id)
+                        var uploaderInfo = _db.User.Where(model => model.userID == userRecipe.UserID).FirstOrDefault();
+                        var foodCategory = _db.FoodCategory.ToList();
+                        var userPremium = _db.UserPremium.Where(model => model.UserID == uploaderInfo.userID).FirstOrDefault();
+
+                        Session["recipeIngredients"] = recipeIngredients;
+                        Session["recipeImage"] = recipeImage;
+                        Session["uploaderInfo"] = uploaderInfo;
+                        Session["foodCategory"] = foodCategory;
+                        //Session["userPremium"] = userPremium;
+
+                        var foodSale = Session["foodSale"] as List<vw_UserRecipeView>;
+
+                        vw_UserRecipeView recipeFoodSle = new vw_UserRecipeView();
+
+                        var editFoodSale = new vw_UserRecipeView();
+
+                        foreach (var item in foodSale)
                         {
-                            editFoodSale = item;
-                            break;
+                            if (item.RecipeID == id)
+                            {
+                                editFoodSale = item;
+                                break;
+                            }
                         }
+
+                        Session["editFoodSale"] = editFoodSale;
+
+                        return View(recipe);
+                    } else
+                    {
+                        return RedirectToAction("../Error/PageNotFound");
                     }
 
-                    TempData["editFoodSale"] = editFoodSale;
-
-                    return View(recipe);
                 } else
                 {
                     return RedirectToAction("../Account/LogOut");

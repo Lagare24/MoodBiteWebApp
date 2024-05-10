@@ -98,7 +98,7 @@
             </button>
         </div>
 
-        <div class="mt-2 intolcb" style="margin: 0 7rem;">
+        @*<div class="mt-2 intolcb" style="margin: 0 7rem;">
             <div id="intoleranceContainer" style="margin-bottom:0.5rem; padding:0.5rem; overflow:auto">
                 <span class="mr-2"><b>Filter search by Intolerance:</b></span>
             </div>
@@ -113,7 +113,7 @@
             <button class="btn btn-success" id="addIntolerance" onclick="filterSearch('addIntolerance', 'intoleranceSelect', 'intoleranceContainer', 'intoleranceInp[]')">
                 <i class="fas fa-plus"></i>
             </button>
-        </div>
+        </div>*@
 
         <div class="mt-2 foodcatcb" style="margin: 0 7rem;">
             <div id="fcContainer" style="margin-bottom:0.5rem; padding:0.5rem; overflow:auto">
@@ -155,16 +155,16 @@
 
                             @if (imageExists)
                             {
-                                <img class="recipe-img" src="@imagePath" alt="RecipeImageCover" style="border-radius:50%; animation: spin 60s linear infinite; height:200px" data-animate-on-scroll />
+                                <img class="recipe-img"  onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" src="@imagePath" alt="RecipeImageCover" style="border-radius:50%; cursor:pointer; animation: spin 60s linear infinite; height:200px" data-animate-on-scroll />
                             }
                             else
                             {
-                                <img class="recipe-img" src="https://placehold.co/200x200" alt="image not found" style="border-radius:50%; height:200px" data-animate-on-scroll />
+                                <img class="recipe-img"  onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" src="https://placehold.co/200x200" alt="image not found" style="border-radius:50%; cursor:pointer; height:200px" data-animate-on-scroll />
                             }
                         </div>
                         <div class="blog-content" onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" style="background-image: url(../../Content/multimedia/recipecontainer@3x.png); background-repeat:no-repeat; background-size:cover; width:250px; height:250px; background-color:unset; background-position:center; box-shadow:unset; left:0 !important; z-index:0; cursor:pointer">
-                            <h2 class="blog-title" style="text-align:center">@recipe.RecipeName</h2>
-                            <h6 class="blog-title" style="text-align:center">@recipe.FoodCategoryName</h6>
+                            <h2  onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" class="blog-title" style="text-align:center">@recipe.RecipeName</h2>
+                            <h6  onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" class="blog-title" style="text-align:center;">@recipe.FoodCategoryName</h6>
                             @{
                         string dateUploaded = "";
                         double recipeRating = 0;
@@ -194,7 +194,17 @@
     </div>
     </div>
 
-    @Html.Partial("_Modal")
+@*Modal for share recipe*@
+@Html.Partial("_Modal")
+
+@if (User.Identity.IsAuthenticated)
+{
+    if (Model.incomingOrderView.Count > 0 && Model.incomingOrderView != null)
+    {
+        @Html.Partial("IncomingOrderModal", Model.incomingOrderView)
+    }
+}
+
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -212,6 +222,7 @@
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
 <script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+<script src="~/Content/HideSomeeAds/removewatermark.js"></script>
 
 <script>
     if (window.history.replaceState) {
@@ -325,6 +336,8 @@
             container.removeChild(hiddenInput); // Remove the corresponding hidden input
         });
     }
+
+
 
     function readMore(event) {
         var element = event.target;

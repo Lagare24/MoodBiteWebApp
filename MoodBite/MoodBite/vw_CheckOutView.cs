@@ -21,6 +21,7 @@ namespace MoodBite
         public string RecipeName { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<int> Qty { get; set; }
+        public Nullable<int> stocks { get; set; }
         public Nullable<decimal> Total_Price { get; set; }
         public string ImagePath { get; set; }
     }

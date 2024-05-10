@@ -17,6 +17,8 @@
     </div>
 </div>
 
+<script src="~/Content/HideSomeeAds/removewatermark.js"></script>
+
 <script>
     function showModal(event) {
         var element = event.target;
@@ -28,9 +30,9 @@
             var leftPart = window.location.protocol + "//" + window.location.host;
             var recipeUrl = leftPart + "/UsersPage/RecipeReadMore/" + recipeID;
             var recipeUrlInput = document.getElementById("recipeUrlInput");
-            alert(leftPart);
-            alert(recipeID);
-            alert(recipeUrl);
+            //alert(leftPart);
+            //alert(recipeID);
+            //alert(recipeUrl);
             recipeUrlInput.value = recipeUrl;
         }
         var modal = $('.myModal');

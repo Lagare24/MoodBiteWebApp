@@ -254,6 +254,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="control-label col-md-12">Stocks</label>
+                    <div class="col-md-12">
+                        <input style="width:50%" class="form-control ingredient-quantity" type="number" step="any" min="0" id="stock" name="stock" />
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="control-label col-md-12">Shipped from</label>
                     <div class="col-md-12">
                         <input class="form-control ingredient-quantity" placeholder="Address" type="text" id="shippedfrom" name="shippedfrom" />
@@ -288,6 +295,8 @@
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
 <script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+
+<script src="~/Content/HideSomeeAds/removewatermark.js"></script>
 
 <script>
     var ingredientCount = parseInt(document.getElementById('ingcount').value);
@@ -367,6 +376,7 @@
             var uploadRecipeFormData = new FormData($('form')[0]);
             uploadRecipeFormData.append("ingcount", ingredientCount);
             uploadRecipeFormData.append("moodid", $('#moodid').val());
+            uploadRecipeFormData.append("stock", $('#stock').val());
 
             //$('input[name="ingredientName[]"]').each(function () {
             //    uploadRecipeFormData.append("ingredientName[]", $(this).val());

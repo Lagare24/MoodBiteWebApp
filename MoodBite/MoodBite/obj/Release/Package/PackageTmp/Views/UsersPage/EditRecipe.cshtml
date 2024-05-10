@@ -1,25 +1,27 @@
 ﻿@model Recipe
 
 @{
-    ViewBag.Title = "Edit recipe";
-    ViewBag.TitleHeader = "Edit recipe";
-    ViewBag.SubHeader = "";
-    Layout = "~/Views/Shared/_StandardLayout.cshtml";
-    ViewBag.LoaderMsg = "Please wait...";
+                ViewBag.Title = "Edit recipe";
+                ViewBag.TitleHeader = "Edit recipe";
+                ViewBag.SubHeader = "";
+                Layout = "~/Views/Shared/_StandardLayout.cshtml";
+                ViewBag.LoaderMsg = "Please wait...";
 
-    string a = "active";
-    string ia = string.Empty;
+                string a = "active";
+                string ia = string.Empty;
 
-    Session["HomeActive"] = ia;
-    Session["UploadActive"] = a;
-    Session["CartActive"] = ia;
-    Session["ProfileActive"] = ia;
+                Session["HomeActive"] = ia;
+                Session["UploadActive"] = a;
+                Session["CartActive"] = ia;
+                Session["ProfileActive"] = ia;
 
-    var recipeIngredients = Session["recipeIngredients"] as List<RecipeIngredient>;
-    var recipeImage = Session["recipeImage"] as RecipeImage;
-    var uploaderInfo = Session["uploaderInfo"] as User;
-    var foodCategory = Session["FoodCategory"] as List<FoodCategory>;
-}
+                var recipeIngredients = Session["recipeIngredients"] as List<RecipeIngredient>;
+                var recipeImage = Session["recipeImage"] as RecipeImage;
+                var uploaderInfo = Session["uploaderInfo"] as User;
+                var foodCategory = Session["FoodCategory"] as List<FoodCategory>;
+
+                var editFoodSale = Session["editFoodSale"] as vw_UserRecipeView;
+            }
 <!-- Favicon -->
 <link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
 
@@ -58,22 +60,35 @@
             </div>
         </div>
 
+        @if (editFoodSale != null)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-12">Stocks</label>
+                <div class="col-md-12">
+                    <input type="number" min="0" class="form-control" required name="stock" id="stock" value="@editFoodSale.Stocks" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <input type="hidden" min="0" class="form-control" required name="stock" id="stock" value="@editFoodSale.Stocks" />
+        }
+
         <div class="form-group">
             <label class="control-label col-md-12">Food Category</label>
             <div class="col-md-12">
                 <select class="form-control" name="foodcategory" id="foodcategory" required>
                     @foreach (var fc in foodCategory)
-                    {
-                        if (fc.FoodCategoryID != Model.FoodCategoryID)
-                        {
+    {
+        if (fc.FoodCategoryID != Model.FoodCategoryID)
+        {
                             <option value="@fc.FoodCategoryID">@fc.FoodCategoryName</option>
                         }
-                        else
-                        {
+        else
+        {
                             <option value="@fc.FoodCategoryID" selected>@fc.FoodCategoryName</option>
-
                         }
-                    }
+    }
                 </select>
             </div>
         </div>
@@ -309,7 +324,7 @@
             </div>
         </div>
     </div>
-                                    }
+}@*HtmlBeginForm end*@
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -326,9 +341,8 @@
 
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
-
+<script src="~/Content/HideSomeeAds/removewatermark.js"></script>
 <script>
-
     function saveChanges() {
         $('#loadertxt').text('Saving changes...');
         showLoader();

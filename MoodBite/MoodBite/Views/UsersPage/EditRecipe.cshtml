@@ -20,7 +20,7 @@
                 var uploaderInfo = Session["uploaderInfo"] as User;
                 var foodCategory = Session["FoodCategory"] as List<FoodCategory>;
 
-                var editFoodSale = TempData["editFoodSale"] as vw_UserRecipeView;
+                var editFoodSale = Session["editFoodSale"] as vw_UserRecipeView;
             }
 <!-- Favicon -->
 <link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
@@ -65,9 +65,13 @@
             <div class="form-group">
                 <label class="control-label col-md-12">Stocks</label>
                 <div class="col-md-12">
-                    <input type="number" min="0" class="form-control" required name="stock" value="@editFoodSale.Stocks" />
+                    <input type="number" min="0" class="form-control" required name="stock" id="stock" value="@editFoodSale.Stocks" />
                 </div>
             </div>
+        }
+        else
+        {
+            <input type="hidden" min="0" class="form-control" required name="stock" id="stock" value="@editFoodSale.Stocks" />
         }
 
         <div class="form-group">
@@ -320,7 +324,7 @@
             </div>
         </div>
     </div>
-                                    }
+}@*HtmlBeginForm end*@
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -339,7 +343,6 @@
 <script src="~/Content/MainTemplate/js/main.js"></script>
 <script src="~/Content/HideSomeeAds/removewatermark.js"></script>
 <script>
-
     function saveChanges() {
         $('#loadertxt').text('Saving changes...');
         showLoader();

@@ -10,7 +10,7 @@
     var foodCategory = Session["foodCategory"] as List<FoodCategory>;
     ViewBag.LoaderMsg = "Please wait...";
 
-    var editFoodSale = TempData["editFoodSale"] as vw_UserRecipeView;
+    var editFoodSale = Session["editFoodSale"] as vw_UserRecipeView;
 }
 
 <!-- Favicon -->
@@ -37,7 +37,7 @@
 
 <div class="form-horizontal">
     <h5 style="padding:1rem 0 0.5rem"><a href="#" onclick="history.back()">Go back</a></h5>
-    <h2>Details of @Html.Raw(Model.RecipeName) Recipe by @Html.Raw(uploaderInfo.FirstName + " " + uploaderInfo.LastName)</h2>
+    <h2>Details of @Html.Raw(Model.RecipeName) Recipe</h2>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">

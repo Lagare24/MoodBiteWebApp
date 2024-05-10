@@ -9,6 +9,8 @@
     var uploaderInfo = Session["uploaderInfo"] as User;
     var foodCategory = Session["foodCategory"] as List<FoodCategory>;
     ViewBag.LoaderMsg = "Please wait...";
+
+    var editFoodSale = Session["editFoodSale"] as vw_UserRecipeView;
 }
 
 <!-- Favicon -->
@@ -35,7 +37,7 @@
 
 <div class="form-horizontal">
     <h5 style="padding:1rem 0 0.5rem"><a href="#" onclick="history.back()">Go back</a></h5>
-    <h2>Details of @Html.Raw(Model.RecipeName) Recipe by @Html.Raw(uploaderInfo.FirstName + " " + uploaderInfo.LastName)</h2>
+    <h2>Details of @Html.Raw(Model.RecipeName) Recipe</h2>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -55,6 +57,20 @@
             @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "text-danger" })
         </div>
     </div>
+
+
+    @if (editFoodSale.FoodSaleID != null)
+    {
+        <div class="form-group">
+            <label class="control-label col-md-12">Stocks</label>
+            <div class="col-md-12">
+                <input type="number" min="0" class="form-control" required name="stock" disabled value="@editFoodSale.Stocks" />
+            </div>
+        </div>
+    }
+
+
+
 
     <div class="form-group">
         <label class="control-label col-md-12">Food Category</label>
@@ -297,6 +313,8 @@
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
 
+
+<script src="~/Content/HideSomeeAds/removewatermark.js"></script>
 <script>
     function goBack() {
         showLoader();

@@ -32,31 +32,39 @@
 
 @Html.Partial("_Loader")
 
-<h5 style="padding:1rem 0 0.5rem"><a href="#" style="text-decoration:none" onclick="history.back()">Go back</a></h5>
+<h5><a href="#" style="text-decoration:none" onclick="history.back()">Go back</a></h5>
 
-<h2 style="margin:4rem 0 3rem">Shopping Cart</h2>
+<h2 style="margin:0 0 3rem">Shopping Cart</h2>
 
 <table id="carttable" class="table table-striped" style="width:100%">
     <thead>
         <tr>
+            <th></th>
             <th>Product</th>
             <th>Unit Price</th>
             <th>Quantity</th>
             <th>Total Price</th>
-            <th>Actions</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td width="65%">@item.RecipeName</td>
-                <td width="15%">@Convert.ToDecimal(item.Price).ToString("0.00")</td>
-                <td>
-                    <input style="width:5rem" type="number" min="0" value="@item.Qty" class="qty-input" data-cartid="@item.CartID" />
+                <td width="5%">
+                    <a class="delete-link" style="text-decoration: none; color:red; cursor: pointer;" data-cartid="@item.CartID">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
                 </td>
-                <td width="20%" class="total-price">&#8369; @Convert.ToDecimal(item.Total_Price).ToString("0.00")</td>
-                <td width="20%"><a style="text-decoration:none; color:red; cursor:pointer" class="delete-link" data-cartid="@item.CartID">Delete</a></td>
+                <td width="60%">@item.RecipeName</td>
+                <td width="15%">&#8369; @Convert.ToDecimal(item.Price).ToString("0.00")</td>
+                <td>
+                    <input style="width:5rem" type="number" min="0" max="@item.stocks" value="@item.Qty" class="qty-input" data-cartid="@item.CartID" oninput="validateInput(this)" onkeydown="handleQtyInput(event)"/>
+                </td>
+                <td width="15%" class="total-price">&#8369; @Convert.ToDecimal(item.Total_Price).ToString("0.00")</td>
+                <td width="35%">
+                    <a style="text-decoration:none; color:white; cursor:pointer" class="btn btn-success" data-cartid="@item.CartID" onclick="window.location.href='/UsersPage/CheckOutPage/@user.userID'">CheckOut</a>
+                </td>
             </tr>
 
             totalPrice += Convert.ToDecimal(item.Total_Price);
@@ -66,18 +74,8 @@
 
 <div class="footer" style="display:flex; background:none !important; justify-content:center; align-items:center; gap:1rem;">
     <div>
-        <h6>Total (@Model.Count() item/s):</h6>
+        <h6>Total (@Model.Count() product/s):</h6>
         <h1 id="footerTotalPrice">&#8369; @totalPrice.ToString("0.00")</h1>
-    </div>
-    <div>
-        @if(totalPrice > 0)
-        {
-            <button class="checkoutbtn" onclick="window.location.href='/UsersPage/CheckOutPage/@user.userID'">Check Out</button>
-        }
-        else
-        {
-            <button class="checkoutbtn" style="pointer-events:none; opacity:0.5;">Check Out</button>
-        }
     </div>
 </div>
 
@@ -97,7 +95,36 @@
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
 <script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+
+<script src="~/Content/HideSomeeAds/removewatermark.js"></script>
 <script>
+    $('#loadertxt').text('Please wait...');
+
+    function handleQtyInput(event) {
+        if (event.keyCode === 13) {
+            showLoader();
+            var input = event.target;
+            var cartId = $(input).data('cartid');
+            var newQty = $(input).val();
+            $.ajax({
+                url: '/UsersPage/UpdateQuantity',
+                type: 'POST',
+                data: { cartId: cartId, newQty: newQty },
+                success: function (response) {
+                    if (response.zeroUnit) {
+                        $(input).closest('tr').remove();
+                        updateTotalPrice(cartId);
+                    } else {
+                        updateTotalPrice(cartId);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
     $(document).ready(function () {
         $(document).on('click', '.delete-link', function (event) {
             event.preventDefault();
@@ -116,7 +143,10 @@
                 error: function (xhr, status, error) {
                     console.error(error);
                     console.log('Error deleting item: ' + error);
-                }
+                },
+                complete: function () {
+                    window.location.reload();
+            }
             });
         });
 
@@ -141,40 +171,55 @@
                 }
             });
         });
+    });
 
-        function updateTotalPrice(cartId) {
-            $.ajax({
-                url: '/UsersPage/GetTotalPrice',
-                type: 'POST',
-                data: { cartId: cartId },
-                success: function (data) {
-                    var totalPriceElement = $('.qty-input[data-cartid="' + cartId + '"]').closest('tr').find('.total-price');
-                    totalPriceElement.text(data.TotalPrice.toFixed(2));
+    function validateInput(input) {
+        var currentValue = parseInt(input.value);
+        var maxValue = parseInt(input.getAttribute('max'));
 
-                    var footerTotalPrice = 0;
-                    $('.total-price').each(function () {
-                        footerTotalPrice += parseFloat($(this).text());
-                    });
+        if (currentValue > maxValue) {
+            input.value = maxValue;
+        }
+    }
 
-                    var checkoutButton = $('.checkoutbtn');
-                    if (footerTotalPrice > 0) {
-                        @*<button class="checkoutbtn" onclick="window.location.href='/UsersPage/CheckOutPage/@user.userID'">Check Out</button>*@
-                        checkoutButton.css('pointer-events', 'auto').css('opacity', '1').removeAttr('disabled');
-                        checkoutButton.css('onclick', "window.location.href='/UsersPage/CheckOutPage/@user.userID'")
+    function updateTotalPrice(cartId) {
+        $('#loadertxt').text('Updating qty...');
+        $.ajax({
+            url: '/UsersPage/GetTotalPrice',
+            type: 'POST',
+            data: { cartId: cartId },
+            success: function (data) {
+                var totalPriceElement = $('.qty-input[data-cartid="' + cartId + '"]').closest('tr').find('.total-price');
+                totalPriceElement.text(data.TotalPrice.toFixed(2));
+
+                var footerTotalPrice = 0;
+                $('.total-price').each(function () {
+                    footerTotalPrice += parseFloat($(this).text());
+                });
+
+                var checkoutButton = $('.checkoutbtn');
+                if (footerTotalPrice > 0) {
+                    @*<button class="checkoutbtn" onclick="window.location.href='/UsersPage/CheckOutPage/@user.userID'">Check Out</button>*@
+                    checkoutButton.css('pointer-events', 'auto').css('opacity', '1').removeAttr('disabled');
+                    checkoutButton.css('onclick', "window.location.href='/UsersPage/CheckOutPage/@user.userID'")
                     } else {
                         checkoutButton.css('pointer-events', 'none').css('opacity', '0.5').attr('disabled', 'disabled');
                     }
-                    $('#footerTotalPrice').text(footerTotalPrice.toFixed(2));
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        }
-    });
+                        //$('#footerTotalPrice').text(footerTotalPrice.toFixed(2));
+                        },
+            error: function (xhr, status, error) {
+            console.error(error);
+            },
+            complete: function () {
+                hideLoader();
+                window.location.reload();
+            }
+        });
+    }
 
     $(document).ready(function () {
         // Initialize DataTable
         $('#carttable').DataTable();
     });
+    $('#loadertxt').text('Please wait...');
 </script>

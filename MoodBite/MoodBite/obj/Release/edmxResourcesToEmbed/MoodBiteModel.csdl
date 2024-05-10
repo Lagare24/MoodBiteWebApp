@@ -1,6 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MoodBiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="MoodBiteEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_FilterSearchByAllergy" ReturnType="Collection(MoodBiteModel.sp_FilterSearchByAllergy_Result)">
+      <Parameter Name="chosenMood" Mode="In" Type="String" />
+      <Parameter Name="recipeNameKeyword" Mode="In" Type="String" />
+      <Parameter Name="allergyname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_FilterSearchByAllergyAndFoodCat" ReturnType="Collection(MoodBiteModel.sp_FilterSearchByAllergyAndFoodCat_Result)">
+      <Parameter Name="chosenMood" Mode="In" Type="String" />
+      <Parameter Name="recipeNameKeyword" Mode="In" Type="String" />
+      <Parameter Name="allergyname" Mode="In" Type="String" />
+      <Parameter Name="fcname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_FilterSearchByFoodCat" ReturnType="Collection(MoodBiteModel.sp_FilterSearchByFoodCat_Result)">
+      <Parameter Name="chosenMood" Mode="In" Type="String" />
+      <Parameter Name="recipeNameKeyword" Mode="In" Type="String" />
+      <Parameter Name="fcname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MoodBiteModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MoodBiteModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
     <EntitySet Name="AccountCreationLog" EntityType="MoodBiteModel.AccountCreationLog" />
     <EntitySet Name="Allergy" EntityType="MoodBiteModel.Allergy" />
     <EntitySet Name="BuyPremiumTransaction" EntityType="MoodBiteModel.BuyPremiumTransaction" />
@@ -20,6 +66,7 @@
     <EntitySet Name="RecipeIntolerance" EntityType="MoodBiteModel.RecipeIntolerance" />
     <EntitySet Name="RecipeRating" EntityType="MoodBiteModel.RecipeRating" />
     <EntitySet Name="Role" EntityType="MoodBiteModel.Role" />
+    <EntitySet Name="sysdiagrams" EntityType="MoodBiteModel.sysdiagrams" />
     <EntitySet Name="Testimonials" EntityType="MoodBiteModel.Testimonials" />
     <EntitySet Name="User" EntityType="MoodBiteModel.User" />
     <EntitySet Name="UserPremium" EntityType="MoodBiteModel.UserPremium" />
@@ -32,20 +79,24 @@
     <EntitySet Name="vw_CheckOutView" EntityType="MoodBiteModel.vw_CheckOutView" />
     <EntitySet Name="vw_CoverImageOfRecipes" EntityType="MoodBiteModel.vw_CoverImageOfRecipes" />
     <EntitySet Name="vw_FilterAllergy" EntityType="MoodBiteModel.vw_FilterAllergy" />
+    <EntitySet Name="vw_FilterFC" EntityType="MoodBiteModel.vw_FilterFC" />
     <EntitySet Name="vw_FoodSaleView" EntityType="MoodBiteModel.vw_FoodSaleView" />
     <EntitySet Name="vw_ForOrderPaymentInsertionView" EntityType="MoodBiteModel.vw_ForOrderPaymentInsertionView" />
+    <EntitySet Name="vw_IncomingOrderView" EntityType="MoodBiteModel.vw_IncomingOrderView" />
     <EntitySet Name="vw_ManageSubscriptions" EntityType="MoodBiteModel.vw_ManageSubscriptions" />
     <EntitySet Name="vw_ManageUploads" EntityType="MoodBiteModel.vw_ManageUploads" />
     <EntitySet Name="vw_ManageUsers" EntityType="MoodBiteModel.vw_ManageUsers" />
     <EntitySet Name="vw_OrderDetailView" EntityType="MoodBiteModel.vw_OrderDetailView" />
     <EntitySet Name="vw_RecipeDetailsWithoutIngredients" EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredients" />
     <EntitySet Name="vw_RecipeDetailsWithoutIngredientsWithRating" EntityType="MoodBiteModel.vw_RecipeDetailsWithoutIngredientsWithRating" />
+    <EntitySet Name="vw_RecipeReadMoreStocksView" EntityType="MoodBiteModel.vw_RecipeReadMoreStocksView" />
     <EntitySet Name="vw_recipeUploadersNameWithRating" EntityType="MoodBiteModel.vw_recipeUploadersNameWithRating" />
     <EntitySet Name="vw_RecipeWithMoodName" EntityType="MoodBiteModel.vw_RecipeWithMoodName" />
     <EntitySet Name="vw_RecommendedRecipeForMood" EntityType="MoodBiteModel.vw_RecommendedRecipeForMood" />
     <EntitySet Name="vw_RoleView" EntityType="MoodBiteModel.vw_RoleView" />
     <EntitySet Name="vw_UploaderDetailsForReadMorePage" EntityType="MoodBiteModel.vw_UploaderDetailsForReadMorePage" />
     <EntitySet Name="vw_UserDetailsWithRole" EntityType="MoodBiteModel.vw_UserDetailsWithRole" />
+    <EntitySet Name="vw_UserRecipeView" EntityType="MoodBiteModel.vw_UserRecipeView" />
     <EntitySet Name="vw_UsersUploadCounts" EntityType="MoodBiteModel.vw_UsersUploadCounts" />
     <AssociationSet Name="FK__AccountCr__UserI__3DE82FB7" Association="MoodBiteModel.FK__AccountCr__UserI__3DE82FB7">
       <End Role="User" EntitySet="User" />
@@ -163,8 +214,60 @@
       <End Role="User" EntitySet="User" />
       <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
     </AssociationSet>
-    <EntitySet Name="vw_UserRecipeView" EntityType="MoodBiteModel.vw_UserRecipeView" />
   </EntityContainer>
+  <ComplexType Name="sp_FilterSearchByAllergy_Result">
+    <Property Type="Int32" Name="RecipeID" Nullable="false" />
+    <Property Type="String" Name="RecipeName" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="FoodCategoryName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MoodName" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="userID" Nullable="false" />
+    <Property Type="String" Name="Uploaded_by" Nullable="false" MaxLength="201" />
+    <Property Type="DateTime" Name="DateUploaded" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Approved_by" Nullable="true" MaxLength="201" />
+    <Property Type="DateTime" Name="DateApproved" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="RecipeImageID" Nullable="false" />
+    <Property Type="String" Name="ImageName" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="ImagePath" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="sp_FilterSearchByAllergyAndFoodCat_Result">
+    <Property Type="Int32" Name="RecipeID" Nullable="false" />
+    <Property Type="String" Name="RecipeName" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="FoodCategoryName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MoodName" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="userID" Nullable="false" />
+    <Property Type="String" Name="Uploaded_by" Nullable="false" MaxLength="201" />
+    <Property Type="DateTime" Name="DateUploaded" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Approved_by" Nullable="true" MaxLength="201" />
+    <Property Type="DateTime" Name="DateApproved" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="RecipeImageID" Nullable="false" />
+    <Property Type="String" Name="ImageName" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="ImagePath" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="sp_FilterSearchByFoodCat_Result">
+    <Property Type="Int32" Name="RecipeID" Nullable="false" />
+    <Property Type="String" Name="RecipeName" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="FoodCategoryName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MoodName" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="userID" Nullable="false" />
+    <Property Type="String" Name="Uploaded_by" Nullable="false" MaxLength="201" />
+    <Property Type="DateTime" Name="DateUploaded" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Approved_by" Nullable="true" MaxLength="201" />
+    <Property Type="DateTime" Name="DateApproved" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="RecipeImageID" Nullable="false" />
+    <Property Type="String" Name="ImageName" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="ImagePath" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
   <EntityType Name="AccountCreationLog">
     <Key>
       <PropertyRef Name="AccountCreationLogID" />
@@ -269,6 +372,8 @@
     <Property Name="DateOrdered" Type="DateTime" Precision="3" />
     <Property Name="CustomerAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="IsPaid" Type="Boolean" />
+    <Property Name="EstimatedArrivalTime" Type="Int32" />
+    <Property Name="DeliveryFee" Type="Int32" />
     <NavigationProperty Name="OrderDetail" Relationship="MoodBiteModel.FK__OrderDeta__PO_ID__31B762FC" FromRole="OrderMaster" ToRole="OrderDetail" />
     <NavigationProperty Name="User" Relationship="MoodBiteModel.FK__OrderMast__UserI__2EDAF651" FromRole="OrderMaster" ToRole="User" />
   </EntityType>
@@ -381,6 +486,16 @@
     <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Rolename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="UserRole" Relationship="MoodBiteModel.FK__UserRole__RoleID__282DF8C2" FromRole="Role" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Testimonials">
     <Key>
@@ -511,6 +626,7 @@
     <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Qty" Type="Int32" />
+    <Property Name="stocks" Type="Int32" />
     <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
   <EntityType Name="vw_CheckOutView">
@@ -527,6 +643,7 @@
     <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Qty" Type="Int32" />
+    <Property Name="stocks" Type="Int32" />
     <Property Name="Total_Price" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
@@ -565,6 +682,25 @@
     <Property Name="Unit" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="AllergyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="vw_FilterFC">
+    <Key>
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="RecipeID" Type="Int32" Nullable="false" />
+    <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
+    <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PreparationTime" Type="Time" Precision="7" />
+    <Property Name="CookingDuration" Type="Time" Precision="7" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="DateApproved" Type="DateTime" Precision="3" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="vw_FoodSaleView">
     <Key>
       <PropertyRef Name="FoodSaleID" />
@@ -598,6 +734,41 @@
     <Property Name="DeliveredFrom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="DateOrdered" Type="DateTime" Precision="3" />
     <Property Name="IsPaid" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="vw_IncomingOrderView">
+    <Key>
+      <PropertyRef Name="OrderDetailID" />
+      <PropertyRef Name="PO_ID" />
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="OrderDetailID" Type="Int32" Nullable="false" />
+    <Property Name="PO_ID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="DateOrdered" Type="DateTime" Precision="3" />
+    <Property Name="CustomerAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="IsPaid" Type="Boolean" />
+    <Property Name="EstimatedArrivalTime" Type="Int32" />
+    <Property Name="DeliveryFee" Type="Int32" />
+    <Property Name="FoodForSaleID" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Shop_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeID" Type="Int32" Nullable="false" />
+    <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
+    <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PreparationTime" Type="Time" Precision="7" />
+    <Property Name="CookingDuration" Type="Time" Precision="7" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="DateApproved" Type="DateTime" Precision="3" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_ManageSubscriptions">
     <Key>
@@ -682,6 +853,31 @@
     <Property Name="RecipeImageID" Type="Int32" Nullable="false" />
     <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vw_RecipeReadMoreStocksView">
+    <Key>
+      <PropertyRef Name="FoodSaleID" />
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="FoodSaleID" Type="Int32" Nullable="false" />
+    <Property Name="UserRecipeID" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Available" Type="Boolean" />
+    <Property Name="Stocks" Type="Int32" />
+    <Property Name="RecipeID" Type="Int32" Nullable="false" />
+    <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
+    <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PreparationTime" Type="Time" Precision="7" />
+    <Property Name="CookingDuration" Type="Time" Precision="7" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="DateApproved" Type="DateTime" Precision="3" />
+    <Property Name="ApprovedBy" Type="Int32" />
   </EntityType>
   <EntityType Name="vw_recipeUploadersNameWithRating">
     <Key>
@@ -772,6 +968,44 @@
     <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="UserRoleID" Type="Int32" Nullable="false" />
     <Property Name="Rolename" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vw_UserRecipeView">
+    <Key>
+      <PropertyRef Name="UserRecipeID" />
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="Uploaded_by" />
+      <PropertyRef Name="RecipeID" />
+      <PropertyRef Name="Status" />
+      <PropertyRef Name="ForSale" />
+    </Key>
+    <Property Name="UserRecipeID" Type="Int32" Nullable="false" />
+    <Property Name="userID" Type="Int32" Nullable="false" />
+    <Property Name="Uploaded_by" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeID" Type="Int32" Nullable="false" />
+    <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
+    <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PreparationTime" Type="Time" Precision="7" />
+    <Property Name="CookingDuration" Type="Time" Precision="7" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="DateApproved" Type="DateTime" Precision="3" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeImageID" Type="Int32" />
+    <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="FoodSaleID" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Available" Type="Boolean" />
+    <Property Name="Stocks" Type="Int32" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="ForSale" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="vw_UsersUploadCounts">
     <Key>
@@ -1170,42 +1404,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="vw_UserRecipeView">
-    <Key>
-      <PropertyRef Name="UserRecipeID" />
-      <PropertyRef Name="userID" />
-      <PropertyRef Name="Uploaded_by" />
-      <PropertyRef Name="RecipeID" />
-      <PropertyRef Name="Status" />
-      <PropertyRef Name="ForSale" />
-    </Key>
-    <Property Name="UserRecipeID" Type="Int32" Nullable="false" />
-    <Property Name="userID" Type="Int32" Nullable="false" />
-    <Property Name="Uploaded_by" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
-    <Property Name="RecipeID" Type="Int32" Nullable="false" />
-    <Property Name="MoodID" Type="Int32" />
-    <Property Name="FoodCategoryID" Type="Int32" />
-    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IngredientsCount" Type="Int32" />
-    <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="PreparationTime" Type="Time" Precision="7" />
-    <Property Name="CookingDuration" Type="Time" Precision="7" />
-    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
-    <Property Name="IsApproved" Type="Boolean" />
-    <Property Name="DateApproved" Type="DateTime" Precision="3" />
-    <Property Name="ApprovedBy" Type="Int32" />
-    <Property Name="MoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="FoodSaleID" Type="Int32" />
-    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Available" Type="Boolean" />
-    <Property Name="Stocks" Type="Int32" />
-    <Property Name="RecipeImageID" Type="Int32" />
-    <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="Status" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-    <Property Name="ForSale" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-  </EntityType>
 </Schema>

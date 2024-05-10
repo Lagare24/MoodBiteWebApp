@@ -31,6 +31,7 @@
 
 @Html.Partial("_Loader")
 
+<h5><a href="#" style="text-decoration:none" onclick="history.back()">Go back</a></h5>
 <h2 style="margin:1.5rem 0 0">Checkout</h2>
 <h6>ShopName + ShopLocation</h6>
 
@@ -71,31 +72,11 @@
             Random random = new Random();
             int deliveryFee = random.Next(5, 126);
             decimal subTotal = 0;
+            int estArrivalTime = random.Next(5, 60);
         }
         <div>
             @foreach (var item in Model)
             {
-                //string mimeType = "image/jpeg";
-                //if (item.ImageURL != null && item.ImageURL.Length > 0)
-                //{
-                //    // Determine the MIME type based on the first few bytes of the image data
-                //    byte[] imageData = item.ImageURL;
-                //    string firstBytes = System.Text.Encoding.UTF8.GetString(imageData.Take(4).ToArray());
-
-                //    if (firstBytes.StartsWith("GIF8"))
-                //    {
-                //        mimeType = "image/gif";
-                //    }
-                //    else if (firstBytes.StartsWith("\xFF\xD8"))
-                //    {
-                //        mimeType = "image/jpeg";
-                //    }
-                //    else if (firstBytes.StartsWith("\x89PNG\x0D\x0A\x1A\x0A"))
-                //    {
-                //        mimeType = "image/png";
-                //    }
-                //}
-
                 <div class="row" style="justify-content:center; align-items:center;">
                     <div class="col-md-1"><span>@item.Qty</span>x</div>
                     <div class="col-md-2"><img src="@Url.Content(item.ImagePath)" width="60px" height="60px" style="border-radius:50%;" /></div>
@@ -119,7 +100,11 @@
                 <div class="col-md-12" style="display:flex; justify-content:space-between">
                     <div>Delivery Fee</div>
                     
-                    <div>&#8369; @deliveryFee</div>
+                    <div data-deliveryFee-data="@deliveryFee">&#8369; @deliveryFee</div>
+                </div>
+                <div class="col-md-12" style="display:flex; justify-content:space-between">
+                    <div>Estimated arrival time</div>
+                    <div data-estArrivalTime-data="@estArrivalTime">@Html.Raw(estArrivalTime + " minutes")</div>
                 </div>
             </div>
         </div>    
@@ -135,10 +120,10 @@
                 </div>
                 <div>
                     <select name="paymentMethod" style="width:100%">
-                        <option value="gcash">Gcash</option>
-                        <option value="visa">Visa</option>
-                        <option value="paymaya">Paymaya</option>
-                        <option value="cod">Cash on Delivery</option>
+                        <option value="gcash" disabled>Gcash</option>
+                        <option value="visa" disabled>Visa</option>
+                        <option value="paymaya" disabled>Paymaya</option>
+                        <option value="cod" selected>Cash on Delivery</option>
                     </select>
                 </div>
 
@@ -183,20 +168,25 @@
 <!-- Template Javascript -->
 <script src="~/Content/MainTemplate/js/main.js"></script>
 <script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+<script src="~/Content/HideSomeeAds/removewatermark.js"></script>
 
 <script>
     $(document).ready(function () {
         $('.checkoutbtn').click(function () {
+            showLoader();
 
             var address = $('input[name="address"]').val();
             var paymentMethod = $('select[name="paymentMethod"]').val();
             var userId = @user.userID;
             var totalAmount = @total;
-
+            var deliveryFee = @deliveryFee;
+            var estArrivalTime = @estArrivalTime;
+            //alert("fee: " + deliveryFee);
+            //alert("estArrivalTime: " + estArrivalTime);
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("PlaceOrder", "UsersPage")',
-                data: { id: userId, address: address, paymentMethod: paymentMethod, totalAmount: totalAmount },
+                data: { id: userId, address: address, paymentMethod: paymentMethod, totalAmount: totalAmount, deliveryFee: deliveryFee, estArrivalTime: estArrivalTime},
                 success: function (result) {
                     if (result.success) {
                         alert("Placed order successfully!");
@@ -209,6 +199,9 @@
                 error: function (xhr, status, error) {
                     // Handle error
                     alert(error)
+                },
+                complete: function () {
+                    hideLoader();
                 }
             });
         });

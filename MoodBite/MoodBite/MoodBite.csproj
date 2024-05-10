@@ -300,6 +300,7 @@
     <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.esm.min.js.map" />
     <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.js.map" />
     <Content Include="Content\bootstrap-5.3.3-dist\js\bootstrap.min.js.map" />
+    <Content Include="App_Browsers\qt.browser" />
     <EntityDeploy Include="MoodBiteModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MoodBiteModel.Designer.cs</LastGenOutput>
@@ -307,7 +308,6 @@
     <Content Include="MoodBiteModel.edmx.diagram">
       <DependentUpon>MoodBiteModel.edmx</DependentUpon>
     </Content>
-    <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
@@ -411,6 +411,24 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="RoleType.cs" />
+    <Compile Include="sp_FilterSearchByAllergyAndFoodCat_Result.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_FilterSearchByAllergy_Result.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_FilterSearchByFoodCat_Result.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Testimonials.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -447,10 +465,16 @@
     <Compile Include="vw_FilterAllergy.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_FilterFC.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_FoodSaleView.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_ForOrderPaymentInsertionView.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_IncomingOrderView.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_ManageSubscriptions.cs">
@@ -469,6 +493,9 @@
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_RecipeDetailsWithoutIngredientsWithRating.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_RecipeReadMoreStocksView.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="vw_recipeUploadersNameWithRating.cs">
@@ -515,7 +542,6 @@
     <Content Include="Views\UsersPage\RecipeReadMore.cshtml" />
     <Content Include="Views\UsersPage\UploadRecipe.cshtml" />
     <Content Include="Views\AdminsPage\ManageUsers.cshtml" />
-    <Content Include="Views\AdminsPage\ManageSubscriptions.cshtml" />
     <Content Include="Views\AdminsPage\ManageUploads.cshtml" />
     <Content Include="Views\AdminsPage\EditRecipe.cshtml" />
     <Content Include="Views\UsersPage\MyCart.cshtml" />
@@ -534,6 +560,7 @@
     <Content Include="Views\UsersPage\MyUploads.cshtml" />
     <Content Include="Views\UsersPage\EditRecipe.cshtml" />
     <Content Include="Views\UsersPage\RecipeDetails.cshtml" />
+    <Content Include="Views\Shared\IncomingOrderModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
