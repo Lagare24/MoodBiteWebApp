@@ -187,13 +187,16 @@
 
                 @if (Model.userPremium != null && Model.foodSaleView != null)
                 {
-                    if(Model.foodSaleView.Available == true)
+                    if (Model.foodSaleView.userID != user.userID)
                     {
-                        <button class="btn custom-btn addToCartBtn" style="background-color:red">Add to cart</button>
-                    }
-                    else
-                    {
-                        <button class="btn custom-btn addToCartBtn disable-button" style="background-color:red" disabled>Add to cart (Not available)</button>
+                        if (Model.foodSaleView.Available == true)
+                        {
+                            <button class="btn custom-btn addToCartBtn" style="background-color:red">Add to cart</button>
+                        }
+                        else
+                        {
+                            <button class="btn custom-btn addToCartBtn disable-button" style="background-color:red" disabled>Add to cart (Not available)</button>
+                        }
                     }
                 }
                 else

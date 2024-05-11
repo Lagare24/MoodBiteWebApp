@@ -225,7 +225,7 @@ namespace MoodBite.Controllers
 
                 recipe.IsApproved = true;
                 recipe.ApprovedBy = adminInCharge.userID;
-                recipe.DateApproved = DateTime.Today;
+                recipe.DateApproved = DateTime.Now;
 
                 try
                 {
@@ -326,6 +326,67 @@ namespace MoodBite.Controllers
                     throw;
                 }
             } else
+            {
+                return RedirectToAction("../Account/LogOut");
+            }
+        }
+
+        public ActionResult DeleteRecipe(int id)
+        {
+            if (Session["User"] != null)
+            {
+                var adminInCharge = Session["User"] as User;
+                var userRecipe = _db.UserRecipe.Where(model => model.RecipeID == id).FirstOrDefault();
+                var recipe = _db.Recipe.Where(model => model.RecipeID == id).FirstOrDefault();
+                var uploader = _db.UserRecipe.Where(model => model.RecipeID == id).FirstOrDefault();
+                var uploaderUserProfile = _db.User.Where(model => model.userID == uploader.UserID).FirstOrDefault();
+
+                recipe.IsApproved = false;
+                recipe.ApprovedBy = adminInCharge.userID;
+                recipe.DateApproved = DateTime.Today;
+
+                try
+                {
+                    _userRecipeRepo.Delete(userRecipe.UserRecipeID);
+                    _recipeRepo.Delete(id);
+
+                    string email = ConfigurationManager.AppSettings["Email"];
+                    string password = "cmobmopkqmvqdriu";
+                    string noreplyEmail = "no-reply@moodbite.com";
+
+                    //string confirmationLink = Url.Action("ConfirmEmail", "Account", new { token = user.EmailConfirmationToken }, Request.Url.Scheme);
+
+                    string subject = "Recipe Approval";
+
+                    ////use this when deployed
+                    //string body = $"Please confirm your email address by clicking <a href=\"{confirmationLink}\">here</a>";
+
+                    string body = $"Your uploaded recipe {recipe.RecipeName} has been rejected and deleted by an admin!";
+
+                    using (MailMessage message = new MailMessage())
+                    {
+                        message.From = new MailAddress(noreplyEmail);
+                        message.To.Add(uploaderUserProfile.Email);
+                        message.Subject = subject;
+                        message.Body = body;
+                        message.IsBodyHtml = true;
+
+                        using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                        {
+                            smtp.Credentials = new NetworkCredential(email, password);
+                            smtp.EnableSsl = true;
+                            smtp.Send(message);
+                        }
+                    }
+                    return View("Index");
+                }
+                catch (Exception)
+                {
+                    return View("Index");
+                    throw;
+                }
+            }
+            else
             {
                 return RedirectToAction("../Account/LogOut");
             }

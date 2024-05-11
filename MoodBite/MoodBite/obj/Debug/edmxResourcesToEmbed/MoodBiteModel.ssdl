@@ -504,6 +504,44 @@ warning 6002: The table/view 'MoodBite.dbo.vw_ManageUsers' does not have a prima
     <Property Name="Role" Type="varchar" MaxLength="100" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_MyFavoritesView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_MyFavoritesView">
+    <Key>
+      <PropertyRef Name="UsersFaveRecipeID" />
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="UsersFaveRecipeID" Type="int" Nullable="false" />
+    <Property Name="userID" Type="int" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="100" />
+    <Property Name="Password" Type="varchar" MaxLength="100" />
+    <Property Name="FirstName" Type="varchar" MaxLength="100" />
+    <Property Name="LastName" Type="varchar" MaxLength="100" />
+    <Property Name="Address" Type="varchar" MaxLength="255" />
+    <Property Name="BirthDate" Type="date" />
+    <Property Name="Gender" Type="varchar" MaxLength="100" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="EmailConfirmed" Type="bit" />
+    <Property Name="EmailConfirmationToken" Type="varchar" MaxLength="255" />
+    <Property Name="ProfilePicturePath" Type="varchar" MaxLength="255" />
+    <Property Name="RecipeID" Type="int" Nullable="false" />
+    <Property Name="MoodID" Type="int" />
+    <Property Name="FoodCategoryID" Type="int" />
+    <Property Name="RecipeName" Type="text" />
+    <Property Name="RecipeDescription" Type="text" />
+    <Property Name="IngredientsCount" Type="int" />
+    <Property Name="CookingInstruction" Type="text" />
+    <Property Name="PreparationTime" Type="time" Precision="7" />
+    <Property Name="CookingDuration" Type="time" Precision="7" />
+    <Property Name="DateUploaded" Type="datetime" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="DateApproved" Type="datetime" />
+    <Property Name="ApprovedBy" Type="int" />
+    <Property Name="ImageName" Type="varchar" MaxLength="255" />
+    <Property Name="ImagePath" Type="varchar" MaxLength="255" />
+    <Property Name="FoodCategoryName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_OrderDetailView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_OrderDetailView">
     <Key>
@@ -1403,6 +1441,39 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_ManageUsers].[Last name] AS [Last name], 
     [vw_ManageUsers].[Role] AS [Role]
     FROM [dbo].[vw_ManageUsers] AS [vw_ManageUsers]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_MyFavoritesView" EntityType="Self.vw_MyFavoritesView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_MyFavoritesView].[UsersFaveRecipeID] AS [UsersFaveRecipeID], 
+    [vw_MyFavoritesView].[userID] AS [userID], 
+    [vw_MyFavoritesView].[Username] AS [Username], 
+    [vw_MyFavoritesView].[Password] AS [Password], 
+    [vw_MyFavoritesView].[FirstName] AS [FirstName], 
+    [vw_MyFavoritesView].[LastName] AS [LastName], 
+    [vw_MyFavoritesView].[Address] AS [Address], 
+    [vw_MyFavoritesView].[BirthDate] AS [BirthDate], 
+    [vw_MyFavoritesView].[Gender] AS [Gender], 
+    [vw_MyFavoritesView].[Email] AS [Email], 
+    [vw_MyFavoritesView].[EmailConfirmed] AS [EmailConfirmed], 
+    [vw_MyFavoritesView].[EmailConfirmationToken] AS [EmailConfirmationToken], 
+    [vw_MyFavoritesView].[ProfilePicturePath] AS [ProfilePicturePath], 
+    [vw_MyFavoritesView].[RecipeID] AS [RecipeID], 
+    [vw_MyFavoritesView].[MoodID] AS [MoodID], 
+    [vw_MyFavoritesView].[FoodCategoryID] AS [FoodCategoryID], 
+    [vw_MyFavoritesView].[RecipeName] AS [RecipeName], 
+    [vw_MyFavoritesView].[RecipeDescription] AS [RecipeDescription], 
+    [vw_MyFavoritesView].[IngredientsCount] AS [IngredientsCount], 
+    [vw_MyFavoritesView].[CookingInstruction] AS [CookingInstruction], 
+    [vw_MyFavoritesView].[PreparationTime] AS [PreparationTime], 
+    [vw_MyFavoritesView].[CookingDuration] AS [CookingDuration], 
+    [vw_MyFavoritesView].[DateUploaded] AS [DateUploaded], 
+    [vw_MyFavoritesView].[IsApproved] AS [IsApproved], 
+    [vw_MyFavoritesView].[DateApproved] AS [DateApproved], 
+    [vw_MyFavoritesView].[ApprovedBy] AS [ApprovedBy], 
+    [vw_MyFavoritesView].[ImageName] AS [ImageName], 
+    [vw_MyFavoritesView].[ImagePath] AS [ImagePath], 
+    [vw_MyFavoritesView].[FoodCategoryName] AS [FoodCategoryName]
+    FROM [dbo].[vw_MyFavoritesView] AS [vw_MyFavoritesView]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_OrderDetailView" EntityType="Self.vw_OrderDetailView" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

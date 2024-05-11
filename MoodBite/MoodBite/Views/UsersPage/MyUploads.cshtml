@@ -60,7 +60,7 @@
                         <div class="dropdown-menu" aria-labelledby="actionsDropdown">
                             <a class="dropdown-item" href="#" onclick="editRecipe(@item.RecipeID)">Edit</a>
                             <a class="dropdown-item" href="~/UsersPage/RecipeDetails/@item.RecipeID" onclick="showLoader()">Details</a>
-                            <a class="dropdown-item" href="#" onclick="showLoader()">Delete</a>
+                            <a class="dropdown-item" href="#" onclick="deleteRecipe(@item.RecipeID)">Delete</a>
                         </div>
                     </div>
                 </td>
@@ -100,5 +100,13 @@
         var recipeIDInt = parseInt(recipeID);
 
         window.location.href = `@Url.Content("~/UsersPage/EditRecipe/")${recipeIDInt}`;;
+    }
+    function deleteRecipe(recipeID) {
+        if (confirm("Confirm to delete this recipe?")) {
+            var recipeIDInt = parseInt(recipeID);
+
+            showLoader();
+            window.location.href = `@Url.Content("~/UsersPage/DeleteRecipe/")${recipeIDInt}`;;
+        }
     }
 </script>

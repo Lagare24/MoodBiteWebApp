@@ -158,7 +158,7 @@ namespace MoodBite.Controllers
                 uploadRecipe.RecipeDescription = recipe.RecipeDescription;
                 uploadRecipe.PreparationTime = TimeSpan.Parse(recipe.PreparationTime.ToString());
                 uploadRecipe.CookingDuration = TimeSpan.Parse(recipe.CookingDuration.ToString());
-                uploadRecipe.DateUploaded = DateTime.Today;
+                uploadRecipe.DateUploaded = DateTime.Now;
                 uploadRecipe.CookingInstruction = recipe.CookingInstruction;
                 uploadRecipe.IngredientsCount = Convert.ToInt32(ingcount);
                 uploadRecipe.IsApproved = false;
@@ -632,11 +632,6 @@ namespace MoodBite.Controllers
             }
         }
 
-        public ActionResult MyFavorites()
-        {
-            return View();
-        }
-
         public ActionResult MyUploads()
         {
             if (User.Identity.IsAuthenticated)
@@ -751,7 +746,7 @@ namespace MoodBite.Controllers
                             }
                             catch (Exception)
                             {
-                                return View();
+                                return View(recipe);
                                 throw;
                             }
                         }
@@ -789,11 +784,11 @@ namespace MoodBite.Controllers
                                 throw;
                             }
                         }
-                        return RedirectToAction("Index");
+                        return View(recipe);
                     }
                     catch (Exception)
                     {
-                        return RedirectToAction("Index");
+                        return View(recipe);
                         throw;
                     }
                 }
@@ -860,6 +855,49 @@ namespace MoodBite.Controllers
                 }
             }
             return RedirectToAction("../Account/LogOut");
+        }
+
+        public ActionResult DeleteRecipe(int id)
+        {
+            var userRecipe = _db.UserRecipe.Where(model => model.RecipeID == id).FirstOrDefault();
+            var recipe = _db.Recipe.Where(model => model.RecipeID == userRecipe.RecipeID).FirstOrDefault();
+            if (User.Identity.IsAuthenticated)
+            {
+                _userRecipeRepo.Delete(userRecipe.UserRecipeID);
+                _recipeRepo.Delete(recipe.RecipeID);
+                return RedirectToAction("MyUploads");
+            } else
+            {
+                return RedirectToAction("../Account/LogOut");
+            }
+        }
+
+        public ActionResult MyFavorites()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var recipeDetail = new RecipeDetailViewModel();
+                var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
+                var myFavorites = _db.vw_MyFavoritesView.Where(model => model.userID == user.userID).ToList();
+                recipeDetail.myFavoritesView = myFavorites;
+                recipeDetail.faveRecipes = _db.UsersFavoriteRecipes.Where(model => model.UserID == user.userID).Select(model => model.RecipeID).Where(recipeId => recipeId.HasValue).Select(recipeId => recipeId.Value).ToList();
+
+                var isUserPremium = _db.UserPremium.Where(model => model.UserID == user.userID).FirstOrDefault();
+                if (isUserPremium != null)
+                {
+                    var incomingOrderList = _db.vw_IncomingOrderView.Where(model => model.CustomerID == user.userID).ToList();
+                    recipeDetail.incomingOrderView = incomingOrderList;
+                }
+                else
+                {
+                    recipeDetail.incomingOrderView = new List<vw_IncomingOrderView>();
+                }
+
+                return View(recipeDetail);
+            } else
+            {
+                return RedirectToAction("../Account/LogOut");
+            }
         }
     }
 }

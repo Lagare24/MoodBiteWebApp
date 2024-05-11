@@ -84,9 +84,9 @@
                         <div class="dropdown-menu" aria-labelledby="actionsDropdown">
                             <a class="dropdown-item" onclick="showLoader()" href="~/AdminsPage/EditRecipe/@item.ID">Edit</a>
                             <a class="dropdown-item" onclick="showLoader()" href="~/AdminsPage/RecipeDetails/@item.ID">Details</a>
-                            <a class="dropdown-item" onclick="showLoader()" href="~/AdminsPage/DeleteRecipe/@item.ID">Delete</a>
-                            @if (item.DateApproved == null)
+                            @if (item.DateApproved == null || (item.DateApproved != null && item.Status == "Rejected"))
                             {
+                                <a class="dropdown-item" onclick="showLoader()" href="~/AdminsPage/DeleteRecipe/@item.ID">Delete</a>
                                 <a class="dropdown-item" href="#" onclick="approveRecipe(@item.ID)">Approve</a>
                                 <a class="dropdown-item" href="#" onclick="rejectRecipe(@item.ID)">Reject</a>
                                 //~/ AdminsPage / RejectRecipe / @item.ID

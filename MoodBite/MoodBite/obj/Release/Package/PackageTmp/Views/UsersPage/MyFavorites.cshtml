@@ -1,0 +1,252 @@
+﻿@using MoodBite.Models.RecipeViewModel;
+
+@model RecipeDetailViewModel
+@{
+    ViewBag.Title = "MyFavorites";
+    Layout = "~/Views/Shared/_StandardLayout.cshtml";
+}
+
+<!-- Favicon -->
+<link href="~/Content/MainTemplate/img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+
+<!-- CSS Libraries -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/flaticon/font/flaticon.css" rel="stylesheet">
+<link href="~/Content/MainTemplate/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Wano Quin:wght@900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Blinker:wght@300;400;700&display=swap" />
+
+<!-- Template Stylesheet -->
+<link href="~/Content/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/MainTemplate/css/style.css" rel="stylesheet">
+
+
+<div style="padding-top:2rem">
+    <div class="section-header text-center">
+        <h2>My Favorites</h2>
+    </div>
+    <div class="row">
+        @if (Model.myFavoritesView.Count() != 0)
+        {
+            foreach (var recipe in Model.myFavoritesView)
+            {
+                <div class="col-md-4 flex-recipe-container">
+                    <div class="blog-item" style="width:100%; display: flex;justify-content: center; align-items: center; flex-direction: column;">
+                        <div class="blog-img" style="width:200px; margin:0 auto">
+                            @{
+                                string imagePath = Url.Content(recipe.ImagePath);
+                                bool imageExists = System.IO.File.Exists(Server.MapPath(imagePath));
+                            }
+
+                            @if (imageExists)
+                            {
+                                <img class="recipe-img" onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" src="@imagePath" alt="RecipeImageCover" style="border-radius:50%; cursor:pointer; animation: spin 60s linear infinite; height:200px" data-animate-on-scroll />
+                            }
+                            else
+                            {
+                                <img class="recipe-img" onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" src="https://placehold.co/200x200" alt="image not found" style="border-radius:50%; cursor:pointer; height:200px" data-animate-on-scroll />
+                            }
+                        </div>
+                        <div class="blog-content" onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" style="background-image: url(../../Content/multimedia/recipecontainer@3x.png); background-repeat:no-repeat; background-size:cover; width:250px; height:250px; background-color:unset; background-position:center; box-shadow:unset; left:0 !important; z-index:0; cursor:pointer">
+                            <h2 onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" class="blog-title" style="text-align:center">@recipe.RecipeName</h2>
+                            <h6 onclick="readMore(event)" data-recipe-id="@recipe.RecipeID" class="blog-title" style="text-align:center;">@recipe.FoodCategoryName</h6>
+                            @{
+                                string dateUploaded = "";
+                                double recipeRating = 0;
+                            }
+
+                            <div class="blog-text recipe-btn userhomerecipebtn" style="display:block">
+
+                                @if (!Model.faveRecipes.Contains(recipe.RecipeID))
+                                {
+                                    <a style="position:relative; left:100px"><img class="inactive-heart" style="cursor:pointer" src="~/Content/multimedia/favoritesvector.svg" data-recipe-id="@recipe.RecipeID" /></a>
+                                }
+                                else
+                                {
+                                    <a style="position:relative; z-index:99999; left:100px"><img class="active-heart" style="cursor:pointer" src="~/Content/multimedia/heartactive.svg" data-recipe-id="@recipe.RecipeID" /></a>
+                                }
+
+                                <a style="position:relative; z-index:99999; left:132.5px"><img style="cursor:pointer" data-recipe-shareID="@recipe.RecipeID" src="~/Content/multimedia/shareicon.svg" onclick="showModal(event)" /></a>
+                            </div>
+                        </div>
+                    </div> <!--end of blog-item-->
+                </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <h3 style="text-align:center"><i>No favorites yet</i></h3>
+                                }
+    </div>
+</div>
+
+@*Modal for share recipe*@
+@Html.Partial("_Modal")
+
+@if (User.Identity.IsAuthenticated)
+{
+    if (Model.incomingOrderView.Count > 0)
+    {
+        @Html.Partial("IncomingOrderModal", Model.incomingOrderView)
+    }
+}
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
+<script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Content/MainTemplate/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Content/MainTemplate/js/main.js"></script>
+<script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+<script src="~/Content/HideSomeeAds/removewatermark.js"></script>
+
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
+    var scrollAnimElements = document.querySelectorAll("[data-animate-on-scroll]");
+    var observer = new IntersectionObserver(
+      (entries) => {
+          for (const entry of entries) {
+              if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                  const targetElement = entry.target;
+                  targetElement.classList.add("animate");
+                  observer.unobserve(targetElement);
+              }
+          }
+      },
+      {
+          threshold: 0.15,
+      }
+    );
+
+    for (let i = 0; i < scrollAnimElements.length; i++) {
+        observer.observe(scrollAnimElements[i]);
+    }
+
+    $(".recipe-btn img[data-recipe-id]").click(function () {
+        // Disable the image to prevent multiple clicks
+        $(this).prop("disabled", true);
+
+        var onClickValue = $(this).closest('.blog-content').attr('onclick');
+
+        $(this).closest('.blog-content').removeAttr('onclick');
+
+        var recipeID = parseInt($(this).attr("data-recipe-id"));
+        var $image = $(".recipe-btn img[data-recipe-id='" + recipeID + "']");
+
+        var data = {
+            recipeID: recipeID
+        };
+
+        $.ajax({
+            url: "/UsersPage/AddToFavorites",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    if(response.add == true){
+                        alert(response.message);
+                        $image.removeClass("inactive-heart").addClass("active-heart").attr("src", '@Url.Content("~/Content/multimedia/heartactive.svg")');
+                    } else {
+                        alert(response.message);
+                        $image.removeClass("active-heart").addClass("inactive-heart").attr("src", '@Url.Content("~/Content/multimedia/favoritesvector.svg")');
+                    }
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert("An error occurred while adding the recipe to favorites.");
+            },
+            complete: function () {
+                $(".recipe-btn img[data-recipe-id]").prop("disabled", false);
+
+                $(".blog-content").attr('onclick', onClickValue);
+            }
+        });
+    });
+
+    function filterSearch(btnID, selectID, containerID, hiddenInpName) {
+        var select = document.getElementById(selectID);
+        var selectedOption = select.options[select.selectedIndex].text;
+        var container = document.getElementById(containerID);
+
+        // Check if the selected option already exists
+        var existingSpans = container.getElementsByTagName('span');
+        for (var i = 0; i < existingSpans.length; i++) {
+            if (existingSpans[i].textContent === selectedOption) {
+                return;
+            }
+        }
+
+        var span = document.createElement('span');
+        span.style.border = '1px solid black';
+        span.style.padding = '0.25rem 0.65rem';
+        span.style.borderRadius = '20px';
+        span.style.marginRight = '0.3rem';
+        span.style.cursor = "pointer";
+
+        var icon = document.createElement('i');
+        icon.className = 'fas fa-times';
+        icon.style.marginRight = '0.15rem';
+
+        span.appendChild(icon);
+        span.appendChild(document.createTextNode(selectedOption));
+
+        container.appendChild(span);
+
+        // Create hidden input with the selected option value
+        var hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = hiddenInpName;
+        hiddenInput.value = selectedOption;
+
+        // Append the hidden input to the container
+        container.appendChild(hiddenInput);
+
+        // Add click event listener to the span element
+        span.addEventListener('click', function() {
+            container.removeChild(span); // Remove the span element
+            container.removeChild(hiddenInput); // Remove the corresponding hidden input
+        });
+    }
+
+
+
+    function readMore(event) {
+        var element = event.target;
+        var recipeID = parseInt(element.getAttribute("data-recipe-id"));
+        console.log("id " + recipeID);
+
+        var modal = $('#myModal');
+        if (modal.is(':visible')) {
+            console.log("Modal is visible. Redirection disabled.");
+            return;
+        }
+
+        if (isNaN(recipeID)) {
+            alert("An error occured, please try again.");
+        } else {
+            window.location.href = `RecipeReadMore/${recipeID}`;
+        }
+    }
+
+</script>

@@ -4,6 +4,8 @@
     var cartActive = Session["CartActive"] as string;
     var profileActive = Session["ProfileActive"] as string;
     var user = Session["User"] as User;
+    var isPremium = Session["IsPremium"] as UserPremium;
+
     ViewBag.LoaderMsg = "Please wait...";
 
 
@@ -33,6 +35,7 @@
     switch (ViewContext.RouteData.Values["action"].ToString().ToLower())
     {
         case "usershome":
+        case "myfavorites":
             classParentContainerName = "blog";
             marginBottom = "0px";
             break;
@@ -150,10 +153,21 @@
                     {
                         myCartUrl = "~/Account/LogOut";
                     }
-                    <a class="my-cart" style="color:white; text-decoration:none !important" href="@Url.Content(myCartUrl)">
-                        <img class="my-cart-icon" src="~/Content/multimedia/group-1.svg" alt="Cart Icon">
-                        <span class="my-cart-text" style="color:white">My Cart</span>
-                    </a>
+                    if (isPremium == null)
+                    {
+                        <a class="my-cart" style="color:white; text-decoration:none !important" href="#" onclick="alert('To access this feature, please subscribe to our premium account.');">
+                            <img class="my-cart-icon" src="~/Content/multimedia/group-1.svg" alt="Cart Icon">
+                            <span class="my-cart-text" style="color:white">My Cart</span>
+                        </a>
+                            }
+                            else
+                            {
+                                <a class="my-cart" style="color:white; text-decoration:none !important" href="@Url.Content(myCartUrl)">
+                                    <img class="my-cart-icon" src="~/Content/multimedia/group-1.svg" alt="Cart Icon">
+                                    <span class="my-cart-text" style="color:white">My Cart</span>
+                                </a>
+                            }
+
                             <div class="dropdown" style="height:36px;">
                                 <button class="btn btn-secondary dropdown-toggle cust-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height:36px; background-color:#fbaf32">
                                     <i class="fas fa-bars"></i>
@@ -237,7 +251,7 @@
                         <div class="row contact-form">
                             <div class="col-md-12">
                                 <div id="success"></div>
-                                <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                                <form>
                                     <div class="control-group">
                                         @if (User.Identity.IsAuthenticated && Session["User"] != null)
                                         {
@@ -287,90 +301,6 @@
     <!-- Footer End -->
 
     <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-
-    <!--
-    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script defer src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
-    <script defer src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="~/Content/MainTemplate/lib/easing/easing.min.js"></script>
-    <script src="~/Content/MainTemplate/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="~/Content/MainTemplate/lib/tempusdominus/js/moment.min.js"></script>
-    <script src="~/Content/MainTemplate/lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="~/Content/MainTemplate/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-    <script src="~/Content/MainTemplate/mail/jqBootstrapValidation.min.js"></script>
-    <script src="~/Content/MainTemplate/mail/contact.js"></script>
-
-    <script src="~/Content/MainTemplate/js/main.js"></script>
-    <script src="~/Content/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        $(document).ready(function(){
-            // Function to handle click event on nav links
-            $('.nav-item.nav-link').click(function(){
-                // Remove active class from all nav links
-                $('.nav-item.nav-link').removeClass('active');
-                // Add active class to the clicked nav link
-                $(this).addClass('active');
-            });
-        });
-
-        //const searchButton = document.getElementById('search-button');
-        //const searchInput = document.getElementById('search-input');
-        //searchButton.addEventListener('click', () => {
-        //    const inputValue = searchInput.value;
-        //    window.location.href = 'UsersHome/' + inputValue;
-        //});
-
-        $(document).ready(function () {
-            // Store the original search widget
-            var originalSearchWidget = $('.search-widget').clone();
-
-            // Function to handle scroll event
-            $(window).scroll(function () {
-                // Check if the navbar has become sticky
-                var isNavSticky = $('.navbar').hasClass('nav-sticky');
-
-                // Check if the search widget has already been transferred
-                var searchWidgetExists = $('.navbar .search-widget').length > 0;
-
-                if (isNavSticky && !searchWidgetExists) {
-                    // Find the first element in the navbar
-                    var firstElement = $('.container-fluid').children().first();
-                    // Clone the original search widget and insert it after the first element
-                    var clonedSearchWidget = originalSearchWidget.clone();
-                    firstElement.after(clonedSearchWidget);
-
-                    // Set the width of the search input to 45rem
-                    clonedSearchWidget.find('input[type="text"]').css('width', '45rem');
-                    // Set the right attribute of the search input to 4.5%
-                    clonedSearchWidget.find('input[type="text"]').css('right', '4.5%');
-                } else if (!isNavSticky && searchWidgetExists) {
-                    // Remove the search widget from the sticky navbar if it's not sticky
-                    $('.navbar .search-widget').remove();
-                }
-
-                // Adjust the width and right attribute of the search input field based on the navbar sticky state
-                if (searchWidgetExists) {
-                    var searchInput = $('.navbar .search-widget input[type="text"]');
-                    if (isNavSticky) {
-                        searchInput.css('width', '45rem');
-                        searchInput.css('right', '4.5%');
-                    } else {
-                        searchInput.css('width', ''); // Remove the width style
-                        searchInput.css('right', ''); // Remove the right style
-                    }
-                }
-            });
-        });
-
-        $(document).ready(function () {
-            new DataTable('#example');
-        })
-    </script> -->
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -502,6 +432,35 @@
                 document.getElementById("searchbtn").click(); // Trigger click event on the search button
             }
         }
+
+        $(document).ready(function () {
+            $(document).on('click', '#sendMessageButton', function (event) {
+                event.preventDefault();
+                showLoader();
+
+                $.ajax({
+                    url: '@Url.Action("SubmitTestimony", "Home")',
+                    type: 'POST',
+                    data: {
+                        name: $('#name').val(),
+                        email: $('#email').val(),
+                        profession: $('#subject').val(),
+                        message: $('#message').val()
+                    },
+                    success: function (response) {
+                        alert(response.msg);
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('An error has occurred: ' + error);
+                        window.location.reload();
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            });
+        });
 
         //$(document).ready(function () {
         //    // Initialize DataTable

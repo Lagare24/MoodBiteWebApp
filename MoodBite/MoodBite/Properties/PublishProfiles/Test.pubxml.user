@@ -52,7 +52,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/18/2024 14:07:44</publishTime>
     </File>
     <File Include="bin/MoodBite.dll">
-      <publishTime>05/11/2024 02:50:57</publishTime>
+      <publishTime>05/11/2024 19:05:29</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/08/2023 07:09:56</publishTime>
@@ -565,7 +565,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/18/2024 14:07:43</publishTime>
     </File>
     <File Include="MoodBiteModel.edmx.diagram">
-      <publishTime>05/10/2024 01:00:25</publishTime>
+      <publishTime>05/11/2024 18:19:15</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>05/05/2024 12:29:04</publishTime>
@@ -607,7 +607,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/11/2024 00:38:13</publishTime>
     </File>
     <File Include="Views/AdminsPage/EditRecipe.cshtml">
-      <publishTime>05/06/2024 08:28:21</publishTime>
+      <publishTime>05/11/2024 13:06:06</publishTime>
     </File>
     <File Include="Views/AdminsPage/EditUser.cshtml">
       <publishTime>05/11/2024 00:42:28</publishTime>
@@ -619,7 +619,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/18/2024 14:07:43</publishTime>
     </File>
     <File Include="Views/AdminsPage/ManageUploads.cshtml">
-      <publishTime>05/08/2024 02:02:40</publishTime>
+      <publishTime>05/11/2024 17:24:03</publishTime>
     </File>
     <File Include="Views/AdminsPage/ManageUsers.cshtml">
       <publishTime>05/08/2024 01:22:57</publishTime>
@@ -646,7 +646,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/11/2024 00:38:06</publishTime>
     </File>
     <File Include="Views/Shared/IncomingOrderModal.cshtml">
-      <publishTime>05/10/2024 01:45:56</publishTime>
+      <publishTime>05/11/2024 14:19:31</publishTime>
     </File>
     <File Include="Views/Shared/_LandingPageLayout.cshtml">
       <publishTime>04/18/2024 14:07:43</publishTime>
@@ -658,7 +658,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/07/2024 08:56:19</publishTime>
     </File>
     <File Include="Views/Shared/_StandardLayout.cshtml">
-      <publishTime>05/10/2024 02:47:21</publishTime>
+      <publishTime>05/11/2024 18:36:47</publishTime>
     </File>
     <File Include="Views/UsersPage/CheckOutPage.cshtml">
       <publishTime>05/11/2024 00:13:22</publishTime>
@@ -667,25 +667,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/06/2024 08:26:17</publishTime>
     </File>
     <File Include="Views/UsersPage/EditRecipe.cshtml">
-      <publishTime>05/09/2024 00:44:18</publishTime>
+      <publishTime>05/11/2024 18:38:50</publishTime>
     </File>
     <File Include="Views/UsersPage/MyCart.cshtml">
       <publishTime>05/11/2024 00:30:34</publishTime>
     </File>
+    <File Include="Views/UsersPage/MyFavorites.cshtml">
+      <publishTime>05/11/2024 18:51:36</publishTime>
+    </File>
     <File Include="Views/UsersPage/MyUploads.cshtml">
-      <publishTime>05/08/2024 00:26:01</publishTime>
+      <publishTime>05/11/2024 16:24:42</publishTime>
     </File>
     <File Include="Views/UsersPage/RecipeDetails.cshtml">
       <publishTime>05/08/2024 00:46:56</publishTime>
     </File>
     <File Include="Views/UsersPage/RecipeReadMore.cshtml">
-      <publishTime>05/10/2024 11:41:58</publishTime>
+      <publishTime>05/11/2024 11:31:59</publishTime>
     </File>
     <File Include="Views/UsersPage/UploadRecipe.cshtml">
-      <publishTime>05/07/2024 10:23:36</publishTime>
+      <publishTime>05/11/2024 13:37:58</publishTime>
     </File>
     <File Include="Views/UsersPage/UsersHome.cshtml">
-      <publishTime>05/10/2024 13:04:07</publishTime>
+      <publishTime>05/11/2024 18:30:45</publishTime>
     </File>
     <File Include="Views/UsersPage/ViewForDownloadRecipe.cshtml">
       <publishTime>05/06/2024 08:29:00</publishTime>
@@ -694,7 +697,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/01/2024 13:50:48</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/11/2024 02:51:01</publishTime>
+      <publishTime>05/11/2024 19:05:32</publishTime>
     </File>
   </ItemGroup>
 </Project>

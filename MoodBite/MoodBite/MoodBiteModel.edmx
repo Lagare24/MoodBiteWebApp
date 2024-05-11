@@ -509,6 +509,44 @@ warning 6002: The table/view 'MoodBite.dbo.vw_ManageUsers' does not have a prima
           <Property Name="Role" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_MyFavoritesView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_MyFavoritesView">
+          <Key>
+            <PropertyRef Name="UsersFaveRecipeID" />
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="RecipeID" />
+          </Key>
+          <Property Name="UsersFaveRecipeID" Type="int" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="100" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="Address" Type="varchar" MaxLength="255" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="Gender" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="EmailConfirmed" Type="bit" />
+          <Property Name="EmailConfirmationToken" Type="varchar" MaxLength="255" />
+          <Property Name="ProfilePicturePath" Type="varchar" MaxLength="255" />
+          <Property Name="RecipeID" Type="int" Nullable="false" />
+          <Property Name="MoodID" Type="int" />
+          <Property Name="FoodCategoryID" Type="int" />
+          <Property Name="RecipeName" Type="text" />
+          <Property Name="RecipeDescription" Type="text" />
+          <Property Name="IngredientsCount" Type="int" />
+          <Property Name="CookingInstruction" Type="text" />
+          <Property Name="PreparationTime" Type="time" Precision="7" />
+          <Property Name="CookingDuration" Type="time" Precision="7" />
+          <Property Name="DateUploaded" Type="datetime" />
+          <Property Name="IsApproved" Type="bit" />
+          <Property Name="DateApproved" Type="datetime" />
+          <Property Name="ApprovedBy" Type="int" />
+          <Property Name="ImageName" Type="varchar" MaxLength="255" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="255" />
+          <Property Name="FoodCategoryName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_OrderDetailView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_OrderDetailView">
           <Key>
@@ -1409,6 +1447,39 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_ManageUsers].[Role] AS [Role]
     FROM [dbo].[vw_ManageUsers] AS [vw_ManageUsers]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_MyFavoritesView" EntityType="Self.vw_MyFavoritesView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_MyFavoritesView].[UsersFaveRecipeID] AS [UsersFaveRecipeID], 
+    [vw_MyFavoritesView].[userID] AS [userID], 
+    [vw_MyFavoritesView].[Username] AS [Username], 
+    [vw_MyFavoritesView].[Password] AS [Password], 
+    [vw_MyFavoritesView].[FirstName] AS [FirstName], 
+    [vw_MyFavoritesView].[LastName] AS [LastName], 
+    [vw_MyFavoritesView].[Address] AS [Address], 
+    [vw_MyFavoritesView].[BirthDate] AS [BirthDate], 
+    [vw_MyFavoritesView].[Gender] AS [Gender], 
+    [vw_MyFavoritesView].[Email] AS [Email], 
+    [vw_MyFavoritesView].[EmailConfirmed] AS [EmailConfirmed], 
+    [vw_MyFavoritesView].[EmailConfirmationToken] AS [EmailConfirmationToken], 
+    [vw_MyFavoritesView].[ProfilePicturePath] AS [ProfilePicturePath], 
+    [vw_MyFavoritesView].[RecipeID] AS [RecipeID], 
+    [vw_MyFavoritesView].[MoodID] AS [MoodID], 
+    [vw_MyFavoritesView].[FoodCategoryID] AS [FoodCategoryID], 
+    [vw_MyFavoritesView].[RecipeName] AS [RecipeName], 
+    [vw_MyFavoritesView].[RecipeDescription] AS [RecipeDescription], 
+    [vw_MyFavoritesView].[IngredientsCount] AS [IngredientsCount], 
+    [vw_MyFavoritesView].[CookingInstruction] AS [CookingInstruction], 
+    [vw_MyFavoritesView].[PreparationTime] AS [PreparationTime], 
+    [vw_MyFavoritesView].[CookingDuration] AS [CookingDuration], 
+    [vw_MyFavoritesView].[DateUploaded] AS [DateUploaded], 
+    [vw_MyFavoritesView].[IsApproved] AS [IsApproved], 
+    [vw_MyFavoritesView].[DateApproved] AS [DateApproved], 
+    [vw_MyFavoritesView].[ApprovedBy] AS [ApprovedBy], 
+    [vw_MyFavoritesView].[ImageName] AS [ImageName], 
+    [vw_MyFavoritesView].[ImagePath] AS [ImagePath], 
+    [vw_MyFavoritesView].[FoodCategoryName] AS [FoodCategoryName]
+    FROM [dbo].[vw_MyFavoritesView] AS [vw_MyFavoritesView]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_OrderDetailView" EntityType="Self.vw_OrderDetailView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_OrderDetailView].[PO_ID] AS [PO_ID], 
@@ -1925,6 +1996,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
             <End Role="User" EntitySet="User" />
             <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
           </AssociationSet>
+          <EntitySet Name="vw_MyFavoritesView" EntityType="MoodBiteModel.vw_MyFavoritesView" />
           </EntityContainer>
         <ComplexType Name="sp_FilterSearchByAllergy_Result">
           <Property Type="Int32" Name="RecipeID" Nullable="false" />
@@ -3115,6 +3187,42 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_MyFavoritesView">
+          <Key>
+            <PropertyRef Name="UsersFaveRecipeID" />
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="RecipeID" />
+          </Key>
+          <Property Name="UsersFaveRecipeID" Type="Int32" Nullable="false" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmailConfirmed" Type="Boolean" />
+          <Property Name="EmailConfirmationToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePicturePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RecipeID" Type="Int32" Nullable="false" />
+          <Property Name="MoodID" Type="Int32" />
+          <Property Name="FoodCategoryID" Type="Int32" />
+          <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IngredientsCount" Type="Int32" />
+          <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PreparationTime" Type="Time" Precision="7" />
+          <Property Name="CookingDuration" Type="Time" Precision="7" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <Property Name="DateApproved" Type="DateTime" Precision="3" />
+          <Property Name="ApprovedBy" Type="Int32" />
+          <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3904,6 +4012,41 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
               <MappingFragment StoreEntitySet="vw_UsersUploadCounts">
                 <ScalarProperty Name="TotalUpload" ColumnName="TotalUpload" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_MyFavoritesView">
+            <EntityTypeMapping TypeName="MoodBiteModel.vw_MyFavoritesView">
+              <MappingFragment StoreEntitySet="vw_MyFavoritesView">
+                <ScalarProperty Name="FoodCategoryName" ColumnName="FoodCategoryName" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+                <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="CookingDuration" ColumnName="CookingDuration" />
+                <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+                <ScalarProperty Name="CookingInstruction" ColumnName="CookingInstruction" />
+                <ScalarProperty Name="IngredientsCount" ColumnName="IngredientsCount" />
+                <ScalarProperty Name="RecipeDescription" ColumnName="RecipeDescription" />
+                <ScalarProperty Name="RecipeName" ColumnName="RecipeName" />
+                <ScalarProperty Name="FoodCategoryID" ColumnName="FoodCategoryID" />
+                <ScalarProperty Name="MoodID" ColumnName="MoodID" />
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+                <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
+                <ScalarProperty Name="EmailConfirmationToken" ColumnName="EmailConfirmationToken" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="UsersFaveRecipeID" ColumnName="UsersFaveRecipeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

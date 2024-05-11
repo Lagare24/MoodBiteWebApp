@@ -42,7 +42,7 @@
 
 @Html.Partial("_Loader")
 
-@using (Html.BeginForm("EditRecipe", "AdminsPage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditRecipe", "UsersPage", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.RecipeID)
@@ -65,13 +65,13 @@
             <div class="form-group">
                 <label class="control-label col-md-12">Stocks</label>
                 <div class="col-md-12">
-                    <input type="number" min="0" class="form-control" required name="stock" id="stock" value="@editFoodSale.Stocks" />
+                    <input type="number" min="0" max="@editFoodSale.Stocks" class="form-control" required name="stock" id="stock" value="@editFoodSale.Stocks" />
                 </div>
             </div>
         }
         else
         {
-            <input type="hidden" min="0" class="form-control" required name="stock" id="stock" value="@editFoodSale.Stocks" />
+            <input type="hidden" min="0" class="form-control" required name="stock" id="stock" value="0" />
         }
 
         <div class="form-group">
@@ -172,7 +172,8 @@
                                 new SelectListItem { Value = "peel", Text = "Peel" },
                                 new SelectListItem { Value = "grind", Text = "Grind" },
                                 new SelectListItem { Value = "crushed", Text = "Crushed" },
-                                new SelectListItem { Value = "diced", Text = "Diced" }
+                                new SelectListItem { Value = "diced", Text = "Diced" },
+                                new SelectListItem { Value = "pc", Text = "Piece"}
                             };
                                     listOfUnitMeasures = listOfUnitMeasures.OrderBy(list => list.Text).ToArray();
 

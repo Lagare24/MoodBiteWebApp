@@ -486,6 +486,9 @@
     <Compile Include="vw_ManageUsers.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_MyFavoritesView.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_OrderDetailView.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
@@ -561,6 +564,7 @@
     <Content Include="Views\UsersPage\EditRecipe.cshtml" />
     <Content Include="Views\UsersPage\RecipeDetails.cshtml" />
     <Content Include="Views\Shared\IncomingOrderModal.cshtml" />
+    <Content Include="Views\UsersPage\MyFavorites.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

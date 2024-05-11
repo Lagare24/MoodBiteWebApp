@@ -39,12 +39,14 @@ namespace MoodBite.Controllers
         public ActionResult LogIn(User u)
         {
             var user = _userRepo.Table.Where(model => (model.Username == u.Username && model.Password == u.Password) && model.EmailConfirmed == true).FirstOrDefault();
+            var isPremium = _db.UserPremium.Where(model => model.UserID == user.userID).FirstOrDefault();
 
             if(user != null)
             {
                 FormsAuthentication.SetAuthCookie(u.Username, false);
                 ViewBag.LoginSuccess = true;
                 Session["User"] = user;
+                Session["IsPremium"] = isPremium;
 
                 var usersRole = _db.UserRole.Where(model => model.UserID == user.userID).Select(model => model.RoleID).FirstOrDefault();
 

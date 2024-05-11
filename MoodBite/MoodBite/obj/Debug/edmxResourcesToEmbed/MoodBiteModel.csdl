@@ -214,6 +214,7 @@
       <End Role="User" EntitySet="User" />
       <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
     </AssociationSet>
+    <EntitySet Name="vw_MyFavoritesView" EntityType="MoodBiteModel.vw_MyFavoritesView" />
   </EntityContainer>
   <ComplexType Name="sp_FilterSearchByAllergy_Result">
     <Property Type="Int32" Name="RecipeID" Nullable="false" />
@@ -1404,4 +1405,40 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="vw_MyFavoritesView">
+    <Key>
+      <PropertyRef Name="UsersFaveRecipeID" />
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="UsersFaveRecipeID" Type="Int32" Nullable="false" />
+    <Property Name="userID" Type="Int32" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="BirthDate" Type="DateTime" Precision="0" />
+    <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="EmailConfirmed" Type="Boolean" />
+    <Property Name="EmailConfirmationToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ProfilePicturePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeID" Type="Int32" Nullable="false" />
+    <Property Name="MoodID" Type="Int32" />
+    <Property Name="FoodCategoryID" Type="Int32" />
+    <Property Name="RecipeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IngredientsCount" Type="Int32" />
+    <Property Name="CookingInstruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PreparationTime" Type="Time" Precision="7" />
+    <Property Name="CookingDuration" Type="Time" Precision="7" />
+    <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="DateApproved" Type="DateTime" Precision="3" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>
