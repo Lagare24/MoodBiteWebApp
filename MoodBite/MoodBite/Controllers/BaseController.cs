@@ -101,6 +101,9 @@ namespace MoodBite.Controllers
             {
                 var incomingOrderList = _db.vw_IncomingOrderView.Where(model => model.CustomerID == user.userID).ToList();
                 recipeDetail.incomingOrderView = incomingOrderList;
+            } else
+            {
+                recipeDetail.incomingOrderView = new List<vw_IncomingOrderView>();
             }
 
             //var orderMaster = _db.OrderMaster.Where(model => model.CustomerID == user.userID).FirstOrDefault();

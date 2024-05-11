@@ -36,21 +36,28 @@ namespace MoodBite.Controllers
         [HttpPost]
         public ActionResult SubmitTestimony(string name, string email, string profession, string message)
         {
-            var testimony = new Testimonials();
-            testimony.tName = name;
-            testimony.tEmail = email;
-            testimony.tProfession = profession;
-            testimony.tMsg = message;
+            var existingTestimonial = _db.Testimonials.Where(model => model.tEmail == email).FirstOrDefault();
+            if (existingTestimonial == null)
+            {
+                var testimony = new Testimonials();
+                testimony.tName = name;
+                testimony.tEmail = email;
+                testimony.tProfession = profession;
+                testimony.tMsg = message;
 
-            try
+                try
+                {
+                    _testimonyRepo.Create(testimony);
+                    return Json(new { msg = "Feedback submitted successfully" });
+                }
+                catch (Exception)
+                {
+                    return Json(new { msg = "An error occurred while submitting the testimony" });
+                    throw;
+                }
+            } else
             {
-                _testimonyRepo.Create(testimony);
-                return Json(new { msg = "Feedback submitted successfully" });
-            }
-            catch (Exception)
-            {
-                return Json(new { msg = "An error occurred while submitting the testimony" });
-                throw;
+                return Json(new { msg="Can only submit feedback once per email" });
             }
         }
 

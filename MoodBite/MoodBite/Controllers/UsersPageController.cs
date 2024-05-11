@@ -483,17 +483,17 @@ namespace MoodBite.Controllers
         public ActionResult CheckOutPage(int id)
         {
             var user = _db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
+            var cartItem = _db.vw_CheckOutView.Where(model => model.CartID == id && model.userID == user.userID).FirstOrDefault();
 
-            if (user.userID == id)
+            if (cartItem != null)
             {
                 if (Session["User"] != null)
                 {
-                    var cart = _db.vw_CheckOutView.Where(model => model.userID == id).ToList();
-                    return View(cart);
+                    return View(cartItem);
                 }
                 else
                 {
-                    return RedirectToAction("../Account/LogOut");
+                    return RedirectToAction("../Error/PageNotFound");
                 }
             } else
             {

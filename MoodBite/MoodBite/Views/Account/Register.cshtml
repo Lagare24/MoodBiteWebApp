@@ -73,7 +73,7 @@
                 <div class="control-group"> 
                     <div class="input-group" id="show-hide-password">
                         @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @required = "required" })
-                        <div class="input-group-append">
+                        <div class="input-group-append" style="z-index:99999">
                             <div class="input-group-text pwd" style="cursor:pointer">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                             </div>
@@ -83,7 +83,7 @@
                 <div class="control-group">
                     <div class="input-group" id="show-hide-confirm-password">
                         <input type="password" class="form-control" name="confirmPasswordInp" id="confirmPasswordInp" placeholder="Confirm Password" required="required" />
-                        <div class="input-group-append">
+                        <div class="input-group-append" style="z-index:99999">
                             <div class="input-group-text confpwd" style="cursor:pointer">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                             </div>

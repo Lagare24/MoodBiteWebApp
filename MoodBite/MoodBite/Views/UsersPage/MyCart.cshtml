@@ -57,13 +57,13 @@
                     </a>
                 </td>
                 <td width="60%">@item.RecipeName</td>
-                <td width="15%">&#8369; @Convert.ToDecimal(item.Price).ToString("0.00")</td>
+                <td width="10%">&#8369; @Convert.ToDecimal(item.Price).ToString("0.00")</td>
                 <td>
                     <input style="width:5rem" type="number" min="0" max="@item.stocks" value="@item.Qty" class="qty-input" data-cartid="@item.CartID" oninput="validateInput(this)" onkeydown="handleQtyInput(event)"/>
                 </td>
-                <td width="15%" class="total-price">&#8369; @Convert.ToDecimal(item.Total_Price).ToString("0.00")</td>
-                <td width="35%">
-                    <a style="text-decoration:none; color:white; cursor:pointer" class="btn btn-success" data-cartid="@item.CartID" onclick="window.location.href='/UsersPage/CheckOutPage/@user.userID'">CheckOut</a>
+                <td width="10%" class="total-price">&#8369; @Convert.ToDecimal(item.Total_Price).ToString("0.00")</td>
+                <td width="45%">
+                    <a style="text-decoration:none; color:white; cursor:pointer" class="btn btn-success" data-cartid="@item.CartID" onclick="window.location.href='/UsersPage/CheckOutPage/@item.CartID'">Check Out</a>
                 </td>
             </tr>
 
@@ -106,22 +106,28 @@
             var input = event.target;
             var cartId = $(input).data('cartid');
             var newQty = $(input).val();
-            $.ajax({
-                url: '/UsersPage/UpdateQuantity',
-                type: 'POST',
-                data: { cartId: cartId, newQty: newQty },
-                success: function (response) {
-                    if (response.zeroUnit) {
-                        $(input).closest('tr').remove();
-                        updateTotalPrice(cartId);
-                    } else {
-                        updateTotalPrice(cartId);
+
+            if (newQty > 0) {
+                $.ajax({
+                    url: '/UsersPage/UpdateQuantity',
+                    type: 'POST',
+                    data: { cartId: cartId, newQty: newQty },
+                    success: function (response) {
+                        if (response.zeroUnit) {
+                            $(input).closest('tr').remove();
+                            updateTotalPrice(cartId);
+                        } else {
+                            updateTotalPrice(cartId);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                }
-            });
+                });
+            } else {
+                alert("Qty should not be less than zero");
+                window.location.reload();
+            }
         }
     }
 
@@ -154,22 +160,27 @@
             var cartId = $(this).data('cartid');
             var newQty = $(this).val();
 
-            $.ajax({
-                url: '/UsersPage/UpdateQuantity',
-                type: 'POST',
-                data: { cartId: cartId, newQty: newQty },
-                success: function (response) {
-                    if (response.zeroUnit) {
-                        $(event.target).closest('tr').remove();
-                        updateTotalPrice(cartId);
-                    } else {
-                        updateTotalPrice(cartId);
+            if (newQty > 0) {
+                $.ajax({
+                    url: '/UsersPage/UpdateQuantity',
+                    type: 'POST',
+                    data: { cartId: cartId, newQty: newQty },
+                    success: function (response) {
+                        if (response.zeroUnit) {
+                            $(event.target).closest('tr').remove();
+                            updateTotalPrice(cartId);
+                        } else {
+                            updateTotalPrice(cartId);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                }
-            });
+                });
+            } else {
+                alert("Qty should not be less than zero");
+                window.location.reload();
+            }
         });
     });
 

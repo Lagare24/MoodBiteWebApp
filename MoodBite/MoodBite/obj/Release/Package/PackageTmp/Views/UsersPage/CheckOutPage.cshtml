@@ -1,4 +1,4 @@
-﻿@model IEnumerable<vw_CheckOutView>
+﻿@model vw_CheckOutView
 
 
 @{
@@ -6,6 +6,11 @@
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
     decimal total = 0;
     var user = Session["User"] as User;
+
+    Random random = new Random();
+    int deliveryFee = random.Next(5, 126);
+    decimal subTotal = 0;
+    int estArrivalTime = random.Next(5, 60);
 }
 
 <!-- Favicon -->
@@ -33,14 +38,14 @@
 
 <h5><a href="#" style="text-decoration:none" onclick="history.back()">Go back</a></h5>
 <h2 style="margin:1.5rem 0 0">Checkout</h2>
-<h6>ShopName + ShopLocation</h6>
+@*<h6>ShopName + ShopLocation</h6>*@
 
 <div class="container row">
     <div class="container border border-dark col-md-6" style="width: 48.5%; margin-left:0;">
-        <h5 class="fw-bold" style="padding-top:0.5rem">Deliver To</h5>                  
+        <h5 class="fw-bold" style="padding-top:0.5rem">Deliver To</h5>         
         <hr />
         <h6 class="fw-lighter">Delivery Arrival Time</h6>
-        <h6>Time : Distance</h6>                  
+        <div data-estArrivalTime-data="@estArrivalTime">@Html.Raw(estArrivalTime + " minutes")</div>
         <hr />
         <div class="row">
             <div class="col-md-6">
@@ -68,26 +73,20 @@
         <hr />
 
         <!--container for each shop-->
-        @{
-            Random random = new Random();
-            int deliveryFee = random.Next(5, 126);
-            decimal subTotal = 0;
-            int estArrivalTime = random.Next(5, 60);
-        }
         <div>
-            @foreach (var item in Model)
-            {
+            @*@foreach (var item in Model)
+            {*@
                 <div class="row" style="justify-content:center; align-items:center;">
-                    <div class="col-md-1"><span>@item.Qty</span>x</div>
-                    <div class="col-md-2"><img src="@Url.Content(item.ImagePath)" width="60px" height="60px" style="border-radius:50%;" /></div>
-                    <div class="col-md-6">@item.RecipeName</div>
-                    <div class="col-md-3">&#8369; @Convert.ToDecimal(item.Total_Price).ToString("0.00")</div>
+                    <div class="col-md-1"><span>@Model.Qty</span>x</div>
+                    <div class="col-md-2"><img src="@Url.Content(Model.ImagePath)" width="60px" height="60px" style="border-radius:50%;" /></div>
+                    <div class="col-md-6">@Model.RecipeName</div>
+                    <div class="col-md-3">&#8369; @Convert.ToDecimal(Model.Total_Price).ToString("0.00")</div>
 
                     @{ 
-                        subTotal += Convert.ToDecimal(item.Total_Price);
+                        subTotal += Convert.ToDecimal(Model.Total_Price);
                     }
                 </div>
-            }
+            @*}*@
             @{
                 total += (subTotal + deliveryFee);
             }
@@ -102,10 +101,10 @@
                     
                     <div data-deliveryFee-data="@deliveryFee">&#8369; @deliveryFee</div>
                 </div>
-                <div class="col-md-12" style="display:flex; justify-content:space-between">
+                @*<div class="col-md-12" style="display:flex; justify-content:space-between">
                     <div>Estimated arrival time</div>
                     <div data-estArrivalTime-data="@estArrivalTime">@Html.Raw(estArrivalTime + " minutes")</div>
-                </div>
+                </div>*@
             </div>
         </div>    
         <!--outer loop-->                   
@@ -128,14 +127,14 @@
                 </div>
 
             </div>
-            <div class="col-md-12" style="margin-bottom:1rem">
+            @*<div class="col-md-12" style="margin-bottom:1rem">
                 <div>
                     <label>Profile</label>
                 </div>
                 <div>
                     <input type="text" name="profileInp" style="width:100%"/>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>

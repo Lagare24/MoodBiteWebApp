@@ -72,7 +72,7 @@
                     <label>Password</label>
                     <div class="input-group" id="show-hide-new-password">
                         @Html.PasswordFor(model => model.Password, new { @class = "form-control", @required = "required", @id = "pwdinp", @value = Model.Password })
-                        <div class="input-group-append">
+                        <div class="input-group-append" style="z-index:99999">
                             <div class="input-group-text newpwd" style="background-color: white; cursor:pointer; border: none; position: absolute; right: 1%; top: 4%;">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                             </div>
