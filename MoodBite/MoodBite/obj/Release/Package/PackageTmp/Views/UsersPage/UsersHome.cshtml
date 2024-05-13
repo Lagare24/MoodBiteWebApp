@@ -199,9 +199,12 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    if (Model.incomingOrderView.Count > 0)
+    if (Model.incomingOrderView != null)
     {
-        @Html.Partial("IncomingOrderModal", Model.incomingOrderView)
+        if (Model.incomingOrderView.Count > 0)
+        {
+            @Html.Partial("IncomingOrderModal", Model.incomingOrderView)
+        }
     }
 }
 

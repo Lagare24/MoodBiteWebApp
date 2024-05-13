@@ -48,8 +48,8 @@
     @Html.HiddenFor(model => model.RecipeID)
 
     <div class="form-horizontal">
-        <h5 style="padding:1rem 0 0.5rem"><a href="#" onclick="history.back()">Go back</a></h5>
-        <h2>Update @Html.Raw(Model.RecipeName) Recipe</h2>
+        <h5 style="padding:1rem 0 0.5rem"><a href="#" onclick="window.location.href = '@Url.Content("~/UsersPage/MyUploads")'">Go back</a></h5>
+        <h2>Upcdate @Html.Raw(Model.RecipeName) Recipe</h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -60,18 +60,37 @@
             </div>
         </div>
 
-        @if (editFoodSale != null)
+        @if (editFoodSale == null)
         {
-            <div class="form-group">
-                <label class="control-label col-md-12">Stocks</label>
-                <div class="col-md-12">
-                    <input type="number" min="0" max="@editFoodSale.Stocks" class="form-control" required name="stock" id="stock" value="@editFoodSale.Stocks" />
-                </div>
-            </div>
+            <input type="hidden" min="0" class="form-control" name="stock" id="stock" value="" />
         }
         else
         {
-            <input type="hidden" min="0" class="form-control" required name="stock" id="stock" value="0" />
+            if (editFoodSale.UserRecipeID != 0)
+            {
+                <div class="form-group">
+                    <label class="control-label col-md-12">Price</label>
+                    <div class="col-md-12">
+                        <input style="width:50%" class="form-control ingredient-quantity" placeholder="P00.00" type="number" step="any" min="@editFoodSale.Price" value="@editFoodSale.Price" id="price" name="price" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-12">Stocks</label>
+                    <div class="col-md-12">
+                        <input type="number" min="@editFoodSale.Stocks" class="form-control" required name="stock" id="stock" value="@editFoodSale.Stocks" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-12">Shipped from</label>
+                    <div class="col-md-12">
+                        <input class="form-control ingredient-quantity" placeholder="Address" type="text" id="shippedfrom" name="shippedfrom" value="@editFoodSale.Address" required />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" min="0" class="form-control" name="stock" id="stock" value="" />
+            }
         }
 
         <div class="form-group">
@@ -122,21 +141,21 @@
         <label class="control-label col-md-12" style="display:block;">Ingredients</label>
 
         <div id="ingredients-container">
-            @foreach (var item in recipeIngredients)
-            {
-                <div class="form-group ingredient-row" style="display: block;">
-                    <div class="row" style="margin:0">
-                        <div class="col-md-3 ingname">
-                            <input class="form-control ingredient-name" placeholder="Ingredient Name" id="ingredientName" name="ingredientName[]" value="@item.IngredientName" required />
-                        </div>
-                        <div class="col-md-3 ingqty">
-                            <input class="form-control ingredient-quantity" placeholder="Quantity" type="number" min="0" id="ingredientQty" name="ingredientQty[]" value="@item.Quantity" required />
-                        </div>
-                        <div class="col-md-3 ingunit">
-                            <div>
-                                @{
-                                    var listOfUnitMeasures = new[]
-                                    {
+                @foreach (var item in recipeIngredients)
+                {
+                    <div class="form-group ingredient-row" style="display: block;">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-3 ingname">
+                                <input class="form-control ingredient-name" placeholder="Ingredient Name" id="ingredientName" name="ingredientName[]" value="@item.IngredientName" required />
+                            </div>
+                            <div class="col-md-3 ingqty">
+                                <input class="form-control ingredient-quantity" placeholder="Quantity" type="number" min="0" step="any" id="ingredientQty" name="ingredientQty[]" value="@item.Quantity" required />
+                            </div>
+                            <div class="col-md-3 ingunit">
+                                <div>
+                                    @{
+                                        var listOfUnitMeasures = new[]
+                                        {
                                 new SelectListItem { Value = "tbsp", Text = "Tablespoon (tbsp)" },
                                 new SelectListItem { Value = "tsp", Text = "Teaspoon (tsp)" },
                                 new SelectListItem { Value = "minced", Text = "Minced" },
@@ -175,36 +194,34 @@
                                 new SelectListItem { Value = "diced", Text = "Diced" },
                                 new SelectListItem { Value = "pc", Text = "Piece"}
                             };
-                                    listOfUnitMeasures = listOfUnitMeasures.OrderBy(list => list.Text).ToArray();
+                                        listOfUnitMeasures = listOfUnitMeasures.OrderBy(list => list.Text).ToArray();
 
-                                    //most
-                                    var unitMeasurementPlaceholder = @item.Unit;
-                                }
-                            </div><!--list of measurements-->
-                            <select class="form-control ingredient-unit" id="ingredientUnit" name="ingredientUnit[]" required>
-                                @foreach (var list in @listOfUnitMeasures)
-                                {
-                                    if (list.Value != unitMeasurementPlaceholder)
-                                    {
-                                        <option value="@list.Value">@list.Text</option>
+                                        //most
+                                        var unitMeasurementPlaceholder = @item.Unit;
                                     }
-                                    else
+                                </div><!--list of measurements-->
+                                <select class="form-control ingredient-unit" id="ingredientUnit" name="ingredientUnit[]" required>
+                                    @foreach (var list in @listOfUnitMeasures)
                                     {
-                                        <option selected value="@list.Value">@list.Text</option>
+                                        if (list.Value != unitMeasurementPlaceholder)
+                                        {
+                                            <option value="@list.Value">@list.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option selected value="@list.Value">@list.Text</option>
+                                        }
                                     }
-                                }
-                            </select>
-                        </div>
+                                </select>
+                            </div>
 
-                        <div class="col-md-3">
-                            <button class="btn btn-danger remove-ingredient">Remove</button>
+                            <div class="col-md-3">
+                                <button class="btn btn-danger remove-ingredient">Remove</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                                    }
+                }
         </div>
-
-
 
         <div class="form-group">
             <div class="col-md-12">
@@ -217,7 +234,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CookingInstruction, "Cooking Instruction", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.CookingInstruction, "Cooking Instruction (each step starts with step number and ends with ./) EXAMPLE: 1. Heat pan./ 2. Add oil./", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 @Html.TextAreaFor(model => model.CookingInstruction, new { @class = "form-control", @rows = 10, @cols = 100 })
                 @Html.ValidationMessageFor(model => model.CookingInstruction, "", new { @class = "text-danger" })
@@ -302,9 +319,16 @@
         <div class="form-group">
             <label for="imageFile" class="control-label col-md-12">Upload Recipes Cover Picture</label>
             <div class="col-md-12">
-                @if (!string.IsNullOrEmpty(recipeImage.ImagePath))
+                @if (recipeImage != null)
                 {
-                    <input type="file" name="imageFile" id="imageInput" accept="image/*" />
+                    if (!string.IsNullOrEmpty(recipeImage.ImagePath))
+                    {
+                        <input type="file" name="imageFile" id="imageInput" accept="image/*" value="@Url.Content(recipeImage.ImagePath)" />
+                    }
+                    else
+                    {
+                        <input type="file" name="imageFile" id="imageInput" accept="image/*" required />
+                    }
                 }
                 else
                 {
@@ -315,17 +339,31 @@
 
         <div class="form-group">
             <div class="col-md-12">
-                <img id="selectedImage" src="@Url.Content(recipeImage.ImagePath)" alt="Selected Image" style="display: block; max-width: 300px; max-height: 300px;" />
+                @if (recipeImage == null)
+                {
+                    <img id="selectedImage" src="https://placehold.co/60x60" alt="" style="display: block; max-width: 300px; max-height: 300px;" />
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(recipeImage.ImagePath))
+                    {
+                        <img id="selectedImage" src="@Url.Content(recipeImage.ImagePath)" alt="@recipeImage.ImageName" style="display: block; max-width: 300px; max-height: 300px;" />
+                    }
+                    else
+                    {
+                        <img id="selectedImage" src="https://placehold.co/60x60" alt="@recipeImage.ImageName" style="display: block; max-width: 300px; max-height: 300px;" />
+                    }
+                }
             </div>
         </div>
 
         <div class="form-group" style="margin-top:3rem">
             <div class="col-md-offset-2 col-md-12">
-                <button class="btn custom-btn" id="upload-recipe-btn" onclick="saveChanges()" type="submit" style="width:100%">Update Recipe</button>
+                <button class="btn custom-btn" id="upload-recipe-btn" style="width:100%">Update Recipe</button>
             </div>
         </div>
     </div>
-}@*HtmlBeginForm end*@
+}  @*HtmlBeginForm end*@
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -344,10 +382,59 @@
 <script src="~/Content/MainTemplate/js/main.js"></script>
 <script src="~/Content/HideSomeeAds/removewatermark.js"></script>
 <script>
-    function saveChanges() {
-        $('#loadertxt').text('Saving changes...');
-        showLoader();
-    }
+    $(document).ready(function () {
+        $('#upload-recipe-btn').click(function (e) {
+            $('#loadertxt').text('Saving changes...');
+            showLoader();
+            e.preventDefault();
+            var ingredientCount = parseInt(document.getElementById('ingcount').value);
+            var uploadRecipeFormData = new FormData($('form')[0]);
+            uploadRecipeFormData.append("ingcount", ingredientCount);
+            uploadRecipeFormData.append("moodid", $('#moodid').val());
+            uploadRecipeFormData.append("stock", $('#stock').val());
+
+            $('input[name="ingredientUnit[]"]').each(function () {
+                uploadRecipeFormData.append("ingredientUnit[]", $(this).val());
+            });
+
+            if (parseFloat($('#price').val()) > 0 && $('#shippedfrom').val() != "") {
+                uploadRecipeFormData.append("price", parseFloat($('#price').val()));
+                uploadRecipeFormData.append("shippedfrom", $('#shippedfrom').val());
+            } else {
+                uploadRecipeFormData.append("price", 0);
+                uploadRecipeFormData.append("shippedfrom", "");
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("EditRecipe", "UsersPage")',
+                data: uploadRecipeFormData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.msg == "Session timeout.") {
+                        alert(response.msg);
+                        window.location.href = '@Url.Action("LogOut", "Account")';
+                    }
+                    if (response.success) {
+                        alert(response.msg);
+                        window.location.href = `@Url.Content($"~/UsersPage/RecipeDetails/${Model.RecipeID}")`
+                    } else {
+                        alert(response.msg);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred: " + error);
+                },
+                complete: function () {
+                    hideLoader();
+                }
+            });
+        });
+    });
+
+
     document.getElementById('imageInput').addEventListener('change', function (event) {
         var input = event.target;
         var reader = new FileReader();
@@ -362,32 +449,29 @@
             reader.readAsDataURL(input.files[0]);
         }
     });
-    var ingredientCount = parseInt(document.getElementById('ingcount').value);
 
     $(document).ready(function () {
+        var ingredientCount = parseInt(document.getElementById('ingcount').value);
+
         // Add ingredient row
         $("#add-ingredient").click(function (e) {
             e.preventDefault();
+            var container = $("#ingredients-container");
+            var templateRow = container.find(".ingredient-row").first();
+            var newRow;
 
-            try {
-                var container = $("#ingredients-container");
-                var templateRow = container.find(".ingredient-row").first().clone();
-                var newRow = templateRow.clone().show(); // Clone the template row and show it
+            if (templateRow.length) {
+                newRow = templateRow.clone().show(); // Clone the template row and show it
                 newRow.find("input").val(""); // Clear input values
-
-                //newRow.find("input").prop("disabled", false);
-                //newRow.find("select").prop("disabled", false);
-
-                container.append(newRow);
-                ingredientCount++;
-
-                document.getElementById('ingcount').value = String(ingredientCount);
-            } catch (e) {
-                alert(e.message);
+            } else {
+                // If no rows exist, clone the template row directly
+                newRow = container.children().first().clone().show();
             }
 
-            //container.find(".ingredient-row").not(newRow).find("input").prop("disabled", true);
-            //container.find(".ingredient-row").not(newRow).find("select").prop("disabled", true);
+            container.append(newRow);
+            ingredientCount++;
+            document.getElementById('ingcount').value = String(ingredientCount);
+            //alert("add: " + ingredientCount);
         });
 
         // Remove ingredient row
@@ -398,6 +482,7 @@
 
             ingredientCount--;
             document.getElementById('ingcount').value = String(ingredientCount);
+            //alert("remove: " + ingredientCount);
         });
     });
 

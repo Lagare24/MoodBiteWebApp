@@ -199,7 +199,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CookingInstruction, "Cooking Instruction (start with step number then dot, then end with ./) EXAMPLE: 1. instructions./ 2. instrucions./", htmlAttributes: new { @class = "control-label col-md-12" })
+            @Html.LabelFor(model => model.CookingInstruction, "Cooking Instruction (each step starts with step number and ends with ./) EXAMPLE: 1. Heat pan./ 2. Add oil./", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-12">
                 @Html.TextAreaFor(model => model.CookingInstruction, new { @class = "form-control", @rows = 10, @cols = 100 })
                 @Html.ValidationMessageFor(model => model.CookingInstruction, "", new { @class = "text-danger" })
@@ -225,7 +225,7 @@
         <div class="form-group">
             <label for="imageFile" class="control-label col-md-12">Upload Recipes Cover Picture</label>
             <div class="col-md-12">
-                <input type="file" name="imageFile" id="imageInput" accept="image/*" required />
+                <input type="file" name="imageFile" id="imageInput" accept="image/jpeg, image/png, image/bmp, image/webp, image/svg+xml" required />
             </div>
         </div>
 
@@ -250,21 +250,21 @@
                 <div class="form-group">
                     <label class="control-label col-md-12">Price</label>
                     <div class="col-md-12">
-                        <input style="width:50%" class="form-control ingredient-quantity" placeholder="P00.00" type="number" step="any" min="0" id="price" name="price" />
+                        <input style="width:50%" class="form-control ingredient-quantity" placeholder="P00.00" type="number" step="any" min="0" id="price" name="price" required/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-12">Stocks</label>
                     <div class="col-md-12">
-                        <input style="width:50%" class="form-control ingredient-quantity" type="number" step="any" min="0" id="stock" name="stock" />
+                        <input style="width:50%" class="form-control ingredient-quantity" type="number" step="any" min="0" id="stock" name="stock" required/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-12">Shipped from</label>
                     <div class="col-md-12">
-                        <input class="form-control ingredient-quantity" placeholder="Address" type="text" id="shippedfrom" name="shippedfrom" />
+                        <input class="form-control ingredient-quantity" placeholder="Address" type="text" id="shippedfrom" name="shippedfrom" required/>
                     </div>
                 </div>
             </div>
@@ -375,18 +375,11 @@
             e.preventDefault();
 
             var uploadRecipeFormData = new FormData($('form')[0]);
+            var forSaleValue = $('input[name="forsale"]:checked').val();
             uploadRecipeFormData.append("ingcount", ingredientCount);
             uploadRecipeFormData.append("moodid", $('#moodid').val());
             uploadRecipeFormData.append("stock", $('#stock').val());
-
-            //$('input[name="ingredientName[]"]').each(function () {
-            //    uploadRecipeFormData.append("ingredientName[]", $(this).val());
-            //});
-
-            //$('input[name="ingredientQty[]"]').each(function () {
-            //    var value = parseFloat($(this).val());
-            //    uploadRecipeFormData.append("ingredientQty[]", value);
-            //});
+            uploadRecipeFormData.append("forSale", forSaleValue);
 
             $('input[name="ingredientUnit[]"]').each(function () {
                 uploadRecipeFormData.append("ingredientUnit[]", $(this).val());
@@ -408,15 +401,22 @@
                 processData: false,
                 contentType: false,
                 success: function (response) {
+                    if (response.msg == "Session timeout.") {
+                        alert(response.msg);
+                        window.location.href = '@Url.Action("LogOut", "Account")';
+                    }
                     if (response.success) {
                         alert(response.msg);
-                        window.location.href = '@Url.Action("UsersHome", "UsersPage")'
+                        window.location.href = '@Url.Action("MyUploads", "UsersPage")'
                     } else {
                         alert(response.msg);
                     }
                 },
                 error: function (xhr, status, error) {
                     alert("An error occurred: " + error);
+                },
+                complete: function () {
+                    hideLoader();
                 }
             });
         });

@@ -54,6 +54,10 @@
 <div class="container row" style="display:flex; flex-direction:row; justify-content:center; margin-top:1rem">
         <form style="display:flex;">
             @Html.HiddenFor(model => model.userID)
+            @Html.HiddenFor(model => model.Email)
+            @Html.HiddenFor(model => model.EmailConfirmationToken)
+            @Html.HiddenFor(model => model.EmailConfirmed)
+
             <div class="col-md-3" style="display:flex; align-items:center; flex-direction:column">
                 <h2>Your Profile</h2>
                 @if (Model.ProfilePicturePath == null)
@@ -69,7 +73,6 @@
                 }
                 else
                 {
-                    @*<img src="data:@($"data:{mimeType};base64,{Convert.ToBase64String(Model.ProfilePicture)}")" style="border-radius:50%; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />*@
                     <img src="@Url.Content(Model.ProfilePicturePath)" style="border-radius:50%; border:1px solid black; cursor:pointer; margin:0 auto" id="profilepicdisplay" width="150px" height="150px" alt="Upload Profile Picture" />
                 }
                 <label class="btn custom-btn" style="width:55%; font-size:1.15rem; padding:0 0.25px; margin-top:0.90rem">
@@ -228,8 +231,14 @@
                 processData: false, 
                 contentType: false, 
                 success: function (result) {
+                    if (result.message == "Session timeout.") {
+                        alert(result.message);
+                        window.location.href = '@Url.Content("~/Account/LogOut")';
+                        window.location.reload();
+                    }
                     if (result.success) {
                         alert("Profile updated successfully!");
+                        window.location.href = '@Url.Action("ViewProfile", "Home")';
                     } else {
                         alert("An error occurred: " + result.message);
                     }
@@ -239,7 +248,6 @@
                 },
                 complete: function () {
                     hideLoader();
-                    window.location.reload();
                 }
             });
         });

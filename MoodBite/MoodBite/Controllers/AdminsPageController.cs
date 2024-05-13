@@ -15,6 +15,7 @@ namespace MoodBite.Controllers
 {
     [HandleError]
     [Authorize(Roles = "Admin")]
+    [OutputCache(NoStore = true, Duration = 0)]
     public class AdminsPageController : BaseController
     {
         public ActionResult Index()
@@ -142,8 +143,7 @@ namespace MoodBite.Controllers
                     }
                     catch (Exception)
                     {
-                        return View();
-                        throw;
+                        return Json(new { success = false, message = "An error has occured." });
                     }
                 }
                 else
@@ -422,7 +422,7 @@ namespace MoodBite.Controllers
                 {
                     var imageFile = Request.Files.Get("imageFile");
                     var existingRecipe = _db.Recipe.Where(model => model.RecipeID == recipe.RecipeID).FirstOrDefault();
-                    recipe.IngredientsCount = Convert.ToInt32(ingcount);
+                    recipe.IngredientsCount = Convert.ToInt32(ingcount) - 1;
                     recipe.MoodID = Convert.ToInt32(moodid);
                     recipe.IsApproved = existingRecipe.IsApproved;
                     recipe.DateApproved = existingRecipe.DateApproved;
@@ -451,9 +451,10 @@ namespace MoodBite.Controllers
                         }
 
 
+
                         var recipeIngredient = new RecipeIngredient();
                         recipeIngredient.RecipeID = recipe.RecipeID;
-                        for (int i = 0; i < Convert.ToInt32(ingcount); i++)
+                        for (int i = 0; i < Convert.ToInt32(ingcount) - 1; i++)
                         {
                             recipeIngredient.IngredientName = ingredientName[i];
                             recipeIngredient.Quantity = ingredientQty[i];

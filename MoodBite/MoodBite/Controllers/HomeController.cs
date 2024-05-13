@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoodBite.Contract;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -6,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -68,7 +70,8 @@ namespace MoodBite.Controllers
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    user = (User)_db.User.Where(model => model.Username == User.Identity.Name).FirstOrDefault();
+                    var u = Session["User"] as User;
+                    user = (User)_db.User.Where(model => model.userID == u.userID).FirstOrDefault();
                     return View(user);
                 }
                 else
@@ -83,95 +86,102 @@ namespace MoodBite.Controllers
         }
 
         [HttpPost]
-        public ActionResult ViewProfile(User user, HttpPostedFileBase profilePic, string oldPwdInp, string dob)
+        public ActionResult ViewProfile(User user, string oldPwdInp, string dob)
         {
-            var existingUser = _db.User.Where(model => model.userID == user.userID).FirstOrDefault();
-            User u = new User();
-            if (existingUser.Password == oldPwdInp)
+            if (User.Identity.IsAuthenticated)
             {
-                if ((user != null && User.Identity.IsAuthenticated) && !string.IsNullOrEmpty(oldPwdInp) && !string.IsNullOrEmpty(dob) && !string.IsNullOrEmpty(user.Password))
+                var existingUser = _db.User.Where(model => model.userID == user.userID).FirstOrDefault();
+                var profilePicture = Request.Files.Get("profilePic");
+                if (!string.IsNullOrEmpty(dob))
                 {
                     string[] dateInitInp = dob.Split('/');
                     string[] formatDateInitInp = new string[dateInitInp.Length];
-
                     formatDateInitInp[0] = dateInitInp[1];
                     formatDateInitInp[1] = dateInitInp[0];
                     formatDateInitInp[2] = dateInitInp[2];
-
                     string formattedDate = string.Join("-", formatDateInitInp);
-
                     DateTime dateOfBirthModel = new DateTime();
-
                     if (DateTime.TryParseExact(formattedDate, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateOfBirthModel))
                     {
-                        if (profilePic == null)
+                        user.BirthDate = dateOfBirthModel;
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Invalid date format" });
+                    }
+
+                    if (profilePicture != null && profilePicture.ContentLength > 0)
+                    {
+                        string fileName = Path.GetFileName(profilePicture.FileName);
+                        string uniqueFileName = GetUniqueFileName("~/Content/UsersProfileImages/", fileName);
+                        string filePath = Path.Combine(Server.MapPath("~/Content/UsersProfileImages/"), uniqueFileName);
+
+                        profilePicture.SaveAs(filePath);
+
+                        user.ProfilePicturePath = "~/Content/UsersProfileImages/" + uniqueFileName;
+                    }
+                    else
+                    {
+                        user.ProfilePicturePath = existingUser.ProfilePicturePath;
+                    }
+
+                    if (!string.IsNullOrEmpty(user.Password))
+                    {
+                        if (oldPwdInp == existingUser.Password)
                         {
-                            u = user;
-                            u.Email = existingUser.Email;
-                            u.EmailConfirmed = existingUser.EmailConfirmed;
-                            u.EmailConfirmationToken = existingUser.EmailConfirmationToken;
-                            u.BirthDate = dateOfBirthModel;
-                            u.ProfilePicturePath = existingUser.ProfilePicturePath;
-
-                            try
+                            if (user.Password.Length < 8)
                             {
-                                _userRepo.Update(user.userID, u);
-                                return Json(new { success = true, message = "Profile updated successfully" });
+                                return Json(new { success = false, message = "Password must be at least 8 characters long." });
                             }
-                            catch (Exception)
+                            if (!Regex.IsMatch(user.Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$"))
                             {
-                                return Json(new { success = false, message = "An error has occured" });
-                                throw;
+                                return Json(new { success = false, message = "Password must contain at least one lowercase letter, one uppercase letter, and one symbol." });
                             }
-                        } else
-                        {
-                            var profilePicture = Request.Files.Get("profilePic");
-
-                            if (profilePicture != null && profilePicture.ContentLength > 0)
+                            user.Password = user.Password;
+                            if (_userRepo.Update(user.userID, user) == ErrorCode.Success)
                             {
-                                string fileName = Path.GetFileName(profilePicture.FileName);
-                                string uniqueFileName = GetUniqueFileName("~/Content/UsersProfileImages/", fileName);
-                                string filePath = Path.Combine(Server.MapPath("~/Content/UsersProfileImages/"), uniqueFileName);
-
-                                // Save the file to the specified path
-                                profilePicture.SaveAs(filePath);
-
-                                // Store the file path in the database
-                                u.ProfilePicturePath = "~/Content/UsersProfileImages/" + uniqueFileName;
-
-                                u = user;
-                                u.Email = existingUser.Email;
-                                u.EmailConfirmed = existingUser.EmailConfirmed;
-                                u.EmailConfirmationToken = existingUser.EmailConfirmationToken;
-                                u.BirthDate = dateOfBirthModel;
-                                try
-                                {
-                                    _userRepo.Update(user.userID, u);
-                                    return Json(new { success = true, message = "Profile updated successfully" });
-                                }
-                                catch (Exception)
-                                {
-                                    return Json(new { success = false, message = "An error has occured" });
-                                }
-                                
+                                Session["User"] = user;
+                                return Json(new { success = true, message = "Profile updated successfully!" });
                             }
                             else
                             {
-                                return Json(new { success = false, message = "An error has occured" });
+                                return Json(new { success = false, message = "An error has occured." });
                             }
                         }
-                    } else
+                        else if (string.IsNullOrEmpty(oldPwdInp))
+                        {
+                            return Json(new { success = false, message = "Please enter your old password" });
+                        }
+                        else
+                        {
+                            return Json(new { success = false, message = "Incorrect old password" });
+                        }
+                    }
+                    else
                     {
-                        return Json(new { success = true, message = "Invalid date format" });
+                        if (!string.IsNullOrEmpty(oldPwdInp))
+                        {
+                            return Json(new { success = false, message = "Fill in your new password" });
+                        }
+                        user.Password = existingUser.Password;
+                        if (_userRepo.Update(user.userID, user) == ErrorCode.Success)
+                        {
+                            Session["User"] = user;
+                            return Json(new { success = true, message = "Profile updated successfully!" });
+                        }
+                        else
+                        {
+                            return Json(new { success = false, message = "An error has occured." });
+                        }
                     }
                 }
                 else
                 {
-                    return Json(new { success = false, message = "An error has occured, please fill empty fields" });
+                    return Json(new { success = false, message = "Date of birth is empty." });
                 }
             } else
             {
-                return Json(new { success = false, message = "Enter your correct old password!" });
+                return Json(new { success = false, message = "Session timeout." });
             }
         }
 

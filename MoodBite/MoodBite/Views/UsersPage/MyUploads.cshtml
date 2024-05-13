@@ -48,7 +48,14 @@
         @foreach (var item in Model.userRecipe)
         {
             <tr>
-                <td width="15%"><img src="@Url.Content(item.ImagePath)" alt="@item.ImageName" width="60px" height="60px" style="border-radius:20px; display:block; margin:0 auto;"/></td>
+                @if (item.ImagePath == null)
+                {
+                    <td width="15%"><img src="https://placehold.co/60x60" alt="@item.ImageName" width="60px" height="60px" style="border-radius:20px; display:block; margin:0 auto;" /></td>
+                }
+                else
+                {
+                    <td width="15%"><img src="@Url.Content(item.ImagePath)" alt="@item.ImageName" width="60px" height="60px" style="border-radius:20px; display:block; margin:0 auto;" /></td>
+                }
                 <td width="55%">@item.RecipeName</td>
                 <td width="10%">@item.Status</td>
                 <td>@item.ForSale</td>

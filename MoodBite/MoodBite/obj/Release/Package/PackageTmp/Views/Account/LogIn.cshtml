@@ -44,7 +44,7 @@
     </div>
     <div class="col-lg-5">
         <div class="booking-form">
-            @using (Html.BeginForm(new { @id = "login-form" }))
+            @using (Html.BeginForm("LogIn", "Account", new { returnUrl = Request.QueryString["returnUrl"] }, FormMethod.Post, new { @id = "login-form" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "alert alert-danger custom-ul", @style = "color:red" })
