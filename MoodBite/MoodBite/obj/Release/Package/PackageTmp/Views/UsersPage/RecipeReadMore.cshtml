@@ -187,7 +187,7 @@
 
                 @if (Model.userPremium != null && Model.foodSaleView != null)
                 {
-                    if (Model.foodSaleView.userID != user.userID)
+                    if (Model.foodSaleView.userID == user.userID)
                     {
                         if (Model.foodSaleView.Available == true)
                         {
@@ -410,7 +410,7 @@
             method: 'POST',
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
-                'X-RapidAPI-Key': '777090ea31mshacde7b7b8764951p19b7f5jsnf5535ffeabac',
+                'X-RapidAPI-Key': 'fc03f3de6emsh83cc4634b5496a1p1250fajsn0b3ca298be87',
                 'X-RapidAPI-Host': 'cloudlabs-text-to-speech.p.rapidapi.com'
             },
             data: {

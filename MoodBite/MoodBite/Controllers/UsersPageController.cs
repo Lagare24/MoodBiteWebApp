@@ -278,192 +278,201 @@ namespace MoodBite.Controllers
                 var foodSale = new FoodSale();
                 var recipeIngredient = new RecipeIngredient();
                 var recipeImage = new RecipeImage();
+                var vw_StarterUser = _db.vw_StarterUser.Where(model => model.UserID == user.userID && model.PremiumID == 1).ToList();
                 recipe.FoodCategoryID = Convert.ToInt32(foodcategory);
                 recipe.IngredientsCount = Convert.ToInt32(ingcount);
                 recipe.MoodID = Convert.ToInt32(moodid);
                 recipe.DateUploaded = DateTime.Now;
                 recipe.IsApproved = false;
-                if (forSale.ToLower() == "no")
+                if (vw_StarterUser.Count() < 2)
                 {
-                    if (_recipeRepo.Create(recipe) == ErrorCode.Success)
+                    if (forSale.ToLower() == "no")
                     {
-                        recipeImage.RecipeID = recipe.RecipeID;
-                        recipeImage.ImageName = recipe.RecipeName + " cover";
-                        string fileName = Path.GetFileName(imageFile.FileName);
-                        string uniqueFileName = GetUniqueFileName("~/Content/RecipeImages/", fileName);
-                        string filePath = Path.Combine(Server.MapPath("~/Content/RecipeImages/"), uniqueFileName);
-                        imageFile.SaveAs(filePath);
-                        recipeImage.ImagePath = "~/Content/RecipeImages/" + uniqueFileName;
-                        if (_recipeImageRepo.Create(recipeImage) == ErrorCode.Error)
+                        if (_recipeRepo.Create(recipe) == ErrorCode.Success)
                         {
-                            _recipeRepo.Delete(recipe.RecipeID);
-                            return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
-                        }
-                        for (int i = 1; i < recipe.IngredientsCount+1; i++)
-                        {
-                            recipeIngredient.RecipeID = recipe.RecipeID;
-                            int ingredientNameInt;
-                            if (int.TryParse(ingredientName[i], out ingredientNameInt) || string.IsNullOrEmpty(ingredientName[i]))
-                            {
-                                var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
-                                if (forDeleteIngredients.Count <= 0)
-                                {
-                                    _recipeRepo.Delete(recipe.RecipeID);
-                                    return Json(new { success = false, msg = "Invalid ingredient name." });
-                                }
-                                foreach (var del in forDeleteIngredients)
-                                {
-                                    _recipeIngredientRepo.Delete(del.RecipeIngredientID);
-                                }
-                                _recipeRepo.Delete(recipe.RecipeID);
-                                return Json(new { success = false, msg = "Invalid ingredient name." });
-                            }
-                            recipeIngredient.IngredientName = ingredientName[i];
-                            recipeIngredient.Unit = ingredientUnit[i];
-                            if (ingredientQty[i] <= 0 || string.IsNullOrEmpty(Convert.ToString(ingredientQty[i])))
-                            {
-                                var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
-                                if (forDeleteIngredients.Count <= 0)
-                                {
-                                    _recipeRepo.Delete(recipe.RecipeID);
-                                    return Json(new { success = false, msg = "Invalid qty input." });
-                                }
-                                foreach (var del in forDeleteIngredients)
-                                {
-                                    _recipeIngredientRepo.Delete(del.RecipeIngredientID);
-                                }
-                                _recipeRepo.Delete(recipe.RecipeID);
-                                return Json(new { success = false, msg = "Invalid qty input." });
-                            }
-                            recipeIngredient.Quantity = ingredientQty[i];
-                            if (_recipeIngredientRepo.Create(recipeIngredient) == ErrorCode.Error)
+                            recipeImage.RecipeID = recipe.RecipeID;
+                            recipeImage.ImageName = recipe.RecipeName + " cover";
+                            string fileName = Path.GetFileName(imageFile.FileName);
+                            string uniqueFileName = GetUniqueFileName("~/Content/RecipeImages/", fileName);
+                            string filePath = Path.Combine(Server.MapPath("~/Content/RecipeImages/"), uniqueFileName);
+                            imageFile.SaveAs(filePath);
+                            recipeImage.ImagePath = "~/Content/RecipeImages/" + uniqueFileName;
+                            if (_recipeImageRepo.Create(recipeImage) == ErrorCode.Error)
                             {
                                 _recipeRepo.Delete(recipe.RecipeID);
                                 return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
                             }
-                        }
-                        userRecipe.RecipeID = recipe.RecipeID;
-                        userRecipe.UserID = user.userID;
-                        if (_userRecipeRepo.Create(userRecipe) == ErrorCode.Error)
-                        {
-                            _recipeRepo.Delete(recipe.RecipeID);
-                            var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
-                            if (forDeleteIngredients.Count > 0)
+                            for (int i = 1; i < recipe.IngredientsCount + 1; i++)
                             {
-                                foreach (var del in forDeleteIngredients)
+                                recipeIngredient.RecipeID = recipe.RecipeID;
+                                int ingredientNameInt;
+                                if (int.TryParse(ingredientName[i], out ingredientNameInt) || string.IsNullOrEmpty(ingredientName[i]))
                                 {
-                                    _recipeIngredientRepo.Delete(del.RecipeIngredientID);
-                                }
-                            }
-                            return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
-                        }
-                        return Json(new { success = true, msg = "Your recipe has been successfully uploaded. It is currently awaiting approval from the administrators before it can be officially published." });
-                    } else
-                    {
-                        return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
-                    }
-                }
-
-                if (forSale.ToLower() == "yes")
-                {
-                    if (_recipeRepo.Create(recipe) == ErrorCode.Success)
-                    {
-                        recipeImage.RecipeID = recipe.RecipeID;
-                        recipeImage.ImageName = recipe.RecipeName + " cover";
-                        string fileName = Path.GetFileName(imageFile.FileName);
-                        string uniqueFileName = GetUniqueFileName("~/Content/RecipeImages/", fileName);
-                        string filePath = Path.Combine(Server.MapPath("~/Content/RecipeImages/"), uniqueFileName);
-                        imageFile.SaveAs(filePath);
-                        recipeImage.ImagePath = "~/Content/RecipeImages/" + uniqueFileName;
-                        if (_recipeImageRepo.Create(recipeImage) == ErrorCode.Error)
-                        {
-                            _recipeRepo.Delete(recipe.RecipeID);
-                            return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
-                        }
-                        for (int i = 1; i < recipe.IngredientsCount + 1; i++)
-                        {
-                            recipeIngredient.RecipeID = recipe.RecipeID;
-                            int ingredientNameInt;
-                            if (int.TryParse(ingredientName[i], out ingredientNameInt) || string.IsNullOrEmpty(ingredientName[i]))
-                            {
-                                var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
-                                if (forDeleteIngredients.Count <= 0)
-                                {
+                                    var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
+                                    if (forDeleteIngredients.Count <= 0)
+                                    {
+                                        _recipeRepo.Delete(recipe.RecipeID);
+                                        return Json(new { success = false, msg = "Invalid ingredient name." });
+                                    }
+                                    foreach (var del in forDeleteIngredients)
+                                    {
+                                        _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    }
                                     _recipeRepo.Delete(recipe.RecipeID);
                                     return Json(new { success = false, msg = "Invalid ingredient name." });
                                 }
-                                foreach (var del in forDeleteIngredients)
+                                recipeIngredient.IngredientName = ingredientName[i];
+                                recipeIngredient.Unit = ingredientUnit[i];
+                                if (ingredientQty[i] <= 0 || string.IsNullOrEmpty(Convert.ToString(ingredientQty[i])))
                                 {
-                                    _recipeIngredientRepo.Delete(del.RecipeIngredientID);
-                                }
-                                _recipeRepo.Delete(recipe.RecipeID);
-                                return Json(new { success = false, msg = "Invalid ingredient name." });
-                            }
-                            recipeIngredient.IngredientName = ingredientName[i];
-                            recipeIngredient.Unit = ingredientUnit[i];
-                            if (ingredientQty[i] <= 0 || string.IsNullOrEmpty(Convert.ToString(ingredientQty[i])))
-                            {
-                                var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
-                                if (forDeleteIngredients.Count <= 0)
-                                {
+                                    var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
+                                    if (forDeleteIngredients.Count <= 0)
+                                    {
+                                        _recipeRepo.Delete(recipe.RecipeID);
+                                        return Json(new { success = false, msg = "Invalid qty input." });
+                                    }
+                                    foreach (var del in forDeleteIngredients)
+                                    {
+                                        _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    }
                                     _recipeRepo.Delete(recipe.RecipeID);
                                     return Json(new { success = false, msg = "Invalid qty input." });
                                 }
-                                foreach (var del in forDeleteIngredients)
+                                recipeIngredient.Quantity = ingredientQty[i];
+                                if (_recipeIngredientRepo.Create(recipeIngredient) == ErrorCode.Error)
                                 {
-                                    _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    _recipeRepo.Delete(recipe.RecipeID);
+                                    return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
                                 }
-                                _recipeRepo.Delete(recipe.RecipeID);
-                                return Json(new { success = false, msg = "Invalid qty input." });
                             }
-                            recipeIngredient.Quantity = ingredientQty[i];
-                            if (_recipeIngredientRepo.Create(recipeIngredient) == ErrorCode.Error)
+                            userRecipe.RecipeID = recipe.RecipeID;
+                            userRecipe.UserID = user.userID;
+                            if (_userRecipeRepo.Create(userRecipe) == ErrorCode.Error)
+                            {
+                                _recipeRepo.Delete(recipe.RecipeID);
+                                var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
+                                if (forDeleteIngredients.Count > 0)
+                                {
+                                    foreach (var del in forDeleteIngredients)
+                                    {
+                                        _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    }
+                                }
+                                return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
+                            }
+                            return Json(new { success = true, msg = "Your recipe has been successfully uploaded. It is currently awaiting approval from the administrators before it can be officially published." });
+                        }
+                        else
+                        {
+                            return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
+                        }
+                    }
+
+                    if (forSale.ToLower() == "yes")
+                    {
+                        if (_recipeRepo.Create(recipe) == ErrorCode.Success)
+                        {
+                            recipeImage.RecipeID = recipe.RecipeID;
+                            recipeImage.ImageName = recipe.RecipeName + " cover";
+                            string fileName = Path.GetFileName(imageFile.FileName);
+                            string uniqueFileName = GetUniqueFileName("~/Content/RecipeImages/", fileName);
+                            string filePath = Path.Combine(Server.MapPath("~/Content/RecipeImages/"), uniqueFileName);
+                            imageFile.SaveAs(filePath);
+
+                            recipeImage.ImagePath = "~/Content/RecipeImages/" + uniqueFileName;
+                            if (_recipeImageRepo.Create(recipeImage) == ErrorCode.Error)
                             {
                                 _recipeRepo.Delete(recipe.RecipeID);
                                 return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
                             }
-                        }
-                        userRecipe.RecipeID = recipe.RecipeID;
-                        userRecipe.UserID = user.userID;
-                        if (_userRecipeRepo.Create(userRecipe) == ErrorCode.Error)
-                        {
-                            _recipeRepo.Delete(recipe.RecipeID);
-                            var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
-                            if (forDeleteIngredients.Count > 0)
+                            for (int i = 1; i < recipe.IngredientsCount + 1; i++)
                             {
-                                foreach (var del in forDeleteIngredients)
+                                recipeIngredient.RecipeID = recipe.RecipeID;
+                                int ingredientNameInt;
+                                if (int.TryParse(ingredientName[i], out ingredientNameInt) || string.IsNullOrEmpty(ingredientName[i]))
                                 {
-                                    _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
+                                    if (forDeleteIngredients.Count <= 0)
+                                    {
+                                        _recipeRepo.Delete(recipe.RecipeID);
+                                        return Json(new { success = false, msg = "Invalid ingredient name." });
+                                    }
+                                    foreach (var del in forDeleteIngredients)
+                                    {
+                                        _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    }
+                                    _recipeRepo.Delete(recipe.RecipeID);
+                                    return Json(new { success = false, msg = "Invalid ingredient name." });
+                                }
+                                recipeIngredient.IngredientName = ingredientName[i];
+                                recipeIngredient.Unit = ingredientUnit[i];
+                                if (ingredientQty[i] <= 0 || string.IsNullOrEmpty(Convert.ToString(ingredientQty[i])))
+                                {
+                                    var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
+                                    if (forDeleteIngredients.Count <= 0)
+                                    {
+                                        _recipeRepo.Delete(recipe.RecipeID);
+                                        return Json(new { success = false, msg = "Invalid qty input." });
+                                    }
+                                    foreach (var del in forDeleteIngredients)
+                                    {
+                                        _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    }
+                                    _recipeRepo.Delete(recipe.RecipeID);
+                                    return Json(new { success = false, msg = "Invalid qty input." });
+                                }
+                                recipeIngredient.Quantity = ingredientQty[i];
+                                if (_recipeIngredientRepo.Create(recipeIngredient) == ErrorCode.Error)
+                                {
+                                    _recipeRepo.Delete(recipe.RecipeID);
+                                    return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
                                 }
                             }
-                            return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
-                        }
-
-                        foodSale.UserRecipeID = userRecipe.UserRecipeID;
-                        foodSale.Price = Convert.ToDecimal(price);
-                        foodSale.Address = shippedfrom;
-                        foodSale.Available = true;
-                        foodSale.Stocks = Convert.ToInt32(stock);
-                        if (_foodSaleRepo.Create(foodSale) == ErrorCode.Error)
-                        {
-                            _recipeRepo.Delete(recipe.RecipeID);
-                            var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
-                            if (forDeleteIngredients.Count > 0)
+                            userRecipe.RecipeID = recipe.RecipeID;
+                            userRecipe.UserID = user.userID;
+                            if (_userRecipeRepo.Create(userRecipe) == ErrorCode.Error)
                             {
-                                foreach (var del in forDeleteIngredients)
+                                _recipeRepo.Delete(recipe.RecipeID);
+                                var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
+                                if (forDeleteIngredients.Count > 0)
                                 {
-                                    _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    foreach (var del in forDeleteIngredients)
+                                    {
+                                        _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    }
                                 }
+                                return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
                             }
+
+                            foodSale.UserRecipeID = userRecipe.UserRecipeID;
+                            foodSale.Price = Convert.ToDecimal(price);
+                            foodSale.Address = shippedfrom;
+                            foodSale.Available = true;
+                            foodSale.Stocks = Convert.ToInt32(stock);
+                            if (_foodSaleRepo.Create(foodSale) == ErrorCode.Error)
+                            {
+                                _recipeRepo.Delete(recipe.RecipeID);
+                                var forDeleteIngredients = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
+                                if (forDeleteIngredients.Count > 0)
+                                {
+                                    foreach (var del in forDeleteIngredients)
+                                    {
+                                        _recipeIngredientRepo.Delete(del.RecipeIngredientID);
+                                    }
+                                }
+                                return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
+                            }
+
+                            return Json(new { success = true, msg = "Your recipe has been successfully uploaded. It is currently awaiting approval from the administrators before it can be officially published." });
+                        }
+                        else
+                        {
                             return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
                         }
-
-                        return Json(new { success = true, msg = "Your recipe has been successfully uploaded. It is currently awaiting approval from the administrators before it can be officially published." });
                     }
-                    else
-                    {
-                        return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
-                    }
+                } else
+                {
+                    return Json(new { success = false, msg = "Your plan is only limited to 2 sellable uploads" });
                 }
             }
             return Json(new { success = false, msg = "Session timeout." });
@@ -766,6 +775,7 @@ namespace MoodBite.Controllers
                         if (foodSale.Stocks <= 0)
                         {
                             foodSale.Available = false;
+                            foodSale.Stocks = 0;
                         }
                         _foodSaleRepo.Update(foodSale.FoodSaleID, foodSale);
                     }
@@ -1143,8 +1153,8 @@ namespace MoodBite.Controllers
                                 }
                             }
                             return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
-                        }
-                        return Json(new { success = true, msg = "Your recipe has been successfully uploaded. It is currently awaiting approval from the administrators before it can be officially published." });
+                        } 
+                        return Json(new { success = true, msg = "Recipe updated successfully!" });
                     }
                     else
                     {
@@ -1154,7 +1164,7 @@ namespace MoodBite.Controllers
 
                 if (!string.IsNullOrEmpty(stock))
                 {
-                    if (_recipeRepo.Create(recipe) == ErrorCode.Success)
+                    if (_recipeRepo.Update(recipe.RecipeID, recipe) == ErrorCode.Success)
                     {
                         var sameRecipeImage = _db.RecipeImage.Where(model => model.RecipeID == recipe.RecipeID).FirstOrDefault();
                         var sameRecipeIngredient = _db.RecipeIngredient.Where(model => model.RecipeID == recipe.RecipeID).ToList();
@@ -1186,7 +1196,9 @@ namespace MoodBite.Controllers
                         {
                             _recipeIngredientRepo.Delete(samerecIngredient.RecipeIngredientID);
                         }
-                        for (int i = 1; i < recipe.IngredientsCount + 1; i++)
+                        recipe.IngredientsCount = 0;
+                        _recipeRepo.Update(recipe.RecipeID, recipe);
+                        for (int i = 0; i < recipe.IngredientsCount; i++)
                         {
                             recipeIngredient.RecipeID = recipe.RecipeID;
                             int ingredientNameInt;
@@ -1267,7 +1279,7 @@ namespace MoodBite.Controllers
                             return Json(new { success = false, msg = "An error has occured when creating your recipe, please try again." });
                         }
 
-                        return Json(new { success = true, msg = "Your recipe has been successfully uploaded. It is currently awaiting approval from the administrators before it can be officially published." });
+                        return Json(new { success = true, msg = "Recipe updated successfully!" });
                     }
                     else
                     {

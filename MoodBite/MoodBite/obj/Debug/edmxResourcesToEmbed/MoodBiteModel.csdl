@@ -215,6 +215,7 @@
       <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
     </AssociationSet>
     <EntitySet Name="vw_MyFavoritesView" EntityType="MoodBiteModel.vw_MyFavoritesView" />
+    <EntitySet Name="vw_StarterUser" EntityType="MoodBiteModel.vw_StarterUser" />
   </EntityContainer>
   <ComplexType Name="sp_FilterSearchByAllergy_Result">
     <Property Type="Int32" Name="RecipeID" Nullable="false" />
@@ -1440,5 +1441,15 @@
     <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vw_StarterUser">
+    <Key>
+      <PropertyRef Name="UserPremiumID" />
+    </Key>
+    <Property Name="UserPremiumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="PremiumID" Type="Int32" />
+    <Property Name="DateSubscribed" Type="DateTime" Precision="0" />
+    <Property Name="RecipeID" Type="Int32" />
   </EntityType>
 </Schema>

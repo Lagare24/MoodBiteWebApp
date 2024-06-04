@@ -247,10 +247,12 @@
                         window.location.href ='@Url.Action("ConfirmEmail", "Account")';
                     } else {
                         alert(result.msg);
+                        window.location.reload();
                     }
                 },
                 error: function (xhr, status, error) {
                     alert("An error occurred: " + error);
+                    window.location.reload();
                 },
                 complete: function () {
                     hideLoader();

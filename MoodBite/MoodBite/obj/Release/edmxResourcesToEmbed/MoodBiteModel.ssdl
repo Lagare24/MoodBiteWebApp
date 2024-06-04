@@ -698,6 +698,18 @@ warning 6002: The table/view 'MoodBite.dbo.vw_RoleView' does not have a primary 
     <Property Name="Rolename" Type="varchar" MaxLength="100" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_StarterUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_StarterUser">
+    <Key>
+      <PropertyRef Name="UserPremiumID" />
+    </Key>
+    <Property Name="UserPremiumID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="PremiumID" Type="int" />
+    <Property Name="DateSubscribed" Type="date" />
+    <Property Name="RecipeID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_UploaderDetailsForReadMorePage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vw_UploaderDetailsForReadMorePage">
     <Key>
@@ -1596,6 +1608,15 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_RoleView].[RoleID] AS [RoleID], 
     [vw_RoleView].[Rolename] AS [Rolename]
     FROM [dbo].[vw_RoleView] AS [vw_RoleView]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_StarterUser" EntityType="Self.vw_StarterUser" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_StarterUser].[UserPremiumID] AS [UserPremiumID], 
+    [vw_StarterUser].[UserID] AS [UserID], 
+    [vw_StarterUser].[PremiumID] AS [PremiumID], 
+    [vw_StarterUser].[DateSubscribed] AS [DateSubscribed], 
+    [vw_StarterUser].[RecipeID] AS [RecipeID]
+    FROM [dbo].[vw_StarterUser] AS [vw_StarterUser]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vw_UploaderDetailsForReadMorePage" EntityType="Self.vw_UploaderDetailsForReadMorePage" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 

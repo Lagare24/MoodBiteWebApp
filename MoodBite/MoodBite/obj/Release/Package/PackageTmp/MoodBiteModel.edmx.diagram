@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5fa59c6237a24675b31b7c2a52e01f8f" Name="Diagram1" ZoomLevel="64">
+      <Diagram DiagramId="5fa59c6237a24675b31b7c2a52e01f8f" Name="Diagram1" ZoomLevel="95">
         <EntityTypeShape EntityType="MoodBiteModel.AccountCreationLog" Width="1.5" PointX="3" PointY="33.25" />
         <EntityTypeShape EntityType="MoodBiteModel.Allergy" Width="1.5" PointX="9" PointY="26.375" />
         <EntityTypeShape EntityType="MoodBiteModel.BuyPremiumTransaction" Width="1.5" PointX="3" PointY="13" />
@@ -86,6 +86,7 @@
         <AssociationConnector Association="MoodBiteModel.FK__UserRole__UserID__3C69FB99" />
         <AssociationConnector Association="MoodBiteModel.FK__UsersFavo__UserI__60FC61CA" />
         <EntityTypeShape EntityType="MoodBiteModel.vw_MyFavoritesView" Width="1.5" PointX="19.375" PointY="3.75" />
+        <EntityTypeShape EntityType="MoodBiteModel.vw_StarterUser" Width="1.5" PointX="20.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

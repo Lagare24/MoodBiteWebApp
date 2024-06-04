@@ -234,7 +234,7 @@
                     if (result.message == "Session timeout.") {
                         alert(result.message);
                         window.location.href = '@Url.Content("~/Account/LogOut")';
-                        window.location.reload();
+                        //window.location.reload();
                     }
                     if (result.success) {
                         alert("Profile updated successfully!");

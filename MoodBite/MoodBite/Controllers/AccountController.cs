@@ -232,7 +232,14 @@ namespace MoodBite.Controllers
                                 u.EmailConfirmationToken = token;
                                 _userRepo.Create(u);
 
-                                SendConfirmationEmail(u);
+                                try
+                                {
+                                    SendConfirmationEmail(u);
+                                }
+                                catch (Exception)
+                                {
+                                    return Json(new { success = false, msg = "Invalid Recipient" });
+                                }
                             }
                             catch (Exception)
                             {

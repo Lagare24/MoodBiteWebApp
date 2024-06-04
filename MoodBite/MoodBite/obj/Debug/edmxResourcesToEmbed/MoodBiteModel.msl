@@ -822,5 +822,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vw_StarterUser">
+      <EntityTypeMapping TypeName="MoodBiteModel.vw_StarterUser">
+        <MappingFragment StoreEntitySet="vw_StarterUser">
+          <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+          <ScalarProperty Name="DateSubscribed" ColumnName="DateSubscribed" />
+          <ScalarProperty Name="PremiumID" ColumnName="PremiumID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserPremiumID" ColumnName="UserPremiumID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

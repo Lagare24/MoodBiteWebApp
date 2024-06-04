@@ -513,6 +513,9 @@
     <Compile Include="vw_RoleView.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_StarterUser.cs">
+      <DependentUpon>MoodBiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_UploaderDetailsForReadMorePage.cs">
       <DependentUpon>MoodBiteModel.tt</DependentUpon>
     </Compile>

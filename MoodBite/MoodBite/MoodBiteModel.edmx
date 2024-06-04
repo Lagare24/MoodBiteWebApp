@@ -703,6 +703,18 @@ warning 6002: The table/view 'MoodBite.dbo.vw_RoleView' does not have a primary 
           <Property Name="Rolename" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'MoodBite.dbo.vw_StarterUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_StarterUser">
+          <Key>
+            <PropertyRef Name="UserPremiumID" />
+          </Key>
+          <Property Name="UserPremiumID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="PremiumID" Type="int" />
+          <Property Name="DateSubscribed" Type="date" />
+          <Property Name="RecipeID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'MoodBite.dbo.vw_UploaderDetailsForReadMorePage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_UploaderDetailsForReadMorePage">
           <Key>
@@ -1602,6 +1614,15 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
     [vw_RoleView].[Rolename] AS [Rolename]
     FROM [dbo].[vw_RoleView] AS [vw_RoleView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_StarterUser" EntityType="Self.vw_StarterUser" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_StarterUser].[UserPremiumID] AS [UserPremiumID], 
+    [vw_StarterUser].[UserID] AS [UserID], 
+    [vw_StarterUser].[PremiumID] AS [PremiumID], 
+    [vw_StarterUser].[DateSubscribed] AS [DateSubscribed], 
+    [vw_StarterUser].[RecipeID] AS [RecipeID]
+    FROM [dbo].[vw_StarterUser] AS [vw_StarterUser]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_UploaderDetailsForReadMorePage" EntityType="Self.vw_UploaderDetailsForReadMorePage" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_UploaderDetailsForReadMorePage].[UploadedBy] AS [UploadedBy], 
@@ -1997,6 +2018,7 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
             <End Role="UsersFavoriteRecipes" EntitySet="UsersFavoriteRecipes" />
           </AssociationSet>
           <EntitySet Name="vw_MyFavoritesView" EntityType="MoodBiteModel.vw_MyFavoritesView" />
+          <EntitySet Name="vw_StarterUser" EntityType="MoodBiteModel.vw_StarterUser" />
           </EntityContainer>
         <ComplexType Name="sp_FilterSearchByAllergy_Result">
           <Property Type="Int32" Name="RecipeID" Nullable="false" />
@@ -3223,6 +3245,16 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
           <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="FoodCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="vw_StarterUser">
+          <Key>
+            <PropertyRef Name="UserPremiumID" />
+          </Key>
+          <Property Name="UserPremiumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="PremiumID" Type="Int32" />
+          <Property Name="DateSubscribed" Type="DateTime" Precision="0" />
+          <Property Name="RecipeID" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4047,6 +4079,17 @@ warning 6002: The table/view 'MoodBite.dbo.vw_UsersUploadCounts' does not have a
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="UsersFaveRecipeID" ColumnName="UsersFaveRecipeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_StarterUser">
+            <EntityTypeMapping TypeName="MoodBiteModel.vw_StarterUser">
+              <MappingFragment StoreEntitySet="vw_StarterUser">
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+                <ScalarProperty Name="DateSubscribed" ColumnName="DateSubscribed" />
+                <ScalarProperty Name="PremiumID" ColumnName="PremiumID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserPremiumID" ColumnName="UserPremiumID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -195,6 +195,10 @@ namespace MoodBite.Controllers
         [HttpPost]
         public ActionResult BuyPremium(string phoneNumber, string email)
         {
+            if (phoneNumber.Length <= 0 || phoneNumber.Length >= 11)
+            {
+                return Json(new { success = false, msg = "An error has occurred. Invalid phone number" });
+            }
             if (TempData["prem"] != null)
             {
                 var user = _db.User.Where(model => model.Email == email).FirstOrDefault();
@@ -233,9 +237,6 @@ namespace MoodBite.Controllers
 
                                 string subject = "Account Upgrade Reciept";
 
-                                ////use this when deployed
-                                //string body = $"Please confirm your email address by clicking <a href=\"{confirmationLink}\">here</a>";
-
                                 string body = $"<p>Thank you for upgrading your account to {prem.PremiumType}.</p>"
                 + $"<p>Date of Subscription: {DateTime.Today:d}</p>"
                 + $"<p>Your subscription will expire on: {DateTime.Today.AddDays(Convert.ToDouble(prem.Duration)):d}</p>"
@@ -251,9 +252,17 @@ namespace MoodBite.Controllers
 
                                     using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                                     {
-                                        smtp.Credentials = new NetworkCredential(from, password);
-                                        smtp.EnableSsl = true;
-                                        smtp.Send(message);
+                                        
+                                        try
+                                        {
+                                            smtp.Credentials = new NetworkCredential(from, password);
+                                            smtp.EnableSsl = true;
+                                            smtp.Send(message);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            return Json(new { success = false, msg = "Invalid Recipient" });
+                                        }
                                     }
                                 }
                                 return Json(new { success = true, msg = "Subscribed successfully, check email for reciepts" });
